@@ -228,12 +228,6 @@
   <data name="lbEmailGlobal" xml:space="preserve">
     <value>Correo electrónico</value>
   </data>
-  <data name="lbEmailProfile" xml:space="preserve">
-    <value>Correo electrónico</value>
-  </data>
-  <data name="lbEmailSignUp" xml:space="preserve">
-    <value>Correo electrónico</value>
-  </data>
   <data name="lbFriendsConnected" xml:space="preserve">
     <value>Amigos conectados</value>
   </data>
@@ -312,16 +306,16 @@
   <data name="tbSendMessagePlaceholder" xml:space="preserve">
     <value>Escribe un mensaje…</value>
   </data>
-  <data name="txtLeaderboard" xml:space="preserve">
+  <data name="txtLeaderboardGlobal" xml:space="preserve">
     <value>Marcador</value>
   </data>
   <data name="txtLoginGlobal" xml:space="preserve">
     <value>Iniciar Sesión</value>
   </data>
-  <data name="txtNickname" xml:space="preserve">
+  <data name="txtNicknameGlobal" xml:space="preserve">
     <value>Nombre de usuario</value>
   </data>
-  <data name="txtReport" xml:space="preserve">
+  <data name="txtReportGlobal" xml:space="preserve">
     <value>Reportar</value>
   </data>
   <data name="txtSignUpGlobal" xml:space="preserve">
