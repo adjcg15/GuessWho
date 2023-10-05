@@ -4,9 +4,38 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GuessWhoClient"
+        xmlns:p ="clr-namespace:GuessWhoClient.Properties"
         mc:Ignorable="d"
-        Title="Login" Height="450" Width="800">
+        Title="{x:Static p:Resources.txtLoginGlobal}" Height="520" Width="900">
     <Grid>
-        
+        <Image Source="/Resources/background.png" Stretch="UniformToFill" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <Border
+            Width="360" Height="400"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            BorderBrush="#FFC436" BorderThickness="8" CornerRadius="16"
+            Background="White"
+        >
+            <Grid>
+                <Label
+                    Content="{x:Static p:Resources.txtLoginGlobal}"
+                    HorizontalAlignment="Center"
+                    Margin="0,20,0,0"
+                    VerticalAlignment="Top"
+                    FontWeight="Bold" FontSize="20"
+                />
+                <Label Content="{x:Static p:Resources.lbEmailGlobal}" HorizontalAlignment="Left" Margin="26,100,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+                <TextBox x:Name="tbEmail" Style="{StaticResource Input}" HorizontalAlignment="Center" Margin="0,126,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="292" Height="30"/>
+                <Label Content="{x:Static p:Resources.lbPasswordGlobal}" HorizontalAlignment="Left" Margin="26,175,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+                <PasswordBox x:Name="tbPassword" Style="{StaticResource PasswordInput}" HorizontalAlignment="Center" Margin="0,201,0,0" VerticalAlignment="Top" Width="292" Height="30"/>
+                <Border HorizontalAlignment="Center" Height="26" VerticalAlignment="Top" Width="188" Margin="0,236,0,0">
+                    <Grid>
+                        <Label Content="{x:Static p:Resources.lbAccountQuestion}" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold"/>
+                        <Button x:Name="BtnSignUp" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Content="{x:Static p:Resources.txtSignUpGlobal}" Foreground="#0A6EBD" Background="{x:Null}" Margin="124,1,0,0" BorderThickness="0,0,0,1" BorderBrush="#FF0A6EBD" Click="BtnSignUpClick"/>
+                    </Grid>
+                </Border>
+                <Button x:Name="BtnLogin" Style="{StaticResource PrimaryButton}" Content="{x:Static p:Resources.txtLoginGlobal}" HorizontalAlignment="Center" Margin="0,307,0,0" VerticalAlignment="Top" Click="BtnLoginClick"/>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

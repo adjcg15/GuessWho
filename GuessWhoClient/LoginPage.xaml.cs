@@ -20,5 +20,15 @@ namespace GuessWhoClient
         {
             InitializeComponent();
         }
+
+        private void BtnLoginClick(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void BtnSignUpClick(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }
