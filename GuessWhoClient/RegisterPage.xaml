@@ -34,19 +34,19 @@
                     Margin="0,42,0,0" 
                     BorderBrush="Black" BorderThickness="2" CornerRadius="8"
                     Padding="4">
-                    <Image Stretch="UniformToFill" Source="/Resources/default-profile-image.png"/>
+                    <Image x:Name="ImageProfile" Stretch="UniformToFill" Source="/Resources/default-profile-image.png"/>
                 </Border>
                 <Button 
+                    Content="{x:Static p:Resources.btnUploadProfilePicture}"
                     x:Name="BtnUploadProfilePicture" 
                     Style="{StaticResource SecondaryButton}" 
-                    Content="{x:Static p:Resources.btnUploadProfilePicture}" 
                     HorizontalAlignment="Center" 
                     Margin="0,121,0,0" 
                     VerticalAlignment="Top" 
                     Click="BtnUploadProfilePictureClick"/>
                 
                 <Label 
-                    Content="{x:Static p:Resources.txtNickname}" 
+                    Content="{x:Static p:Resources.txtNicknameGlobal}"
                     HorizontalAlignment="Left" 
                     Margin="41,165,0,0" 
                     VerticalAlignment="Top" 
@@ -58,7 +58,7 @@
                     VerticalAlignment="Top" 
                     Width="248" Height="30"/>
                 <Label 
-                    Content="{x:Static p:Resources.lbFullName}" 
+                    Content="{x:Static p:Resources.lbFullName}"
                     HorizontalAlignment="Left" 
                     Margin="302,165,0,0" 
                     VerticalAlignment="Top" 
@@ -72,7 +72,7 @@
                     VerticalAlignment="Top"
                     Width="242" Height="32"/>
                 <Label 
-                    Content="{x:Static p:Resources.lbPasswordGlobal}"  
+                    Content="{x:Static p:Resources.lbPasswordGlobal}"
                     HorizontalAlignment="Left" 
                     Margin="41,222,0,0" 
                     VerticalAlignment="Top"
@@ -86,7 +86,7 @@
                     VerticalAlignment="Top" 
                     Width="205" Height="30"/>
                 <Label 
-                    Content="Correo electrónico" 
+                    Content="{x:Static p:Resources.lbEmailGlobal}"
                     HorizontalAlignment="Left" 
                     Margin="302,223,0,0" 
                     VerticalAlignment="Top" 
@@ -100,7 +100,7 @@
                     VerticalAlignment="Top" 
                     Width="215" Height="30"/>
                 <Label 
-                    Content="Repite tu contraseña" 
+                    Content="{x:Static p:Resources.lbRepeatPassword}"
                     HorizontalAlignment="Left"
                     Margin="41,280,0,0" 
                     VerticalAlignment="Top" 
@@ -115,9 +115,9 @@
                     Width="231" Height="30"/>
                 
                 <Button
+                    Content="{x:Static p:Resources.btnCreateAccount}"
                     x:Name="BtnCreateAccount" 
-                    Style="{StaticResource PrimaryButton}" 
-                    Content="Crear cuenta" 
+                    Style="{StaticResource PrimaryButton}"
                     HorizontalAlignment="Center" 
                     Margin="0,350,0,0" 
                     VerticalAlignment="Top"
