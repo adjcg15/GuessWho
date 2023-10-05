@@ -394,24 +394,6 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Correo electrónico.
-        /// </summary>
-        public static string lbEmailProfile {
-            get {
-                return ResourceManager.GetString("lbEmailProfile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a Correo electrónico.
-        /// </summary>
-        public static string lbEmailSignUp {
-            get {
-                return ResourceManager.GetString("lbEmailSignUp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Busca una cadena traducida similar a Amigos conectados.
         /// </summary>
         public static string lbFriendsConnected {
@@ -648,9 +630,9 @@ namespace GuessWhoClient.Properties {
         /// <summary>
         ///   Busca una cadena traducida similar a Marcador.
         /// </summary>
-        public static string txtLeaderboard {
+        public static string txtLeaderboardGlobal {
             get {
-                return ResourceManager.GetString("txtLeaderboard", resourceCulture);
+                return ResourceManager.GetString("txtLeaderboardGlobal", resourceCulture);
             }
         }
         
@@ -666,18 +648,18 @@ namespace GuessWhoClient.Properties {
         /// <summary>
         ///   Busca una cadena traducida similar a Nombre de usuario.
         /// </summary>
-        public static string txtNickname {
+        public static string txtNicknameGlobal {
             get {
-                return ResourceManager.GetString("txtNickname", resourceCulture);
+                return ResourceManager.GetString("txtNicknameGlobal", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Busca una cadena traducida similar a Reportar.
         /// </summary>
-        public static string txtReport {
+        public static string txtReportGlobal {
             get {
-                return ResourceManager.GetString("txtReport", resourceCulture);
+                return ResourceManager.GetString("txtReportGlobal", resourceCulture);
             }
         }
         
