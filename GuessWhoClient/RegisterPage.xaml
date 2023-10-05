@@ -4,9 +4,125 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GuessWhoClient"
+        xmlns:p="clr-namespace:GuessWhoClient.Properties"
         mc:Ignorable="d"
-        Title="Register" Height="450" Width="800">
+        Title="Register" Height="520" Width="900">
     <Grid>
-        
+        <Image 
+            Source="/Resources/background.png" 
+            Stretch="UniformToFill" 
+            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+
+        <Border
+            Width="620" Height="428" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Center" 
+            Margin="152,0,0,0" 
+            BorderBrush="#FFC436" BorderThickness="8" CornerRadius="16"
+            Background="White">
+            <Grid>
+                <Label 
+                    Content="{x:Static p:Resources.txtSignUpGlobal}"
+                    Margin="0,5,0,0" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Top" 
+                    FontWeight="Bold" FontSize="20"/>
+                <Border 
+                    Width="70" Height="70" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Top" 
+                    Margin="0,42,0,0" 
+                    BorderBrush="Black" BorderThickness="2" CornerRadius="8"
+                    Padding="4">
+                    <Image Stretch="UniformToFill" Source="/Resources/default-profile-image.png"/>
+                </Border>
+                <Button 
+                    x:Name="BtnUploadProfilePicture" 
+                    Style="{StaticResource SecondaryButton}" 
+                    Content="{x:Static p:Resources.btnUploadProfilePicture}" 
+                    HorizontalAlignment="Center" 
+                    Margin="0,121,0,0" 
+                    VerticalAlignment="Top" 
+                    Click="BtnUploadProfilePictureClick"/>
+                
+                <Label 
+                    Content="{x:Static p:Resources.txtNickname}" 
+                    HorizontalAlignment="Left" 
+                    Margin="41,165,0,0" 
+                    VerticalAlignment="Top" 
+                    FontWeight="Bold"/>
+                <TextBox 
+                    x:Name="TbNickname" Style="{StaticResource Input}" 
+                    HorizontalAlignment="Left" Margin="41,191,0,0" 
+                    TextWrapping="Wrap" 
+                    VerticalAlignment="Top" 
+                    Width="248" Height="30"/>
+                <Label 
+                    Content="{x:Static p:Resources.lbFullName}" 
+                    HorizontalAlignment="Left" 
+                    Margin="302,165,0,0" 
+                    VerticalAlignment="Top" 
+                    FontWeight="Bold"/>
+                <TextBox 
+                    x:Name="TbName" 
+                    Style="{StaticResource Input}" 
+                    HorizontalAlignment="Left" 
+                    Margin="302,191,0,0" 
+                    TextWrapping="Wrap" 
+                    VerticalAlignment="Top"
+                    Width="242" Height="32"/>
+                <Label 
+                    Content="{x:Static p:Resources.lbPasswordGlobal}"  
+                    HorizontalAlignment="Left" 
+                    Margin="41,222,0,0" 
+                    VerticalAlignment="Top"
+                    FontWeight="Bold"/>
+                <TextBox 
+                    x:Name="TbPassword" 
+                    Style="{StaticResource Input}" 
+                    HorizontalAlignment="Left" 
+                    Margin="41,248,0,0" 
+                    TextWrapping="Wrap" 
+                    VerticalAlignment="Top" 
+                    Width="205" Height="30"/>
+                <Label 
+                    Content="Correo electrónico" 
+                    HorizontalAlignment="Left" 
+                    Margin="302,223,0,0" 
+                    VerticalAlignment="Top" 
+                    FontWeight="Bold"/>
+                <TextBox 
+                    x:Name="TbEmail" 
+                    Style="{StaticResource Input}" 
+                    HorizontalAlignment="Left" 
+                    Margin="302,248,0,0"
+                    TextWrapping="Wrap" 
+                    VerticalAlignment="Top" 
+                    Width="215" Height="30"/>
+                <Label 
+                    Content="Repite tu contraseña" 
+                    HorizontalAlignment="Left"
+                    Margin="41,280,0,0" 
+                    VerticalAlignment="Top" 
+                    FontWeight="Bold"/>
+                <TextBox 
+                    x:Name="TbRepeatedPassword" 
+                    Style="{StaticResource Input}" 
+                    HorizontalAlignment="Left" 
+                    Margin="41,306,0,0" 
+                    TextWrapping="Wrap" 
+                    VerticalAlignment="Top" 
+                    Width="231" Height="30"/>
+                
+                <Button
+                    x:Name="BtnCreateAccount" 
+                    Style="{StaticResource PrimaryButton}" 
+                    Content="Crear cuenta" 
+                    HorizontalAlignment="Center" 
+                    Margin="0,350,0,0" 
+                    VerticalAlignment="Top"
+                    Click="BtnCreateAccountClick"/>
+            </Grid>
+        </Border>
     </Grid>
 </Page>
