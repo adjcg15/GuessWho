@@ -40,23 +40,23 @@ namespace GuessWhoClient
             string email = TbEmail.Text;
             byte[] profileImage = GetProfileImageBytes();
 
-            if(nickname == "" || password == "" || passwordConfirmation == ""
+            if (nickname == "" || password == "" || passwordConfirmation == ""
                || email == "")
             {
                 MessageBox.Show(
-                    "Ingrese información en cada uno de los campos para poder continuar", 
-                    "Campos vacíos", 
-                    MessageBoxButton.OK, 
+                    "ingrese información en cada uno de los campos para poder continuar",
+                    "campos vacíos",
+                    MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
                 return;
             }
 
-            if(!Authentication.IsValidEmail(email))
+            if (!Authentication.IsValidEmail(email))
             {
                 MessageBox.Show(
-                    "Corrija el correo electrónico a un formato válido",
-                    "Correo electrónico inválido",
+                    "corrija el correo electrónico a un formato válido",
+                    "correo electrónico inválido",
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -66,8 +66,8 @@ namespace GuessWhoClient
             if (password != passwordConfirmation)
             {
                 MessageBox.Show(
-                    "Las contraseñas ingresadas no coinciden, modifique los campos para que lo hagan",
-                    "Contraseñas no coincidentes",
+                    "las contraseñas ingresadas no coinciden, modifique los campos para que lo hagan",
+                    "contraseñas no coincidentes",
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -79,7 +79,7 @@ namespace GuessWhoClient
             {
                 Email = email,
                 FullName = fullname,
-                Password = password,
+                Password = Authentication.HashPassword(password),
                 NickName = nickname,
                 Avatar = profileImage
             };
