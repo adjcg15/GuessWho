@@ -42,7 +42,8 @@ namespace GuessWhoClient
 
         private void BtnSignUpClick(object sender, RoutedEventArgs e)
         {
-            
+            RegisterPage registerPage = new RegisterPage();
+            this.NavigationService.Navigate(registerPage);
         }
     }
 }
