@@ -25,7 +25,7 @@ namespace GuessWhoDataAccess
                 context.Accounts.Add(account);
                 context.SaveChanges();
 
-                user.idUser = account.idAccount;
+                user.idAccount = account.idAccount;
                 context.Users.Add(user);
                 context.SaveChanges();
             }
