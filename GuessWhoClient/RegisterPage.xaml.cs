@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using GuessWhoClient.Utils;
+using Microsoft.Win32;
 using System;
 using System.IO;
 using System.Windows;
@@ -32,6 +33,7 @@ namespace GuessWhoClient
 
         private void BtnCreateAccountClick(object sender, RoutedEventArgs e)
         {
+            string fullname = TbName.Text;
             string nickname = TbNickname.Text;
             string password = TbPassword.Text;
             string passwordConfirmation = TbRepeatedPassword.Text;
@@ -50,7 +52,7 @@ namespace GuessWhoClient
                 return;
             }
 
-            if(true)
+            if(!Authentication.IsValidEmail(email))
             {
                 MessageBox.Show(
                     "Corrija el correo electrónico a un formato válido",
@@ -59,6 +61,33 @@ namespace GuessWhoClient
                     MessageBoxImage.Warning
                 );
                 return;
+            }
+
+            if (password != passwordConfirmation)
+            {
+                MessageBox.Show(
+                    "Las contraseñas ingresadas no coinciden, modifique los campos para que lo hagan",
+                    "Contraseñas no coincidentes",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+                return;
+            }
+
+            GameServices.UserServiceClient userServiceClient = new GameServices.UserServiceClient();
+            GameServices.Profile profile = new GameServices.Profile
+            {
+                Email = email,
+                FullName = fullname,
+                Password = password,
+                NickName = nickname,
+                Avatar = profileImage
+            };
+
+            bool result = userServiceClient.RegisterUser(profile);
+            if (result)
+            {
+                MessageBox.Show("Se ha registrado el usuario correctamente");
             }
         }
 
