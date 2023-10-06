@@ -33,85 +33,86 @@ namespace GuessWhoClient
 
         private void BtnCreateAccountClick(object sender, RoutedEventArgs e)
         {
-            string fullname = TbName.Text;
+            string fullName = TbName.Text;
             string nickname = TbNickname.Text;
             string password = TbPassword.Text;
             string passwordConfirmation = TbRepeatedPassword.Text;
             string email = TbEmail.Text;
             byte[] profileImage = GetProfileImageBytes();
 
-            if (nickname == "" || password == "" || passwordConfirmation == ""
-               || email == "")
-            {
-                MessageBox.Show(
-                    "Ingrese información en cada uno de los campos para poder continuar",
-                    "Campos vacíos",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning
-                );
-                return;
-            }
+            //if (nickname == "" || password == "" || passwordConfirmation == ""
+            //   || email == "" || fullName == "")
+            //{
+            //    MessageBox.Show(
+            //        "Ingrese información en cada uno de los campos para poder continuar",
+            //        "Campos vacíos",
+            //        MessageBoxButton.OK,
+            //        MessageBoxImage.Warning
+            //    );
+            //    return;
+            //}
 
-            if (!Authentication.IsValidEmail(email))
-            {
-                MessageBox.Show(
-                    "Corrija el correo electrónico a un formato válido",
-                    "Correo electrónico inválido",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning
-                );
-                return;
-            }
+            //if (!Authentication.IsValidEmail(email))
+            //{
+            //    MessageBox.Show(
+            //        "Corrija el correo electrónico a un formato válido",
+            //        "Correo electrónico inválido",
+            //        MessageBoxButton.OK,
+            //        MessageBoxImage.Warning
+            //    );
+            //    return;
+            //}
 
-            if (Authentication.IsSecurePassword(password))
-            {
-                MessageBox.Show(
-                    "La contraseña debe tener mínimo 8 caracteres y, al menos, una letra minúscula, una letra mayúscula, un número y un caracter especial (¡, @, -, $, #, %, _, etc.).",
-                    "Contraseñas insegura",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning
-                );
-                return;
-            }
+            //if (Authentication.IsSecurePassword(password))
+            //{
+            //    MessageBox.Show(
+            //        "La contraseña debe tener mínimo 8 caracteres y, al menos, una letra minúscula, una letra mayúscula, un número y un caracter especial (¡, @, -, $, #, %, _, etc.).",
+            //        "Contraseñas insegura",
+            //        MessageBoxButton.OK,
+            //        MessageBoxImage.Warning
+            //    );
+            //    return;
+            //}
 
-            if (password != passwordConfirmation)
-            {
-                MessageBox.Show(
-                    "Las contraseñas ingresadas no coinciden, modifique los campos para que lo hagan",
-                    "Contraseñas no coincidentes",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning
-                );
-                return;
-            }
+            //if (password != passwordConfirmation)
+            //{
+            //    MessageBox.Show(
+            //        "Las contraseñas ingresadas no coinciden, modifique los campos para que lo hagan",
+            //        "Contraseñas no coincidentes",
+            //        MessageBoxButton.OK,
+            //        MessageBoxImage.Warning
+            //    );
+            //    return;
+            //}
 
-            GameServices.UserServiceClient userServiceClient = new GameServices.UserServiceClient();
-            bool userEmailAlreadyRegistered = userServiceClient.VerifyUserRegisteredByEmail(email);
-            if (userEmailAlreadyRegistered)
-            {
-                MessageBox.Show(
-                    "Ya existe una cuenta registrada con ese correo electrónico, intente con otro",
-                    "Correo electrónico registrado",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning
-                );
-                return;
-            }
+            //GameServices.UserServiceClient userServiceClient = new GameServices.UserServiceClient();
+            //bool userEmailAlreadyRegistered = userServiceClient.VerifyUserRegisteredByEmail(email);
+            //if (userEmailAlreadyRegistered)
+            //{
+            //    MessageBox.Show(
+            //        "Ya existe una cuenta registrada con ese correo electrónico, intente con otro",
+            //        "Correo electrónico registrado",
+            //        MessageBoxButton.OK,
+            //        MessageBoxImage.Warning
+            //    );
+            //    return;
+            //}
 
-            MessageBox.Show(nickname);
-            bool userNicknameAlreadyRegistered = userServiceClient.VerifyUserRegisteredByNickName(nickname);
-            if (userNicknameAlreadyRegistered)
-            {
-                MessageBox.Show(
-                    "Ya existe otro jugador utilizando el nombre de usuario ingresado, intente con otro",
-                    "Nombre de usuario registrado",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning
-                );
-                return;
-            }
+            //MessageBox.Show(nickname);
+            //bool userNicknameAlreadyRegistered = userServiceClient.VerifyUserRegisteredByNickName(nickname);
+            //if (userNicknameAlreadyRegistered)
+            //{
+            //    MessageBox.Show(
+            //        "Ya existe otro jugador utilizando el nombre de usuario ingresado, intente con otro",
+            //        "Nombre de usuario registrado",
+            //        MessageBoxButton.OK,
+            //        MessageBoxImage.Warning
+            //    );
+            //    return;
+            //}
 
-            MessageBox.Show("Sí te puedes registrar :)");
+            ConfirmAccountPage confirmAccountPage = new ConfirmAccountPage(nickname, email, password, fullName, profileImage);
+            this.NavigationService.Navigate(confirmAccountPage);
         }
 
         private byte[] GetProfileImageBytes()
