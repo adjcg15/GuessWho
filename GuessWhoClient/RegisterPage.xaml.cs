@@ -44,8 +44,8 @@ namespace GuessWhoClient
                || email == "")
             {
                 MessageBox.Show(
-                    "ingrese información en cada uno de los campos para poder continuar",
-                    "campos vacíos",
+                    "Ingrese información en cada uno de los campos para poder continuar",
+                    "Campos vacíos",
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -55,8 +55,19 @@ namespace GuessWhoClient
             if (!Authentication.IsValidEmail(email))
             {
                 MessageBox.Show(
-                    "corrija el correo electrónico a un formato válido",
-                    "correo electrónico inválido",
+                    "Corrija el correo electrónico a un formato válido",
+                    "Correo electrónico inválido",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+                return;
+            }
+
+            if (Authentication.IsSecurePassword(password))
+            {
+                MessageBox.Show(
+                    "La contraseña debe tener mínimo 8 caracteres y, al menos, una letra minúscula, una letra mayúscula, un número y un caracter especial (¡, @, -, $, #, %, _, etc.).",
+                    "Contraseñas insegura",
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -66,8 +77,8 @@ namespace GuessWhoClient
             if (password != passwordConfirmation)
             {
                 MessageBox.Show(
-                    "las contraseñas ingresadas no coinciden, modifique los campos para que lo hagan",
-                    "contraseñas no coincidentes",
+                    "Las contraseñas ingresadas no coinciden, modifique los campos para que lo hagan",
+                    "Contraseñas no coincidentes",
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -75,20 +86,32 @@ namespace GuessWhoClient
             }
 
             GameServices.UserServiceClient userServiceClient = new GameServices.UserServiceClient();
-            GameServices.Profile profile = new GameServices.Profile
+            bool userEmailAlreadyRegistered = userServiceClient.VerifyUserRegisteredByEmail(email);
+            if (userEmailAlreadyRegistered)
             {
-                Email = email,
-                FullName = fullname,
-                Password = Authentication.HashPassword(password),
-                NickName = nickname,
-                Avatar = profileImage
-            };
-
-            bool result = userServiceClient.RegisterUser(profile);
-            if (result)
-            {
-                MessageBox.Show("Se ha registrado el usuario correctamente");
+                MessageBox.Show(
+                    "Ya existe una cuenta registrada con ese correo electrónico, intente con otro",
+                    "Correo electrónico registrado",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+                return;
             }
+
+            MessageBox.Show(nickname);
+            bool userNicknameAlreadyRegistered = userServiceClient.VerifyUserRegisteredByNickName(nickname);
+            if (userNicknameAlreadyRegistered)
+            {
+                MessageBox.Show(
+                    "Ya existe otro jugador utilizando el nombre de usuario ingresado, intente con otro",
+                    "Nombre de usuario registrado",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+                return;
+            }
+
+            MessageBox.Show("Sí te puedes registrar :)");
         }
 
         private byte[] GetProfileImageBytes()

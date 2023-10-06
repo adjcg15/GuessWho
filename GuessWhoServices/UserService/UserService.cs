@@ -48,5 +48,17 @@ namespace GuessWhoServices
             
             return UserDAO.RegisterUser(user, account);
         }
+
+        public bool VerifyUserRegisteredByEmail(string email)
+        {
+            User userStored = UserDAO.GetUserByEmail(email);
+            return userStored != null;
+        }
+
+        public bool VerifyUserRegisteredByNickName(string nickname)
+        {
+            User userStored = UserDAO.GetUserByNickName(nickname);
+            return userStored != null;
+        }
     }
 }
