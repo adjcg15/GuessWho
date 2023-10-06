@@ -12,12 +12,10 @@ namespace GuessWhoDataAccess
         {
             using (var context = new GuessWhoContext())
             {
-                Console.WriteLine(account.email + ", " + account.password);
                 context.Accounts.Add(account);
                 context.SaveChanges();
 
                 user.idAccount = account.idAccount;
-                Console.WriteLine(user.fullName + ", " + user.nickname + ", " + account.idAccount);
                 context.Users.Add(user);
                 context.SaveChanges();
             }
