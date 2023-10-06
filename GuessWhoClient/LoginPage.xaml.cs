@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GuessWhoClient.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +25,7 @@ namespace GuessWhoClient
         private void BtnLoginClick(object sender, RoutedEventArgs e)
         {
             string email = tbEmail.Text;
-            string password = pbPassword.Password;
+            string password = Authentication.HashPassword(pbPassword.Password);
 
             GameServices.UserServiceClient userServiceClient = new GameServices.UserServiceClient();
             GameServices.Profile profile = userServiceClient.Login(email,password);
@@ -32,6 +33,10 @@ namespace GuessWhoClient
             if(profile != null)
             {
                 MessageBox.Show("Bienvenido/a " + profile.FullName + " a " + "Adivina quién");
+            }
+            else
+            {
+                MessageBox.Show("No se encontró usuario");
             }
         }
 
