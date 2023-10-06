@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace GuessWhoClient.Utils
@@ -36,6 +37,12 @@ namespace GuessWhoClient.Utils
             {
                 return false;
             }
+        }
+
+        public static bool IsSecurePassword(string password)
+        {
+            string pattern = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&-#_])[A-Za-z\d@$!%*?&-#_]{8,}$";
+            return Regex.IsMatch(password, pattern);
         }
     }
 }
