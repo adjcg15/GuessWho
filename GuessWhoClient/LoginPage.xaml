@@ -27,7 +27,7 @@
                 <Label Content="{x:Static p:Resources.lbEmailGlobal}" HorizontalAlignment="Left" Margin="26,100,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
                 <TextBox x:Name="tbEmail" Style="{StaticResource Input}" HorizontalAlignment="Center" Margin="0,126,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="292" Height="30"/>
                 <Label Content="{x:Static p:Resources.lbPasswordGlobal}" HorizontalAlignment="Left" Margin="26,175,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
-                <PasswordBox x:Name="tbPassword" Style="{StaticResource PasswordInput}" HorizontalAlignment="Center" Margin="0,201,0,0" VerticalAlignment="Top" Width="292" Height="30"/>
+                <PasswordBox x:Name="pbPassword" Style="{StaticResource PasswordInput}" HorizontalAlignment="Center" Margin="0,201,0,0" VerticalAlignment="Top" Width="292" Height="30"/>
                 <Border HorizontalAlignment="Center" Height="26" VerticalAlignment="Top" Width="188" Margin="0,236,0,0">
                     <Grid>
                         <Label Content="{x:Static p:Resources.lbAccountQuestion}" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold"/>

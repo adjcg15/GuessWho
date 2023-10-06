@@ -7,7 +7,29 @@ namespace GuessWhoServices
     {
         public Profile Login(string email, string password)
         {
-            throw new NotImplementedException();
+            Account account = UserDAO.VerifyUserSession(email, password);
+
+            if(account == null)
+            {
+                return null;
+            }
+
+            User user = UserDAO.GetUserByIdAccount(account.idAccount);
+
+            if(user == null)
+            {
+                return null;
+            }
+
+            return new Profile
+            {
+                Email = account.email,
+                Password = account.password,
+                NickName = user.nickname,
+                FullName = user.fullName,
+                Avatar = user.avatar,
+            };
+
         }
 
         public bool RegisterUser(Profile profile)

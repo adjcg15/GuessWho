@@ -23,7 +23,18 @@ namespace GuessWhoClient
 
         private void BtnLoginClick(object sender, RoutedEventArgs e)
         {
-            
+            string email = tbEmail.Text;
+            string password = pbPassword.Password;
+
+            tbEmail.Text = Utils.Authentication.HashPassword(password);
+
+            /*GameServices.UserServiceClient userServiceClient = new GameServices.UserServiceClient();
+            GameServices.Profile profile = userServiceClient.Login(email,password);
+
+            if(profile != null)
+            {
+                MessageBox.Show("Bienvenido/a " + profile.FullName + " a " + "Adivina quién");
+            }*/
         }
 
         private void BtnSignUpClick(object sender, RoutedEventArgs e)
