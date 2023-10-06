@@ -75,6 +75,7 @@
     <Compile Include="User.cs">
       <DependentUpon>GuessWhoModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserDAO.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
