@@ -63,6 +63,7 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ProfileSingleton.cs" />
     <Compile Include="Properties\Resources.es-MX.Designer.cs">
       <DependentUpon>Resources.es-MX.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -131,7 +132,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.Profile.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -180,6 +181,30 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\default-profile-image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\logo.ES-MX.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\help-icon.png" />
+    <Resource Include="Resources\join-match-icon.png" />
+    <Resource Include="Resources\login-icon.png" />
+    <Resource Include="Resources\logout-icon.png" />
+    <Resource Include="Resources\quick-match-icon.png" />
+    <Resource Include="Resources\register-icon.png" />
+    <Resource Include="Resources\tournament-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\leaderboard-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\friends-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\mx-flag-image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\us-flag-image.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -214,7 +214,7 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Salir.
+        ///   Busca una cadena traducida similar a SALIR.
         /// </summary>
         public static string btnLogOut {
             get {

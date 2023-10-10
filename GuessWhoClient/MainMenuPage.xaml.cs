@@ -1,10 +1,12 @@
-﻿using System.Windows;
+﻿using GuessWhoClient.GameServices;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace GuessWhoClient
 {
     public partial class MainMenuPage : Page
     {
+
         public MainMenuPage()
         {
             InitializeComponent();
@@ -20,6 +22,67 @@ namespace GuessWhoClient
         {
             RegisterPage registerPage = new RegisterPage();
             this.NavigationService.Navigate(registerPage);
+        }
+
+        private void BtnLogOutClick(object sender, RoutedEventArgs e)
+        {
+            ProfileSingleton.Instance = null;
+
+            BtnLogOut.Visibility = Visibility.Collapsed;
+            BtnTournamentMatch.Visibility = Visibility.Collapsed;
+            BtnLogin.Visibility = Visibility.Visible;
+            BtnRegister.Visibility = Visibility.Visible;
+            BorderProfile.Visibility = Visibility.Collapsed;
+            BtnLeaderboard.Visibility = Visibility.Collapsed;
+            BtnFriends.Visibility = Visibility.Collapsed;
+        }
+
+        private void BtnQuickMatchClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnLeaderboardClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnJoinMatchClick (object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnHowToPlayClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnTournamentMatchClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnFriendsClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void cbLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        public void LoginProfile ()
+        {
+            BtnLogOut.Visibility = Visibility.Visible;
+            BtnTournamentMatch.Visibility = Visibility.Visible;
+            BtnLogin.Visibility = Visibility.Collapsed;
+            BtnRegister.Visibility = Visibility.Collapsed;
+            BorderProfile.Visibility = Visibility.Visible;
+            BtnLeaderboard.Visibility = Visibility.Visible;
+            BtnFriends.Visibility = Visibility.Visible;
+
+            lbNickname.Content = ProfileSingleton.Instance.NickName;
         }
     }
 }

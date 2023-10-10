@@ -4,10 +4,111 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GuessWhoClient"
+        xmlns:p ="clr-namespace:GuessWhoClient.Properties"
         mc:Ignorable="d"
         Title="MainMenu" Height="520" Width="900">
     <Grid>
-        <Button Content="Iniciar sesión" Click="BtnLoginClick" HorizontalAlignment="Center" Margin="0,221,0,0" VerticalAlignment="Top"/>
-        <Button Content="Regístrate" Click="BtnRegisterClick" HorizontalAlignment="Center" Margin="0,278,0,0" VerticalAlignment="Top"/>
+        <Image Source="/Resources/background.png" Stretch="UniformToFill" Margin="1,0,-1,0"/>
+        <Button Name ="BtnLogOut" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="BtnLogOutClick" Visibility="Collapsed" Style="{StaticResource PrimaryCancelButtonWithIcon}">
+            <StackPanel Orientation="Horizontal" Cursor="Hand">
+                <Image Source="/Resources/logout-icon.png" Width="24" Height="24"/>
+                <TextBlock Text="{x:Static p:Resources.btnLogOut}" VerticalAlignment="Center" FontWeight="SemiBold" Margin="3,0,0,0" />
+            </StackPanel>
+        </Button>
+        <Image Source="/Resources/logo.ES-MX.png" Margin="187,84,187,194" Width="526"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,330,0,0" VerticalAlignment="Top">
+            <Button Name ="BtnQuickMatch" Click="BtnQuickMatchClick" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Style="{StaticResource PrimaryButtonWithIcon}">
+                <StackPanel Orientation="Horizontal" Cursor="Hand">
+                    <Image Source="/Resources/quick-match-icon.png" Width="24" Height="19"/>
+                    <TextBlock Text="{x:Static p:Resources.btnQuickMatch}" VerticalAlignment="Center" FontWeight="SemiBold" Margin="12,0,0,0"/>
+                </StackPanel>
+            </Button>
+            <Button Name ="BtnTournamentMatch" Click="BtnTournamentMatchClick" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Style="{StaticResource PrimaryButtonWithIcon}" Visibility="Collapsed">
+                <StackPanel Orientation="Horizontal" Cursor="Hand">
+                    <Image Source="/Resources/tournament-icon.png" Width="24" Height="19"/>
+                    <TextBlock Text="{x:Static p:Resources.btnTournamentMatch}" VerticalAlignment="Center" FontWeight="SemiBold" Margin="12,0,16,0"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,407,0,0" VerticalAlignment="Top">
+            <Button Name ="BtnLogin" Click="BtnLoginClick" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Style="{StaticResource SecondaryButtonWithIcon}">
+                <StackPanel Orientation="Horizontal" Cursor="Hand">
+                    <Image Source="/Resources/login-icon.png" Width="18" Height="18"/>
+                    <TextBlock Text="{x:Static p:Resources.txtLoginGlobal}" VerticalAlignment="Center" FontWeight="SemiBold" Margin="3,0,0,0"/>
+                </StackPanel>
+            </Button>
+            <Button Name="BtnJoinMatch" Click="BtnJoinMatchClick" HorizontalAlignment="Left" Margin="16,0,16,0" VerticalAlignment="Top" Style="{StaticResource SecondaryButtonWithIcon}">
+                <StackPanel Orientation="Horizontal" Cursor="Hand">
+                    <Image Source="/Resources/join-match-icon.png" Width="25" Height="21"/>
+                    <TextBlock Text="{x:Static p:Resources.btnJoinMatch}" VerticalAlignment="Center" FontWeight="SemiBold" Margin="3,0,0,0"/>
+                </StackPanel>
+            </Button>
+            <Button Name ="BtnRegister" Click="BtnRegisterClick" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Style="{StaticResource SecondaryButtonWithIcon}">
+                <StackPanel Orientation="Horizontal" Cursor="Hand">
+                    <Image Source="/Resources/register-icon.png" Width="18" Height="18"/>
+                    <TextBlock Text="{x:Static p:Resources.txtSignUpGlobal}" VerticalAlignment="Center" FontWeight="SemiBold" Margin="3,0,18,0"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+        <Border Background="#0A6EBD"
+        BorderBrush="#BDCDD9"
+        BorderThickness="4"
+        CornerRadius="24"
+        HorizontalAlignment="Left"
+        VerticalAlignment="Top"
+        Margin="860,480,0,0">
+            <Button x:Name="BtnHowToPlay"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Click="BtnHowToPlayClick"
+            Cursor="Hand" BorderThickness="0,0,0,0" Background="{x:Null}" Margin="1,1,1,1">
+                <Image Source="/Resources/help-icon.png" Width="18" Height="18" Cursor=""/>
+            </Button>
+        </Border>
+        <StackPanel HorizontalAlignment="Left" Orientation="Vertical" VerticalAlignment="Top" Margin="714,10,0,0" Width="176">
+            <Border x:Name ="BorderProfile" CornerRadius="24,24,24,24" Width="120" Height="120" Background="#8E8E8E" BorderBrush="#BCBCBC" BorderThickness="4" HorizontalAlignment="Right" Visibility="Collapsed">
+                <StackPanel>
+                    <Border 
+                        Width="70" Height="70" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Top" 
+                        Margin="5,12,5,0" 
+                        BorderBrush="Black" BorderThickness="2" CornerRadius="8"
+                        Padding="4" 
+                >
+                        <Image x:Name="imgProfilePicture" Stretch="UniformToFill" Source="/Resources/default-profile-image.png"/>
+                    </Border>
+                    <Label x:Name="lbNickname" FontWeight="Bold" FontSize="9" Content="Nickname" Margin="0,3,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+                </StackPanel>
+            </Border>
+
+            <Button Name="BtnLeaderboard" Click="BtnLeaderboardClick" Style="{StaticResource PrimaryGrayButtonWithIcon}" Margin="0,10,0,0" Width="140" Visibility="Collapsed" HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal" Cursor="Hand">
+                    <Image Source="/Resources/leaderboard-icon.png" Width="18" Height="18"/>
+                    <TextBlock Text="{x:Static p:Resources.txtLeaderboardGlobal}" VerticalAlignment="Center" FontWeight="SemiBold" Margin="3,0,18,0"/>
+                </StackPanel>
+            </Button>
+            <Button Name ="BtnFriends" Click="BtnFriendsClick" Style="{StaticResource PrimaryGrayButtonWithIcon}" Visibility="Collapsed" Margin="0,10,0,0" Width="140" HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal" Cursor="Hand">
+                    <Image Source="/Resources/friends-icon.png" Width="18"/>
+                    <TextBlock Text="{x:Static p:Resources.btnFriends}" VerticalAlignment="Center" FontWeight="SemiBold" Margin="3,0,18,0"/>
+                </StackPanel>
+            </Button>
+
+            <ComboBox x:Name="cbLanguage" Margin="0,10,0,0" BorderThickness="4,4,4,4" IsEditable="True" BorderBrush="#FFBCBCBC" SelectionChanged="cbLanguage_SelectionChanged">
+                <ComboBoxItem Background="#8E8E8E" BorderBrush="#FFBCBCBC" Foreground="Black" FontWeight="SemiBold" IsSelected="True">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Resources/mx-flag-image.png"/>
+                        <TextBlock Text="ESPAÑOL" VerticalAlignment="Center" FontWeight="SemiBold" Margin="3,0,18,0"/>
+                    </StackPanel>
+                </ComboBoxItem>
+                <ComboBoxItem Background="#FF8E8E8E" BorderBrush="#FFBCBCBC" Foreground="Black" FontWeight="SemiBold">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Resources/us-flag-image.png"/>
+                        <TextBlock Text="ENGLISH" VerticalAlignment="Center" FontWeight="SemiBold" Margin="3,0,18,0"/>
+                    </StackPanel>
+                </ComboBoxItem>
+            </ComboBox>
+        </StackPanel>
     </Grid>
 </Page>
