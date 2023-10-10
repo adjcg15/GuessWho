@@ -148,7 +148,7 @@
     <value>End try</value>
   </data>
   <data name="btnFriends" xml:space="preserve">
-    <value>Friends</value>
+    <value>FRIENDS</value>
   </data>
   <data name="btnGoToGame" xml:space="preserve">
     <value>Start game</value>
@@ -162,6 +162,9 @@
   <data name="btnJoinMatch" xml:space="preserve">
     <value>Join a match</value>
   </data>
+  <data name="btnLeaderboard" xml:space="preserve">
+    <value>LEADERBOARD</value>
+  </data>
   <data name="btnLeave" xml:space="preserve">
     <value>Leave</value>
   </data>
@@ -169,10 +172,10 @@
     <value>Exit game</value>
   </data>
   <data name="btnLogOut" xml:space="preserve">
-    <value>Log out</value>
+    <value>LOG OUT</value>
   </data>
   <data name="btnQuickMatch" xml:space="preserve">
-    <value>Quick Match</value>
+    <value>QUICK MATCH</value>
   </data>
   <data name="btnReportPlayer" xml:space="preserve">
     <value>Report player</value>
@@ -181,7 +184,7 @@
     <value>Start</value>
   </data>
   <data name="btnTournamentMatch" xml:space="preserve">
-    <value>Tournament</value>
+    <value>TOURNAMENT</value>
   </data>
   <data name="btnUploadImage" xml:space="preserve">
     <value>Update avatar</value>
@@ -297,6 +300,21 @@
   <data name="lbWaitingPlayer" xml:space="preserve">
     <value>Waiting for all players…</value>
   </data>
+  <data name="msgbConectionLost" xml:space="preserve">
+    <value>Currently, there is no connection, please try again later.</value>
+  </data>
+  <data name="msgbEmptyField" xml:space="preserve">
+    <value>Email and password are required</value>
+  </data>
+  <data name="msgbUserNotFound" xml:space="preserve">
+    <value>Email and/or password are incorrect, please verify the information.</value>
+  </data>
+  <data name="msgbWelcome1" xml:space="preserve">
+    <value>Welcome </value>
+  </data>
+  <data name="msgbWelcome2" xml:space="preserve">
+    <value> to Guess Who</value>
+  </data>
   <data name="tbCodePlaceholder" xml:space="preserve">
     <value>Code</value>
   </data>
@@ -311,6 +329,9 @@
   </data>
   <data name="txtLoginGlobal" xml:space="preserve">
     <value>Log in</value>
+  </data>
+  <data name="txtMainMenuTitle" xml:space="preserve">
+    <value>Main Menu</value>
   </data>
   <data name="txtNicknameGlobal" xml:space="preserve">
     <value>Nickname</value>

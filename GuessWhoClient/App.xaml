@@ -111,6 +111,98 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+
+            <Style TargetType="Button" x:Key="PrimaryButtonWithIcon">
+                <Setter Property="Padding" Value="24, 10, 24, 10"/>
+                <Setter Property="BorderBrush" Value="#BDCDD9"/>
+                <Setter Property="BorderThickness" Value="4"/>
+                <Setter Property="Background" Value="#0A6EBD"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="24"
+                            Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style TargetType="Button" x:Key="SecondaryButtonWithIcon">
+                <Setter Property="Padding" Value="10, 6, 10, 6"/>
+                <Setter Property="BorderBrush" Value="#0A6EBD"/>
+                <Setter Property="BorderThickness" Value="4"/>
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Foreground" Value="#0A6EBD"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="18"
+                Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style TargetType="Button" x:Key="PrimaryCancelButtonWithIcon">
+                <Setter Property="Padding" Value="10, 6, 10, 6"/>
+                <Setter Property="BorderBrush" Value="#FF9494"/>
+                <Setter Property="BorderThickness" Value="4"/>
+                <Setter Property="Background" Value="#E21818"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="24"
+                            Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style TargetType="Button" x:Key="PrimaryGrayButtonWithIcon">
+                <Setter Property="Padding" Value="24, 10, 24, 10"/>
+                <Setter Property="BorderBrush" Value="#BCBCBC"/>
+                <Setter Property="BorderThickness" Value="4"/>
+                <Setter Property="Background" Value="#8E8E8E"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="24"
+                            Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
