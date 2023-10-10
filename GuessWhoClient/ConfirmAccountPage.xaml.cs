@@ -6,6 +6,8 @@ using System.Xml.Linq;
 using System.Net.Mail;
 using System.Net;
 using GuessWhoClient.GameServices;
+using GuessWhoClient.Properties;
+using System.Resources;
 
 namespace GuessWhoClient
 {
@@ -36,14 +38,15 @@ namespace GuessWhoClient
 
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
+            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
             generatedConfirmationCode = GenerateConfirmationCode(10);
             bool confirmationSent = SendConfirmationEmail(email, this.generatedConfirmationCode);
 
             if(!confirmationSent)
             {
                 MessageBox.Show(
-                    "Ocurrió un error al enviar el correo electrónico, intente registrarse en otro momento",
-                    "Error de envío",
+                    resourceManager.GetString("msgbConfirmEmailSendingErrorMessage"),
+                    resourceManager.GetString("msgbConfirmEmailSendingErrorTitle"),
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -52,11 +55,13 @@ namespace GuessWhoClient
 
         private void BtnConfirmAccountClick(object sender, RoutedEventArgs e)
         {
-            if(TbConfirmationCode.Text.Trim() != generatedConfirmationCode)
+            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
+
+            if (TbConfirmationCode.Text.Trim() != generatedConfirmationCode)
             {
                 MessageBox.Show(
-                    "El código introducido no coincide con el código generado",
-                    "Verifique el código ingresado",
+                    resourceManager.GetString("msgbWrongConfirmationCodeMessage"),
+                    resourceManager.GetString("msgbWrongConfirmationCodeTitle"),
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -72,13 +77,13 @@ namespace GuessWhoClient
                 FullName = fullName,
                 Avatar = profileImage
             };
-            bool registered = userServiceClient.RegisterUser(newUser);
 
+            bool registered = userServiceClient.RegisterUser(newUser);
             if(!registered)
             {
                 MessageBox.Show(
-                    "No fue posible completar su registro, por favor intente de nuevo más tarde",
-                    "Error de registro",
+                    resourceManager.GetString("msgbRegistrationErrorMessage"),
+                    resourceManager.GetString("msgbRegistrationErrorTitle"),
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -106,6 +111,7 @@ namespace GuessWhoClient
 
         private static bool SendConfirmationEmail(string email, string code)
         {
+            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
             bool successSend = true;
 
             try
@@ -120,8 +126,8 @@ namespace GuessWhoClient
                 MailMessage mailMessage = new MailMessage();
                 mailMessage.From = new MailAddress("guesswhodrawn@gmail.com");
                 mailMessage.To.Add(new MailAddress(email));
-                mailMessage.Subject = "Confirmación de correo electrónico";
-                mailMessage.Body = "Tu código de confirmación: " + code;
+                mailMessage.Subject = resourceManager.GetString("txtConfirmationEmailSubject");
+                mailMessage.Body = resourceManager.GetString("txtConfirmationEmailBody") + ": " + code;
 
                 smtpClient.Send(mailMessage);
             } 

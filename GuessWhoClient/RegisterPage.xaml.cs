@@ -1,7 +1,9 @@
-﻿using GuessWhoClient.Utils;
+﻿using GuessWhoClient.Properties;
+using GuessWhoClient.Utils;
 using Microsoft.Win32;
 using System;
 using System.IO;
+using System.Resources;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -33,6 +35,7 @@ namespace GuessWhoClient
 
         private void BtnCreateAccountClick(object sender, RoutedEventArgs e)
         {
+            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
             string fullName = TbName.Text;
             string nickname = TbNickname.Text;
             string password = TbPassword.Text;
@@ -44,8 +47,8 @@ namespace GuessWhoClient
                || email == "" || fullName == "")
             {
                 MessageBox.Show(
-                    "Ingrese información en cada uno de los campos para poder continuar",
-                    "Campos vacíos",
+                    resourceManager.GetString("msgbRegisterEmptyFieldsMessage"),
+                    resourceManager.GetString("msgbRegisterEmptyFieldsTitle"),
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -55,8 +58,8 @@ namespace GuessWhoClient
             if (!Authentication.IsValidNickname(nickname))
             {
                 MessageBox.Show(
-                    "El nombre de usuario solo debe conetener letras, números y guiones bajos",
-                    "Nombre de usuario inválido",
+                    resourceManager.GetString("msgbRegisterInvalidNicknameMessage"),
+                    resourceManager.GetString("msgbRegisterInvalidNicknameTitle"),
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -66,8 +69,8 @@ namespace GuessWhoClient
             if (!Authentication.IsValidEmail(email))
             {
                 MessageBox.Show(
-                    "Corrija el correo electrónico a un formato válido",
-                    "Correo electrónico inválido",
+                    resourceManager.GetString("msgbRegisterInvalidEmailMessage"),
+                    resourceManager.GetString("msgbRegisterInvalidEmailTitle"),
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -77,8 +80,8 @@ namespace GuessWhoClient
             if (!Authentication.IsSecurePassword(password))
             {
                 MessageBox.Show(
-                    "La contraseña debe tener mínimo 8 caracteres y, al menos, una letra minúscula, una letra mayúscula, un número y un caracter especial (¡, @, -, $, #, %, _, etc.).",
-                    "Contraseñas insegura",
+                    resourceManager.GetString("msgbRegisterInsecurePasswordMessage"),
+                    resourceManager.GetString("msgbRegisterInsecurePasswordTitle"),
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -88,8 +91,8 @@ namespace GuessWhoClient
             if (password != passwordConfirmation)
             {
                 MessageBox.Show(
-                    "Las contraseñas ingresadas no coinciden, modifique los campos para que lo hagan",
-                    "Contraseñas no coincidentes",
+                    resourceManager.GetString("msgbRegisterMismatchPasswordMessage"),
+                    resourceManager.GetString("msgbRegisterMismatchPasswordTitle"),
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -101,8 +104,8 @@ namespace GuessWhoClient
             if (userEmailAlreadyRegistered)
             {
                 MessageBox.Show(
-                    "Ya existe una cuenta registrada con ese correo electrónico, intente con otro",
-                    "Correo electrónico registrado",
+                    resourceManager.GetString("msgbRegisterRegisteredEmailMessage"),
+                    resourceManager.GetString("msgbRegisterRegisteredEmailTitle"),
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -113,8 +116,8 @@ namespace GuessWhoClient
             if (userNicknameAlreadyRegistered)
             {
                 MessageBox.Show(
-                    "Ya existe otro jugador utilizando el nombre de usuario ingresado, intente con otro",
-                    "Nombre de usuario registrado",
+                    resourceManager.GetString("msgbRegisterRegisteredNicknameMessage"),
+                    resourceManager.GetString("msgbRegisterRegisteredNicknameTitle"),
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
