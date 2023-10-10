@@ -49,7 +49,7 @@
 
                 <Button
                     Content="Confirmar"
-                    x:Name="BtnCreateAccount" 
+                    x:Name="BtnConfirmAccount" 
                     Style="{StaticResource PrimaryButton}"
                     HorizontalAlignment="Center" 
                     Margin="0,230,0,0" 

@@ -41,8 +41,14 @@ namespace GuessWhoClient.Utils
 
         public static bool IsSecurePassword(string password)
         {
-            string pattern = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&-#_])[A-Za-z\d@$!%*?&-#_]{8,}$";
+            string pattern = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?#-&_])[A-Za-z\d@$!%*?#-&_]{8,}$";
             return Regex.IsMatch(password, pattern);
+        }
+
+        public static bool IsValidNickname(string nickname)
+        {
+            string pattern = @"^[a-zA-Z0-9_]*$";
+            return Regex.IsMatch(nickname, pattern);
         }
     }
 }

@@ -5,11 +5,13 @@ using System.Windows.Controls;
 using System.Xml.Linq;
 using System.Net.Mail;
 using System.Net;
+using GuessWhoClient.GameServices;
 
 namespace GuessWhoClient
 {
     public partial class ConfirmAccountPage : Page
     {
+        private string generatedConfirmationCode;
         private string nickname;
         private string email;
         private string password;
@@ -34,8 +36,8 @@ namespace GuessWhoClient
 
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
-            string confirmationCode = GenerateConfirmationCode(10);
-            bool confirmationSent = SendConfirmationEmail(email, confirmationCode);
+            generatedConfirmationCode = GenerateConfirmationCode(10);
+            bool confirmationSent = SendConfirmationEmail(email, this.generatedConfirmationCode);
 
             if(!confirmationSent)
             {
@@ -50,7 +52,41 @@ namespace GuessWhoClient
 
         private void BtnConfirmAccountClick(object sender, RoutedEventArgs e)
         {
+            if(TbConfirmationCode.Text.Trim() != generatedConfirmationCode)
+            {
+                MessageBox.Show(
+                    "El código introducido no coincide con el código generado",
+                    "Verifique el código ingresado",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+                return;
+            }
 
+            GameServices.UserServiceClient userServiceClient = new GameServices.UserServiceClient();
+            var newUser = new Profile
+            {
+                NickName = nickname,
+                Email = email,
+                Password = password,
+                FullName = fullName,
+                Avatar = profileImage
+            };
+            bool registered = userServiceClient.RegisterUser(newUser);
+
+            if(!registered)
+            {
+                MessageBox.Show(
+                    "No fue posible completar su registro, por favor intente de nuevo más tarde",
+                    "Error de registro",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+                return;
+            }
+
+            MainMenuPage mainMenu = new MainMenuPage();
+            this.NavigationService.Navigate(mainMenu);
         }
 
         private static string GenerateConfirmationCode(int length)
@@ -74,11 +110,15 @@ namespace GuessWhoClient
 
             try
             {
-                SmtpClient smtpClient = new SmtpClient("localhost");
-                smtpClient.Port = 25;
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
+                smtpClient.EnableSsl = true;
+                smtpClient.UseDefaultCredentials = false;
+                smtpClient.Port = 587;
+                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtpClient.Credentials = new NetworkCredential("guesswhodrawn@gmail.com", "dwny hpdm zdmg jyme");
 
                 MailMessage mailMessage = new MailMessage();
-                mailMessage.From = new MailAddress("noreply@guesswho.com");
+                mailMessage.From = new MailAddress("guesswhodrawn@gmail.com");
                 mailMessage.To.Add(new MailAddress(email));
                 mailMessage.Subject = "Confirmación de correo electrónico";
                 mailMessage.Body = "Tu código de confirmación: " + code;
@@ -87,7 +127,6 @@ namespace GuessWhoClient
             } 
             catch(SmtpException ex)
             {
-                Console.WriteLine(ex.StackTrace);
                 successSend = false;
             }
 
