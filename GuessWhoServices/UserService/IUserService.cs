@@ -12,6 +12,12 @@ namespace GuessWhoServices
 
         [OperationContract]
         Profile Login(string email, string password);
+
+        [OperationContract]
+        bool VerifyUserRegisteredByEmail(string email);
+
+        [OperationContract]
+        bool VerifyUserRegisteredByNickName(string nickname);
     }
 
     [DataContract]

@@ -41,5 +41,29 @@ namespace GuessWhoDataAccess
                 return user;
             }
         }
+
+        public static User GetUserByEmail(string email)
+        {
+            using (var context = new GuessWhoContext())
+            {
+                var account = context.Accounts.FirstOrDefault(a => a.email == email);
+                if(account == null)
+                {
+                    return null;
+                }
+
+                var user = context.Users.FirstOrDefault(a => a.idAccount == account.idAccount);
+                return user;
+            }
+        }
+
+        public static User GetUserByNickName(string nickname)
+        {
+            using (var context = new GuessWhoContext())
+            {
+                var user = context.Users.FirstOrDefault(a => a.nickname == nickname);
+                return user;
+            }
+        }
     }
 }
