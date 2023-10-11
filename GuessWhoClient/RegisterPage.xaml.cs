@@ -41,7 +41,7 @@ namespace GuessWhoClient
             string password = TbPassword.Text;
             string passwordConfirmation = TbRepeatedPassword.Text;
             string email = TbEmail.Text;
-            byte[] profileImage = GetProfileImageBytes();
+            byte[] profileImage = ImageTransformator.GetImageBytesFromImagePath(imagePath);
 
             if (nickname == "" || password == "" || passwordConfirmation == ""
                || email == "" || fullName == "")
@@ -126,16 +126,6 @@ namespace GuessWhoClient
 
             ConfirmAccountPage confirmAccountPage = new ConfirmAccountPage(nickname, email, password, fullName, profileImage);
             this.NavigationService.Navigate(confirmAccountPage);
-        }
-
-        private byte[] GetProfileImageBytes()
-        {
-            if (imagePath == "")
-            {
-                return null;
-            }
-
-            return File.ReadAllBytes(imagePath);
         }
     }
 }

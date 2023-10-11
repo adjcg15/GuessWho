@@ -76,7 +76,7 @@
                         BorderBrush="Black" BorderThickness="2" CornerRadius="8"
                         Padding="4" 
                 >
-                        <Image x:Name="imgProfilePicture" Stretch="UniformToFill" Source="/Resources/default-profile-image.png"/>
+                        <Image x:Name="ImgProfilePicture" Stretch="UniformToFill" Source="/Resources/default-profile-image.png"/>
                     </Border>
                     <Label x:Name="lbNickname" FontWeight="Bold" FontSize="9" Content="Nickname" Margin="0,3,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
                 </StackPanel>

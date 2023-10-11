@@ -1,6 +1,9 @@
 ﻿using GuessWhoClient.GameServices;
+using GuessWhoClient.Utils;
+using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace GuessWhoClient
 {
@@ -83,6 +86,12 @@ namespace GuessWhoClient
             BtnFriends.Visibility = Visibility.Visible;
 
             lbNickname.Content = ProfileSingleton.Instance.NickName;
+
+            BitmapImage profileImageSrc = ImageTransformator.GetBitmapImageFromByteArray(ProfileSingleton.Instance.Avatar);
+            if(profileImageSrc != null)
+            {
+                ImgProfilePicture.Source = profileImageSrc;
+            }
         }
     }
 }
