@@ -135,6 +135,9 @@
   <data name="btnChangePassword" xml:space="preserve">
     <value>Cambiar contraseña</value>
   </data>
+  <data name="btnConfirmCode" xml:space="preserve">
+    <value>Confirmar</value>
+  </data>
   <data name="btnContinueAfterReport" xml:space="preserve">
     <value>Continuar</value>
   </data>
@@ -303,8 +306,62 @@
   <data name="msgbConectionLost" xml:space="preserve">
     <value>Por el momento no hay conexión, por favor intentélo más tarde</value>
   </data>
+  <data name="msgbConfirmEmailSendingErrorMessage" xml:space="preserve">
+    <value>Ocurrió un error al enviar el correo electrónico, intente registrarse en otro momento</value>
+  </data>
+  <data name="msgbConfirmEmailSendingErrorTitle" xml:space="preserve">
+    <value>Error de envío</value>
+  </data>
   <data name="msgbEmptyField" xml:space="preserve">
     <value>El correo electrónico y la contraseña son requeridos</value>
+  </data>
+  <data name="msgbRegisterEmptyFieldsMessage" xml:space="preserve">
+    <value>Ingrese información en cada uno de los campos para poder continuar</value>
+  </data>
+  <data name="msgbRegisterEmptyFieldsTitle" xml:space="preserve">
+    <value>Campos vacíos</value>
+  </data>
+  <data name="msgbRegisterInsecurePasswordMessage" xml:space="preserve">
+    <value>La contraseña debe tener mínimo 8 caracteres y, al menos, una letra minúscula, una letra mayúscula, un número y un caracter especial (¡, @, -, $, #, %, _, etc.).</value>
+  </data>
+  <data name="msgbRegisterInsecurePasswordTitle" xml:space="preserve">
+    <value>Contraseñas insegura</value>
+  </data>
+  <data name="msgbRegisterInvalidEmailMessage" xml:space="preserve">
+    <value>Corrija el correo electrónico a un formato válido</value>
+  </data>
+  <data name="msgbRegisterInvalidEmailTitle" xml:space="preserve">
+    <value>Correo electrónico inválido</value>
+  </data>
+  <data name="msgbRegisterInvalidNicknameMessage" xml:space="preserve">
+    <value>El nombre de usuario solo debe conetener letras, números y guiones bajos</value>
+  </data>
+  <data name="msgbRegisterInvalidNicknameTitle" xml:space="preserve">
+    <value>Nombre de usuario inválido</value>
+  </data>
+  <data name="msgbRegisterMismatchPasswordMessage" xml:space="preserve">
+    <value>Las contraseñas ingresadas no coinciden, modifique los campos para que lo hagan</value>
+  </data>
+  <data name="msgbRegisterMismatchPasswordTitle" xml:space="preserve">
+    <value>Contraseñas no coincidentes</value>
+  </data>
+  <data name="msgbRegisterRegisteredEmailMessage" xml:space="preserve">
+    <value>Ya existe una cuenta registrada con ese correo electrónico, intente con otro</value>
+  </data>
+  <data name="msgbRegisterRegisteredEmailTitle" xml:space="preserve">
+    <value>Correo electrónico registrado</value>
+  </data>
+  <data name="msgbRegisterRegisteredNicknameMessage" xml:space="preserve">
+    <value>Ya existe otro jugador utilizando el nombre de usuario ingresado, intente con otro</value>
+  </data>
+  <data name="msgbRegisterRegisteredNicknameTitle" xml:space="preserve">
+    <value>Nombre de usuario registrado</value>
+  </data>
+  <data name="msgbRegistrationErrorMessage" xml:space="preserve">
+    <value>No fue posible completar su registro, por favor intente de nuevo más tarde</value>
+  </data>
+  <data name="msgbRegistrationErrorTitle" xml:space="preserve">
+    <value>Error de registro</value>
   </data>
   <data name="msgbUserNotFound" xml:space="preserve">
     <value>El correo y/o contraseña son incorrectas, por favor verifique la información</value>
@@ -315,6 +372,12 @@
   <data name="msgbWelcome2" xml:space="preserve">
     <value>a Adivina Quién</value>
   </data>
+  <data name="msgbWrongConfirmationCodeMessage" xml:space="preserve">
+    <value>El código introducido no coincide con el código generado</value>
+  </data>
+  <data name="msgbWrongConfirmationCodeTitle" xml:space="preserve">
+    <value>Verifique el código ingresado</value>
+  </data>
   <data name="tbCodePlaceholder" xml:space="preserve">
     <value>Código</value>
   </data>
@@ -323,6 +386,12 @@
   </data>
   <data name="tbSendMessagePlaceholder" xml:space="preserve">
     <value>Escribe un mensaje…</value>
+  </data>
+  <data name="txtConfirmationEmailBody" xml:space="preserve">
+    <value>Tu código de confirmación</value>
+  </data>
+  <data name="txtConfirmationEmailSubject" xml:space="preserve">
+    <value>Confirmación de correo electrónico</value>
   </data>
   <data name="txtLeaderboardGlobal" xml:space="preserve">
     <value>Marcador</value>

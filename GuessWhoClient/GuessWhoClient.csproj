@@ -81,6 +81,7 @@
       <DependentUpon>RegisterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\Authentication.cs" />
+    <Compile Include="Utils\ImageTransformator.cs" />
     <Page Include="ConfirmAccountPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

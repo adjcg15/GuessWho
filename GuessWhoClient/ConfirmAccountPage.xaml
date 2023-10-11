@@ -48,7 +48,7 @@
                     Width="248" Height="30"/>
 
                 <Button
-                    Content="Confirmar"
+                    Content="{x:Static p:Resources.btnConfirmCode}"
                     x:Name="BtnConfirmAccount" 
                     Style="{StaticResource PrimaryButton}"
                     HorizontalAlignment="Center" 
