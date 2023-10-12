@@ -16,8 +16,6 @@ namespace GuessWhoClient
         private void BtnLoginClick(object sender, RoutedEventArgs e)
         {
             ValidateFields();
-            tbEmail.Text = "";
-            pbPassword.Password = "";
         }
 
         private void BtnSignUpClick(object sender, RoutedEventArgs e)

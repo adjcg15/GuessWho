@@ -50,7 +50,7 @@ namespace GuessWhoClient
 
         }
 
-        private void BtnJoinMatchClick (object sender, RoutedEventArgs e)
+        private void BtnJoinMatchClick(object sender, RoutedEventArgs e)
         {
 
         }
@@ -72,10 +72,21 @@ namespace GuessWhoClient
 
         private void cbLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            int selectedIndex = cbLanguage.SelectedIndex;
 
+            if (selectedIndex == 0)
+            {
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("es-MX");
+            }
+            else if (selectedIndex == 1)
+            {
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
+            }
+
+            ReloadLanguageResources();
         }
 
-        public void LoginProfile ()
+        public void LoginProfile()
         {
             BtnLogOut.Visibility = Visibility.Visible;
             BtnTournamentMatch.Visibility = Visibility.Visible;
@@ -88,10 +99,22 @@ namespace GuessWhoClient
             lbNickname.Content = ProfileSingleton.Instance.NickName;
 
             BitmapImage profileImageSrc = ImageTransformator.GetBitmapImageFromByteArray(ProfileSingleton.Instance.Avatar);
-            if(profileImageSrc != null)
+            if (profileImageSrc != null)
             {
                 ImgProfilePicture.Source = profileImageSrc;
             }
+        }
+
+        private void ReloadLanguageResources()
+        {
+            TbBtnFriends.Text = Properties.Resources.btnFriends;
+            TbBtnJoinMatch.Text = Properties.Resources.btnJoinMatch;
+            TbBtnLeaderboard.Text = Properties.Resources.btnLeaderboard;
+            TbBtnLogin.Text = Properties.Resources.txtLoginGlobal;
+            TbBtnLogOut.Text = Properties.Resources.btnLogOut;
+            TbBtnQuickMatch.Text = Properties.Resources.btnQuickMatch;
+            TbBtnRegister.Text = Properties.Resources.txtSignUpGlobal;
+            TbBtnTournamentMatch.Text = Properties.Resources.btnTournamentMatch;
         }
     }
 }
