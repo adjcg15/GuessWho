@@ -1,7 +1,4 @@
 ﻿using GuessWhoClient.GameServices;
-using GuessWhoClient.Utils;
-using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
