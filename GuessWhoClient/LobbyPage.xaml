@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:GuessWhoClient"
       xmlns:p="clr-namespace:GuessWhoClient.Properties"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="520" d:DesignWidth="900"
       Title="LobbyPage">
 
     <Grid>
@@ -14,15 +14,15 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Image Source="/Resources/background.png" Stretch="UniformToFill"  HorizontalAlignment="Center" Height="380" Margin="0,70,0,0" VerticalAlignment="Top" Width="400"/>
-        <Border BorderBrush="White" Background="White" BorderThickness="1" HorizontalAlignment="Center" Height="70" VerticalAlignment="Top" Width="400">
+        <Image Source="/Resources/background.png" Stretch="UniformToFill"  HorizontalAlignment="Center" Height="450" Margin="0,70,0,0" VerticalAlignment="Top" Width="450"/>
+        <Border BorderBrush="White" Background="White" BorderThickness="1" HorizontalAlignment="Center" Height="70" VerticalAlignment="Top" Width="450">
             <Grid>
 
             </Grid>
         </Border>
-        <Border Background ="White" BorderThickness="2,0,0,0" BorderBrush="#E2E2E2" Grid.Column="1" HorizontalAlignment="Center" Height="450" VerticalAlignment="Center" Width="400">
+        <Border Background ="White" BorderThickness="2,0,0,0" BorderBrush="#E2E2E2" Grid.Column="1" HorizontalAlignment="Center" Height="522" VerticalAlignment="Center" Width="450">
             <Grid>
-                <Button Name="BtnStartGame" IsEnabled="False" HorizontalAlignment="Left" Margin="208,10,0,0" VerticalAlignment="Top" Style="{StaticResource PrimaryButtonWithIcon}">
+                <Button Name="BtnStartGame" IsEnabled="False" HorizontalAlignment="Left" Margin="257,10,0,0" VerticalAlignment="Top" Style="{StaticResource PrimaryButtonWithIcon}">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Image Source="/Resources/play-icon.png" Height="16" Width="16"/>
                         <TextBlock Text="{x:Static p:Resources.btnStartGame}" VerticalAlignment="Center" FontWeight="SemiBold" Margin="5,0,0,0"/>
@@ -35,15 +35,15 @@
                     </StackPanel>
                 </Button>
 
-                <Button Name="BtnInvitationCode" HorizontalAlignment="Left" Margin="38,157,0,0" VerticalAlignment="Top" Style="{StaticResource SecondaryButtonWithIcon}">
+                <Button Name="BtnInvitationCode" HorizontalAlignment="Left" Margin="44,176,0,0" VerticalAlignment="Top" Style="{StaticResource SecondaryButtonWithIcon}">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Image Source="/Resources/invitation-code-icon.png" Height="16" Width="16"/>
                         <TextBlock Text="{x:Static p:Resources.btnInvitationCode}" VerticalAlignment="Center" FontWeight="SemiBold" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Label Grid.Column="1" HorizontalAlignment="Left" Margin="10,196,0,0" Content="{x:Static p:Resources.lbFriendsConnected}" VerticalAlignment="Top" FontWeight="Medium" FontSize="14"/>
-                <ScrollViewer HorizontalAlignment="Center" Height="215" Margin="0,225,0,0" VerticalAlignment="Top" Width="378"/>
-                <Button x:Name="BtnEmailInvitation" HorizontalAlignment="Left" Margin="226,157,0,0" VerticalAlignment="Top" Style="{StaticResource ResourceKey=SecondaryButtonWithIcon}">
+                <Label HorizontalAlignment="Left" Margin="10,226,0,0" Content="{x:Static p:Resources.lbFriendsConnected}" VerticalAlignment="Top" FontWeight="Medium" FontSize="14"/>
+                <ScrollViewer HorizontalAlignment="Center" Height="250" Margin="0,260,0,0" VerticalAlignment="Top" Width="428"/>
+                <Button x:Name="BtnEmailInvitation" HorizontalAlignment="Left" Margin="276,176,0,0" VerticalAlignment="Top" Style="{StaticResource ResourceKey=SecondaryButtonWithIcon}">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Image Source="/Resources/email-invitation-icon.png" Height="18" RenderTransformOrigin="0.5,0.5" Width="18">
                             <Image.RenderTransform>
@@ -58,9 +58,9 @@
                         <TextBlock Text="{x:Static p:Resources.btnEmailInvitation}" VerticalAlignment="Center" FontWeight="SemiBold" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
+                <Border x:Name="BPlayerCard" BorderBrush="#FFE2E2E2" BorderThickness="1" HorizontalAlignment="Center" Height="52" Margin="0,88,0,0" VerticalAlignment="Top" Width="428" CornerRadius="30,30,30,30" Background="#FFE2E2E2"/>
 
             </Grid>
         </Border>
-        <Border x:Name="BPlayerCard" BorderBrush="#FFE2E2E2" BorderThickness="1" HorizontalAlignment="Center" Height="52" Margin="0,70,0,0" VerticalAlignment="Top" Width="380" Grid.Column="1" CornerRadius="30,30,30,30" Background="#FFE2E2E2"/>
     </Grid>
 </Page>

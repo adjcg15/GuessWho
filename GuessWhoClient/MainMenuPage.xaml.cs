@@ -1,4 +1,5 @@
 ﻿using GuessWhoClient.GameServices;
+using GuessWhoClient.Utils;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -40,7 +41,8 @@ namespace GuessWhoClient
 
         private void BtnQuickMatchClick(object sender, RoutedEventArgs e)
         {
-
+            LobbyPage lobbyPage = new LobbyPage();
+            this.NavigationService.Navigate(lobbyPage); 
         }
 
         private void BtnLeaderboardClick(object sender, RoutedEventArgs e)
