@@ -11,7 +11,7 @@
         <Image Source="/Resources/background.png" Stretch="UniformToFill" Margin="1,0,-1,0"/>
         <Button Name ="BtnLogOut" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="BtnLogOutClick" Visibility="Collapsed" Style="{StaticResource PrimaryCancelButtonWithIcon}">
             <StackPanel Orientation="Horizontal" Cursor="Hand">
-                <Image Source="/Resources/logout-icon.png" Width="24" Height="24"/>
+                <Image Source="/Resources/exit-icon.png" Width="24" Height="24"/>
                 <TextBlock Text="{x:Static p:Resources.btnLogOut}" Name="TbBtnLogOut" VerticalAlignment="Center" FontWeight="SemiBold" Margin="3,0,0,0" />
             </StackPanel>
         </Button>
@@ -19,7 +19,7 @@
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,330,0,0" VerticalAlignment="Top">
             <Button Name ="BtnQuickMatch" Click="BtnQuickMatchClick" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Style="{StaticResource PrimaryButtonWithIcon}">
                 <StackPanel Orientation="Horizontal" Cursor="Hand">
-                    <Image Source="/Resources/quick-match-icon.png" Width="24" Height="19"/>
+                    <Image Source="/Resources/play-icon.png" Width="24" Height="19"/>
                     <TextBlock Text="{x:Static p:Resources.btnQuickMatch}" Name="TbBtnQuickMatch" VerticalAlignment="Center" FontWeight="SemiBold" Margin="12,0,0,0"/>
                 </StackPanel>
             </Button>
@@ -65,7 +65,11 @@
                 <Image Source="/Resources/help-icon.png" Width="18" Height="18" Cursor=""/>
             </Button>
         </Border>
-        <StackPanel HorizontalAlignment="Left" Orientation="Vertical" VerticalAlignment="Top" Margin="714,10,0,0" Width="176">
+        <StackPanel HorizontalAlignment="Left" Orientation="Vertical" VerticalAlignment="Top" Margin="714,10,0,0">
+            <ComboBox x:Name="CbLanguage" BorderThickness="4,4,4,4" Background="#8E8E8E" BorderBrush="#FFBCBCBC" SelectionChanged="CbLanguage_SelectionChanged" Height="30" SelectedIndex="0" FontSize="14" FontWeight="Bold" Width="179">
+                <ComboBoxItem Content="Español" IsSelected="True"/>
+                <ComboBoxItem Content="English"/>
+            </ComboBox>
             <Border x:Name ="BorderProfile" CornerRadius="24,24,24,24" Width="120" Height="120" Background="#8E8E8E" BorderBrush="#BCBCBC" BorderThickness="4" HorizontalAlignment="Right" Visibility="Collapsed">
                 <StackPanel>
                     <Border 
@@ -82,33 +86,18 @@
                 </StackPanel>
             </Border>
 
-            <Button Name="BtnLeaderboard" Click="BtnLeaderboardClick" Style="{StaticResource PrimaryGrayButtonWithIcon}" Margin="0,10,0,0" Width="140" Visibility="Collapsed" HorizontalAlignment="Right">
+            <Button x:Name="BtnLeaderboard" Click="BtnLeaderboardClick" Style="{StaticResource PrimaryGrayButtonWithIcon}" Margin="0,10,0,0" Width="140" Visibility="Collapsed" HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal" Cursor="Hand">
                     <Image Source="/Resources/leaderboard-icon.png" Width="18" Height="18"/>
-                    <TextBlock Text="{x:Static p:Resources.txtLeaderboardGlobal}" Name ="TbBtnLeaderboard" VerticalAlignment="Center" FontWeight="SemiBold" Margin="3,0,18,0"/>
+                    <TextBlock Text="{x:Static p:Resources.txtLeaderboardGlobal}" x:Name ="TbBtnLeaderboard" VerticalAlignment="Center" FontWeight="SemiBold" Margin="3,0,18,0"/>
                 </StackPanel>
             </Button>
-            <Button Name ="BtnFriends" Click="BtnFriendsClick" Style="{StaticResource PrimaryGrayButtonWithIcon}" Visibility="Collapsed" Margin="0,10,0,0" Width="140" HorizontalAlignment="Right">
+            <Button x:Name ="BtnFriends" Click="BtnFriendsClick" Style="{StaticResource PrimaryGrayButtonWithIcon}" Visibility="Collapsed" Margin="0,10,0,0" Width="140" HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal" Cursor="Hand">
                     <Image Source="/Resources/friends-icon.png" Width="18"/>
-                    <TextBlock Text="{x:Static p:Resources.btnFriends}" Name="TbBtnFriends" VerticalAlignment="Center" FontWeight="SemiBold" Margin="3,0,18,0"/>
+                    <TextBlock Text="{x:Static p:Resources.btnFriends}" x:Name="TbBtnFriends" VerticalAlignment="Center" FontWeight="SemiBold" Margin="3,0,18,0"/>
                 </StackPanel>
             </Button>
-
-            <ComboBox x:Name="cbLanguage" Margin="0,10,0,0" BorderThickness="4,4,4,4" IsEditable="True" BorderBrush="#FFBCBCBC" SelectionChanged="cbLanguage_SelectionChanged">
-                <ComboBoxItem Background="#8E8E8E" BorderBrush="#FFBCBCBC" Foreground="Black" FontWeight="SemiBold" IsSelected="True">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Resources/mx-flag-image.png"/>
-                        <TextBlock Text="ESPAÑOL" VerticalAlignment="Center" FontWeight="SemiBold" Margin="3,0,18,0"/>
-                    </StackPanel>
-                </ComboBoxItem>
-                <ComboBoxItem Background="#FF8E8E8E" BorderBrush="#FFBCBCBC" Foreground="Black" FontWeight="SemiBold">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/Resources/us-flag-image.png"/>
-                        <TextBlock Text="ENGLISH" VerticalAlignment="Center" FontWeight="SemiBold" Margin="3,0,18,0"/>
-                    </StackPanel>
-                </ComboBoxItem>
-            </ComboBox>
         </StackPanel>
     </Grid>
 </Page>

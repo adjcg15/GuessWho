@@ -1,6 +1,7 @@
 ﻿using GuessWhoClient.GameServices;
 using GuessWhoClient.Utils;
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -70,13 +71,14 @@ namespace GuessWhoClient
 
         }
 
-        private void cbLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CbLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int selectedIndex = cbLanguage.SelectedIndex;
+            int selectedIndex = CbLanguage.SelectedIndex;
 
             if (selectedIndex == 0)
             {
                 System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("es-MX");
+                
             }
             else if (selectedIndex == 1)
             {
@@ -85,6 +87,9 @@ namespace GuessWhoClient
 
             ReloadLanguageResources();
         }
+
+
+
 
         public void LoginProfile()
         {
@@ -107,14 +112,17 @@ namespace GuessWhoClient
 
         private void ReloadLanguageResources()
         {
-            TbBtnFriends.Text = Properties.Resources.btnFriends;
+            if(ProfileSingleton.Instance != null)
+            {
+                TbBtnFriends.Text = Properties.Resources.btnFriends;
+                TbBtnLeaderboard.Text = Properties.Resources.btnLeaderboard;
+                TbBtnLogOut.Text = Properties.Resources.btnLogOut;
+                TbBtnTournamentMatch.Text = Properties.Resources.btnTournamentMatch;
+            }
             TbBtnJoinMatch.Text = Properties.Resources.btnJoinMatch;
-            TbBtnLeaderboard.Text = Properties.Resources.btnLeaderboard;
             TbBtnLogin.Text = Properties.Resources.txtLoginGlobal;
-            TbBtnLogOut.Text = Properties.Resources.btnLogOut;
             TbBtnQuickMatch.Text = Properties.Resources.btnQuickMatch;
             TbBtnRegister.Text = Properties.Resources.txtSignUpGlobal;
-            TbBtnTournamentMatch.Text = Properties.Resources.btnTournamentMatch;
         }
     }
 }
