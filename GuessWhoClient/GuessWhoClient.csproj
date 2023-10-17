@@ -57,15 +57,35 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ConfirmAccountPage.xaml.cs">
+      <DependentUpon>ConfirmAccountPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ProfileSingleton.cs" />
+    <Compile Include="Properties\Resources.es-MX.Designer.cs">
+      <DependentUpon>Resources.es-MX.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\Resources.en.Designer.cs">
+      <DependentUpon>Resources.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="RegisterPage.xaml.cs">
       <DependentUpon>RegisterPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\Authentication.cs" />
+    <Compile Include="Utils\ImageTransformator.cs" />
+    <Page Include="ConfirmAccountPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -110,9 +130,17 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Properties\Resources.es-MX.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.es-MX.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.Profile.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -155,6 +183,36 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\default-profile-image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\logo.ES-MX.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\help-icon.png" />
+    <Resource Include="Resources\join-match-icon.png" />
+    <Resource Include="Resources\login-icon.png" />
+    <Resource Include="Resources\logout-icon.png" />
+    <Resource Include="Resources\quick-match-icon.png" />
+    <Resource Include="Resources\register-icon.png" />
+    <Resource Include="Resources\tournament-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\leaderboard-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\friends-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\mx-flag-image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\us-flag-image.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

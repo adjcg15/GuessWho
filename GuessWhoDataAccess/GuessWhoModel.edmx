@@ -56,7 +56,7 @@
           </Key>
           <Property Name="idAccount" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="password" Type="String" MaxLength="32" FixedLength="true" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="64" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="Users" Relationship="Self.FK_users_accounts" FromRole="Accounts" ToRole="Users" />
         </EntityType>
         <EntityType Name="User">

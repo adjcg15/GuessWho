@@ -118,297 +118,297 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="btnAddFriend" xml:space="preserve">
-    <value>Agregar Amigo</value>
+    <value>Add Friend</value>
   </data>
   <data name="btnBackToMenu" xml:space="preserve">
-    <value>Volver al menú</value>
+    <value>Go back to menu...</value>
   </data>
   <data name="btnCancelGame" xml:space="preserve">
-    <value>Cancelar partida</value>
+    <value>Cancel match</value>
   </data>
   <data name="btnCancelGuess" xml:space="preserve">
-    <value>Cancelar adivinado</value>
+    <value>Cancel guess</value>
   </data>
   <data name="btnCancelReport" xml:space="preserve">
-    <value>Cancelar</value>
+    <value>Cancel</value>
   </data>
   <data name="btnChangePassword" xml:space="preserve">
-    <value>Cambiar contraseña</value>
+    <value>Change password</value>
   </data>
   <data name="btnConfirmCode" xml:space="preserve">
-    <value>Confirmar</value>
+    <value>Confirm</value>
   </data>
   <data name="btnContinueAfterReport" xml:space="preserve">
-    <value>Continuar</value>
+    <value>Continue playing</value>
   </data>
   <data name="btnCreateAccount" xml:space="preserve">
-    <value>Crear Cuenta</value>
+    <value>Create Account</value>
   </data>
   <data name="btnEmailInvitation" xml:space="preserve">
-    <value>Invitar por correo</value>
+    <value>Invite via email</value>
   </data>
   <data name="btnFinishAttempt" xml:space="preserve">
-    <value>Terminar intento</value>
+    <value>End try</value>
   </data>
   <data name="btnFriends" xml:space="preserve">
-    <value>AMIGOS</value>
+    <value>FRIENDS</value>
   </data>
   <data name="btnGoToGame" xml:space="preserve">
-    <value>Comenzar partida</value>
+    <value>Start game</value>
   </data>
   <data name="btnGuess" xml:space="preserve">
-    <value>Adivinar</value>
+    <value>Guess</value>
   </data>
   <data name="btnInvitationCode" xml:space="preserve">
-    <value>Código de invitación</value>
+    <value>Room code</value>
   </data>
   <data name="btnJoinMatch" xml:space="preserve">
-    <value>Unirse a partida</value>
+    <value>Join a match</value>
   </data>
   <data name="btnLeaderboard" xml:space="preserve">
-    <value>MARCADOR</value>
+    <value>LEADERBOARD</value>
   </data>
   <data name="btnLeave" xml:space="preserve">
-    <value>Abandonar</value>
+    <value>Leave</value>
   </data>
   <data name="btnLeaveGame" xml:space="preserve">
-    <value>Salir</value>
+    <value>Exit game</value>
   </data>
   <data name="btnLogOut" xml:space="preserve">
-    <value>SALIR</value>
+    <value>LOG OUT</value>
   </data>
   <data name="btnQuickMatch" xml:space="preserve">
-    <value>PARTIDA RÁPIDA</value>
+    <value>QUICK MATCH</value>
   </data>
   <data name="btnReportPlayer" xml:space="preserve">
-    <value>Reportar jugador</value>
+    <value>Report player</value>
   </data>
   <data name="btnStartGame" xml:space="preserve">
-    <value>Comenzar juego</value>
+    <value>Start</value>
   </data>
   <data name="btnTournamentMatch" xml:space="preserve">
-    <value>CAMPEONATO</value>
+    <value>TOURNAMENT</value>
   </data>
   <data name="btnUploadImage" xml:space="preserve">
-    <value>Actualizar imagen</value>
+    <value>Update avatar</value>
   </data>
   <data name="btnUploadProfilePicture" xml:space="preserve">
-    <value>Cargar foto de perfil</value>
+    <value>Upload profile picture</value>
   </data>
-  <data name="cbLanguageOptionTwo" xml:space="preserve">
-    <value>Español</value>
+  <data name="cbLanguageOptionOne" xml:space="preserve">
+    <value>English</value>
   </data>
   <data name="cbReportReasonOptionOne" xml:space="preserve">
-    <value>Jugador que realiza trampas</value>
+    <value>Cheating player</value>
   </data>
   <data name="cbReportReasonOptionThree" xml:space="preserve">
-    <value>Dibujo fuera de contexto</value>
+    <value>Drawing unrelated to the context</value>
   </data>
   <data name="cbReportReasonOptionTwo" xml:space="preserve">
-    <value>Antideportividad</value>
+    <value>Unsportsmanlike conduct</value>
   </data>
   <data name="cbReportReasonPlaceholder" xml:space="preserve">
-    <value>Seleccione una opción</value>
+    <value>Select an option</value>
   </data>
   <data name="lbAccountQuestion" xml:space="preserve">
-    <value>¿No tienes cuenta?</value>
+    <value>Need an account?</value>
   </data>
   <data name="lbChangePassword" xml:space="preserve">
-    <value>Cambio de Contraseña</value>
+    <value>Password change</value>
   </data>
   <data name="lbCharacterLooksLikeQuestion" xml:space="preserve">
-    <value>¿Se parece a tu personaje?</value>
+    <value>¿Does it look like your character?</value>
   </data>
   <data name="lbChooseCharacter" xml:space="preserve">
-    <value>¡Escoge tu personaje!</value>
+    <value>Choose your character!</value>
   </data>
   <data name="lbConfirmAccountDescription" xml:space="preserve">
-    <value>Hemos enviado un código de verificación al correo que nos has proporcionado, por favor colócalo debajo para concluir con la creación de tu cuenta.</value>
+    <value>We have sent a verification code to the email you have provided, please place it below to conclude with the creation of your account.</value>
   </data>
   <data name="lbConfirmationCode" xml:space="preserve">
-    <value>Código de Confirmación</value>
+    <value>Confirmation Code</value>
   </data>
   <data name="lbConfirmPassword" xml:space="preserve">
-    <value>Confirme su contraseña</value>
+    <value>Confirm your password</value>
   </data>
   <data name="lbEmailGlobal" xml:space="preserve">
-    <value>Correo electrónico</value>
+    <value>Email</value>
   </data>
   <data name="lbFriendsConnected" xml:space="preserve">
-    <value>Amigos conectados</value>
+    <value>Online friends</value>
   </data>
   <data name="lbFullName" xml:space="preserve">
-    <value>Nombre completo</value>
+    <value>Full Name</value>
   </data>
   <data name="lbFullNameProfile" xml:space="preserve">
-    <value>Nombre</value>
+    <value>Full Name</value>
   </data>
   <data name="lbHowToPlayDescription" xml:space="preserve">
-    <value>¡Dibuja! A diferencia del juego original, aquí no podrás hacer preguntas a tu contrincante, en su lugar, deberás usar tu imaginación y realizar un dibujo para transmitir tu pregunta. Una vez terminado tu dibujo, termina tu intento y ve al siguiente paso.</value>
+    <value>Draw! Unlike the original game, here you will not be able to ask questions to your opponent, instead, you must use your imagination and make a drawing to convey your question. Once your drawing is finished, finish your attempt and go to the next step.</value>
   </data>
   <data name="lbOfflineFriends" xml:space="preserve">
-    <value>Desconectados</value>
+    <value>Offline</value>
   </data>
   <data name="lbOnlineFriends" xml:space="preserve">
-    <value>Conectados</value>
+    <value>Online</value>
   </data>
   <data name="lbPasswordGlobal" xml:space="preserve">
-    <value>Contraseña</value>
+    <value>Password</value>
   </data>
   <data name="lbRankHeaderRow" xml:space="preserve">
-    <value>Posición</value>
+    <value>Rank</value>
   </data>
   <data name="lbRepeatPassword" xml:space="preserve">
-    <value>Repite tu Contraseña</value>
+    <value>Confirm Password</value>
   </data>
   <data name="lbReportComment" xml:space="preserve">
-    <value>Comentario</value>
+    <value>Comment</value>
   </data>
   <data name="lbReportFinishedMessage" xml:space="preserve">
-    <value>No habrá ninguna penalización por finalizar la partida.</value>
+    <value>There won’t be any penalty for finishing the game.</value>
   </data>
   <data name="lbReportReason" xml:space="preserve">
-    <value>Razón del reporte</value>
+    <value>Cause</value>
   </data>
   <data name="lbScoreHeaderRow" xml:space="preserve">
-    <value>Puntuación</value>
+    <value>Score</value>
   </data>
   <data name="lbStatusRequestFailed" xml:space="preserve">
-    <value>¡Ups! No se ha encontrado ningún usuario con ese nombre</value>
+    <value>Sorry! We couldn’t find a user with that name</value>
   </data>
   <data name="lbStatusRequestSuccess" xml:space="preserve">
-    <value>¡Se ha enviado la solicitud correctamente! </value>
+    <value>Your request has been sent successfully!</value>
   </data>
   <data name="lbTitleConfirmAccount" xml:space="preserve">
-    <value>Confirmar Cuenta</value>
+    <value>Verify Account</value>
   </data>
   <data name="lbTitleFriends" xml:space="preserve">
-    <value>Mis Amigos</value>
+    <value>My Friends</value>
   </data>
   <data name="lbTitleHowToPlay" xml:space="preserve">
-    <value>¿Cómo jugar?</value>
+    <value>¿How to play?</value>
   </data>
   <data name="lbTitleLeaderboard" xml:space="preserve">
-    <value>Marcador Global</value>
+    <value>Global Leaderboard</value>
   </data>
   <data name="lbTitleMyProfile" xml:space="preserve">
-    <value>Mi perfil</value>
+    <value>My profile</value>
   </data>
   <data name="lbTitleReportFinished" xml:space="preserve">
-    <value>El jugador ha sido reportado, ¿Deseas terminar la partida?</value>
+    <value>The player has been reported. Would you like to finish the game?</value>
   </data>
   <data name="lbWaitingOpponent" xml:space="preserve">
-    <value>Esperando oponente…</value>
+    <value>Waiting for all players…</value>
   </data>
   <data name="lbWaitingPlayer" xml:space="preserve">
-    <value>Esperando jugador…</value>
+    <value>Waiting for all players…</value>
   </data>
   <data name="msgbConectionLost" xml:space="preserve">
-    <value>Por el momento no hay conexión, por favor intentélo más tarde</value>
+    <value>Currently, there is no connection, please try again later.</value>
   </data>
   <data name="msgbConfirmEmailSendingErrorMessage" xml:space="preserve">
-    <value>Ocurrió un error al enviar el correo electrónico, intente registrarse en otro momento</value>
+    <value>An error occurred while sending the email, please try to register another time</value>
   </data>
   <data name="msgbConfirmEmailSendingErrorTitle" xml:space="preserve">
-    <value>Error de envío</value>
+    <value>Sending email error</value>
   </data>
   <data name="msgbEmptyField" xml:space="preserve">
-    <value>El correo electrónico y la contraseña son requeridos</value>
+    <value>Email and password are required</value>
   </data>
   <data name="msgbRegisterEmptyFieldsMessage" xml:space="preserve">
-    <value>Ingrese información en cada uno de los campos para poder continuar</value>
+    <value>Enter information in each of the fields to continue</value>
   </data>
   <data name="msgbRegisterEmptyFieldsTitle" xml:space="preserve">
-    <value>Campos vacíos</value>
+    <value>Empty fields</value>
   </data>
   <data name="msgbRegisterInsecurePasswordMessage" xml:space="preserve">
-    <value>La contraseña debe tener mínimo 8 caracteres y, al menos, una letra minúscula, una letra mayúscula, un número y un caracter especial (¡, @, -, $, #, %, _, etc.).</value>
+    <value>The password must have at least 8 characters and at least one lowercase letter, one uppercase letter, one number and one special character (, @, -, $, #, %, _, etc.).</value>
   </data>
   <data name="msgbRegisterInsecurePasswordTitle" xml:space="preserve">
-    <value>Contraseñas insegura</value>
+    <value>Insecure password</value>
   </data>
   <data name="msgbRegisterInvalidEmailMessage" xml:space="preserve">
-    <value>Corrija el correo electrónico a un formato válido</value>
+    <value>Correct the email to a valid format</value>
   </data>
   <data name="msgbRegisterInvalidEmailTitle" xml:space="preserve">
-    <value>Correo electrónico inválido</value>
+    <value>Invalid email</value>
   </data>
   <data name="msgbRegisterInvalidNicknameMessage" xml:space="preserve">
-    <value>El nombre de usuario solo debe conetener letras, números y guiones bajos</value>
+    <value>The username should only contain letters, numbers and underscores</value>
   </data>
   <data name="msgbRegisterInvalidNicknameTitle" xml:space="preserve">
-    <value>Nombre de usuario inválido</value>
+    <value>Invalid username</value>
   </data>
   <data name="msgbRegisterMismatchPasswordMessage" xml:space="preserve">
-    <value>Las contraseñas ingresadas no coinciden, modifique los campos para que lo hagan</value>
+    <value>The passwords entered do not match, modify the fields so that they do</value>
   </data>
   <data name="msgbRegisterMismatchPasswordTitle" xml:space="preserve">
-    <value>Contraseñas no coincidentes</value>
+    <value>Mismatch passwords</value>
   </data>
   <data name="msgbRegisterRegisteredEmailMessage" xml:space="preserve">
-    <value>Ya existe una cuenta registrada con ese correo electrónico, intente con otro</value>
+    <value>There is already an account registered with that email, try another</value>
   </data>
   <data name="msgbRegisterRegisteredEmailTitle" xml:space="preserve">
-    <value>Correo electrónico registrado</value>
+    <value>Email already registered </value>
   </data>
   <data name="msgbRegisterRegisteredNicknameMessage" xml:space="preserve">
-    <value>Ya existe otro jugador utilizando el nombre de usuario ingresado, intente con otro</value>
+    <value>There is already another player using the username entered, try another one</value>
   </data>
   <data name="msgbRegisterRegisteredNicknameTitle" xml:space="preserve">
-    <value>Nombre de usuario registrado</value>
+    <value>Nickname already registered</value>
   </data>
   <data name="msgbRegistrationErrorMessage" xml:space="preserve">
-    <value>No fue posible completar su registro, por favor intente de nuevo más tarde</value>
+    <value>It was not possible to complete your registration, please try again later</value>
   </data>
   <data name="msgbRegistrationErrorTitle" xml:space="preserve">
-    <value>Error de registro</value>
+    <value>Registration error</value>
   </data>
   <data name="msgbUserNotFound" xml:space="preserve">
-    <value>El correo y/o contraseña son incorrectas, por favor verifique la información</value>
+    <value>Email and/or password are incorrect, please verify the information.</value>
   </data>
   <data name="msgbWelcome1" xml:space="preserve">
-    <value>Bienvenido/a</value>
+    <value>Welcome </value>
   </data>
   <data name="msgbWelcome2" xml:space="preserve">
-    <value>a Adivina Quién</value>
+    <value> to Guess Who</value>
   </data>
   <data name="msgbWrongConfirmationCodeMessage" xml:space="preserve">
-    <value>El código introducido no coincide con el código generado</value>
+    <value>The code entered does not match the generated code</value>
   </data>
   <data name="msgbWrongConfirmationCodeTitle" xml:space="preserve">
-    <value>Verifique el código ingresado</value>
+    <value>Verify the code entered</value>
   </data>
   <data name="tbCodePlaceholder" xml:space="preserve">
-    <value>Código</value>
+    <value>Code</value>
   </data>
   <data name="tbReportCommentPlaceholder" xml:space="preserve">
-    <value>Explica la situación</value>
+    <value>Explain the situation</value>
   </data>
   <data name="tbSendMessagePlaceholder" xml:space="preserve">
-    <value>Escribe un mensaje…</value>
+    <value>Write a message…</value>
   </data>
   <data name="txtConfirmationEmailBody" xml:space="preserve">
-    <value>Tu código de confirmación</value>
+    <value>Your confirmation code</value>
   </data>
   <data name="txtConfirmationEmailSubject" xml:space="preserve">
-    <value>Confirmación de correo electrónico</value>
+    <value>Email confirmation</value>
   </data>
   <data name="txtLeaderboardGlobal" xml:space="preserve">
-    <value>Marcador</value>
+    <value>Leaderboard</value>
   </data>
   <data name="txtLoginGlobal" xml:space="preserve">
-    <value>Iniciar Sesión</value>
+    <value>Log in</value>
   </data>
   <data name="txtMainMenuTitle" xml:space="preserve">
-    <value>Menú Principal</value>
+    <value>Main Menu</value>
   </data>
   <data name="txtNicknameGlobal" xml:space="preserve">
-    <value>Nombre de usuario</value>
+    <value>Nickname</value>
   </data>
   <data name="txtReportGlobal" xml:space="preserve">
-    <value>Reportar</value>
+    <value>Report</value>
   </data>
   <data name="txtSignUpGlobal" xml:space="preserve">
-    <value>Regístrate</value>
+    <value>Sign up</value>
   </data>
 </root>

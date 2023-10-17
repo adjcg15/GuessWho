@@ -137,6 +137,18 @@ namespace GuessWhoClient.GameServices {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/Login", ReplyAction="http://tempuri.org/IUserService/LoginResponse")]
         System.Threading.Tasks.Task<GuessWhoClient.GameServices.Profile> LoginAsync(string email, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/VerifyUserRegisteredByEmail", ReplyAction="http://tempuri.org/IUserService/VerifyUserRegisteredByEmailResponse")]
+        bool VerifyUserRegisteredByEmail(string email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/VerifyUserRegisteredByEmail", ReplyAction="http://tempuri.org/IUserService/VerifyUserRegisteredByEmailResponse")]
+        System.Threading.Tasks.Task<bool> VerifyUserRegisteredByEmailAsync(string email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/VerifyUserRegisteredByNickName", ReplyAction="http://tempuri.org/IUserService/VerifyUserRegisteredByNickNameResponse")]
+        bool VerifyUserRegisteredByNickName(string nickname);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/VerifyUserRegisteredByNickName", ReplyAction="http://tempuri.org/IUserService/VerifyUserRegisteredByNickNameResponse")]
+        System.Threading.Tasks.Task<bool> VerifyUserRegisteredByNickNameAsync(string nickname);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -180,6 +192,22 @@ namespace GuessWhoClient.GameServices {
         
         public System.Threading.Tasks.Task<GuessWhoClient.GameServices.Profile> LoginAsync(string email, string password) {
             return base.Channel.LoginAsync(email, password);
+        }
+        
+        public bool VerifyUserRegisteredByEmail(string email) {
+            return base.Channel.VerifyUserRegisteredByEmail(email);
+        }
+        
+        public System.Threading.Tasks.Task<bool> VerifyUserRegisteredByEmailAsync(string email) {
+            return base.Channel.VerifyUserRegisteredByEmailAsync(email);
+        }
+        
+        public bool VerifyUserRegisteredByNickName(string nickname) {
+            return base.Channel.VerifyUserRegisteredByNickName(nickname);
+        }
+        
+        public System.Threading.Tasks.Task<bool> VerifyUserRegisteredByNickNameAsync(string nickname) {
+            return base.Channel.VerifyUserRegisteredByNickNameAsync(nickname);
         }
     }
 }

@@ -48,6 +48,18 @@
   <wsdl:message name="IUserService_Login_OutputMessage">
     <wsdl:part name="parameters" element="tns:LoginResponse" />
   </wsdl:message>
+  <wsdl:message name="IUserService_VerifyUserRegisteredByEmail_InputMessage">
+    <wsdl:part name="parameters" element="tns:VerifyUserRegisteredByEmail" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_VerifyUserRegisteredByEmail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VerifyUserRegisteredByEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_VerifyUserRegisteredByNickName_InputMessage">
+    <wsdl:part name="parameters" element="tns:VerifyUserRegisteredByNickName" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_VerifyUserRegisteredByNickName_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VerifyUserRegisteredByNickNameResponse" />
+  </wsdl:message>
   <wsdl:portType name="IUserService">
     <wsdl:operation name="RegisterUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/RegisterUser" message="tns:IUserService_RegisterUser_InputMessage" />
@@ -56,6 +68,14 @@
     <wsdl:operation name="Login">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/Login" message="tns:IUserService_Login_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserService/LoginResponse" message="tns:IUserService_Login_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="VerifyUserRegisteredByEmail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/VerifyUserRegisteredByEmail" message="tns:IUserService_VerifyUserRegisteredByEmail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/VerifyUserRegisteredByEmailResponse" message="tns:IUserService_VerifyUserRegisteredByEmail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="VerifyUserRegisteredByNickName">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/VerifyUserRegisteredByNickName" message="tns:IUserService_VerifyUserRegisteredByNickName_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/VerifyUserRegisteredByNickNameResponse" message="tns:IUserService_VerifyUserRegisteredByNickName_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IUserService" type="tns:IUserService">
@@ -72,6 +92,24 @@
     </wsdl:operation>
     <wsdl:operation name="Login">
       <soap12:operation soapAction="http://tempuri.org/IUserService/Login" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyUserRegisteredByEmail">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/VerifyUserRegisteredByEmail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyUserRegisteredByNickName">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/VerifyUserRegisteredByNickName" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
