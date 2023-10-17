@@ -1,5 +1,6 @@
 ﻿using GuessWhoClient.GameServices;
 using GuessWhoClient.Utils;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -28,8 +29,6 @@ namespace GuessWhoClient
 
         private void BtnLogOutClick(object sender, RoutedEventArgs e)
         {
-            ProfileSingleton.Instance = null;
-
             BtnLogOut.Visibility = Visibility.Collapsed;
             BtnTournamentMatch.Visibility = Visibility.Collapsed;
             BtnLogin.Visibility = Visibility.Visible;
@@ -37,6 +36,14 @@ namespace GuessWhoClient
             BorderProfile.Visibility = Visibility.Collapsed;
             BtnLeaderboard.Visibility = Visibility.Collapsed;
             BtnFriends.Visibility = Visibility.Collapsed;
+
+            AuthenticationServiceClient authenticationServiceClient = new AuthenticationServiceClient();
+
+            Console.WriteLine(ProfileSingleton.Instance);
+            Console.WriteLine(ProfileSingleton.Instance?.NickName);
+            authenticationServiceClient.Logout(ProfileSingleton.Instance.NickName);
+
+            ProfileSingleton.Instance = null;
         }
 
         private void BtnQuickMatchClick(object sender, RoutedEventArgs e)
@@ -87,9 +94,6 @@ namespace GuessWhoClient
             ReloadLanguageResources();
         }
 
-
-
-
         public void LoginProfile()
         {
             BtnLogOut.Visibility = Visibility.Visible;
@@ -111,13 +115,13 @@ namespace GuessWhoClient
 
         private void ReloadLanguageResources()
         {
-            if(ProfileSingleton.Instance != null)
+            /*if(ProfileSingleton.Instance != null)
             {
                 TbBtnFriends.Text = Properties.Resources.btnFriends;
                 TbBtnLeaderboard.Text = Properties.Resources.btnLeaderboard;
                 TbBtnLogOut.Text = Properties.Resources.btnLogOut;
                 TbBtnTournamentMatch.Text = Properties.Resources.btnTournamentMatch;
-            }
+            }*/
             TbBtnJoinMatch.Text = Properties.Resources.btnJoinMatch;
             TbBtnLogin.Text = Properties.Resources.txtLoginGlobal;
             TbBtnQuickMatch.Text = Properties.Resources.btnQuickMatch;

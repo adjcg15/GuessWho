@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="UserService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="GuessWhoService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsp:Policy wsu:Id="NetTcpBinding_IUserService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="NetTcpBinding_IAuthenticationService_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
@@ -36,53 +65,105 @@
       <xsd:import schemaLocation="http://localhost:6969/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GuessWhoServices" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IUserService_RegisterUser_InputMessage">
+  <wsdl:message name="IUserService_Subscribe_InputMessage">
+    <wsdl:part name="parameters" element="tns:Subscribe" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_Subscribe_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SubscribeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_Unsubscribe_InputMessage">
+    <wsdl:part name="parameters" element="tns:Unsubscribe" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_Unsubscribe_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UnsubscribeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_GetActiveUsers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetActiveUsers" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_GetActiveUsers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetActiveUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_UserStatusChanged_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:UserStatusChanged" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_UserStatusChanged_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:UserStatusChangedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_RegisterUser_InputMessage">
     <wsdl:part name="parameters" element="tns:RegisterUser" />
   </wsdl:message>
-  <wsdl:message name="IUserService_RegisterUser_OutputMessage">
+  <wsdl:message name="IAuthenticationService_RegisterUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:RegisterUserResponse" />
   </wsdl:message>
-  <wsdl:message name="IUserService_Login_InputMessage">
+  <wsdl:message name="IAuthenticationService_Login_InputMessage">
     <wsdl:part name="parameters" element="tns:Login" />
   </wsdl:message>
-  <wsdl:message name="IUserService_Login_OutputMessage">
+  <wsdl:message name="IAuthenticationService_Login_OutputMessage">
     <wsdl:part name="parameters" element="tns:LoginResponse" />
   </wsdl:message>
-  <wsdl:message name="IUserService_VerifyUserRegisteredByEmail_InputMessage">
+  <wsdl:message name="IAuthenticationService_VerifyUserRegisteredByEmail_InputMessage">
     <wsdl:part name="parameters" element="tns:VerifyUserRegisteredByEmail" />
   </wsdl:message>
-  <wsdl:message name="IUserService_VerifyUserRegisteredByEmail_OutputMessage">
+  <wsdl:message name="IAuthenticationService_VerifyUserRegisteredByEmail_OutputMessage">
     <wsdl:part name="parameters" element="tns:VerifyUserRegisteredByEmailResponse" />
   </wsdl:message>
-  <wsdl:message name="IUserService_VerifyUserRegisteredByNickName_InputMessage">
+  <wsdl:message name="IAuthenticationService_VerifyUserRegisteredByNickName_InputMessage">
     <wsdl:part name="parameters" element="tns:VerifyUserRegisteredByNickName" />
   </wsdl:message>
-  <wsdl:message name="IUserService_VerifyUserRegisteredByNickName_OutputMessage">
+  <wsdl:message name="IAuthenticationService_VerifyUserRegisteredByNickName_OutputMessage">
     <wsdl:part name="parameters" element="tns:VerifyUserRegisteredByNickNameResponse" />
   </wsdl:message>
+  <wsdl:message name="IAuthenticationService_Logout_InputMessage">
+    <wsdl:part name="parameters" element="tns:Logout" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_Logout_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LogoutResponse" />
+  </wsdl:message>
   <wsdl:portType name="IUserService">
+    <wsdl:operation name="Subscribe">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/Subscribe" message="tns:IUserService_Subscribe_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/SubscribeResponse" message="tns:IUserService_Subscribe_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Unsubscribe">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/Unsubscribe" message="tns:IUserService_Unsubscribe_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/UnsubscribeResponse" message="tns:IUserService_Unsubscribe_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetActiveUsers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetActiveUsers" message="tns:IUserService_GetActiveUsers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/GetActiveUsersResponse" message="tns:IUserService_GetActiveUsers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UserStatusChanged">
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/UserStatusChanged" message="tns:IUserService_UserStatusChanged_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/UserStatusChangedResponse" message="tns:IUserService_UserStatusChanged_InputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IAuthenticationService">
     <wsdl:operation name="RegisterUser">
-      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/RegisterUser" message="tns:IUserService_RegisterUser_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/RegisterUserResponse" message="tns:IUserService_RegisterUser_OutputMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/RegisterUser" message="tns:IAuthenticationService_RegisterUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/RegisterUserResponse" message="tns:IAuthenticationService_RegisterUser_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="Login">
-      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/Login" message="tns:IUserService_Login_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/LoginResponse" message="tns:IUserService_Login_OutputMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/Login" message="tns:IAuthenticationService_Login_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/LoginResponse" message="tns:IAuthenticationService_Login_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="VerifyUserRegisteredByEmail">
-      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/VerifyUserRegisteredByEmail" message="tns:IUserService_VerifyUserRegisteredByEmail_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/VerifyUserRegisteredByEmailResponse" message="tns:IUserService_VerifyUserRegisteredByEmail_OutputMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/VerifyUserRegisteredByEmail" message="tns:IAuthenticationService_VerifyUserRegisteredByEmail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/VerifyUserRegisteredByEmailResponse" message="tns:IAuthenticationService_VerifyUserRegisteredByEmail_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="VerifyUserRegisteredByNickName">
-      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/VerifyUserRegisteredByNickName" message="tns:IUserService_VerifyUserRegisteredByNickName_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/VerifyUserRegisteredByNickNameResponse" message="tns:IUserService_VerifyUserRegisteredByNickName_OutputMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/VerifyUserRegisteredByNickName" message="tns:IAuthenticationService_VerifyUserRegisteredByNickName_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/VerifyUserRegisteredByNickNameResponse" message="tns:IAuthenticationService_VerifyUserRegisteredByNickName_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/Logout" message="tns:IAuthenticationService_Logout_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/LogoutResponse" message="tns:IAuthenticationService_Logout_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IUserService" type="tns:IUserService">
     <wsp:PolicyReference URI="#NetTcpBinding_IUserService_policy" />
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
-    <wsdl:operation name="RegisterUser">
-      <soap12:operation soapAction="http://tempuri.org/IUserService/RegisterUser" style="document" />
+    <wsdl:operation name="Subscribe">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/Subscribe" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -90,8 +171,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="Login">
-      <soap12:operation soapAction="http://tempuri.org/IUserService/Login" style="document" />
+    <wsdl:operation name="Unsubscribe">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/Unsubscribe" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -99,8 +180,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="VerifyUserRegisteredByEmail">
-      <soap12:operation soapAction="http://tempuri.org/IUserService/VerifyUserRegisteredByEmail" style="document" />
+    <wsdl:operation name="GetActiveUsers">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/GetActiveUsers" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -108,8 +189,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="VerifyUserRegisteredByNickName">
-      <soap12:operation soapAction="http://tempuri.org/IUserService/VerifyUserRegisteredByNickName" style="document" />
+    <wsdl:operation name="UserStatusChanged">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/UserStatusChanged" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -118,11 +199,69 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name="UserService">
+  <wsdl:binding name="NetTcpBinding_IAuthenticationService" type="tns:IAuthenticationService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IAuthenticationService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="RegisterUser">
+      <soap12:operation soapAction="http://tempuri.org/IAuthenticationService/RegisterUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap12:operation soapAction="http://tempuri.org/IAuthenticationService/Login" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyUserRegisteredByEmail">
+      <soap12:operation soapAction="http://tempuri.org/IAuthenticationService/VerifyUserRegisteredByEmail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyUserRegisteredByNickName">
+      <soap12:operation soapAction="http://tempuri.org/IAuthenticationService/VerifyUserRegisteredByNickName" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Logout">
+      <soap12:operation soapAction="http://tempuri.org/IAuthenticationService/Logout" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GuessWhoService">
     <wsdl:port name="NetTcpBinding_IUserService" binding="tns:NetTcpBinding_IUserService">
-      <soap12:address location="net.tcp://localhost:6970/UserService" />
+      <soap12:address location="net.tcp://localhost:6970/GuessWhoService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:6970/UserService</wsa10:Address>
+        <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="NetTcpBinding_IAuthenticationService" binding="tns:NetTcpBinding_IAuthenticationService">
+      <soap12:address location="net.tcp://localhost:6970/GuessWhoService" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
         </Identity>

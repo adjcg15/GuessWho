@@ -15,6 +15,67 @@ namespace GuessWhoClient.GameServices {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ActiveUser", Namespace="http://schemas.datacontract.org/2004/07/GuessWhoServices")]
+    [System.SerializableAttribute()]
+    public partial class ActiveUser : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private byte[] AvatarField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NicknameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public byte[] Avatar {
+            get {
+                return this.AvatarField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AvatarField, value) != true)) {
+                    this.AvatarField = value;
+                    this.RaisePropertyChanged("Avatar");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Nickname {
+            get {
+                return this.NicknameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NicknameField, value) != true)) {
+                    this.NicknameField = value;
+                    this.RaisePropertyChanged("Nickname");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Profile", Namespace="http://schemas.datacontract.org/2004/07/GuessWhoServices")]
     [System.SerializableAttribute()]
     public partial class Profile : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -123,32 +184,33 @@ namespace GuessWhoClient.GameServices {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameServices.IUserService")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameServices.IUserService", CallbackContract=typeof(GuessWhoClient.GameServices.IUserServiceCallback))]
     public interface IUserService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/RegisterUser", ReplyAction="http://tempuri.org/IUserService/RegisterUserResponse")]
-        bool RegisterUser(GuessWhoClient.GameServices.Profile user);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/Subscribe", ReplyAction="http://tempuri.org/IUserService/SubscribeResponse")]
+        void Subscribe();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/RegisterUser", ReplyAction="http://tempuri.org/IUserService/RegisterUserResponse")]
-        System.Threading.Tasks.Task<bool> RegisterUserAsync(GuessWhoClient.GameServices.Profile user);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/Subscribe", ReplyAction="http://tempuri.org/IUserService/SubscribeResponse")]
+        System.Threading.Tasks.Task SubscribeAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/Login", ReplyAction="http://tempuri.org/IUserService/LoginResponse")]
-        GuessWhoClient.GameServices.Profile Login(string email, string password);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/Unsubscribe", ReplyAction="http://tempuri.org/IUserService/UnsubscribeResponse")]
+        void Unsubscribe();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/Login", ReplyAction="http://tempuri.org/IUserService/LoginResponse")]
-        System.Threading.Tasks.Task<GuessWhoClient.GameServices.Profile> LoginAsync(string email, string password);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/Unsubscribe", ReplyAction="http://tempuri.org/IUserService/UnsubscribeResponse")]
+        System.Threading.Tasks.Task UnsubscribeAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/VerifyUserRegisteredByEmail", ReplyAction="http://tempuri.org/IUserService/VerifyUserRegisteredByEmailResponse")]
-        bool VerifyUserRegisteredByEmail(string email);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetActiveUsers", ReplyAction="http://tempuri.org/IUserService/GetActiveUsersResponse")]
+        GuessWhoClient.GameServices.ActiveUser[] GetActiveUsers();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/VerifyUserRegisteredByEmail", ReplyAction="http://tempuri.org/IUserService/VerifyUserRegisteredByEmailResponse")]
-        System.Threading.Tasks.Task<bool> VerifyUserRegisteredByEmailAsync(string email);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetActiveUsers", ReplyAction="http://tempuri.org/IUserService/GetActiveUsersResponse")]
+        System.Threading.Tasks.Task<GuessWhoClient.GameServices.ActiveUser[]> GetActiveUsersAsync();
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IUserServiceCallback {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/VerifyUserRegisteredByNickName", ReplyAction="http://tempuri.org/IUserService/VerifyUserRegisteredByNickNameResponse")]
-        bool VerifyUserRegisteredByNickName(string nickname);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/VerifyUserRegisteredByNickName", ReplyAction="http://tempuri.org/IUserService/VerifyUserRegisteredByNickNameResponse")]
-        System.Threading.Tasks.Task<bool> VerifyUserRegisteredByNickNameAsync(string nickname);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/UserStatusChanged", ReplyAction="http://tempuri.org/IUserService/UserStatusChangedResponse")]
+        void UserStatusChanged(GuessWhoClient.GameServices.ActiveUser user, bool isActive);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -157,24 +219,112 @@ namespace GuessWhoClient.GameServices {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class UserServiceClient : System.ServiceModel.ClientBase<GuessWhoClient.GameServices.IUserService>, GuessWhoClient.GameServices.IUserService {
+    public partial class UserServiceClient : System.ServiceModel.DuplexClientBase<GuessWhoClient.GameServices.IUserService>, GuessWhoClient.GameServices.IUserService {
         
-        public UserServiceClient() {
+        public UserServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
         }
         
-        public UserServiceClient(string endpointConfigurationName) : 
+        public UserServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
+        }
+        
+        public UserServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public UserServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public UserServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
+        }
+        
+        public void Subscribe() {
+            base.Channel.Subscribe();
+        }
+        
+        public System.Threading.Tasks.Task SubscribeAsync() {
+            return base.Channel.SubscribeAsync();
+        }
+        
+        public void Unsubscribe() {
+            base.Channel.Unsubscribe();
+        }
+        
+        public System.Threading.Tasks.Task UnsubscribeAsync() {
+            return base.Channel.UnsubscribeAsync();
+        }
+        
+        public GuessWhoClient.GameServices.ActiveUser[] GetActiveUsers() {
+            return base.Channel.GetActiveUsers();
+        }
+        
+        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.ActiveUser[]> GetActiveUsersAsync() {
+            return base.Channel.GetActiveUsersAsync();
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameServices.IAuthenticationService")]
+    public interface IAuthenticationService {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/RegisterUser", ReplyAction="http://tempuri.org/IAuthenticationService/RegisterUserResponse")]
+        bool RegisterUser(GuessWhoClient.GameServices.Profile user);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/RegisterUser", ReplyAction="http://tempuri.org/IAuthenticationService/RegisterUserResponse")]
+        System.Threading.Tasks.Task<bool> RegisterUserAsync(GuessWhoClient.GameServices.Profile user);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/Login", ReplyAction="http://tempuri.org/IAuthenticationService/LoginResponse")]
+        GuessWhoClient.GameServices.Profile Login(string email, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/Login", ReplyAction="http://tempuri.org/IAuthenticationService/LoginResponse")]
+        System.Threading.Tasks.Task<GuessWhoClient.GameServices.Profile> LoginAsync(string email, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/VerifyUserRegisteredByEmail", ReplyAction="http://tempuri.org/IAuthenticationService/VerifyUserRegisteredByEmailResponse")]
+        bool VerifyUserRegisteredByEmail(string email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/VerifyUserRegisteredByEmail", ReplyAction="http://tempuri.org/IAuthenticationService/VerifyUserRegisteredByEmailResponse")]
+        System.Threading.Tasks.Task<bool> VerifyUserRegisteredByEmailAsync(string email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/VerifyUserRegisteredByNickName", ReplyAction="http://tempuri.org/IAuthenticationService/VerifyUserRegisteredByNickNameResponse")]
+        bool VerifyUserRegisteredByNickName(string nickname);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/VerifyUserRegisteredByNickName", ReplyAction="http://tempuri.org/IAuthenticationService/VerifyUserRegisteredByNickNameResponse")]
+        System.Threading.Tasks.Task<bool> VerifyUserRegisteredByNickNameAsync(string nickname);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/Logout", ReplyAction="http://tempuri.org/IAuthenticationService/LogoutResponse")]
+        void Logout(string nickname);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/Logout", ReplyAction="http://tempuri.org/IAuthenticationService/LogoutResponse")]
+        System.Threading.Tasks.Task LogoutAsync(string nickname);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IAuthenticationServiceChannel : GuessWhoClient.GameServices.IAuthenticationService, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class AuthenticationServiceClient : System.ServiceModel.ClientBase<GuessWhoClient.GameServices.IAuthenticationService>, GuessWhoClient.GameServices.IAuthenticationService {
+        
+        public AuthenticationServiceClient() {
+        }
+        
+        public AuthenticationServiceClient(string endpointConfigurationName) : 
                 base(endpointConfigurationName) {
         }
         
-        public UserServiceClient(string endpointConfigurationName, string remoteAddress) : 
+        public AuthenticationServiceClient(string endpointConfigurationName, string remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public UserServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public AuthenticationServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public UserServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public AuthenticationServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
         }
         
@@ -208,6 +358,14 @@ namespace GuessWhoClient.GameServices {
         
         public System.Threading.Tasks.Task<bool> VerifyUserRegisteredByNickNameAsync(string nickname) {
             return base.Channel.VerifyUserRegisteredByNickNameAsync(nickname);
+        }
+        
+        public void Logout(string nickname) {
+            base.Channel.Logout(nickname);
+        }
+        
+        public System.Threading.Tasks.Task LogoutAsync(string nickname) {
+            return base.Channel.LogoutAsync(nickname);
         }
     }
 }

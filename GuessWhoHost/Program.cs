@@ -7,7 +7,7 @@ namespace GuessWhoHost
     {
         static void Main(string[] args)
         {
-            using (ServiceHost host = new ServiceHost(typeof(GuessWhoServices.UserService)))
+            using (ServiceHost host = new ServiceHost(typeof(GuessWhoServices.GuessWhoService)))
             {
                 host.Open();
                 Console.WriteLine("Server is running");

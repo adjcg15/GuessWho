@@ -68,7 +68,7 @@ namespace GuessWhoClient
                 return;
             }
 
-            GameServices.UserServiceClient userServiceClient = new GameServices.UserServiceClient();
+            GameServices.AuthenticationServiceClient authenticationServiceClient = new GameServices.AuthenticationServiceClient();
             var newUser = new Profile
             {
                 NickName = nickname,
@@ -78,7 +78,7 @@ namespace GuessWhoClient
                 Avatar = profileImage
             };
 
-            bool registered = userServiceClient.RegisterUser(newUser);
+            bool registered = authenticationServiceClient.RegisterUser(newUser);
             if(!registered)
             {
                 MessageBox.Show(
