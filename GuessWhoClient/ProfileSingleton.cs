@@ -25,10 +25,6 @@ namespace GuessWhoClient
         {
             get
             {
-                if (instance == null)
-                {
-                    instance = new Profile();
-                }
                 return instance;
             }
             set

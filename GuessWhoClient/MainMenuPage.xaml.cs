@@ -1,6 +1,5 @@
 ﻿using GuessWhoClient.GameServices;
 using GuessWhoClient.Utils;
-using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -42,7 +41,8 @@ namespace GuessWhoClient
 
         private void BtnQuickMatchClick(object sender, RoutedEventArgs e)
         {
-
+            LobbyPage lobbyPage = new LobbyPage();
+            this.NavigationService.Navigate(lobbyPage); 
         }
 
         private void BtnLeaderboardClick(object sender, RoutedEventArgs e)
@@ -50,7 +50,7 @@ namespace GuessWhoClient
 
         }
 
-        private void BtnJoinMatchClick (object sender, RoutedEventArgs e)
+        private void BtnJoinMatchClick(object sender, RoutedEventArgs e)
         {
 
         }
@@ -70,12 +70,27 @@ namespace GuessWhoClient
 
         }
 
-        private void cbLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CbLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            int selectedIndex = CbLanguage.SelectedIndex;
 
+            if (selectedIndex == 0)
+            {
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("es-MX");
+                
+            }
+            else if (selectedIndex == 1)
+            {
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
+            }
+
+            ReloadLanguageResources();
         }
 
-        public void LoginProfile ()
+
+
+
+        public void LoginProfile()
         {
             BtnLogOut.Visibility = Visibility.Visible;
             BtnTournamentMatch.Visibility = Visibility.Visible;
@@ -88,10 +103,25 @@ namespace GuessWhoClient
             lbNickname.Content = ProfileSingleton.Instance.NickName;
 
             BitmapImage profileImageSrc = ImageTransformator.GetBitmapImageFromByteArray(ProfileSingleton.Instance.Avatar);
-            if(profileImageSrc != null)
+            if (profileImageSrc != null)
             {
                 ImgProfilePicture.Source = profileImageSrc;
             }
+        }
+
+        private void ReloadLanguageResources()
+        {
+            if(ProfileSingleton.Instance != null)
+            {
+                TbBtnFriends.Text = Properties.Resources.btnFriends;
+                TbBtnLeaderboard.Text = Properties.Resources.btnLeaderboard;
+                TbBtnLogOut.Text = Properties.Resources.btnLogOut;
+                TbBtnTournamentMatch.Text = Properties.Resources.btnTournamentMatch;
+            }
+            TbBtnJoinMatch.Text = Properties.Resources.btnJoinMatch;
+            TbBtnLogin.Text = Properties.Resources.txtLoginGlobal;
+            TbBtnQuickMatch.Text = Properties.Resources.btnQuickMatch;
+            TbBtnRegister.Text = Properties.Resources.txtSignUpGlobal;
         }
     }
 }
