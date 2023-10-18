@@ -16,26 +16,50 @@
         </Grid.ColumnDefinitions>
         <Image Source="/Resources/background.png" Stretch="UniformToFill"  HorizontalAlignment="Center" Height="450" Margin="0,70,0,0" VerticalAlignment="Top" Width="450"/>
         <Border BorderBrush="White" Background="White" BorderThickness="1" HorizontalAlignment="Center" Height="70" VerticalAlignment="Top" Width="450">
-            <Grid>
-
-            </Grid>
+            <Grid/>
         </Border>
         <Border Background ="White" BorderThickness="2,0,0,0" BorderBrush="#E2E2E2" Grid.Column="1" HorizontalAlignment="Center" Height="522" VerticalAlignment="Center" Width="450">
             <Grid>
-                <Button Name="BtnStartGame" IsEnabled="False" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Style="{StaticResource PrimaryButtonWithIcon}">
+                <Grid>
+                    <Border Background="#E2E2E2" CornerRadius="30" Width="430" Height="60" Margin="8,84,10,378">
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
+                                <Ellipse Width="50" Height="50" Margin="6,5,5,5">
+                                    <Ellipse.Fill>
+                                        <ImageBrush x:Name="ImgProfilePicture" ImageSource="/Resources/user-icon.png"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <TextBlock x:Name="TbOponent" Text="{x:Static p:Resources.lbWaitingPlayer}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="16" FontWeight="Medium" Opacity="0.5"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <Border Background="#E2E2E2" CornerRadius="30" Width="430" Height="60" Margin="8,84,10,378">
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
+                                <Ellipse Width="50" Height="50" Margin="6,5,5,5">
+                                    <Ellipse.Fill>
+                                        <ImageBrush x:Name="ImgProfilePicture1" ImageSource="/Resources/user-icon.png"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <TextBlock x:Name="TbOponent1" Text="{x:Static p:Resources.lbWaitingPlayer}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="16" FontWeight="Medium" Opacity="0.5"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+                <Button x:Name="BtnStartGame" IsEnabled="False" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Style="{StaticResource PrimaryButtonWithIcon}">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Image Source="/Resources/play-icon.png" Height="16" Width="16"/>
                         <TextBlock Text="{x:Static p:Resources.btnStartGame}" VerticalAlignment="Center" FontWeight="SemiBold" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Button Name="BtnCancelGame" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Style="{StaticResource PrimaryCancelButtonWithIcon}" IsCancel="True">
+                <Button x:Name="BtnCancelGame" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Style="{StaticResource PrimaryCancelButtonWithIcon}" IsCancel="True">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Image Source="/Resources/exit-icon.png" Height="19" Width="19"/>
                         <TextBlock Text="{x:Static p:Resources.btnCancelGame}" VerticalAlignment="Center" FontWeight="SemiBold" Margin="5,3,0,3"/>
                     </StackPanel>
                 </Button>
 
-                <Button Name="BtnInvitationCode" HorizontalAlignment="Left" Margin="10,176,0,0" VerticalAlignment="Top" Style="{StaticResource SecondaryButtonWithIcon}">
+                <Button x:Name="BtnInvitationCode" HorizontalAlignment="Left" Margin="10,176,0,0" VerticalAlignment="Top" Style="{StaticResource SecondaryButtonWithIcon}">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Image Source="/Resources/invitation-code-icon.png" Height="16" Width="16"/>
                         <TextBlock Text="{x:Static p:Resources.btnInvitationCode}" VerticalAlignment="Center" FontWeight="SemiBold" Margin="5,0,0,0"/>
@@ -57,18 +81,36 @@
                         <TextBlock Text="{x:Static p:Resources.btnEmailInvitation}" VerticalAlignment="Center" FontWeight="SemiBold" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Border x:Name="BPlayerCard" BorderBrush="#FFE2E2E2" BorderThickness="1" HorizontalAlignment="Center" Height="52" Margin="0,88,0,0" VerticalAlignment="Top" Width="428" CornerRadius="30,30,30,30" Background="#FFE2E2E2"/>
-
+                <Button x:Name="BtnExpelPlayer" HorizontalAlignment="Left" Margin="382,90,0,0" Visibility="Collapsed" VerticalAlignment="Top" Style="{StaticResource PrimaryCancelButtonWithIcon}" IsCancel="True" Height="46">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Image Source="/Resources/cross-icon.png" Height="19" Width="19"/>
+                    </StackPanel>
+                </Button>
             </Grid>
         </Border>
-        <ListBox x:Name="ListBoxActiveUsers" Margin="10,260,10,10" Grid.Column="1">
+        <ListBox x:Name="ListBoxActiveUsers" Margin="0,260,0,0" Grid.Column="1" BorderThickness="0,0,0,1" Background="{x:Null}" d:ItemsSource="{d:SampleData ItemCount=5}" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Nickname}" Margin="10,0,0,0"/>
-                    </StackPanel>
+                    <Border Background="#FFE9B2" CornerRadius="30" Width="400" Height="60">
+                        <Grid>
+                            <StackPanel Orientation="Horizontal">
+                                <Ellipse Width="50" Height="50" Margin="6,5,5,5">
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="{Binding Avatar}" />
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <TextBlock Text="{Binding Nickname}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="16" FontWeight="Medium" />
+                            </StackPanel>
+                            <Border Background="#0A6EBD" BorderBrush="#BDCDD9" BorderThickness="4" CornerRadius="24" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="350,0,0,0" Height="40" Width="40">
+                                <Button x:Name="BtnInvitePlayer" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" BorderThickness="0,0,0,0" Background="{x:Null}" Margin="1,1,1,1">
+                                    <Image Source="/Resources/invite-icon.png" Width="18" Height="18" Cursor=""/>
+                                </Button>
+                            </Border>
+                        </Grid>
+                    </Border>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+
     </Grid>
 </Page>

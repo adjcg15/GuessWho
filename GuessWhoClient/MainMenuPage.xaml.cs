@@ -10,7 +10,6 @@ namespace GuessWhoClient
 {
     public partial class MainMenuPage : Page
     {
-
         public MainMenuPage()
         {
             InitializeComponent();
@@ -77,23 +76,6 @@ namespace GuessWhoClient
 
         }
 
-        private void CbLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            int selectedIndex = CbLanguage.SelectedIndex;
-
-            if (selectedIndex == 0)
-            {
-                System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("es-MX");
-                
-            }
-            else if (selectedIndex == 1)
-            {
-                System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
-            }
-
-            ReloadLanguageResources();
-        }
-
         public void LoginProfile()
         {
             BtnLogOut.Visibility = Visibility.Visible;
@@ -115,17 +97,36 @@ namespace GuessWhoClient
 
         private void ReloadLanguageResources()
         {
-            /*if(ProfileSingleton.Instance != null)
+            if(DataStore.Profile != null && TbBtnFriends.Visibility != Visibility.Collapsed)
             {
                 TbBtnFriends.Text = Properties.Resources.btnFriends;
                 TbBtnLeaderboard.Text = Properties.Resources.btnLeaderboard;
                 TbBtnLogOut.Text = Properties.Resources.btnLogOut;
                 TbBtnTournamentMatch.Text = Properties.Resources.btnTournamentMatch;
-            }*/
+            }
             TbBtnJoinMatch.Text = Properties.Resources.btnJoinMatch;
             TbBtnLogin.Text = Properties.Resources.txtLoginGlobal;
             TbBtnQuickMatch.Text = Properties.Resources.btnQuickMatch;
             TbBtnRegister.Text = Properties.Resources.txtSignUpGlobal;
         }
+
+        private void BtnChangeLanguageClick(object sender, RoutedEventArgs e)
+        {
+            if (TbBtnLanguage.Text == "ESPAÑOL")
+            {
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
+                TbBtnLanguage.Text = "ENGLISH";
+                ImgBtnLanguage.Source = new BitmapImage(new Uri("/Resources/us-flag-image.png", UriKind.Relative));
+            }
+            else if (TbBtnLanguage.Text == "ENGLISH")
+            {
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("es-ES");
+                TbBtnLanguage.Text = "ESPAÑOL";
+                ImgBtnLanguage.Source = new BitmapImage(new Uri("/Resources/mx-flag-image.png", UriKind.Relative));
+            }
+
+            ReloadLanguageResources();
+        }
+
     }
 }

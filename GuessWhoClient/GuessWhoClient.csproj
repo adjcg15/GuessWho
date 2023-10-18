@@ -235,5 +235,14 @@
     <Resource Include="Resources\email-invitation-icon.png" />
     <Resource Include="Resources\invitation-code-icon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\user-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\invite-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\cross-icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

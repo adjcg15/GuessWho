@@ -20,8 +20,6 @@ namespace GuessWhoClient
             userServiceClient = new GameServices.UserServiceClient(new InstanceContext(this));
             userServiceClient.Subscribe();
             activeUsers = userServiceClient.GetActiveUsers().ToList();
-
-            ListBoxActiveUsers.ItemsSource = activeUsers;
         }
 
         public void UserStatusChanged(ActiveUser user, bool isActive)
@@ -34,7 +32,6 @@ namespace GuessWhoClient
             {
                 activeUsers.Remove(activeUsers.Find(u => u.Nickname == user.Nickname));
             }
-            ListBoxActiveUsers.ItemsSource = activeUsers;
         }
 
         private void ClosingPage(object sender, RoutedEventArgs e)
