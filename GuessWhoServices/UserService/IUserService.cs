@@ -1,47 +1,36 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 
 namespace GuessWhoServices
 {
-    [ServiceContract]
-    public interface IUserService
+    [ServiceContract(CallbackContract = typeof(IUsersCallback))]
+    interface IUserService
     {
         [OperationContract]
-        bool RegisterUser(Profile user);
+        void Subscribe();
 
         [OperationContract]
-        Profile Login(string email, string password);
+        void Unsubscribe();
 
         [OperationContract]
-        bool VerifyUserRegisteredByEmail(string email);
+        List<ActiveUser> GetActiveUsers();
+    }
 
+    [ServiceContract]
+    public interface IUsersCallback
+    {
         [OperationContract]
-        bool VerifyUserRegisteredByNickName(string nickname);
+        void UserStatusChanged(ActiveUser user, bool isActive);
     }
 
     [DataContract]
-    public class Profile
+    public class ActiveUser
     {
-        private string nickName;
-        private string fullName;
-        private byte[] avatar;
-        private string email;
-        private string password;
+        [DataMember]
+        public string Nickname { get; set; }
 
         [DataMember]
-        public string NickName { get { return nickName; } set { nickName = value; } }
-
-        [DataMember]
-        public string FullName { get { return fullName; } set { fullName = value; } }
-
-        [DataMember]
-        public byte[] Avatar { get { return avatar; } set { avatar = value; } }
-
-        [DataMember]
-        public string Email { get { return email; } set { email = value; } }
-
-        [DataMember]
-        public string Password { get { return password; } set { password = value; } }
+        public byte[] Avatar { get; set; }
     }
 }

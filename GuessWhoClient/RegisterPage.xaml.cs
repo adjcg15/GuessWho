@@ -99,8 +99,8 @@ namespace GuessWhoClient
                 return;
             }
 
-            GameServices.UserServiceClient userServiceClient = new GameServices.UserServiceClient();
-            bool userEmailAlreadyRegistered = userServiceClient.VerifyUserRegisteredByEmail(email);
+            GameServices.AuthenticationServiceClient authenticationServiceClient = new GameServices.AuthenticationServiceClient();
+            bool userEmailAlreadyRegistered = authenticationServiceClient.VerifyUserRegisteredByEmail(email);
             if (userEmailAlreadyRegistered)
             {
                 MessageBox.Show(
@@ -112,7 +112,7 @@ namespace GuessWhoClient
                 return;
             }
 
-            bool userNicknameAlreadyRegistered = userServiceClient.VerifyUserRegisteredByNickName(nickname);
+            bool userNicknameAlreadyRegistered = authenticationServiceClient.VerifyUserRegisteredByNickName(nickname);
             if (userNicknameAlreadyRegistered)
             {
                 MessageBox.Show(

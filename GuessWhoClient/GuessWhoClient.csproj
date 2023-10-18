@@ -85,6 +85,7 @@
     </Compile>
     <Compile Include="Utils\Authentication.cs" />
     <Compile Include="Utils\ImageTransformator.cs" />
+    <Compile Include="Utils\ServerResponse.cs" />
     <Page Include="ConfirmAccountPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -149,7 +150,13 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.Profile.datasource">
+    <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ActiveUser.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ResponseOfboolean.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ResponseOfProfileLorJNRyk.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\GameServices\item.xsd">
@@ -159,6 +166,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\GameServices\item2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GameServices\item3.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\GameServices\UserService.wsdl" />
@@ -224,6 +234,15 @@
   <ItemGroup>
     <Resource Include="Resources\email-invitation-icon.png" />
     <Resource Include="Resources\invitation-code-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\user-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\invite-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\cross-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

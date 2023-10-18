@@ -1,5 +1,7 @@
 ﻿using GuessWhoClient.GameServices;
 using GuessWhoClient.Utils;
+using System;
+using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -8,7 +10,6 @@ namespace GuessWhoClient
 {
     public partial class MainMenuPage : Page
     {
-
         public MainMenuPage()
         {
             InitializeComponent();
@@ -28,8 +29,6 @@ namespace GuessWhoClient
 
         private void BtnLogOutClick(object sender, RoutedEventArgs e)
         {
-            ProfileSingleton.Instance = null;
-
             BtnLogOut.Visibility = Visibility.Collapsed;
             BtnTournamentMatch.Visibility = Visibility.Collapsed;
             BtnLogin.Visibility = Visibility.Visible;
@@ -37,6 +36,13 @@ namespace GuessWhoClient
             BorderProfile.Visibility = Visibility.Collapsed;
             BtnLeaderboard.Visibility = Visibility.Collapsed;
             BtnFriends.Visibility = Visibility.Collapsed;
+
+            AuthenticationServiceClient authenticationServiceClient = new AuthenticationServiceClient();
+
+            Console.WriteLine(DataStore.Profile?.NickName);
+            authenticationServiceClient.Logout(DataStore.Profile.NickName);
+
+            DataStore.Profile = null;
         }
 
         private void BtnQuickMatchClick(object sender, RoutedEventArgs e)
@@ -70,26 +76,6 @@ namespace GuessWhoClient
 
         }
 
-        private void CbLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            int selectedIndex = CbLanguage.SelectedIndex;
-
-            if (selectedIndex == 0)
-            {
-                System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("es-MX");
-                
-            }
-            else if (selectedIndex == 1)
-            {
-                System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
-            }
-
-            ReloadLanguageResources();
-        }
-
-
-
-
         public void LoginProfile()
         {
             BtnLogOut.Visibility = Visibility.Visible;
@@ -100,9 +86,9 @@ namespace GuessWhoClient
             BtnLeaderboard.Visibility = Visibility.Visible;
             BtnFriends.Visibility = Visibility.Visible;
 
-            lbNickname.Content = ProfileSingleton.Instance.NickName;
+            lbNickname.Content = DataStore.Profile.NickName;
 
-            BitmapImage profileImageSrc = ImageTransformator.GetBitmapImageFromByteArray(ProfileSingleton.Instance.Avatar);
+            BitmapImage profileImageSrc = ImageTransformator.GetBitmapImageFromByteArray(DataStore.Profile.Avatar);
             if (profileImageSrc != null)
             {
                 ImgProfilePicture.Source = profileImageSrc;
@@ -111,7 +97,7 @@ namespace GuessWhoClient
 
         private void ReloadLanguageResources()
         {
-            if(ProfileSingleton.Instance != null)
+            if(DataStore.Profile != null && TbBtnFriends.Visibility != Visibility.Collapsed)
             {
                 TbBtnFriends.Text = Properties.Resources.btnFriends;
                 TbBtnLeaderboard.Text = Properties.Resources.btnLeaderboard;
@@ -123,5 +109,24 @@ namespace GuessWhoClient
             TbBtnQuickMatch.Text = Properties.Resources.btnQuickMatch;
             TbBtnRegister.Text = Properties.Resources.txtSignUpGlobal;
         }
+
+        private void BtnChangeLanguageClick(object sender, RoutedEventArgs e)
+        {
+            if (TbBtnLanguage.Text == "ESPAÑOL")
+            {
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
+                TbBtnLanguage.Text = "ENGLISH";
+                ImgBtnLanguage.Source = new BitmapImage(new Uri("/Resources/us-flag-image.png", UriKind.Relative));
+            }
+            else if (TbBtnLanguage.Text == "ENGLISH")
+            {
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("es-ES");
+                TbBtnLanguage.Text = "ESPAÑOL";
+                ImgBtnLanguage.Source = new BitmapImage(new Uri("/Resources/mx-flag-image.png", UriKind.Relative));
+            }
+
+            ReloadLanguageResources();
+        }
+
     }
 }

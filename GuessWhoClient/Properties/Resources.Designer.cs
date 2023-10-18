@@ -950,28 +950,6 @@ namespace GuessWhoClient.Properties
         }
 
         /// <summary>
-        ///   Busca una cadena traducida similar a No fue posible completar su registro, por favor intente de nuevo más tarde.
-        /// </summary>
-        public static string msgbRegistrationErrorMessage
-        {
-            get
-            {
-                return ResourceManager.GetString("msgbRegistrationErrorMessage", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Busca una cadena traducida similar a Error de registro.
-        /// </summary>
-        public static string msgbRegistrationErrorTitle
-        {
-            get
-            {
-                return ResourceManager.GetString("msgbRegistrationErrorTitle", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Busca una cadena traducida similar a El correo y/o contraseña son incorrectas, por favor verifique la información.
         /// </summary>
         public static string msgbUserNotFound
@@ -1144,6 +1122,72 @@ namespace GuessWhoClient.Properties
             get
             {
                 return ResourceManager.GetString("txtSignUpGlobal", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ocurrió un error de conexión y la aplicación no pudo completar la solicitud, intente más tarde..
+        /// </summary>
+        public static string txtSQLErrorMessage
+        {
+            get
+            {
+                return ResourceManager.GetString("txtSQLErrorMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error de conexión.
+        /// </summary>
+        public static string txtSQLErrorTitle
+        {
+            get
+            {
+                return ResourceManager.GetString("txtSQLErrorTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Busca una cadena traducida similar a La aplicación no logó completar la solicitud, por favor reporte el error e intente más tarde..
+        /// </summary>
+        public static string txtUpdateErrorMessage
+        {
+            get
+            {
+                return ResourceManager.GetString("txtUpdateErrorMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error de actualización.
+        /// </summary>
+        public static string txtUpdateErrorTitle
+        {
+            get
+            {
+                return ResourceManager.GetString("txtUpdateErrorTitle", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Busca una cadena traducida similar a La aplicación no logró completar la solicitud debido a un error en el formato de los datos, por favor reporte el error..
+        /// </summary>
+        public static string txtValidationErrorMessage
+        {
+            get
+            {
+                return ResourceManager.GetString("txtValidationErrorMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Busca una cadena traducida similar a Datos inválidos.
+        /// </summary>
+        public static string txtValidationErrorTitle
+        {
+            get
+            {
+                return ResourceManager.GetString("txtValidationErrorTitle", resourceCulture);
             }
         }
     }

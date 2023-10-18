@@ -1,28 +1,42 @@
-﻿using System;
+﻿using GuessWhoClient.GameServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace GuessWhoClient
 {
-    /// <summary>
-    /// Lógica de interacción para LobbyPage.xaml
-    /// </summary>
-    public partial class LobbyPage : Page
+    public partial class LobbyPage : Page, GameServices.IUserServiceCallback
     {
+        private GameServices.UserServiceClient userServiceClient;
+        private static List<ActiveUser> activeUsers = new List<ActiveUser>();
+
         public LobbyPage()
         {
             InitializeComponent();
+
+            userServiceClient = new GameServices.UserServiceClient(new InstanceContext(this));
+            userServiceClient.Subscribe();
+            activeUsers = userServiceClient.GetActiveUsers().ToList();
+        }
+
+        public void UserStatusChanged(ActiveUser user, bool isActive)
+        {
+            if (isActive)
+            {
+                activeUsers.Add(user);
+            }
+            else
+            {
+                activeUsers.Remove(activeUsers.Find(u => u.Nickname == user.Nickname));
+            }
+        }
+
+        private void ClosingPage(object sender, RoutedEventArgs e)
+        {
+            userServiceClient.Unsubscribe();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using GuessWhoClient.Properties;
 using GuessWhoClient.Utils;
+using System;
 using System.Resources;
 using System.Windows;
 using System.Windows.Controls;
@@ -45,15 +46,19 @@ namespace GuessWhoClient
 
         private void ValidateUserCredentials(string email, string password)
         {
-            GameServices.UserServiceClient userServiceClient = new GameServices.UserServiceClient();
-            GameServices.Profile profile = userServiceClient.Login(email, password);
+            GameServices.AuthenticationServiceClient authenticationServiceClient = new GameServices.AuthenticationServiceClient();
+            GameServices.ResponseOfProfileLorJNRyk response = authenticationServiceClient.Login(email, password);
 
-            if (profile != null)
+            if (response.Value != null)
             {
+                GameServices.Profile profile = response.Value;
                 ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
                 MessageBox.Show(resourceManager.GetString("msgbWelcome1") + profile.FullName + resourceManager.GetString("msgbWelcome2"));
 
-                ProfileSingleton.Instance = profile;
+                Console.WriteLine(profile.NickName);
+                DataStore.Profile = profile;
+
+                Console.WriteLine(DataStore.Profile?.NickName);
                 GoToMainMenuUploaded();
             }
             else
