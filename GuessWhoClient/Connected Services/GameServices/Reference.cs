@@ -183,6 +183,145 @@ namespace GuessWhoClient.GameServices {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ResponseOfboolean", Namespace="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess")]
+    [System.SerializableAttribute()]
+    public partial class ResponseOfboolean : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private GuessWhoClient.GameServices.ResponseStatus StatusCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ValueField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GuessWhoClient.GameServices.ResponseStatus StatusCode {
+            get {
+                return this.StatusCodeField;
+            }
+            set {
+                if ((this.StatusCodeField.Equals(value) != true)) {
+                    this.StatusCodeField = value;
+                    this.RaisePropertyChanged("StatusCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Value {
+            get {
+                return this.ValueField;
+            }
+            set {
+                if ((this.ValueField.Equals(value) != true)) {
+                    this.ValueField = value;
+                    this.RaisePropertyChanged("Value");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ResponseStatus", Namespace="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess")]
+    public enum ResponseStatus : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        OK = 200,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        VALIDATION_ERROR = 400,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        UPDATE_ERROR = 500,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        SQL_ERROR = 501,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ResponseOfProfileLorJNRyk", Namespace="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess")]
+    [System.SerializableAttribute()]
+    public partial class ResponseOfProfileLorJNRyk : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private GuessWhoClient.GameServices.ResponseStatus StatusCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private GuessWhoClient.GameServices.Profile ValueField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GuessWhoClient.GameServices.ResponseStatus StatusCode {
+            get {
+                return this.StatusCodeField;
+            }
+            set {
+                if ((this.StatusCodeField.Equals(value) != true)) {
+                    this.StatusCodeField = value;
+                    this.RaisePropertyChanged("StatusCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GuessWhoClient.GameServices.Profile Value {
+            get {
+                return this.ValueField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ValueField, value) != true)) {
+                    this.ValueField = value;
+                    this.RaisePropertyChanged("Value");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameServices.IUserService", CallbackContract=typeof(GuessWhoClient.GameServices.IUserServiceCallback))]
     public interface IUserService {
@@ -271,16 +410,16 @@ namespace GuessWhoClient.GameServices {
     public interface IAuthenticationService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/RegisterUser", ReplyAction="http://tempuri.org/IAuthenticationService/RegisterUserResponse")]
-        bool RegisterUser(GuessWhoClient.GameServices.Profile user);
+        GuessWhoClient.GameServices.ResponseOfboolean RegisterUser(GuessWhoClient.GameServices.Profile user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/RegisterUser", ReplyAction="http://tempuri.org/IAuthenticationService/RegisterUserResponse")]
-        System.Threading.Tasks.Task<bool> RegisterUserAsync(GuessWhoClient.GameServices.Profile user);
+        System.Threading.Tasks.Task<GuessWhoClient.GameServices.ResponseOfboolean> RegisterUserAsync(GuessWhoClient.GameServices.Profile user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/Login", ReplyAction="http://tempuri.org/IAuthenticationService/LoginResponse")]
-        GuessWhoClient.GameServices.Profile Login(string email, string password);
+        GuessWhoClient.GameServices.ResponseOfProfileLorJNRyk Login(string email, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/Login", ReplyAction="http://tempuri.org/IAuthenticationService/LoginResponse")]
-        System.Threading.Tasks.Task<GuessWhoClient.GameServices.Profile> LoginAsync(string email, string password);
+        System.Threading.Tasks.Task<GuessWhoClient.GameServices.ResponseOfProfileLorJNRyk> LoginAsync(string email, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/VerifyUserRegisteredByEmail", ReplyAction="http://tempuri.org/IAuthenticationService/VerifyUserRegisteredByEmailResponse")]
         bool VerifyUserRegisteredByEmail(string email);
@@ -328,19 +467,19 @@ namespace GuessWhoClient.GameServices {
                 base(binding, remoteAddress) {
         }
         
-        public bool RegisterUser(GuessWhoClient.GameServices.Profile user) {
+        public GuessWhoClient.GameServices.ResponseOfboolean RegisterUser(GuessWhoClient.GameServices.Profile user) {
             return base.Channel.RegisterUser(user);
         }
         
-        public System.Threading.Tasks.Task<bool> RegisterUserAsync(GuessWhoClient.GameServices.Profile user) {
+        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.ResponseOfboolean> RegisterUserAsync(GuessWhoClient.GameServices.Profile user) {
             return base.Channel.RegisterUserAsync(user);
         }
         
-        public GuessWhoClient.GameServices.Profile Login(string email, string password) {
+        public GuessWhoClient.GameServices.ResponseOfProfileLorJNRyk Login(string email, string password) {
             return base.Channel.Login(email, password);
         }
         
-        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.Profile> LoginAsync(string email, string password) {
+        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.ResponseOfProfileLorJNRyk> LoginAsync(string email, string password) {
             return base.Channel.LoginAsync(email, password);
         }
         

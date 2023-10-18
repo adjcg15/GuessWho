@@ -83,11 +83,9 @@
     <Compile Include="RegisterPage.xaml.cs">
       <DependentUpon>RegisterPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserCard.xaml.cs">
-      <DependentUpon>UserCard.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Utils\Authentication.cs" />
     <Compile Include="Utils\ImageTransformator.cs" />
+    <Compile Include="Utils\ServerResponse.cs" />
     <Page Include="ConfirmAccountPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -125,10 +123,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserCard.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -159,7 +153,10 @@
     <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ActiveUser.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.Profile.datasource">
+    <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ResponseOfboolean.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ResponseOfProfileLorJNRyk.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\GameServices\item.xsd">
@@ -169,6 +166,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\GameServices\item2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GameServices\item3.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\GameServices\UserService.wsdl" />

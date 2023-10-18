@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
+using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GuessWhoDataAccess
 {
@@ -18,18 +17,43 @@ namespace GuessWhoDataAccess
             }
         }
 
-        public static bool RegisterUser(User user, Account account)
+        public static Response<bool> RegisterUser(User user, Account account)
         {
-            using (var context = new GuessWhoContext())
+            Response<bool> response = new Response<bool>
             {
-                context.Accounts.Add(account);
-                context.SaveChanges();
+                StatusCode = ResponseStatus.OK,
+                Value = true
+            };
 
-                user.idAccount = account.idAccount;
-                context.Users.Add(user);
-                context.SaveChanges();
+            try
+            {
+                using (var context = new GuessWhoContext())
+                {
+                    context.Accounts.Add(account);
+                    context.SaveChanges();
+
+                    user.idAccount = account.idAccount;
+                    context.Users.Add(user);
+                    context.SaveChanges();
+                }
+            } 
+            catch (DbUpdateException ex)
+            {
+                response.StatusCode = ResponseStatus.UPDATE_ERROR;
+                response.Value = false;
             }
-            return true;
+            catch (DbEntityValidationException ex)
+            {
+                response.StatusCode = ResponseStatus.VALIDATION_ERROR;
+                response.Value = false;
+            }
+            catch (SqlException ex)
+            {
+                response.StatusCode = ResponseStatus.SQL_ERROR;
+                response.Value = false;
+            }
+
+            return response;
         }
 
         public static User GetUserByIdAccount(int idAccount)

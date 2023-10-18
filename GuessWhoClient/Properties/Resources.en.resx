@@ -357,12 +357,6 @@
   <data name="msgbRegisterRegisteredNicknameTitle" xml:space="preserve">
     <value>Nickname already registered</value>
   </data>
-  <data name="msgbRegistrationErrorMessage" xml:space="preserve">
-    <value>It was not possible to complete your registration, please try again later</value>
-  </data>
-  <data name="msgbRegistrationErrorTitle" xml:space="preserve">
-    <value>Registration error</value>
-  </data>
   <data name="msgbUserNotFound" xml:space="preserve">
     <value>Email and/or password are incorrect, please verify the information.</value>
   </data>
@@ -410,5 +404,23 @@
   </data>
   <data name="txtSignUpGlobal" xml:space="preserve">
     <value>Sign up</value>
+  </data>
+  <data name="txtSQLErrorMessage" xml:space="preserve">
+    <value>A connection error occurred and the application was unable to complete the request, please try again later.</value>
+  </data>
+  <data name="txtSQLErrorTitle" xml:space="preserve">
+    <value>Connection error</value>
+  </data>
+  <data name="txtUpdateErrorMessage" xml:space="preserve">
+    <value>The application failed to complete the request, please report the error and try again later.</value>
+  </data>
+  <data name="txtUpdateErrorTitle" xml:space="preserve">
+    <value>Update error</value>
+  </data>
+  <data name="txtValidationErrorMessage" xml:space="preserve">
+    <value>The application failed to complete the request due to a data format error, please report the error.</value>
+  </data>
+  <data name="txtValidationErrorTitle" xml:space="preserve">
+    <value>Invalid data</value>
   </data>
 </root>

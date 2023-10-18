@@ -2,12 +2,12 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Xml.Linq;
 using System.Net.Mail;
 using System.Net;
 using GuessWhoClient.GameServices;
 using GuessWhoClient.Properties;
 using System.Resources;
+using GuessWhoClient.Utils;
 
 namespace GuessWhoClient
 {
@@ -42,7 +42,7 @@ namespace GuessWhoClient
             generatedConfirmationCode = GenerateConfirmationCode(10);
             bool confirmationSent = SendConfirmationEmail(email, this.generatedConfirmationCode);
 
-            if(!confirmationSent)
+            if (!confirmationSent)
             {
                 MessageBox.Show(
                     resourceManager.GetString("msgbConfirmEmailSendingErrorMessage"),
@@ -73,17 +73,18 @@ namespace GuessWhoClient
             {
                 NickName = nickname,
                 Email = email,
-                Password = password,
+                Password = Authentication.HashPassword(password),
                 FullName = fullName,
                 Avatar = profileImage
             };
 
-            bool registered = authenticationServiceClient.RegisterUser(newUser);
-            if(!registered)
+            GameServices.ResponseOfboolean response = authenticationServiceClient.RegisterUser(newUser);
+            bool successRegister = response.Value;
+            if (!successRegister)
             {
                 MessageBox.Show(
-                    resourceManager.GetString("msgbRegistrationErrorMessage"),
-                    resourceManager.GetString("msgbRegistrationErrorTitle"),
+                    ServerResponse.GetMessageFromStatusCode(response.StatusCode),
+                    ServerResponse.GetTitleFromStatusCode(response.StatusCode),
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );

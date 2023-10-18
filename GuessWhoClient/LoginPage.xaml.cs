@@ -47,17 +47,18 @@ namespace GuessWhoClient
         private void ValidateUserCredentials(string email, string password)
         {
             GameServices.AuthenticationServiceClient authenticationServiceClient = new GameServices.AuthenticationServiceClient();
-            GameServices.Profile profile = authenticationServiceClient.Login(email, password);
+            GameServices.ResponseOfProfileLorJNRyk response = authenticationServiceClient.Login(email, password);
 
-            if (profile != null)
+            if (response.Value != null)
             {
+                GameServices.Profile profile = response.Value;
                 ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
                 MessageBox.Show(resourceManager.GetString("msgbWelcome1") + profile.FullName + resourceManager.GetString("msgbWelcome2"));
 
                 Console.WriteLine(profile.NickName);
-                ProfileSingleton.Instance = profile;
+                DataStore.Profile = profile;
 
-                Console.WriteLine(ProfileSingleton.Instance?.NickName);
+                Console.WriteLine(DataStore.Profile?.NickName);
                 GoToMainMenuUploaded();
             }
             else

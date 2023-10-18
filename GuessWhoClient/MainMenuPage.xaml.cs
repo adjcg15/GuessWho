@@ -1,6 +1,7 @@
 ﻿using GuessWhoClient.GameServices;
 using GuessWhoClient.Utils;
 using System;
+using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -38,11 +39,10 @@ namespace GuessWhoClient
 
             AuthenticationServiceClient authenticationServiceClient = new AuthenticationServiceClient();
 
-            Console.WriteLine(ProfileSingleton.Instance);
-            Console.WriteLine(ProfileSingleton.Instance?.NickName);
-            authenticationServiceClient.Logout(ProfileSingleton.Instance.NickName);
+            Console.WriteLine(DataStore.Profile?.NickName);
+            authenticationServiceClient.Logout(DataStore.Profile.NickName);
 
-            ProfileSingleton.Instance = null;
+            DataStore.Profile = null;
         }
 
         private void BtnQuickMatchClick(object sender, RoutedEventArgs e)
@@ -86,9 +86,9 @@ namespace GuessWhoClient
             BtnLeaderboard.Visibility = Visibility.Visible;
             BtnFriends.Visibility = Visibility.Visible;
 
-            lbNickname.Content = ProfileSingleton.Instance.NickName;
+            lbNickname.Content = DataStore.Profile.NickName;
 
-            BitmapImage profileImageSrc = ImageTransformator.GetBitmapImageFromByteArray(ProfileSingleton.Instance.Avatar);
+            BitmapImage profileImageSrc = ImageTransformator.GetBitmapImageFromByteArray(DataStore.Profile.Avatar);
             if (profileImageSrc != null)
             {
                 ImgProfilePicture.Source = profileImageSrc;
@@ -97,7 +97,7 @@ namespace GuessWhoClient
 
         private void ReloadLanguageResources()
         {
-            if(ProfileSingleton.Instance != null && TbBtnFriends.Visibility != Visibility.Collapsed)
+            if(DataStore.Profile != null && TbBtnFriends.Visibility != Visibility.Collapsed)
             {
                 TbBtnFriends.Text = Properties.Resources.btnFriends;
                 TbBtnLeaderboard.Text = Properties.Resources.btnLeaderboard;

@@ -1,35 +1,26 @@
 ﻿using GuessWhoClient.GameServices;
+using System.ServiceModel;
 
 namespace GuessWhoClient
 {
-    public class ProfileSingleton
+    public class DataStore
     {
-        private static Profile instance;
+        private static Profile profile;
 
-        public string NickName { get; set; }
-        public string FullName { get; set; }
-        public byte[] Avatar { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-
-        private ProfileSingleton()
+        private DataStore()
         {
-            NickName = string.Empty;
-            FullName = string.Empty;
-            Avatar = null;
-            Email = string.Empty;
-            Password = string.Empty;
+            profile = null;
         }
 
-        public static Profile Instance
+        public static Profile Profile
         {
             get
             {
-                return instance;
+                return profile;
             }
             set
             {
-                instance = value; 
+                profile = value; 
             }
         }
     }
