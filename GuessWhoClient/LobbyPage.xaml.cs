@@ -29,7 +29,7 @@ namespace GuessWhoClient
             InitializeComponent();
 
             InstanceContext context = new InstanceContext(this);
-            GameServices.UserServiceClient userServiceClient = new GameServices.UserServiceClient(context);
+            UserServiceClient userServiceClient = new UserServiceClient(context);
 
             userServiceClient.Subscribe();
             activeUsers = userServiceClient.GetActiveUsers().ToList();

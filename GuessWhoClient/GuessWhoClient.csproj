@@ -83,6 +83,9 @@
     <Compile Include="RegisterPage.xaml.cs">
       <DependentUpon>RegisterPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserCard.xaml.cs">
+      <DependentUpon>UserCard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\Authentication.cs" />
     <Compile Include="Utils\ImageTransformator.cs" />
     <Page Include="ConfirmAccountPage.xaml">
@@ -119,6 +122,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RegisterPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -227,6 +234,15 @@
   <ItemGroup>
     <Resource Include="Resources\email-invitation-icon.png" />
     <Resource Include="Resources\invitation-code-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\user-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\invite-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\cross-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
