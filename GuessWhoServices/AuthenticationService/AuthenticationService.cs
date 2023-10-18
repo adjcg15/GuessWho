@@ -4,20 +4,26 @@ namespace GuessWhoServices
 {
     public partial class GuessWhoService : IAuthenticationService
     {
-        public Profile Login(string email, string password)
+        public GuessWhoDataAccess.Response<Profile> Login(string email, string password)
         {
-            Account account = UserDAO.VerifyUserSession(email, password);
-
-            if(account == null)
+            GuessWhoDataAccess.Response<Profile> response = new GuessWhoDataAccess.Response<Profile>()
             {
-                return null;
+                StatusCode = ResponseStatus.OK,
+                Value = null
+            };
+
+            Account account = UserDAO.VerifyUserSession(email, password);
+            if (account == null)
+            {
+                response.StatusCode = ResponseStatus.VALIDATION_ERROR;
+                return response;
             }
 
             User user = UserDAO.GetUserByIdAccount(account.idAccount);
-
-            if(user == null)
+            if (user == null)
             {
-                return null;
+                response.StatusCode = ResponseStatus.VALIDATION_ERROR;
+                return response;
             }
 
             ActiveUser activeUser = new ActiveUser
@@ -27,7 +33,7 @@ namespace GuessWhoServices
             };
             GuessWhoService.UpdateUserStatus(activeUser, true);
 
-            return new Profile
+            response.Value = new Profile
             {
                 Email = account.email,
                 Password = account.password,
@@ -35,10 +41,10 @@ namespace GuessWhoServices
                 FullName = user.fullName,
                 Avatar = user.avatar,
             };
-
+            return response;
         }
 
-        public bool RegisterUser(Profile profile)
+        public GuessWhoDataAccess.Response<bool> RegisterUser(Profile profile)
         {
             User user = new User
             {

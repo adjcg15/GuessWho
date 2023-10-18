@@ -357,12 +357,6 @@
   <data name="msgbRegisterRegisteredNicknameTitle" xml:space="preserve">
     <value>Nombre de usuario registrado</value>
   </data>
-  <data name="msgbRegistrationErrorMessage" xml:space="preserve">
-    <value>No fue posible completar su registro, por favor intente de nuevo más tarde</value>
-  </data>
-  <data name="msgbRegistrationErrorTitle" xml:space="preserve">
-    <value>Error de registro</value>
-  </data>
   <data name="msgbUserNotFound" xml:space="preserve">
     <value>El correo y/o contraseña son incorrectas, por favor verifique la información</value>
   </data>
@@ -410,5 +404,23 @@
   </data>
   <data name="txtSignUpGlobal" xml:space="preserve">
     <value>Regístrate</value>
+  </data>
+  <data name="txtSQLErrorMessage" xml:space="preserve">
+    <value>Ocurrió un error de conexión y la aplicación no pudo completar la solicitud, intente más tarde.</value>
+  </data>
+  <data name="txtSQLErrorTitle" xml:space="preserve">
+    <value>Error de conexión</value>
+  </data>
+  <data name="txtUpdateErrorMessage" xml:space="preserve">
+    <value>La aplicación no logó completar la solicitud, por favor reporte el error e intente más tarde.</value>
+  </data>
+  <data name="txtUpdateErrorTitle" xml:space="preserve">
+    <value>Error de actualización</value>
+  </data>
+  <data name="txtValidationErrorMessage" xml:space="preserve">
+    <value>La aplicación no logró completar la solicitud debido a un error en el formato de los datos, por favor reporte el error.</value>
+  </data>
+  <data name="txtValidationErrorTitle" xml:space="preserve">
+    <value>Datos inválidos</value>
   </data>
 </root>
