@@ -42,7 +42,7 @@ namespace GuessWhoClient
             generatedConfirmationCode = GenerateConfirmationCode(10);
             bool confirmationSent = SendConfirmationEmail(email, this.generatedConfirmationCode);
 
-            if(!confirmationSent)
+            if (!confirmationSent)
             {
                 MessageBox.Show(
                     resourceManager.GetString("msgbConfirmEmailSendingErrorMessage"),
@@ -73,7 +73,7 @@ namespace GuessWhoClient
             {
                 NickName = nickname,
                 Email = email,
-                Password = password,
+                Password = Authentication.HashPassword(password),
                 FullName = fullName,
                 Avatar = profileImage
             };
