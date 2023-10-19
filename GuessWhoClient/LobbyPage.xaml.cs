@@ -1,6 +1,7 @@
 ﻿using GuessWhoClient.GameServices;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.ServiceModel;
 using System.Windows;
@@ -11,7 +12,7 @@ namespace GuessWhoClient
     public partial class LobbyPage : Page, GameServices.IUserServiceCallback
     {
         private GameServices.UserServiceClient userServiceClient;
-        private static List<ActiveUser> activeUsers = new List<ActiveUser>();
+        public ObservableCollection<ActiveUser> activeUsers { get; set; } = new ObservableCollection<ActiveUser>();
 
         public LobbyPage()
         {
@@ -19,18 +20,33 @@ namespace GuessWhoClient
 
             userServiceClient = new GameServices.UserServiceClient(new InstanceContext(this));
             userServiceClient.Subscribe();
-            activeUsers = userServiceClient.GetActiveUsers().ToList();
+            activeUsers = new ObservableCollection<ActiveUser>(userServiceClient.GetActiveUsers().ToList());
+
+            if (DataStore.Profile != null)
+            {
+                string nickname = DataStore.Profile.NickName;
+                activeUsers.Remove(activeUsers.FirstOrDefault(u => u.Nickname == nickname));
+            }
+
+            ListBoxActiveUsers.ItemsSource = activeUsers;
         }
 
         public void UserStatusChanged(ActiveUser user, bool isActive)
         {
             if (isActive)
             {
-                activeUsers.Add(user);
+                Application.Current.Dispatcher.Invoke(() => activeUsers.Add(user));
             }
             else
             {
-                activeUsers.Remove(activeUsers.Find(u => u.Nickname == user.Nickname));
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    var userToRemove = activeUsers.FirstOrDefault(u => u.Nickname == user.Nickname);
+                    if (userToRemove != null)
+                    {
+                        activeUsers.Remove(userToRemove);
+                    }
+                });
             }
         }
 

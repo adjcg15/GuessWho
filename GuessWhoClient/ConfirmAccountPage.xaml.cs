@@ -40,6 +40,7 @@ namespace GuessWhoClient
         {
             ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
             generatedConfirmationCode = GenerateConfirmationCode(10);
+            Console.WriteLine(generatedConfirmationCode);
             bool confirmationSent = SendConfirmationEmail(email, this.generatedConfirmationCode);
 
             if (!confirmationSent)

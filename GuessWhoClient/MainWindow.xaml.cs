@@ -8,5 +8,14 @@ namespace GuessWhoClient
         {
             InitializeComponent();
         }
+
+        private void NavigationWindowClosed(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if(DataStore.Profile !=  null)
+            {
+                GameServices.AuthenticationServiceClient authenticationServiceClient = new GameServices.AuthenticationServiceClient();
+                authenticationServiceClient.Logout(DataStore.Profile.NickName);
+            }
+        }
     }
 }
