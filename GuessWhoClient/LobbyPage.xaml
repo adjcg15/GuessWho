@@ -88,10 +88,28 @@
                 </Button>
             </Grid>
         </Border>
-        <ListBox x:Name="ListBoxActiveUsers" Margin="0,260,0,0" Grid.Column="1" BorderThickness="0,0,0,1" Background="{x:Null}" d:ItemsSource="{d:SampleData ItemCount=5}" >
+        <ListBox x:Name="ListBoxActiveUsers" Margin="0,260,0,-1" Grid.Column="1" BorderThickness="0,0,0,1" Background="{x:Null}" 
+         MaxHeight="250" HorizontalAlignment="Center" VerticalAlignment="Top" d:ItemsSource="{d:SampleData ItemCount=5}">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.Template>
+                <ControlTemplate>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ItemsPresenter />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ListBox.Template>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="IsSelected" Value="False" />
+                </Style>
+            </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border Background="#FFE9B2" CornerRadius="30" Width="400" Height="60">
+                    <Border Background="#FFE9B2" CornerRadius="30" Width="400" Height="60" HorizontalAlignment="Center">
                         <Grid>
                             <StackPanel Orientation="Horizontal">
                                 <Ellipse Width="50" Height="50" Margin="6,5,5,5">
@@ -111,6 +129,5 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-
     </Grid>
 </Page>

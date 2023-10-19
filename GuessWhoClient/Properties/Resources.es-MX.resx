@@ -361,10 +361,10 @@
     <value>El correo y/o contraseña son incorrectas, por favor verifique la información</value>
   </data>
   <data name="msgbWelcome1" xml:space="preserve">
-    <value>Bienvenido/a</value>
+    <value>Bienvenido/a </value>
   </data>
   <data name="msgbWelcome2" xml:space="preserve">
-    <value>a Adivina Quién</value>
+    <value> a Adivina Quién</value>
   </data>
   <data name="msgbWrongConfirmationCodeMessage" xml:space="preserve">
     <value>El código introducido no coincide con el código generado</value>
