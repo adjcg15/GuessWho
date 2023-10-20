@@ -153,13 +153,13 @@
     <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ActiveUser.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ResponseOfboolean.datasource">
+    <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.booleanResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ResponseOfProfileLorJNRyk.datasource">
+    <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ProfileResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ResponseOfUserT0fZ_PjoL.datasource">
+    <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.UserResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\GameServices\item.xsd">
