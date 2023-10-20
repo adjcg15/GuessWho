@@ -134,8 +134,8 @@ namespace GuessWhoClient
             }
 
             GameServices.AuthenticationServiceClient authenticationServiceClient = new GameServices.AuthenticationServiceClient();
-            bool userEmailAlreadyRegistered = authenticationServiceClient.VerifyUserRegisteredByEmail(email);
-            if (userEmailAlreadyRegistered)
+            GameServices.UserResponse emailValidation = authenticationServiceClient.VerifyUserRegisteredByEmail(email);
+            if (emailValidation.StatusCode != GameServices.ResponseStatus.OK)
             {
                 MessageBox.Show(
                     resourceManager.GetString("msgbRegisterRegisteredEmailMessage"),
@@ -146,8 +146,8 @@ namespace GuessWhoClient
                 return;
             }
 
-            bool userNicknameAlreadyRegistered = authenticationServiceClient.VerifyUserRegisteredByNickName(nickname);
-            if (userNicknameAlreadyRegistered)
+            GameServices.UserResponse nicknameValidation = authenticationServiceClient.VerifyUserRegisteredByNickName(nickname);
+            if (nicknameValidation.StatusCode != GameServices.ResponseStatus.OK)
             {
                 MessageBox.Show(
                     resourceManager.GetString("msgbRegisterRegisteredNicknameMessage"),

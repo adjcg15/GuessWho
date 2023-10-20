@@ -47,7 +47,7 @@ namespace GuessWhoClient
         private void ValidateUserCredentials(string email, string password)
         {
             GameServices.AuthenticationServiceClient authenticationServiceClient = new GameServices.AuthenticationServiceClient();
-            GameServices.ResponseOfProfileLorJNRyk response = authenticationServiceClient.Login(email, password);
+            GameServices.ProfileResponse response = authenticationServiceClient.Login(email, password);
 
             if (response.Value != null)
             {

@@ -78,7 +78,7 @@ namespace GuessWhoClient
                 Avatar = profileImage
             };
 
-            GameServices.ResponseOfboolean response = authenticationServiceClient.RegisterUser(newUser);
+            GameServices.booleanResponse response = authenticationServiceClient.RegisterUser(newUser);
             bool successRegister = response.Value;
             if (!successRegister)
             {

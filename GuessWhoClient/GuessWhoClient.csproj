@@ -159,6 +159,9 @@
     <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ResponseOfProfileLorJNRyk.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ResponseOfUserT0fZ_PjoL.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\GameServices\item.xsd">
       <SubType>Designer</SubType>
     </None>

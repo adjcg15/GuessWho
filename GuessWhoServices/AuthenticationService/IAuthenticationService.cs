@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using GuessWhoDataAccess;
+using System.Runtime.Serialization;
 using System.ServiceModel;
 
 namespace GuessWhoServices
@@ -7,16 +8,16 @@ namespace GuessWhoServices
     public interface IAuthenticationService
     {
         [OperationContract]
-        GuessWhoDataAccess.Response<bool> RegisterUser(Profile user);
+        Response<bool> RegisterUser(Profile user);
 
         [OperationContract]
-        GuessWhoDataAccess.Response<Profile> Login(string email, string password);
+        Response<Profile> Login(string email, string password);
 
         [OperationContract]
-        bool VerifyUserRegisteredByEmail(string email);
+        Response<User> VerifyUserRegisteredByEmail(string email);
 
         [OperationContract]
-        bool VerifyUserRegisteredByNickName(string nickname);
+        Response<User> VerifyUserRegisteredByNickName(string nickname);
         [OperationContract]
         void Logout(string nickname);
     }
