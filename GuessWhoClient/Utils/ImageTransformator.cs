@@ -7,7 +7,7 @@ namespace GuessWhoClient.Utils
     {
         public static byte[] GetImageBytesFromImagePath(string imagePath)
         {
-            if (imagePath == "")
+            if (string.IsNullOrEmpty(imagePath))
             {
                 return null;
             }

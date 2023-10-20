@@ -655,6 +655,24 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a La imagen debe tener un tamaño de 20kb o menos..
+        /// </summary>
+        public static string msgbRegisterAlertImageSizeMessage {
+            get {
+                return ResourceManager.GetString("msgbRegisterAlertImageSizeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Tamaño de imagen excedido.
+        /// </summary>
+        public static string msgbRegisterAlertImageSizeTitle {
+            get {
+                return ResourceManager.GetString("msgbRegisterAlertImageSizeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Ingrese información en cada uno de los campos para poder continuar.
         /// </summary>
         public static string msgbRegisterEmptyFieldsMessage {
@@ -669,6 +687,24 @@ namespace GuessWhoClient.Properties {
         public static string msgbRegisterEmptyFieldsTitle {
             get {
                 return ResourceManager.GetString("msgbRegisterEmptyFieldsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ocurrió un error al tratar de recuperar la imagen, intente nuevamente.
+        /// </summary>
+        public static string msgbRegisterImageNotFoundMessage {
+            get {
+                return ResourceManager.GetString("msgbRegisterImageNotFoundMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Imagen no encontrada.
+        /// </summary>
+        public static string msgbRegisterImageNotFoundTitle {
+            get {
+                return ResourceManager.GetString("msgbRegisterImageNotFoundTitle", resourceCulture);
             }
         }
         

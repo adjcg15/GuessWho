@@ -27,9 +27,43 @@ namespace GuessWhoClient
             if (fileDialog.ShowDialog() == true)
             {
                 imagePath = fileDialog.FileName;
+                UpdateInterfaceImageElement();
+            }
+        }
 
-                BitmapImage bitmapImage = new BitmapImage(new Uri(imagePath));
-                ImageProfile.Source = bitmapImage;
+        private void UpdateInterfaceImageElement()
+        {
+            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
+
+            try
+            {
+                FileInfo fileInfo = new FileInfo(imagePath);
+                long fileSizeInBytes = fileInfo.Length;
+                long fileSizeInKilobytes = fileSizeInBytes / 1024;
+
+                if (fileSizeInKilobytes <= 20)
+                {
+                    BitmapImage bitmapImage = new BitmapImage(new Uri(imagePath));
+                    ImageProfile.Source = bitmapImage;
+                }
+                else
+                {
+                    MessageBox.Show(
+                        resourceManager.GetString("msgbRegisterAlertImageSizeMessage"),
+                        resourceManager.GetString("msgbRegisterAlertImageSizeTitle"),
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning
+                    );
+                }
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show(
+                    resourceManager.GetString("msgbRegisterImageNotFoundMessage"),
+                    resourceManager.GetString("msgbRegisterImageNotFoundTitle"),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
             }
         }
 
