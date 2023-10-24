@@ -4,7 +4,7 @@ namespace GuessWhoServices
 {
     public partial class GuessWhoService : IAuthenticationService
     {
-        public GuessWhoDataAccess.Response<Profile> Login(string email, string password)
+        public Response<Profile> Login(string email, string password)
         {
             GuessWhoDataAccess.Response<Profile> response = new GuessWhoDataAccess.Response<Profile>()
             {
@@ -44,7 +44,7 @@ namespace GuessWhoServices
             return response;
         }
 
-        public GuessWhoDataAccess.Response<bool> RegisterUser(Profile profile)
+        public Response<bool> RegisterUser(Profile profile)
         {
             User user = new User
             {
@@ -61,16 +61,16 @@ namespace GuessWhoServices
             return UserDAO.RegisterUser(user, account);
         }
 
-        public bool VerifyUserRegisteredByEmail(string email)
+        public Response<User> VerifyUserRegisteredByEmail(string email)
         {
-            User userStored = UserDAO.GetUserByEmail(email);
-            return userStored != null;
+            Response<User> userStored = UserDAO.GetUserByEmail(email);
+            return userStored;
         }
 
-        public bool VerifyUserRegisteredByNickName(string nickname)
+        public Response<User> VerifyUserRegisteredByNickName(string nickname)
         {
-            User userStored = UserDAO.GetUserByNickName(nickname);
-            return userStored != null;
+            Response<User> userStored = UserDAO.GetUserByNickName(nickname);
+            return userStored;
         }
 
         public void Logout(string nickname)

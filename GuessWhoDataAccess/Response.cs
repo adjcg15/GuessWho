@@ -2,7 +2,7 @@
 
 namespace GuessWhoDataAccess
 {
-    [DataContract]
+    [DataContract(Name = "{0}Response")]
     public class Response<T>
     {
         private ResponseStatus statusCode;

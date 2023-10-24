@@ -27,9 +27,43 @@ namespace GuessWhoClient
             if (fileDialog.ShowDialog() == true)
             {
                 imagePath = fileDialog.FileName;
+                UpdateInterfaceImageElement();
+            }
+        }
 
-                BitmapImage bitmapImage = new BitmapImage(new Uri(imagePath));
-                ImageProfile.Source = bitmapImage;
+        private void UpdateInterfaceImageElement()
+        {
+            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
+
+            try
+            {
+                FileInfo fileInfo = new FileInfo(imagePath);
+                long fileSizeInBytes = fileInfo.Length;
+                long fileSizeInKilobytes = fileSizeInBytes / 1024;
+
+                if (fileSizeInKilobytes <= 20)
+                {
+                    BitmapImage bitmapImage = new BitmapImage(new Uri(imagePath));
+                    ImageProfile.Source = bitmapImage;
+                }
+                else
+                {
+                    MessageBox.Show(
+                        resourceManager.GetString("msgbRegisterAlertImageSizeMessage"),
+                        resourceManager.GetString("msgbRegisterAlertImageSizeTitle"),
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning
+                    );
+                }
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show(
+                    resourceManager.GetString("msgbRegisterImageNotFoundMessage"),
+                    resourceManager.GetString("msgbRegisterImageNotFoundTitle"),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
             }
         }
 
@@ -100,8 +134,8 @@ namespace GuessWhoClient
             }
 
             GameServices.AuthenticationServiceClient authenticationServiceClient = new GameServices.AuthenticationServiceClient();
-            bool userEmailAlreadyRegistered = authenticationServiceClient.VerifyUserRegisteredByEmail(email);
-            if (userEmailAlreadyRegistered)
+            GameServices.UserResponse emailValidation = authenticationServiceClient.VerifyUserRegisteredByEmail(email);
+            if (emailValidation.StatusCode != GameServices.ResponseStatus.OK)
             {
                 MessageBox.Show(
                     resourceManager.GetString("msgbRegisterRegisteredEmailMessage"),
@@ -112,8 +146,8 @@ namespace GuessWhoClient
                 return;
             }
 
-            bool userNicknameAlreadyRegistered = authenticationServiceClient.VerifyUserRegisteredByNickName(nickname);
-            if (userNicknameAlreadyRegistered)
+            GameServices.UserResponse nicknameValidation = authenticationServiceClient.VerifyUserRegisteredByNickName(nickname);
+            if (nicknameValidation.StatusCode != GameServices.ResponseStatus.OK)
             {
                 MessageBox.Show(
                     resourceManager.GetString("msgbRegisterRegisteredNicknameMessage"),

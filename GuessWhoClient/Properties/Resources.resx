@@ -315,11 +315,23 @@
   <data name="msgbEmptyField" xml:space="preserve">
     <value>El correo electrónico y la contraseña son requeridos</value>
   </data>
+  <data name="msgbRegisterAlertImageSizeMessage" xml:space="preserve">
+    <value>La imagen debe tener un tamaño de 20kb o menos.</value>
+  </data>
+  <data name="msgbRegisterAlertImageSizeTitle" xml:space="preserve">
+    <value>Tamaño de imagen excedido</value>
+  </data>
   <data name="msgbRegisterEmptyFieldsMessage" xml:space="preserve">
     <value>Ingrese información en cada uno de los campos para poder continuar</value>
   </data>
   <data name="msgbRegisterEmptyFieldsTitle" xml:space="preserve">
     <value>Campos vacíos</value>
+  </data>
+  <data name="msgbRegisterImageNotFoundMessage" xml:space="preserve">
+    <value>Ocurrió un error al tratar de recuperar la imagen, intente nuevamente</value>
+  </data>
+  <data name="msgbRegisterImageNotFoundTitle" xml:space="preserve">
+    <value>Imagen no encontrada</value>
   </data>
   <data name="msgbRegisterInsecurePasswordMessage" xml:space="preserve">
     <value>La contraseña debe tener mínimo 8 caracteres y, al menos, una letra minúscula, una letra mayúscula, un número y un caracter especial (¡, @, -, $, #, %, _, etc.).</value>

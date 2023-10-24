@@ -66,28 +66,58 @@ namespace GuessWhoDataAccess
             }
         }
 
-        public static User GetUserByEmail(string email)
+        public static Response<User> GetUserByEmail(string email)
         {
-            using (var context = new GuessWhoContext())
+            Response<User> response = new Response<User>
             {
-                var account = context.Accounts.FirstOrDefault(a => a.email == email);
-                if(account == null)
-                {
-                    return null;
-                }
+                StatusCode = ResponseStatus.OK,
+                Value = null
+            };
 
-                var user = context.Users.FirstOrDefault(a => a.idAccount == account.idAccount);
-                return user;
+            try
+            {
+                using (var context = new GuessWhoContext())
+                {
+                    var account = context.Accounts.FirstOrDefault(a => a.email == email);
+                    if (account == null)
+                    {
+                        return null;
+                    }
+
+                    var user = context.Users.FirstOrDefault(a => a.idAccount == account.idAccount);
+                    response.Value = user;
+                }
             }
+            catch (SqlException ex)
+            {
+                response.StatusCode = ResponseStatus.SQL_ERROR;
+            }
+
+            return response;
         }
 
-        public static User GetUserByNickName(string nickname)
+        public static Response<User> GetUserByNickName(string nickname)
         {
-            using (var context = new GuessWhoContext())
+            Response<User> response = new Response<User>
             {
-                var user = context.Users.FirstOrDefault(a => a.nickname == nickname);
-                return user;
+                StatusCode = ResponseStatus.OK,
+                Value = null
+            };
+
+            try
+            {
+                using (var context = new GuessWhoContext())
+                {
+                    var user = context.Users.FirstOrDefault(a => a.nickname == nickname);
+                    response.Value = user;
+                }
             }
+            catch (SqlException ex)
+            {
+                response.StatusCode = ResponseStatus.SQL_ERROR;
+            }
+
+            return response;
         }
     }
 }

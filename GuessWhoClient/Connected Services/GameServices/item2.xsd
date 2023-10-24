@@ -57,7 +57,7 @@
   <xs:element name="RegisterUserResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="RegisterUserResult" nillable="true" type="q4:ResponseOfboolean" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="RegisterUserResult" nillable="true" type="q4:booleanResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -72,7 +72,7 @@
   <xs:element name="LoginResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="LoginResult" nillable="true" type="q5:ResponseOfProfileLorJNRyk" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="LoginResult" nillable="true" type="q5:ProfileResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -86,7 +86,7 @@
   <xs:element name="VerifyUserRegisteredByEmailResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="VerifyUserRegisteredByEmailResult" type="xs:boolean" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="VerifyUserRegisteredByEmailResult" nillable="true" type="q6:UserResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -100,7 +100,7 @@
   <xs:element name="VerifyUserRegisteredByNickNameResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="VerifyUserRegisteredByNickNameResult" type="xs:boolean" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="VerifyUserRegisteredByNickNameResult" nillable="true" type="q7:UserResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

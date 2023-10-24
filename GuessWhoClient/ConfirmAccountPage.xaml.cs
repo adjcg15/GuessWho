@@ -40,9 +40,8 @@ namespace GuessWhoClient
         {
             ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
             generatedConfirmationCode = GenerateConfirmationCode(10);
-            Console.WriteLine(generatedConfirmationCode);
-            bool confirmationSent = SendConfirmationEmail(email, this.generatedConfirmationCode);
 
+            bool confirmationSent = SendConfirmationEmail(email, generatedConfirmationCode);
             if (!confirmationSent)
             {
                 MessageBox.Show(
@@ -79,7 +78,7 @@ namespace GuessWhoClient
                 Avatar = profileImage
             };
 
-            GameServices.ResponseOfboolean response = authenticationServiceClient.RegisterUser(newUser);
+            GameServices.booleanResponse response = authenticationServiceClient.RegisterUser(newUser);
             bool successRegister = response.Value;
             if (!successRegister)
             {
@@ -114,7 +113,7 @@ namespace GuessWhoClient
         private static bool SendConfirmationEmail(string email, string code)
         {
             ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
-            bool successSend = true;
+            bool successSending = true;
 
             try
             {
@@ -135,10 +134,10 @@ namespace GuessWhoClient
             } 
             catch(SmtpException ex)
             {
-                successSend = false;
+                successSending = false;
             }
 
-            return successSend;
+            return successSending;
         }
     }
 }
