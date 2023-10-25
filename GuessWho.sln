@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuessWhoServices", "GuessWh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuessWhoDataAccess", "GuessWhoDataAccess\GuessWhoDataAccess.csproj", "{F4A0F8A3-05A5-4FC2-B660-939C26B85DF5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuessWhoTests", "GuessWhoTests\GuessWhoTests.csproj", "{34166DFA-9AAA-403E-ACB6-AE4C73ABB8F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{F4A0F8A3-05A5-4FC2-B660-939C26B85DF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4A0F8A3-05A5-4FC2-B660-939C26B85DF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4A0F8A3-05A5-4FC2-B660-939C26B85DF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34166DFA-9AAA-403E-ACB6-AE4C73ABB8F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34166DFA-9AAA-403E-ACB6-AE4C73ABB8F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34166DFA-9AAA-403E-ACB6-AE4C73ABB8F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34166DFA-9AAA-403E-ACB6-AE4C73ABB8F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
