@@ -50,5 +50,77 @@ namespace GuessWhoTests.ClientTests.Utils
 
             Assert.False(Authentication.IsValidEmail(email));
         }
+
+        [Fact]
+        public void Authentication_IsSecurePassword_SecurePasswordIsValid()
+        {
+            string password = "Jual_killer1";
+
+            Assert.True(Authentication.IsSecurePassword(password));
+        }
+
+        [Fact]
+        public void Authentication_IsSecurePassword_PasswordWithoutEightCharactersIsInsecure()
+        {
+            string password = "hola";
+
+            Assert.False(Authentication.IsSecurePassword(password));
+        }
+
+        [Fact]
+        public void Authentication_IsSecurePassword_PasswordWithoutNumberIsInsecure()
+        {
+            string password = "holamundo";
+
+            Assert.False(Authentication.IsSecurePassword(password));
+        }
+
+        [Fact]
+        public void Authentication_IsSecurePassword_PasswordWithoutCapitalLetterIsInsecure()
+        {
+            string password = "holamundo0";
+
+            Assert.False(Authentication.IsSecurePassword(password));
+        }
+
+        [Fact]
+        public void Authentication_IsSecurePassword_PasswordWithoutSpecialCharacterIsInsecure()
+        {
+            string password = "Holamundo0";
+
+            Assert.False(Authentication.IsSecurePassword(password));
+        }
+
+        [Fact]
+        public void Authentication_IsSecurePassword_EmptyPasswordInvalid()
+        {
+            string password = "";
+
+            Assert.False(Authentication.IsSecurePassword(password));
+        }
+
+        [Fact]
+        public void Authentication_IsValidNickname_ValidNickname()
+        {
+            string password = "_777JUAN777_";
+
+            Assert.True(Authentication.IsValidNickname(password));
+        }
+
+        [Fact]
+        public void Authentication_IsValidNickname_NicknameWithSpecialCharacterInvalid()
+        {
+            string password = "@777JUAN777@";
+
+            Assert.False(Authentication.IsValidNickname(password));
+        }
+
+        [Fact]
+        public void Authentication_IsValidNickname_EmptyNicknameInvalid()
+        {
+            string password = "";
+
+            Assert.False(Authentication.IsValidNickname(password));
+        }
     }
 }

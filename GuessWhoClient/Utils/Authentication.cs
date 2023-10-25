@@ -57,7 +57,7 @@ namespace GuessWhoClient.Utils
 
         public static bool IsValidNickname(string nickname)
         {
-            string pattern = @"^[a-zA-Z0-9_]*$";
+            string pattern = @"^[a-zA-Z0-9_]+$";
             return Regex.IsMatch(nickname, pattern);
         }
     }
