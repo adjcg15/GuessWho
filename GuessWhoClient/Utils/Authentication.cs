@@ -28,15 +28,25 @@ namespace GuessWhoClient.Utils
         }
         public static bool IsValidEmail(string email)
         {
-            try
+            bool isValidEmail = true;
+            if(string.IsNullOrEmpty(email))
             {
-                MailAddress mailAddress = new MailAddress(email);
-                return true;
-            }
-            catch (FormatException)
+                isValidEmail = false;
+            } 
+            else
             {
-                return false;
+                try
+                {
+                    MailAddress mailAddress = new MailAddress(email);
+                    isValidEmail = true;
+                }
+                catch (FormatException)
+                {
+                    isValidEmail = false;
+                }
             }
+
+            return isValidEmail;
         }
 
         public static bool IsSecurePassword(string password)
