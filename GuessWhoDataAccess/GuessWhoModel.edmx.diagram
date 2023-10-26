@@ -4,10 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="aa31c1c5f823400891f02b16e61e8e7f" Name="Diagram1">
-        <EntityTypeShape EntityType="GuessWhoModel.Account" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="GuessWhoModel.User" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+      <Diagram DiagramId="aa31c1c5f823400891f02b16e61e8e7f" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="GuessWhoModel.Account" Width="1.5" PointX="1.625" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GuessWhoModel.User" Width="1.5" PointX="3.875" PointY="3.25" IsExpanded="true" />
         <AssociationConnector Association="GuessWhoModel.FK_users_accounts" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="GuessWhoModel.Friendship" Width="1.5" PointX="6.75" PointY="3.375" />
+        <EntityTypeShape EntityType="GuessWhoModel.Match" Width="1.5" PointX="3.875" PointY="0.5" />
+        <AssociationConnector Association="GuessWhoModel.FK_friendships_users" />
+        <AssociationConnector Association="GuessWhoModel.FK_friendships_users1" />
+        <AssociationConnector Association="GuessWhoModel.FK_matches_users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

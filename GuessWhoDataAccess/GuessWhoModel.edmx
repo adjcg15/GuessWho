@@ -4,14 +4,33 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="GuessWhoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="GuessWhoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Accounts">
           <Key>
             <PropertyRef Name="idAccount" />
           </Key>
           <Property Name="idAccount" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="email" Type="nvarchar" MaxLength="255" />
-          <Property Name="password" Type="char" MaxLength="32" />
+          <Property Name="password" Type="char" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="Friendships">
+          <Key>
+            <PropertyRef Name="idFriendship" />
+          </Key>
+          <Property Name="idFriendship" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idFriendRequester" Type="int" Nullable="false" />
+          <Property Name="idFriendRequested" Type="int" Nullable="false" />
+          <Property Name="status" Type="nvarchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="Matches">
+          <Key>
+            <PropertyRef Name="idMatch" />
+          </Key>
+          <Property Name="idMatch" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="invitationCode" Type="char" MaxLength="4" />
+          <Property Name="status" Type="nvarchar" MaxLength="45" />
+          <Property Name="score" Type="int" />
+          <Property Name="idWinner" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -20,9 +39,45 @@
           <Property Name="idUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="nickname" Type="nvarchar" MaxLength="20" />
           <Property Name="fullName" Type="nvarchar" MaxLength="255" />
-          <Property Name="avatar" Type="image" />
+          <Property Name="avatar" Type="varbinary(max)" />
           <Property Name="idAccount" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_friendships_users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Friendships" Type="Self.Friendships" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="Friendships">
+              <PropertyRef Name="idFriendRequester" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_friendships_users1">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Friendships" Type="Self.Friendships" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="Friendships">
+              <PropertyRef Name="idFriendRequested" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_matches_users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Matches" Type="Self.Matches" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="Matches">
+              <PropertyRef Name="idWinner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_users_accounts">
           <End Role="Accounts" Type="Self.Accounts" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -39,14 +94,27 @@
         </Association>
         <EntityContainer Name="GuessWhoModelStoreContainer">
           <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Friendships" EntityType="Self.Friendships" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Matches" EntityType="Self.Matches" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_friendships_users" Association="Self.FK_friendships_users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Friendships" EntitySet="Friendships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_friendships_users1" Association="Self.FK_friendships_users1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Friendships" EntitySet="Friendships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_matches_users" Association="Self.FK_matches_users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Matches" EntitySet="Matches" />
+          </AssociationSet>
           <AssociationSet Name="FK_users_accounts" Association="Self.FK_users_accounts">
             <End Role="Accounts" EntitySet="Accounts" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="GuessWhoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -69,6 +137,9 @@
           <Property Name="avatar" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="idAccount" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Account" Relationship="Self.FK_users_accounts" FromRole="Users" ToRole="Accounts" />
+          <NavigationProperty Name="Friendships" Relationship="GuessWhoModel.FK_friendships_users" FromRole="User" ToRole="Friendship" />
+          <NavigationProperty Name="Friendships1" Relationship="GuessWhoModel.FK_friendships_users1" FromRole="User" ToRole="Friendship" />
+          <NavigationProperty Name="Matches" Relationship="GuessWhoModel.FK_matches_users" FromRole="User" ToRole="Match" />
         </EntityType>
         <Association Name="FK_users_accounts">
           <End Role="Accounts" Type="Self.Account" Multiplicity="1">
@@ -91,7 +162,79 @@
             <End Role="Accounts" EntitySet="Accounts" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="Friendships" EntityType="GuessWhoModel.Friendship" />
+          <EntitySet Name="Matches" EntityType="GuessWhoModel.Match" />
+          <AssociationSet Name="FK_friendships_users" Association="GuessWhoModel.FK_friendships_users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Friendship" EntitySet="Friendships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_friendships_users1" Association="GuessWhoModel.FK_friendships_users1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Friendship" EntitySet="Friendships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_matches_users" Association="GuessWhoModel.FK_matches_users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Match" EntitySet="Matches" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Friendship">
+          <Key>
+            <PropertyRef Name="idFriendship" />
+          </Key>
+          <Property Name="idFriendship" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idFriendRequester" Type="Int32" Nullable="false" />
+          <Property Name="idFriendRequested" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="GuessWhoModel.FK_friendships_users" FromRole="Friendship" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="GuessWhoModel.FK_friendships_users1" FromRole="Friendship" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Match">
+          <Key>
+            <PropertyRef Name="idMatch" />
+          </Key>
+          <Property Name="idMatch" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="invitationCode" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
+          <Property Name="score" Type="Int32" />
+          <Property Name="idWinner" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="GuessWhoModel.FK_matches_users" FromRole="Match" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_friendships_users">
+          <End Type="GuessWhoModel.User" Role="User" Multiplicity="1" />
+          <End Type="GuessWhoModel.Friendship" Role="Friendship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="Friendship">
+              <PropertyRef Name="idFriendRequester" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_friendships_users1">
+          <End Type="GuessWhoModel.User" Role="User" Multiplicity="1" />
+          <End Type="GuessWhoModel.Friendship" Role="Friendship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="Friendship">
+              <PropertyRef Name="idFriendRequested" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_matches_users">
+          <End Type="GuessWhoModel.User" Role="User" Multiplicity="1" />
+          <End Type="GuessWhoModel.Match" Role="Match" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="Match">
+              <PropertyRef Name="idWinner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -115,6 +258,27 @@
                 <ScalarProperty Name="fullName" ColumnName="fullName" />
                 <ScalarProperty Name="avatar" ColumnName="avatar" />
                 <ScalarProperty Name="idAccount" ColumnName="idAccount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Friendships">
+            <EntityTypeMapping TypeName="GuessWhoModel.Friendship">
+              <MappingFragment StoreEntitySet="Friendships">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="idFriendRequested" ColumnName="idFriendRequested" />
+                <ScalarProperty Name="idFriendRequester" ColumnName="idFriendRequester" />
+                <ScalarProperty Name="idFriendship" ColumnName="idFriendship" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Matches">
+            <EntityTypeMapping TypeName="GuessWhoModel.Match">
+              <MappingFragment StoreEntitySet="Matches">
+                <ScalarProperty Name="idWinner" ColumnName="idWinner" />
+                <ScalarProperty Name="score" ColumnName="score" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="invitationCode" ColumnName="invitationCode" />
+                <ScalarProperty Name="idMatch" ColumnName="idMatch" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
