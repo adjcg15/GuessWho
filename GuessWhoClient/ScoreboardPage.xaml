@@ -47,8 +47,7 @@
                     Content="{x:Static p:Resources.lbEmptyScoreboard}"/>
             </Border>
             
-            <DataGrid 
-                Visibility="Collapsed"
+            <DataGrid
                 Style="{DynamicResource Table}" 
                 ColumnHeaderStyle="{DynamicResource TableColumnHeader}" 
                 CellStyle="{DynamicResource TableCell}"
