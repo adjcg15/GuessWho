@@ -259,6 +259,15 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Buscar.
+        /// </summary>
+        public static string btnSearch {
+            get {
+                return ResourceManager.GetString("btnSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Comenzar juego.
         /// </summary>
         public static string btnStartGame {

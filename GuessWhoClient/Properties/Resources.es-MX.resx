@@ -183,6 +183,9 @@
   <data name="btnReportPlayer" xml:space="preserve">
     <value>Reportar jugador</value>
   </data>
+  <data name="btnSearch" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
   <data name="btnStartGame" xml:space="preserve">
     <value>Comenzar juego</value>
   </data>
