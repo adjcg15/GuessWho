@@ -34,7 +34,6 @@ namespace GuessWhoClient
             BtnLogin.Visibility = Visibility.Visible;
             BtnRegister.Visibility = Visibility.Visible;
             BorderProfile.Visibility = Visibility.Collapsed;
-            BtnLeaderboard.Visibility = Visibility.Collapsed;
             BtnFriends.Visibility = Visibility.Collapsed;
 
             AuthenticationServiceClient authenticationServiceClient = new AuthenticationServiceClient();
@@ -53,7 +52,8 @@ namespace GuessWhoClient
 
         private void BtnLeaderboardClick(object sender, RoutedEventArgs e)
         {
-
+            ScoreboardPage scoreboardPage = new ScoreboardPage();
+            this.NavigationService.Navigate(scoreboardPage);
         }
 
         private void BtnJoinMatchClick(object sender, RoutedEventArgs e)
@@ -83,7 +83,6 @@ namespace GuessWhoClient
             BtnLogin.Visibility = Visibility.Collapsed;
             BtnRegister.Visibility = Visibility.Collapsed;
             BorderProfile.Visibility = Visibility.Visible;
-            BtnLeaderboard.Visibility = Visibility.Visible;
             BtnFriends.Visibility = Visibility.Visible;
 
             lbNickname.Content = DataStore.Profile.NickName;

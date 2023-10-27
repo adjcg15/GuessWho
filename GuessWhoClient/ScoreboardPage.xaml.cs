@@ -17,11 +17,11 @@ namespace GuessWhoClient
         public string Score { get; set; }
     }
 
-    public partial class Scoreboard : Page
+    public partial class ScoreboardPage : Page
     {
         private ObservableCollection<GameServices.TopPlayer> topPlayers { get; set; }
         
-        public Scoreboard()
+        public ScoreboardPage()
         {
             InitializeComponent();
             LoadBestPlayers();
