@@ -24,21 +24,37 @@ namespace GuessWhoClient
         public ScoreboardPage()
         {
             InitializeComponent();
-            LoadBestPlayers();
+            LoadBestPlayers("", 100);
         }
 
-        private void LoadBestPlayers()
+        private void BtnSearchPlayersClick(object sender, RoutedEventArgs e)
+        {
+            string query = TbSearchQuery.Text;
+            LoadBestPlayers(query, 10);
+        }
+
+        private void LoadBestPlayers(string query, int numberOfPlayers)
         {
             var userServiceClient = new GameServices.PlayerServiceClient();
-            var response = userServiceClient.GetBestPlayers(10);
+            var response = userServiceClient.GetBestPlayers(query, numberOfPlayers);
 
             if (response.StatusCode == GameServices.ResponseStatus.OK)
             {
-                topPlayers = new ObservableCollection<GameServices.TopPlayer>(response.Value.ToList());
-                DataGridPlayers.ItemsSource = topPlayers;
+                if(response.Value.Length > 0)
+                {
+                    topPlayers = new ObservableCollection<GameServices.TopPlayer>(response.Value.ToList());
+                    DataGridPlayers.ItemsSource = topPlayers;
+                    ShowScoreboard();
+                }
+                else
+                {
+                    ShowEmptyScoreboardMessage();
+                }
+                
             }
             else
             {
+                ShowEmptyScoreboardMessage();
                 MessageBox.Show(
                     ServerResponse.GetMessageFromStatusCode(response.StatusCode),
                     ServerResponse.GetTitleFromStatusCode(response.StatusCode),
@@ -46,6 +62,18 @@ namespace GuessWhoClient
                     MessageBoxImage.Warning
                 );
             }
+        }
+
+        private void ShowEmptyScoreboardMessage()
+        {
+            DataGridPlayers.Visibility = Visibility.Collapsed;
+            LbEmptyScoreboard.Visibility = Visibility.Visible;
+        }
+
+        private void ShowScoreboard()
+        {
+            DataGridPlayers.Visibility = Visibility.Visible;
+            LbEmptyScoreboard.Visibility = Visibility.Collapsed;
         }
     }
 }

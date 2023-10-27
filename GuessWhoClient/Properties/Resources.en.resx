@@ -237,6 +237,9 @@
   <data name="lbEmailGlobal" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="lbEmptyScoreboard" xml:space="preserve">
+    <value>There are no players to show</value>
+  </data>
   <data name="lbFriendsConnected" xml:space="preserve">
     <value>Online friends</value>
   </data>

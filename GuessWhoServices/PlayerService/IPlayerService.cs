@@ -8,6 +8,6 @@ namespace GuessWhoServices
     public interface IPlayerService
     {
         [OperationContract]
-        Response<List<TopPlayer>> GetBestPlayers(int totalPlayers);
+        Response<List<TopPlayer>> GetBestPlayers(string query, int totalPlayers);
     }
 }

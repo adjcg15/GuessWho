@@ -1228,10 +1228,10 @@ namespace GuessWhoClient.GameServices {
     public interface IPlayerService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlayerService/GetBestPlayers", ReplyAction="http://tempuri.org/IPlayerService/GetBestPlayersResponse")]
-        GuessWhoClient.GameServices.ArrayOfTopPlayerResponse GetBestPlayers(int totalPlayers);
+        GuessWhoClient.GameServices.ArrayOfTopPlayerResponse GetBestPlayers(string query, int totalPlayers);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPlayerService/GetBestPlayers", ReplyAction="http://tempuri.org/IPlayerService/GetBestPlayersResponse")]
-        System.Threading.Tasks.Task<GuessWhoClient.GameServices.ArrayOfTopPlayerResponse> GetBestPlayersAsync(int totalPlayers);
+        System.Threading.Tasks.Task<GuessWhoClient.GameServices.ArrayOfTopPlayerResponse> GetBestPlayersAsync(string query, int totalPlayers);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1261,12 +1261,12 @@ namespace GuessWhoClient.GameServices {
                 base(binding, remoteAddress) {
         }
         
-        public GuessWhoClient.GameServices.ArrayOfTopPlayerResponse GetBestPlayers(int totalPlayers) {
-            return base.Channel.GetBestPlayers(totalPlayers);
+        public GuessWhoClient.GameServices.ArrayOfTopPlayerResponse GetBestPlayers(string query, int totalPlayers) {
+            return base.Channel.GetBestPlayers(query, totalPlayers);
         }
         
-        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.ArrayOfTopPlayerResponse> GetBestPlayersAsync(int totalPlayers) {
-            return base.Channel.GetBestPlayersAsync(totalPlayers);
+        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.ArrayOfTopPlayerResponse> GetBestPlayersAsync(string query, int totalPlayers) {
+            return base.Channel.GetBestPlayersAsync(query, totalPlayers);
         }
     }
 }

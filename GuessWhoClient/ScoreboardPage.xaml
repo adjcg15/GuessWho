@@ -19,16 +19,36 @@
                 Content="{x:Static p:Resources.lbTitleLeaderboard}" 
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Top" 
-                FontWeight="Bold" FontSize="18" Margin="0,10,0,0"/>
+                FontWeight="Bold" FontSize="22" Margin="0,24,0,0"/>
 
             <TextBox 
+                x:Name="TbSearchQuery"
                 Style="{StaticResource Searchbar}"
                 HorizontalAlignment="Left" Margin="33,85,0,0" TextWrapping="Wrap" 
                 VerticalAlignment="Top" Width="739"/>
-            <Button Style="{StaticResource SecondaryButton}" Content="{x:Static p:Resources.btnSearch}" HorizontalAlignment="Right" Margin="0,83,33,0" VerticalAlignment="Top"/>
+            <Button 
+                Style="{StaticResource SecondaryButton}" 
+                Content="{x:Static p:Resources.btnSearch}" 
+                Click="BtnSearchPlayersClick"
+                HorizontalAlignment="Right" Margin="0,83,33,0" VerticalAlignment="Top"/>
             <Image Source="/Resources/search-icon.png" Margin="42,93,837,408"/>
+
+            <Border 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
+                BorderThickness="3"
+                BorderBrush="#FFC436"
+                Padding="16 12 16 12"
+                Background="White"
+                CornerRadius="30">
+                <Label 
+                    FontSize="16"
+                    x:Name="LbEmptyScoreboard"
+                    Content="{x:Static p:Resources.lbEmptyScoreboard}"/>
+            </Border>
             
             <DataGrid 
+                Visibility="Collapsed"
                 Style="{DynamicResource Table}" 
                 ColumnHeaderStyle="{DynamicResource TableColumnHeader}" 
                 CellStyle="{DynamicResource TableCell}"

@@ -119,6 +119,7 @@
   <xs:element name="GetBestPlayers">
     <xs:complexType>
       <xs:sequence>
+        <xs:element minOccurs="0" name="query" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="totalPlayers" type="xs:int" />
       </xs:sequence>
     </xs:complexType>

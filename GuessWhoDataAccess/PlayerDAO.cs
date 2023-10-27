@@ -9,7 +9,7 @@ namespace GuessWhoDataAccess
 {
     public class PlayerDAO
     {
-        public static Response<List<TopPlayer>> GetTopPlayers(int numberOfPlayers)
+        public static Response<List<TopPlayer>> GetTopPlayers(string query, int numberOfPlayers)
         {
             Response<List<TopPlayer>> response = new Response<List<TopPlayer>>();
             response.Value = new List<TopPlayer>();
@@ -19,28 +19,40 @@ namespace GuessWhoDataAccess
             {
                 using (var context = new GuessWhoContext())
                 {
-                    var topPlayers = context.Matches
-                        .Where(m => m.status == "finished")
-                        .GroupBy(m => m.idWinner)
+                    var result = context.Matches
+                        .Join(
+                            context.Users,
+                            match => match.idWinner,
+                            user => user.idUser,
+                            (match, user) => new
+                            {
+                                UserId = user.idUser,
+                                UserNickname = user.nickname,
+                                MatchScore = match.score,
+                                MatchStatus = match.status
+                            }
+                        )
+                        .Where(m => m.MatchStatus == "finished")
+                        .Where(u => u.UserNickname.Contains(query))
+                        .GroupBy(m => m.UserId)
                         .Select(g => new
                         {
-                            UserId = g.Key,
-                            TotalScore = g.Sum(m => m.score)
+                            UserNickname = g.FirstOrDefault().UserNickname,
+                            TotalScore = g.Sum(m => m.MatchScore)
                         })
                         .OrderByDescending(tp => tp.TotalScore)
                         .Take(numberOfPlayers)
                         .ToList();
 
                     int position = 1;
-                    foreach (var player in topPlayers)
+                    foreach (var row in result)
                     {
-                        var user = context.Users.FirstOrDefault(u => u.idUser == player.UserId);
-                        if (user != null && player.TotalScore.HasValue)
+                        if (row != null && row.TotalScore.HasValue)
                         {
                             response.Value.Add(new TopPlayer
                             {
-                                Nickname = user.nickname,
-                                Score = (int)player.TotalScore,
+                                Nickname = row.UserNickname,
+                                Score = (int)row.TotalScore,
                                 Position = position
                             });
                         }

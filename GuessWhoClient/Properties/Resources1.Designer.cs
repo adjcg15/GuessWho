@@ -421,6 +421,15 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No hay jugadores por mostrar.
+        /// </summary>
+        public static string lbEmptyScoreboard {
+            get {
+                return ResourceManager.GetString("lbEmptyScoreboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Amigos conectados.
         /// </summary>
         public static string lbFriendsConnected {
