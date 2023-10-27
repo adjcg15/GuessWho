@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GuessWhoClient.Utils;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -18,20 +19,33 @@ namespace GuessWhoClient
 
     public partial class Scoreboard : Page
     {
+        private ObservableCollection<GameServices.TopPlayer> topPlayers { get; set; }
+        
         public Scoreboard()
         {
             InitializeComponent();
+            LoadBestPlayers();
+        }
 
-            ObservableCollection<Player> players = new ObservableCollection<Player>();
-            for(int i = 1; i < 16; i++)
+        private void LoadBestPlayers()
+        {
+            var userServiceClient = new GameServices.PlayerServiceClient();
+            var response = userServiceClient.GetBestPlayers(10);
+
+            if (response.StatusCode == GameServices.ResponseStatus.OK)
             {
-                players.Add(new Player { 
-                    Name = "Player " + i, 
-                    Position = (16 - i).ToString(), 
-                    Score=((16-i) * 100).ToString()
-                });
+                topPlayers = new ObservableCollection<GameServices.TopPlayer>(response.Value.ToList());
+                DataGridPlayers.ItemsSource = topPlayers;
             }
-            DataGridPlayers.ItemsSource = players;
+            else
+            {
+                MessageBox.Show(
+                    ServerResponse.GetMessageFromStatusCode(response.StatusCode),
+                    ServerResponse.GetTitleFromStatusCode(response.StatusCode),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+            }
         }
     }
 }

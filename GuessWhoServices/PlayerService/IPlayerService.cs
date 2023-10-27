@@ -1,13 +1,13 @@
 ﻿using GuessWhoDataAccess;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using System.ServiceModel;
 
-namespace GuessWhoServices.PlayerService
+namespace GuessWhoServices
 {
     [ServiceContract]
     public interface IPlayerService
     {
+        [OperationContract]
         Response<List<TopPlayer>> GetBestPlayers(int totalPlayers);
     }
 }

@@ -27,7 +27,7 @@
                 x:Name="DataGridPlayers" Margin="33,130,33,26">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Position}" Header="Posición"/>
-                    <DataGridTextColumn Binding="{Binding Name}" Header="Nombre de usuario"/>
+                    <DataGridTextColumn Binding="{Binding Nickname}" Header="Nombre de usuario"/>
                     <DataGridTextColumn Binding="{Binding Score}" Header="Puntuación"/>
                 </DataGrid.Columns>
             </DataGrid>

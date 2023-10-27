@@ -31,6 +31,7 @@ namespace GuessWhoDataAccess
                         .Take(numberOfPlayers)
                         .ToList();
 
+                    int position = 1;
                     foreach (var player in topPlayers)
                     {
                         var user = context.Users.FirstOrDefault(u => u.idUser == player.UserId);
@@ -39,9 +40,11 @@ namespace GuessWhoDataAccess
                             response.Value.Add(new TopPlayer
                             {
                                 Nickname = user.nickname,
-                                Score = (int)player.TotalScore
+                                Score = (int)player.TotalScore,
+                                Position = position
                             });
                         }
+                        position++;
                     }
                 }
             }
@@ -70,5 +73,8 @@ namespace GuessWhoDataAccess
 
         [DataMember]
         public int Score { get; set; }
+
+        [DataMember]
+        public int Position { get; set; }
     }
 }

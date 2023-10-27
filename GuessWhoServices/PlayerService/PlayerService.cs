@@ -1,13 +1,9 @@
 ﻿using GuessWhoDataAccess;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace GuessWhoServices.PlayerService
+namespace GuessWhoServices
 {
-    public class PlayerService : IPlayerService
+    public partial class GuessWhoService : IPlayerService
     {
         Response<List<TopPlayer>> IPlayerService.GetBestPlayers(int totalPlayers)
         {

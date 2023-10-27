@@ -80,6 +80,9 @@
   <xs:complexType name="User">
     <xs:sequence>
       <xs:element minOccurs="0" name="Account" nillable="true" type="tns:Account" />
+      <xs:element minOccurs="0" name="Friendships" nillable="true" type="tns:ArrayOfFriendship" />
+      <xs:element minOccurs="0" name="Friendships1" nillable="true" type="tns:ArrayOfFriendship" />
+      <xs:element minOccurs="0" name="Matches" nillable="true" type="tns:ArrayOfMatch" />
       <xs:element minOccurs="0" name="avatar" nillable="true" type="xs:base64Binary" />
       <xs:element minOccurs="0" name="fullName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="idAccount" type="xs:int" />
@@ -103,4 +106,66 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfUser" nillable="true" type="tns:ArrayOfUser" />
+  <xs:complexType name="ArrayOfFriendship">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Friendship" nillable="true" type="tns:Friendship" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFriendship" nillable="true" type="tns:ArrayOfFriendship" />
+  <xs:complexType name="Friendship">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="User" nillable="true" type="tns:User" />
+      <xs:element minOccurs="0" name="User1" nillable="true" type="tns:User" />
+      <xs:element minOccurs="0" name="idFriendRequested" type="xs:int" />
+      <xs:element minOccurs="0" name="idFriendRequester" type="xs:int" />
+      <xs:element minOccurs="0" name="idFriendship" type="xs:int" />
+      <xs:element minOccurs="0" name="status" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Friendship" nillable="true" type="tns:Friendship" />
+  <xs:complexType name="ArrayOfMatch">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Match" nillable="true" type="tns:Match" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMatch" nillable="true" type="tns:ArrayOfMatch" />
+  <xs:complexType name="Match">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="User" nillable="true" type="tns:User" />
+      <xs:element minOccurs="0" name="idMatch" type="xs:int" />
+      <xs:element minOccurs="0" name="idWinner" type="xs:int" />
+      <xs:element minOccurs="0" name="invitationCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="score" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="status" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Match" nillable="true" type="tns:Match" />
+  <xs:complexType name="ArrayOfTopPlayerResponse">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="{0}Response" Namespace="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="ArrayOfTopPlayer" Namespace="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="StatusCode" type="tns:ResponseStatus" />
+      <xs:element minOccurs="0" name="Value" nillable="true" type="tns:ArrayOfTopPlayer" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTopPlayerResponse" nillable="true" type="tns:ArrayOfTopPlayerResponse" />
+  <xs:complexType name="ArrayOfTopPlayer">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TopPlayer" nillable="true" type="tns:TopPlayer" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTopPlayer" nillable="true" type="tns:ArrayOfTopPlayer" />
+  <xs:complexType name="TopPlayer">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Nickname" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Position" type="xs:int" />
+      <xs:element minOccurs="0" name="Score" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TopPlayer" nillable="true" type="tns:TopPlayer" />
 </xs:schema>
