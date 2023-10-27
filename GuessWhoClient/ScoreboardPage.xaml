@@ -18,8 +18,15 @@
                 Content="Marcador global" 
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Top" 
-                FontWeight="Bold" FontSize="18"/>
+                FontWeight="Bold" FontSize="18" Margin="0,10,0,0"/>
 
+            <TextBox 
+                Style="{StaticResource Searchbar}"
+                HorizontalAlignment="Left" Margin="33,85,0,0" TextWrapping="Wrap" 
+                VerticalAlignment="Top" Width="734"/>
+            <Button Style="{StaticResource SecondaryButton}" Content="Buscar" HorizontalAlignment="Right" Margin="0,83,33,0" VerticalAlignment="Top"/>
+            <Image Source="/Resources/search-icon.png" Margin="42,93,837,408"/>
+            
             <DataGrid 
                 Style="{DynamicResource Table}" 
                 ColumnHeaderStyle="{DynamicResource TableColumnHeader}" 
