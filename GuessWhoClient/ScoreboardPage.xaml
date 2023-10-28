@@ -1,0 +1,63 @@
+﻿<Page x:Class="GuessWhoClient.ScoreboardPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:GuessWhoClient"
+      xmlns:p="clr-namespace:GuessWhoClient.Properties"
+      mc:Ignorable="d"
+      Title="Scoreboard" Height="520" Width="900">
+    <Grid>
+        <Image 
+            Source="/Resources/background.png" 
+            Stretch="UniformToFill" 
+            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <Image Source="/Resources/logo.ES-MX.png" Margin="8,10,758,452"/>
+
+        <Grid>
+            <Label 
+                Content="{x:Static p:Resources.lbTitleLeaderboard}" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Top" 
+                FontWeight="Bold" FontSize="22" Margin="0,24,0,0"/>
+
+            <TextBox 
+                x:Name="TbSearchQuery"
+                Style="{StaticResource Searchbar}"
+                HorizontalAlignment="Left" Margin="33,85,0,0" TextWrapping="Wrap" 
+                VerticalAlignment="Top" Width="739"/>
+            <Button 
+                Style="{StaticResource SecondaryButton}" 
+                Content="{x:Static p:Resources.btnSearch}" 
+                Click="BtnSearchPlayersClick"
+                HorizontalAlignment="Right" Margin="0,83,33,0" VerticalAlignment="Top"/>
+            <Image Source="/Resources/search-icon.png" Margin="42,93,837,408"/>
+
+            <Border 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
+                BorderThickness="3"
+                BorderBrush="#FFC436"
+                Padding="16 12 16 12"
+                Background="White"
+                CornerRadius="30">
+                <Label 
+                    FontSize="16"
+                    x:Name="LbEmptyScoreboard"
+                    Content="{x:Static p:Resources.lbEmptyScoreboard}"/>
+            </Border>
+            
+            <DataGrid
+                Style="{DynamicResource Table}" 
+                ColumnHeaderStyle="{DynamicResource TableColumnHeader}" 
+                CellStyle="{DynamicResource TableCell}"
+                x:Name="DataGridPlayers" Margin="33,130,33,26">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Position}" Header="{x:Static p:Resources.lbRankHeaderRow}"/>
+                    <DataGridTextColumn Binding="{Binding Nickname}" Header="{x:Static p:Resources.txtNicknameGlobal}"/>
+                    <DataGridTextColumn Binding="{Binding Score}" Header="{x:Static p:Resources.lbScoreHeaderRow}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Page>
