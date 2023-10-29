@@ -70,6 +70,9 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ProfilePage.xaml.cs">
+      <DependentUpon>ProfilePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ProfileSingleton.cs" />
     <Compile Include="Properties\Resources.es-MX.Designer.cs">
       <DependentUpon>Resources.es-MX.resx</DependentUpon>
@@ -128,6 +131,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ProfilePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="RegisterPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -157,6 +164,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ActiveUser.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -260,6 +268,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\search-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\folder-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\edit-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\save-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\cancel-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
