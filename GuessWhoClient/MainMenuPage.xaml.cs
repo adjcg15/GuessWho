@@ -76,6 +76,12 @@ namespace GuessWhoClient
 
         }
 
+        private void BorderProfileClick(object sender, RoutedEventArgs e)
+        {
+            ProfilePage profilePage = new ProfilePage();
+            this.NavigationService.Navigate(profilePage);
+        }
+
         public void LoginProfile()
         {
             BtnLogOut.Visibility = Visibility.Visible;
