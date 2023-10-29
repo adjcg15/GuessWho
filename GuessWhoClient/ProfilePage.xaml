@@ -33,7 +33,7 @@
                     VerticalAlignment="Top" 
                     Margin="0,39,0,0" Padding="15"
                     BorderBrush="#BCBCBC" BorderThickness="5" CornerRadius="8">
-                    <Image Stretch="UniformToFill" Source="/Resources/user-icon.png"/>
+                    <Image x:Name="ImgAvatar" Stretch="UniformToFill" Source="/Resources/user-icon.png"/>
                 </Border>
                 <Button 
                     Style="{StaticResource SecondaryButton}" 
@@ -54,8 +54,8 @@
                         Background="#E2E2E2"
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Top" Margin="0,23,0,0" Width="307"
-                        CornerRadius="16">
-                        <Label Content="ejemplo@gmail.com"/>
+                        CornerRadius="16" MinHeight="32">
+                        <Label x:Name="LbEmail"/>
                     </Border>
 
                     <Label 
@@ -68,8 +68,8 @@
                         Background="#E2E2E2"
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Top" Margin="0,80,0,0" Width="307"
-                        CornerRadius="16">
-                        <Label Content="Juan Carlos De la torre Pérez"/>
+                        CornerRadius="16" MinHeight="32">
+                        <Label x:Name="LbFullName"/>
                     </Border>
 
                     <Label 
@@ -78,6 +78,7 @@
                         VerticalAlignment="Top" 
                         FontWeight="Bold" Margin="0,114,0,0"/>
                     <TextBox 
+                        x:Name="TbNickname"
                         Style="{StaticResource Input}"
                         HorizontalAlignment="Left" TextWrapping="Wrap"
                         VerticalAlignment="Top" MinWidth="0" Width="274" Margin="0,138,0,0"/>
@@ -97,13 +98,13 @@
                          HorizontalAlignment="Left" 
                          VerticalAlignment="Top" 
                          FontSize="12" Margin="0,205,0,0"/>
-                    <PasswordBox Height="28" MinWidth="0" Style="{StaticResource PasswordInput}" Margin="0,228,170,45"/>
+                    <PasswordBox x:Name="PbPassword" Height="28" MinWidth="0" Style="{StaticResource PasswordInput}" Margin="0,228,170,45"/>
                     <Label 
                         Content="{x:Static p:Resources.lbConfirmPassword}" 
                         HorizontalAlignment="Left" 
                         VerticalAlignment="Top" 
                         FontSize="12" Margin="144,205,0,0"/>
-                    <PasswordBox Height="28" MinWidth="0" Style="{StaticResource PasswordInput}" Margin="144,228,1,45"/>
+                    <PasswordBox x:Name="PbPasswordConfirmation" Height="28" MinWidth="0" Style="{StaticResource PasswordInput}" Margin="144,228,1,45"/>
 
                     <Button 
                         Content="{x:Static p:Resources.btnChangePassword}" 

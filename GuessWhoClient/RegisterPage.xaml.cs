@@ -133,8 +133,9 @@ namespace GuessWhoClient
                 return;
             }
 
-            GameServices.AuthenticationServiceClient authenticationServiceClient = new GameServices.AuthenticationServiceClient();
-            GameServices.UserResponse emailValidation = authenticationServiceClient.VerifyUserRegisteredByEmail(email);
+            var authenticationServiceClient = new GameServices.AuthenticationServiceClient();
+
+            var emailValidation = authenticationServiceClient.VerifyUserRegisteredByEmail(email);
             if (emailValidation.StatusCode != GameServices.ResponseStatus.OK)
             {
                 MessageBox.Show(
@@ -146,7 +147,7 @@ namespace GuessWhoClient
                 return;
             }
 
-            GameServices.UserResponse nicknameValidation = authenticationServiceClient.VerifyUserRegisteredByNickName(nickname);
+            var nicknameValidation = authenticationServiceClient.VerifyUserRegisteredByNickName(nickname);
             if (nicknameValidation.StatusCode != GameServices.ResponseStatus.OK)
             {
                 MessageBox.Show(

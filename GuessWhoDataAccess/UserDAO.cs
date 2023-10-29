@@ -79,13 +79,11 @@ namespace GuessWhoDataAccess
                 using (var context = new GuessWhoContext())
                 {
                     var account = context.Accounts.FirstOrDefault(a => a.email == email);
-                    if (account == null)
+                    if (account != null)
                     {
-                        return null;
+                        var user = context.Users.FirstOrDefault(a => a.idAccount == account.idAccount);
+                        response.Value = user;
                     }
-
-                    var user = context.Users.FirstOrDefault(a => a.idAccount == account.idAccount);
-                    response.Value = user;
                 }
             }
             catch (SqlException ex)

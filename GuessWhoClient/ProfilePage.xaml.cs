@@ -1,28 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using GuessWhoClient.Utils;
+using System;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace GuessWhoClient
 {
-    /// <summary>
-    /// Lógica de interacción para ProfilePage.xaml
-    /// </summary>
     public partial class ProfilePage : Page
     {
+        private const string DEFAULT_PROFILE_PICTURE_ROUTE = "pack://application:,,,/Resources/user-icon.png";
+
         public ProfilePage()
         {
             InitializeComponent();
+            StablishUIValuesFromProfileInfo();
+        }
+
+        private void StablishUIValuesFromProfileInfo()
+        {
+            LbEmail.Content = DataStore.Profile.Email;
+            LbFullName.Content = DataStore.Profile.FullName;
+            TbNickname.Text = DataStore.Profile.NickName;
+            PbPassword.Password = DataStore.Profile.Password;
+            PbPasswordConfirmation.Password = DataStore.Profile.Password;
+
+            BitmapImage bitmapAvatar = ImageTransformator.GetBitmapImageFromByteArray(DataStore.Profile.Avatar);
+            if(bitmapAvatar != null)
+            {
+                ImgAvatar.Source = bitmapAvatar;
+            } 
+            else
+            {
+                Uri uri = new Uri(DEFAULT_PROFILE_PICTURE_ROUTE);
+                BitmapImage defaultImage = new BitmapImage(uri);
+                ImgAvatar.Source = defaultImage;
+            }
         }
     }
 }
