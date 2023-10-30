@@ -77,15 +77,16 @@
                         HorizontalAlignment="Left" 
                         VerticalAlignment="Top" 
                         FontWeight="Bold" Margin="0,114,0,0"/>
-                    <TextBox 
+                    <TextBox
                         x:Name="TbNickname"
+                        IsEnabled="False"
                         Style="{StaticResource Input}"
                         HorizontalAlignment="Left" TextWrapping="Wrap"
                         VerticalAlignment="Top" MinWidth="0" Width="274" Margin="0,138,0,0"/>
-                    <Image Cursor="Hand" Width="28" Height="28" Source="/Resources/edit-icon.png" Margin="279,136,0,137"/>
-                    <Grid Visibility="Collapsed" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="246,138,0,0">
+                    <Image x:Name="ImgEditNicknameIcon" Cursor="Hand" Width="28" Height="28" Source="/Resources/edit-icon.png" Margin="279,136,0,137" MouseDown="ImgEditNicknameClick"/>
+                    <Grid x:Name="GridEditNicknameOptions" Visibility="Collapsed" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="246,138,0,0">
                         <Image VerticalAlignment="Center" HorizontalAlignment="Left" Cursor="Hand" Width="28" Height="28" Source="/Resources/save-icon.png"/>
-                        <Image VerticalAlignment="Center" HorizontalAlignment="Left" Cursor="Hand" Width="28" Height="28" Source="/Resources/cancel-icon.png" Margin="33,0,0,0"/>
+                        <Image MouseDown="ImgCloseEditNicknameClick" VerticalAlignment="Center" HorizontalAlignment="Left" Cursor="Hand" Width="28" Height="28" Source="/Resources/cancel-icon.png" Margin="33,0,0,0"/>
                     </Grid>
 
                     <Label 

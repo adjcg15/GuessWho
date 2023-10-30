@@ -22,14 +22,17 @@
                                 BorderThickness="2"
                                 Background="#fff">
                                 <ScrollViewer x:Name="PART_ContentHost"
-                                Focusable="false"
-                                HorizontalScrollBarVisibility="Hidden"
-                                VerticalScrollBarVisibility="Hidden"
-                            />
+                                    Focusable="false"
+                                    HorizontalScrollBarVisibility="Hidden"
+                                    VerticalScrollBarVisibility="Hidden"/>
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsFocused" Value="true">
                                     <Setter Property="BorderBrush" TargetName="border" Value="#0A6EBD"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter Property="Background" TargetName="border" Value="#BCBCBC"/>
+                                    <Setter Property="BorderBrush" TargetName="border" Value="#BCBCBC"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
