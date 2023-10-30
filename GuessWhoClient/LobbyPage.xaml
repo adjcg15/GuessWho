@@ -89,7 +89,7 @@
             </Grid>
         </Border>
         <ListBox x:Name="ListBoxActiveUsers" Margin="0,260,0,-1" Grid.Column="1" BorderThickness="0,0,0,1" Background="{x:Null}" 
-         MaxHeight="250" HorizontalAlignment="Center" VerticalAlignment="Top" d:ItemsSource="{d:SampleData ItemCount=5}">
+        MaxHeight="250" HorizontalAlignment="Center" VerticalAlignment="Top" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <VirtualizingStackPanel />

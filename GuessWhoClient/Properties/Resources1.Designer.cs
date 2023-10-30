@@ -448,24 +448,6 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Desconectados.
-        /// </summary>
-        public static string lbOfflineFriends {
-            get {
-                return ResourceManager.GetString("lbOfflineFriends", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a Conectados.
-        /// </summary>
-        public static string lbOnlineFriends {
-            get {
-                return ResourceManager.GetString("lbOnlineFriends", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Busca una cadena traducida similar a Contraseña.
         /// </summary>
         public static string lbPasswordGlobal {
@@ -903,6 +885,24 @@ namespace GuessWhoClient.Properties {
         public static string txtConfirmationEmailSubject {
             get {
                 return ResourceManager.GetString("txtConfirmationEmailSubject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Solicitudes.
+        /// </summary>
+        public static string txtFriendRequests {
+            get {
+                return ResourceManager.GetString("txtFriendRequests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Amigos.
+        /// </summary>
+        public static string txtFriends {
+            get {
+                return ResourceManager.GetString("txtFriends", resourceCulture);
             }
         }
         

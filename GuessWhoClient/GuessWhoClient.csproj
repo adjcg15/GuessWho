@@ -60,6 +60,9 @@
     <Compile Include="ConfirmAccountPage.xaml.cs">
       <DependentUpon>ConfirmAccountPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FriendsPage.xaml.cs">
+      <DependentUpon>FriendsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LobbyPage.xaml.cs">
       <DependentUpon>LobbyPage.xaml</DependentUpon>
     </Compile>
@@ -92,6 +95,10 @@
     <Compile Include="Utils\ImageTransformator.cs" />
     <Compile Include="Utils\ServerResponse.cs" />
     <Page Include="ConfirmAccountPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FriendsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -246,6 +253,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\cross-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\check-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

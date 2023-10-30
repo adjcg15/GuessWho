@@ -246,12 +246,6 @@
   <data name="lbHowToPlayDescription" xml:space="preserve">
     <value>¡Dibuja! A diferencia del juego original, aquí no podrás hacer preguntas a tu contrincante, en su lugar, deberás usar tu imaginación y realizar un dibujo para transmitir tu pregunta. Una vez terminado tu dibujo, termina tu intento y ve al siguiente paso.</value>
   </data>
-  <data name="lbOfflineFriends" xml:space="preserve">
-    <value>Desconectados</value>
-  </data>
-  <data name="lbOnlineFriends" xml:space="preserve">
-    <value>Conectados</value>
-  </data>
   <data name="lbPasswordGlobal" xml:space="preserve">
     <value>Contraseña</value>
   </data>
@@ -398,6 +392,12 @@
   </data>
   <data name="txtConfirmationEmailSubject" xml:space="preserve">
     <value>Confirmación de correo electrónico</value>
+  </data>
+  <data name="txtFriendRequests" xml:space="preserve">
+    <value>Solicitudes</value>
+  </data>
+  <data name="txtFriends" xml:space="preserve">
+    <value>Amigos</value>
   </data>
   <data name="txtLeaderboardGlobal" xml:space="preserve">
     <value>Marcador</value>
