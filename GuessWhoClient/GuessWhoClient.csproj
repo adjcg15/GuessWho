@@ -35,6 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
@@ -91,6 +92,9 @@
     <Compile Include="RegisterPage.xaml.cs">
       <DependentUpon>RegisterPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ScoreboardPage.xaml.cs">
+      <DependentUpon>ScoreboardPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\Authentication.cs" />
     <Compile Include="Utils\ImageTransformator.cs" />
     <Compile Include="Utils\ServerResponse.cs" />
@@ -135,6 +139,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ScoreboardPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -158,6 +166,9 @@
       <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ActiveUser.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ArrayOfTopPlayerResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.booleanResponse.datasource">
@@ -256,6 +267,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\check-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\search-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

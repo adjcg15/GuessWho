@@ -183,6 +183,9 @@
   <data name="btnReportPlayer" xml:space="preserve">
     <value>Reportar jugador</value>
   </data>
+  <data name="btnSearch" xml:space="preserve">
+    <value>Buscar</value>
+  </data>
   <data name="btnStartGame" xml:space="preserve">
     <value>Comenzar juego</value>
   </data>
@@ -233,6 +236,9 @@
   </data>
   <data name="lbEmailGlobal" xml:space="preserve">
     <value>Correo electrónico</value>
+  </data>
+  <data name="lbEmptyScoreboard" xml:space="preserve">
+    <value>No hay jugadores por mostrar</value>
   </data>
   <data name="lbFriendsConnected" xml:space="preserve">
     <value>Amigos conectados</value>

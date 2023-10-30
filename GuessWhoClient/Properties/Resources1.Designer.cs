@@ -259,6 +259,15 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Buscar.
+        /// </summary>
+        public static string btnSearch {
+            get {
+                return ResourceManager.GetString("btnSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Comenzar juego.
         /// </summary>
         public static string btnStartGame {
@@ -408,6 +417,15 @@ namespace GuessWhoClient.Properties {
         public static string lbEmailGlobal {
             get {
                 return ResourceManager.GetString("lbEmailGlobal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No hay jugadores por mostrar.
+        /// </summary>
+        public static string lbEmptyScoreboard {
+            get {
+                return ResourceManager.GetString("lbEmptyScoreboard", resourceCulture);
             }
         }
         
