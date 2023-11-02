@@ -139,24 +139,49 @@ namespace GuessWhoClient
             if (emailValidation.StatusCode != GameServices.ResponseStatus.OK)
             {
                 MessageBox.Show(
-                    resourceManager.GetString("msgbRegisterRegisteredEmailMessage"),
-                    resourceManager.GetString("msgbRegisterRegisteredEmailTitle"),
+                    ServerResponse.GetMessageFromStatusCode(emailValidation.StatusCode),
+                    ServerResponse.GetTitleFromStatusCode(emailValidation.StatusCode),
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
                 return;
+            } 
+            else
+            {
+                if(emailValidation.Value != null)
+                {
+                    MessageBox.Show(
+                        resourceManager.GetString("msgbRegisterRegisteredEmailMessage"),
+                        resourceManager.GetString("msgbRegisterRegisteredEmailTitle"),
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning
+                    );
+                    return;
+                }
             }
 
             var nicknameValidation = authenticationServiceClient.VerifyUserRegisteredByNickName(nickname);
             if (nicknameValidation.StatusCode != GameServices.ResponseStatus.OK)
             {
                 MessageBox.Show(
-                    resourceManager.GetString("msgbRegisterRegisteredNicknameMessage"),
-                    resourceManager.GetString("msgbRegisterRegisteredNicknameTitle"),
+                    ServerResponse.GetMessageFromStatusCode(emailValidation.StatusCode),
+                    ServerResponse.GetTitleFromStatusCode(emailValidation.StatusCode),
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
                 return;
+            } else
+            {
+                if(nicknameValidation.Value != null)
+                {
+                    MessageBox.Show(
+                        resourceManager.GetString("msgbRegisterRegisteredNicknameMessage"),
+                        resourceManager.GetString("msgbRegisterRegisteredNicknameTitle"),
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning
+                    );
+                    return;
+                }
             }
 
             ConfirmAccountPage confirmAccountPage = new ConfirmAccountPage(nickname, email, password, fullName, profileImage);

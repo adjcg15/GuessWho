@@ -78,6 +78,7 @@
       <DependentUpon>GuessWhoModel.tt</DependentUpon>
     </Compile>
     <Compile Include="PlayerDAO.cs" />
+    <Compile Include="Profile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="User.cs">

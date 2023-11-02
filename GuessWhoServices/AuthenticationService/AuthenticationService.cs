@@ -61,15 +61,15 @@ namespace GuessWhoServices
             return UserDAO.RegisterUser(user, account);
         }
 
-        public Response<User> VerifyUserRegisteredByEmail(string email)
+        public Response<Profile> VerifyUserRegisteredByEmail(string email)
         {
-            Response<User> userStored = UserDAO.GetUserByEmail(email);
+            Response<Profile> userStored = UserDAO.GetUserByEmail(email);
             return userStored;
         }
 
-        public Response<User> VerifyUserRegisteredByNickName(string nickname)
+        public Response<Profile> VerifyUserRegisteredByNickName(string nickname)
         {
-            Response<User> userStored = UserDAO.GetUserByNickName(nickname);
+            Response<Profile> userStored = UserDAO.GetUserByNickName(nickname);
             return userStored;
         }
 
