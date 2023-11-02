@@ -30,6 +30,7 @@ namespace GuessWhoServices
         private byte[] avatar;
         private string email;
         private string password;
+        private int idUser;
 
         [DataMember]
         public string NickName { get { return nickName; } set { nickName = value; } }
@@ -45,5 +46,8 @@ namespace GuessWhoServices
 
         [DataMember]
         public string Password { get { return password; } set { password = value; } }
+
+        [DataMember]
+        public int IdUser { get { return idUser; } set { idUser = value; } }
     }
 }

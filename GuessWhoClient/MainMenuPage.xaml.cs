@@ -73,7 +73,8 @@ namespace GuessWhoClient
 
         private void BtnFriendsClick(object sender, RoutedEventArgs e)
         {
-
+            FriendsPage friendsPage = new FriendsPage();
+            this.NavigationService.Navigate(friendsPage);
         }
 
         public void LoginProfile()

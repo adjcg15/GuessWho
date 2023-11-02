@@ -6,7 +6,7 @@ namespace GuessWhoServices
     {
         public Response<Profile> Login(string email, string password)
         {
-            GuessWhoDataAccess.Response<Profile> response = new GuessWhoDataAccess.Response<Profile>()
+            Response<Profile> response = new Response<Profile>()
             {
                 StatusCode = ResponseStatus.OK,
                 Value = null
@@ -40,6 +40,7 @@ namespace GuessWhoServices
                 NickName = user.nickname,
                 FullName = user.fullName,
                 Avatar = user.avatar,
+                IdUser = user.idUser
             };
             return response;
         }

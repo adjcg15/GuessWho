@@ -87,6 +87,35 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="NetTcpBinding_IFriendsService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:6969/?xsd=xsd0" namespace="http://tempuri.org/" />
@@ -155,6 +184,30 @@
   <wsdl:message name="IPlayerService_GetBestPlayers_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetBestPlayersResponse" />
   </wsdl:message>
+  <wsdl:message name="IFriendsService_SendRequest_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendRequest" />
+  </wsdl:message>
+  <wsdl:message name="IFriendsService_SendRequest_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFriendsService_GetFriends_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFriends" />
+  </wsdl:message>
+  <wsdl:message name="IFriendsService_GetFriends_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFriendsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFriendsService_GetRequests_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRequests" />
+  </wsdl:message>
+  <wsdl:message name="IFriendsService_GetRequests_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRequestsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IFriendsService_AnswerRequest_InputMessage">
+    <wsdl:part name="parameters" element="tns:AnswerRequest" />
+  </wsdl:message>
+  <wsdl:message name="IFriendsService_AnswerRequest_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AnswerRequestResponse" />
+  </wsdl:message>
   <wsdl:portType name="IUserService">
     <wsdl:operation name="Subscribe">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/Subscribe" message="tns:IUserService_Subscribe_InputMessage" />
@@ -199,6 +252,24 @@
     <wsdl:operation name="GetBestPlayers">
       <wsdl:input wsaw:Action="http://tempuri.org/IPlayerService/GetBestPlayers" message="tns:IPlayerService_GetBestPlayers_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPlayerService/GetBestPlayersResponse" message="tns:IPlayerService_GetBestPlayers_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IFriendsService">
+    <wsdl:operation name="SendRequest">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFriendsService/SendRequest" message="tns:IFriendsService_SendRequest_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFriendsService/SendRequestResponse" message="tns:IFriendsService_SendRequest_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFriends">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFriendsService/GetFriends" message="tns:IFriendsService_GetFriends_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFriendsService/GetFriendsResponse" message="tns:IFriendsService_GetFriends_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRequests">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFriendsService/GetRequests" message="tns:IFriendsService_GetRequests_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFriendsService/GetRequestsResponse" message="tns:IFriendsService_GetRequests_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AnswerRequest">
+      <wsdl:input wsaw:Action="http://tempuri.org/IFriendsService/AnswerRequest" message="tns:IFriendsService_AnswerRequest_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IFriendsService/AnswerRequestResponse" message="tns:IFriendsService_AnswerRequest_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IUserService" type="tns:IUserService">
@@ -303,13 +374,53 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
+  <wsdl:binding name="NetTcpBinding_IFriendsService" type="tns:IFriendsService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IFriendsService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="SendRequest">
+      <soap12:operation soapAction="http://tempuri.org/IFriendsService/SendRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFriends">
+      <soap12:operation soapAction="http://tempuri.org/IFriendsService/GetFriends" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetRequests">
+      <soap12:operation soapAction="http://tempuri.org/IFriendsService/GetRequests" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AnswerRequest">
+      <soap12:operation soapAction="http://tempuri.org/IFriendsService/AnswerRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
   <wsdl:service name="GuessWhoService">
     <wsdl:port name="NetTcpBinding_IUserService" binding="tns:NetTcpBinding_IUserService">
       <soap12:address location="net.tcp://localhost:6970/GuessWhoService" />
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
+          <Upn>LAPTOP-EGH\kikga</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -318,7 +429,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
+          <Upn>LAPTOP-EGH\kikga</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -327,7 +438,16 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
+          <Upn>LAPTOP-EGH\kikga</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="NetTcpBinding_IFriendsService" binding="tns:NetTcpBinding_IFriendsService">
+      <soap12:address location="net.tcp://localhost:6970/GuessWhoService" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>LAPTOP-EGH\kikga</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>

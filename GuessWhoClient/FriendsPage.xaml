@@ -6,15 +6,15 @@
       xmlns:local="clr-namespace:GuessWhoClient"
       xmlns:p="clr-namespace:GuessWhoClient.Properties"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      MaxHeight="520" MaxWidth="900"
       Title="FriendsPage">
 
     <Grid>
-        <Image Source="/Resources/background.png"  HorizontalAlignment="Left" Height="450" VerticalAlignment="Top" Width="800"/>
+        <Image Source="/Resources/background.png"  HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill"/>
         <Image Source ="/Resources/logo.ES-MX.png" Width="134" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <Label Content="{x:Static p:Resources.lbTitleFriends}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0" FontWeight="Bold" FontSize="16"/>
-        <TabControl Margin="10,98,10,10" BorderBrush="#FFBCBCBC" BorderThickness="3,3,3,3">
-            <TabItem Header="{x:Static p:Resources.txtFriendRequests}" FontSize="16" FontWeight="Bold">
+        <TabControl Margin="10,98,10,10" BorderBrush="#FFBCBCBC" BorderThickness="3,3,3,3" >
+            <TabItem Name="TabRequests" Header="{x:Static p:Resources.txtFriendRequests}" FontSize="16" FontWeight="Bold">
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1">
                         <GradientStop Color="#FFF0F0F0"/>
@@ -22,7 +22,7 @@
                     </LinearGradientBrush>
                 </TabItem.Background>
                 <ListBox x:Name="ListBoxFriendRequests" Margin="0,0,0,0" BorderThickness="0,0,0,0" Background="{x:Null}" 
-                MaxHeight="350" HorizontalAlignment="Center" VerticalAlignment="Top" d:ItemsSource="{d:SampleData ItemCount=2}">
+                MaxHeight="375" HorizontalAlignment="Center" VerticalAlignment="Top" d:ItemsSource="{d:SampleData ItemCount=10}">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel/>
@@ -42,7 +42,7 @@
                     </ListBox.ItemContainerStyle>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Border Background="#E2E2E2" CornerRadius="30" Width="740" Margin="0,5,0,0" Height="60">
+                            <Border Background="#E2E2E2" CornerRadius="30" Width="830" Margin="0,5,0,0" Height="60">
                                 <Grid>
                                     <StackPanel Orientation="Horizontal">
                                         <Ellipse Width="50" Height="50" Margin="6,5,5,5">
@@ -51,16 +51,16 @@
                                             </Ellipse.Fill>
                                         </Ellipse>
                                         <TextBlock Text="{Binding Nickname}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="16" FontWeight="SemiBold" Foreground="Black" />
-                                        <TextBlock Text="{Binding FullName}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,0,0,0" FontWeight="Medium" FontSize="14" />
                                     </StackPanel>
+                                    <TextBlock Text="{Binding FullName}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" FontWeight="Medium" FontSize="14" />
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                                         <Border Background="#0A6EBD" BorderBrush="#BDCDD9" BorderThickness="4" CornerRadius="24" Height="40" Width="40">
-                                            <Button x:Name="BtnAcceptInvitation" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" BorderThickness="0,0,0,0" Background="{x:Null}" Margin="1,1,1,1">
+                                            <Button Name="BtnAcceptInvitation" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" BorderThickness="0,0,0,0" Background="{x:Null}" Margin="1,1,1,1" Click="BtnAcceptInvitationClick">
                                                 <Image Source="/Resources/check-icon.png" Width="24" Cursor="Hand"/>
                                             </Button>
                                         </Border>
                                         <Border Background="#E21818" BorderBrush="#FF9494" BorderThickness="4" Margin="15,0,10,0"  CornerRadius="24" Height="40" Width="40">
-                                            <Button x:Name="BtnDeclineInvitation" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" BorderThickness="0,0,0,0" Background="{x:Null}" Margin="1,1,1,1">
+                                            <Button Name="BtnDeclineInvitation" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand" BorderThickness="0,0,0,0" Background="{x:Null}" Margin="1,1,1,1" Click="BtnDeclineInvitationClick">
                                                 <Image Source="/Resources/cross-icon.png" Width="15" Cursor="Hand"/>
                                             </Button>
                                         </Border>
@@ -71,9 +71,9 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
             </TabItem>
-            <TabItem Header="{x:Static p:Resources.txtFriends}" FontSize="16" FontWeight="Bold">
+            <TabItem Name="TabFriends" Header="{x:Static p:Resources.txtFriends}" FontSize="16" FontWeight="Bold">
                 <ListBox x:Name="ListBoxFriends" Margin="0,0,0,0" BorderThickness="0,0,0,0" Background="{x:Null}" 
-                    MaxHeight="350" HorizontalAlignment="Center" VerticalAlignment="Top" d:ItemsSource="{d:SampleData ItemCount=2}">
+                    MaxHeight="375" HorizontalAlignment="Center" VerticalAlignment="Top" d:ItemsSource="{d:SampleData ItemCount=2}">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel/>
@@ -93,7 +93,7 @@
                     </ListBox.ItemContainerStyle>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Border Background="#FFE29B" CornerRadius="30" Width="740" Margin="0,5,0,0" Height="60">
+                            <Border Name="BorderFriend" Background="#FFE29B" CornerRadius="30" Width="830" Margin="0,5,0,0" Height="60">
                                 <Grid>
                                     <StackPanel Orientation="Horizontal">
                                         <Ellipse Width="50" Height="50" Margin="6,5,5,5">
@@ -102,9 +102,21 @@
                                             </Ellipse.Fill>
                                         </Ellipse>
                                         <TextBlock Text="{Binding Nickname}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="16" FontWeight="SemiBold" Foreground="Black" />
-                                        <TextBlock Text="{Binding FullName}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,0,0,0" FontWeight="Medium" FontSize="14" />
                                     </StackPanel>
-                                    <Ellipse HorizontalAlignment="Left" Height="13" Margin="43,42,0,0" VerticalAlignment="Top" Width="13" Fill="#FF56C568"/>
+                                    <TextBlock Text="{Binding FullName}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" FontWeight="Medium" FontSize="14" />
+                                    <Ellipse Name="EllipseConnected" Width="13" Height="13" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="43,42,0,0">
+                                        <Ellipse.Style>
+                                            <Style TargetType="Ellipse">
+                                                <Setter Property="Fill" Value="#FF56C568" />
+
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Status}" Value="Offline">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Ellipse.Style>
+                                    </Ellipse>
                                 </Grid>
                             </Border>
                         </DataTemplate>
@@ -112,5 +124,13 @@
                 </ListBox>
             </TabItem>
         </TabControl>
+        <TextBox Name="TbNameRequest" Style="{StaticResource Input}" HorizontalAlignment="Left" Margin="488,45,0,0" VerticalAlignment="Top" Width="194"/>
+        <Button Name="BtnAddFriend" Style="{StaticResource SecondaryButtonWithIcon}" HorizontalAlignment="Left" Margin="743,40,0,0" VerticalAlignment="Top" Click="BtnAddFriendClick">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/Resources/add-friend-icon.png" Width="19" Height="16"/>
+                <TextBlock Text="{x:Static p:Resources.btnAddFriend}" x:Name="TbBtnJoinMatch" VerticalAlignment="Center" FontWeight="SemiBold" Margin="3,0,0,0"/>
+            </StackPanel>
+        </Button>
+        <TextBox x:Name="TbMessage" Visibility="Hidden" HorizontalAlignment="Left" Height="32" Margin="492,43,0,0" VerticalAlignment="Top" Width="242" BorderThickness="0,0,0,0" Background="{x:Null}" TextAlignment="Center" IsEnabled="False" TextWrapping="Wrap" FontSize="10"/>
     </Grid>
 </Page>

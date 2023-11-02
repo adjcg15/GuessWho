@@ -168,4 +168,18 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="TopPlayer" nillable="true" type="tns:TopPlayer" />
+  <xs:complexType name="ArrayOfFriendResponse">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="{0}Response" Namespace="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="ArrayOfFriend" Namespace="http://schemas.datacontract.org/2004/07/GuessWhoServices" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="StatusCode" type="tns:ResponseStatus" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/GuessWhoServices" minOccurs="0" name="Value" nillable="true" type="q2:ArrayOfFriend" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFriendResponse" nillable="true" type="tns:ArrayOfFriendResponse" />
 </xs:schema>

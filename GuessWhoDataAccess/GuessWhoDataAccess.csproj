@@ -59,6 +59,7 @@
     <Compile Include="Friendship.cs">
       <DependentUpon>GuessWhoModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="FriendshipDAO.cs" />
     <Compile Include="GuessWhoModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -110,6 +111,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GuessWhoClient\GuessWhoClient.csproj">
+      <Project>{B40E19B9-6FE1-4135-9CF6-DD10E98F46DF}</Project>
+      <Name>GuessWhoClient</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
