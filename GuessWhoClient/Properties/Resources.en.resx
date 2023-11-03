@@ -385,13 +385,16 @@
     <value>Verify the code entered</value>
   </data>
   <data name="tbCodePlaceholder" xml:space="preserve">
-    <value>Code</value>
+    <value>CODE</value>
   </data>
   <data name="tbReportCommentPlaceholder" xml:space="preserve">
     <value>Explain the situation</value>
   </data>
   <data name="tbSendMessagePlaceholder" xml:space="preserve">
     <value>Write a message…</value>
+  </data>
+  <data name="txtAlreadyFriends" xml:space="preserve">
+    <value>This user is already your friend</value>
   </data>
   <data name="txtConfirmationEmailBody" xml:space="preserve">
     <value>Your confirmation code</value>
@@ -416,6 +419,9 @@
   </data>
   <data name="txtNicknameGlobal" xml:space="preserve">
     <value>Nickname</value>
+  </data>
+  <data name="txtOwnNickname" xml:space="preserve">
+    <value>Enter a username that is not yours</value>
   </data>
   <data name="txtReportGlobal" xml:space="preserve">
     <value>Report</value>

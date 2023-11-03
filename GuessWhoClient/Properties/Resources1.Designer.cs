@@ -862,7 +862,7 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Código.
+        ///   Busca una cadena traducida similar a CÓDIGO.
         /// </summary>
         public static string tbCodePlaceholder {
             get {
@@ -885,6 +885,15 @@ namespace GuessWhoClient.Properties {
         public static string tbSendMessagePlaceholder {
             get {
                 return ResourceManager.GetString("tbSendMessagePlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Este usuario ya es tu amigo.
+        /// </summary>
+        public static string txtAlreadyFriends {
+            get {
+                return ResourceManager.GetString("txtAlreadyFriends", resourceCulture);
             }
         }
         
@@ -957,6 +966,15 @@ namespace GuessWhoClient.Properties {
         public static string txtNicknameGlobal {
             get {
                 return ResourceManager.GetString("txtNicknameGlobal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingresa un nombre de usuario que no sea el tuyo.
+        /// </summary>
+        public static string txtOwnNickname {
+            get {
+                return ResourceManager.GetString("txtOwnNickname", resourceCulture);
             }
         }
         

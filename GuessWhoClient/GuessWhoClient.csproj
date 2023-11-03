@@ -297,5 +297,8 @@
   <ItemGroup>
     <Resource Include="Resources\send-icon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\send-gray-icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
