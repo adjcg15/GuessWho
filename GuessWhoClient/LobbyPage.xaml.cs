@@ -1,6 +1,4 @@
 ﻿using GuessWhoClient.GameServices;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.ServiceModel;
@@ -9,19 +7,23 @@ using System.Windows.Controls;
 
 namespace GuessWhoClient
 {
-    public partial class LobbyPage : Page, GameServices.IUserServiceCallback
+    public partial class LobbyPage : Page, IUserServiceCallback, IMatchServiceCallback
     {
-        private GameServices.UserServiceClient userServiceClient;
+        private static string invitationCode;
+        private UserServiceClient userServiceClient;
+        private MatchServiceClient matchServiceClient;
         public ObservableCollection<ActiveUser> activeUsers { get; set; } = new ObservableCollection<ActiveUser>();
 
         public LobbyPage()
         {
             InitializeComponent();
 
-            userServiceClient = new GameServices.UserServiceClient(new InstanceContext(this));
+            userServiceClient = new UserServiceClient(new InstanceContext(this));
+            matchServiceClient = new MatchServiceClient(new InstanceContext(this));
             userServiceClient.Subscribe();
-            activeUsers = new ObservableCollection<ActiveUser>(userServiceClient.GetActiveUsers().ToList());
+            matchServiceClient.CreateMatch(DataStore.Profile != null ? DataStore.Profile.NickName : "");
 
+            activeUsers = new ObservableCollection<ActiveUser>(userServiceClient.GetActiveUsers().ToList());
             if (DataStore.Profile != null)
             {
                 string nickname = DataStore.Profile.NickName;
@@ -48,6 +50,11 @@ namespace GuessWhoClient
                     }
                 });
             }
+        }
+
+        public void PlayerStatusInMatchChanged(string user, bool isInMatch)
+        {
+            throw new System.NotImplementedException();
         }
 
         private void ClosingPage(object sender, RoutedEventArgs e)

@@ -13,6 +13,8 @@ namespace GuessWhoServices
     [ServiceContract]
     public interface IMatchCallback
     {
-        
+        //Pending to define the real type of users
+        [OperationContract]
+        void PlayerStatusInMatchChanged(string user, bool isInMatch);
     }
 }
