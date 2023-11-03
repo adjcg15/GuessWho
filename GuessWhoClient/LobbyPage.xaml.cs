@@ -52,7 +52,7 @@ namespace GuessWhoClient
             }
         }
 
-        public void PlayerStatusInMatchChanged(string user, bool isInMatch)
+        public void PlayerStatusInMatchChanged(PlayerInMatch user, bool isInMatch)
         {
             throw new System.NotImplementedException();
         }

@@ -8,13 +8,15 @@ namespace GuessWhoServices
     {
         [OperationContract]
         Response<string> CreateMatch(string hostNickname);
+
+        [OperationContract]
+        Response<PlayerInMatch> JoinGame(string invitationCode, string nickname);
     }
 
     [ServiceContract]
     public interface IMatchCallback
     {
-        //Pending to define the real type of users
         [OperationContract]
-        void PlayerStatusInMatchChanged(string user, bool isInMatch);
+        void PlayerStatusInMatchChanged(PlayerInMatch player, bool isInMatch);
     }
 }

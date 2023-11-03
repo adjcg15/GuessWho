@@ -130,4 +130,27 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="stringResponse" nillable="true" type="tns:stringResponse" />
+  <xs:complexType name="PlayerInMatchResponse">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="{0}Response" Namespace="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="PlayerInMatch" Namespace="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="StatusCode" type="tns:ResponseStatus" />
+      <xs:element minOccurs="0" name="Value" nillable="true" type="tns:PlayerInMatch" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PlayerInMatchResponse" nillable="true" type="tns:PlayerInMatchResponse" />
+  <xs:complexType name="PlayerInMatch">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Avatar" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsHost" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Nickname" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PlayerInMatch" nillable="true" type="tns:PlayerInMatch" />
 </xs:schema>

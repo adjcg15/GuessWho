@@ -185,6 +185,9 @@
     <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.booleanResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.PlayerInMatchResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ProfileResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

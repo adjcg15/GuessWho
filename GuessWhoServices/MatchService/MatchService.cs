@@ -1,6 +1,5 @@
 ﻿using GuessWhoDataAccess;
 using GuessWhoServices.Utils;
-using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 
@@ -32,9 +31,74 @@ namespace GuessWhoServices
 
             response.Value = invitationCode;
 
-            Console.WriteLine("Se agregó al map el host: " + matches[invitationCode].HostNickname);
-            Console.WriteLine("Dicho host tiene el canal: " + matches[invitationCode].HostChannel.GetHashCode());
-            Console.WriteLine("Y el código de invitación es: " + invitationCode);
+            return response;
+        }
+
+        public Response<PlayerInMatch> JoinGame(string invitationCode, string nickname)
+        {
+            var response = new Response<PlayerInMatch>
+            {
+                StatusCode = ResponseStatus.VALIDATION_ERROR,
+                Value = null
+            };
+
+            if (matches.ContainsKey(invitationCode))
+            {
+                var storedMatch = matches[invitationCode];
+                storedMatch.GuestChannel = OperationContext.Current.GetCallbackChannel<IMatchCallback>();
+
+                response.StatusCode = ResponseStatus.OK;
+
+                response.Value = new PlayerInMatch();
+                response.Value.Nickname = "";
+                response.Value.Avatar = null;
+                response.Value.FullName = "";
+                response.Value.IsHost = true;
+
+                //If HostNickname is empty it is assumed that the user is a guest so it does not have an account
+                if (!string.IsNullOrEmpty(storedMatch.HostNickname))
+                {
+                    Response<Profile> userResponse = UserDAO.GetUserByNickName(storedMatch.HostNickname);
+
+                    if (userResponse.StatusCode == ResponseStatus.OK)
+                    {
+                        response.Value.Nickname = userResponse.Value.NickName;
+                        response.Value.Avatar = userResponse.Value.Avatar;
+                        response.Value.FullName = userResponse.Value.FullName;
+                    }
+                    else
+                    {
+                        response.Value = null;
+                        response.StatusCode = userResponse.StatusCode;
+                    }
+                }
+
+                PlayerInMatch guest = new PlayerInMatch();
+                guest.Nickname = "";
+                guest.Avatar = null;
+                guest.FullName = "";
+                guest.IsHost = false;
+
+                //If nickname is empty it is assumed that the user is a guest so it does not have an account
+                if (!string.IsNullOrEmpty(nickname))
+                {
+                    Response<Profile> userResponse = UserDAO.GetUserByNickName(nickname);
+                    if(userResponse.StatusCode == ResponseStatus.OK)
+                    {
+                        guest.Nickname = userResponse.Value.NickName;
+                        guest.Avatar = userResponse.Value.Avatar;
+                        guest.FullName = userResponse.Value.FullName;
+                    }
+                    else
+                    {
+                        //If guest is null, an error occurred when recovering its information
+                        guest = null;
+                    }
+                }
+                
+                storedMatch.HostChannel.PlayerStatusInMatchChanged(guest, true);
+            }
+
             return response;
         }
     }
