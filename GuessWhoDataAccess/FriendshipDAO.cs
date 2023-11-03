@@ -38,6 +38,7 @@ namespace GuessWhoDataAccess
             catch (DbUpdateException ex) {
                 response.StatusCode = ResponseStatus.UPDATE_ERROR;
                 response.Value = false;
+                Console.WriteLine(ex.InnerException?.Message);
             }
             catch (DbEntityValidationException ex)
             {

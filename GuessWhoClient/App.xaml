@@ -424,6 +424,28 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+
+            <Style TargetType="TextBox" x:Key="TextBoxCodeInput">
+                <Setter Property="Padding" Value="6"/>
+                <Setter Property="BorderBrush" Value="#0A6EBD"/>
+                <Setter Property="BorderThickness" Value="4"/>
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Foreground" Value="#0A6EBD"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Cursor" Value="IBeam"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TextBox">
+                            <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="0,0,18,18" Cursor="Hand">
+                                <ScrollViewer x:Name="PART_ContentHost"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

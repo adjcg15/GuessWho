@@ -34,7 +34,7 @@
                         <Button x:Name="BtnSignUp" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Content="{x:Static p:Resources.txtSignUpGlobal}" Foreground="#0A6EBD" Background="{x:Null}" Margin="124,1,0,0" BorderThickness="0,0,0,1" BorderBrush="#FF0A6EBD" Click="BtnSignUpClick"/>
                     </Grid>
                 </Border>
-                <Button x:Name="BtnLogin" Style="{StaticResource PrimaryButton}" Content="{x:Static p:Resources.txtLoginGlobal}" HorizontalAlignment="Center" Margin="0,307,0,0" VerticalAlignment="Top" Click="BtnLoginClick"/>
+                <Button x:Name="BtnLogin" Style="{StaticResource PrimaryButton}" Content="{x:Static p:Resources.txtLoginGlobal}" HorizontalAlignment="Center" Margin="0,307,0,0" VerticalAlignment="Top" Click="BtnLoginClick" IsDefault="True"/>
             </Grid>
         </Border>
     </Grid>
