@@ -54,10 +54,6 @@
     <Compile Include="UserService\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GuessWhoClient\GuessWhoClient.csproj">
-      <Project>{B40E19B9-6FE1-4135-9CF6-DD10E98F46DF}</Project>
-      <Name>GuessWhoClient</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GuessWhoDataAccess\GuessWhoDataAccess.csproj">
       <Project>{f4a0f8a3-05a5-4fc2-b660-939c26b85df5}</Project>
       <Name>GuessWhoDataAccess</Name>

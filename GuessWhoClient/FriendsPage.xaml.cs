@@ -96,9 +96,9 @@ namespace GuessWhoClient
             else
             {
                 AuthenticationServiceClient authenticationServiceClient = new AuthenticationServiceClient();
-                UserResponse userResponse = authenticationServiceClient.VerifyUserRegisteredByNickName(nicknameRequested);
+                ProfileResponse profileResponse = authenticationServiceClient.VerifyUserRegisteredByNickName(nicknameRequested);
                 
-                if(userResponse.StatusCode == ResponseStatus.OK && userResponse.Value == null) 
+                if(profileResponse.StatusCode == ResponseStatus.OK && profileResponse.Value == null) 
                 {
                     TbMessage.Text = Properties.Resources.lbStatusRequestFailed;
                     TbMessage.Visibility = Visibility.Visible;
@@ -108,7 +108,7 @@ namespace GuessWhoClient
                 else
                 {
                     FriendsServiceClient friendsServiceClient = new FriendsServiceClient();
-                    booleanResponse booleanResponse = friendsServiceClient.SendRequest(DataStore.Profile.IdUser, userResponse.Value.idUser);
+                    booleanResponse booleanResponse = friendsServiceClient.SendRequest(DataStore.Profile.IdUser, profileResponse.Value.IdUser);
 
                     if(booleanResponse.Value)
                     {
