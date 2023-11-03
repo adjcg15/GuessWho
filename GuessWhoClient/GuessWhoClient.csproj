@@ -61,6 +61,9 @@
     <Compile Include="ConfirmAccountPage.xaml.cs">
       <DependentUpon>ConfirmAccountPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FriendsPage.xaml.cs">
+      <DependentUpon>FriendsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LobbyPage.xaml.cs">
       <DependentUpon>LobbyPage.xaml</DependentUpon>
     </Compile>
@@ -69,6 +72,9 @@
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProfilePage.xaml.cs">
+      <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ProfileSingleton.cs" />
     <Compile Include="Properties\Resources.es-MX.Designer.cs">
@@ -96,6 +102,10 @@
     <Compile Include="Utils\ImageTransformator.cs" />
     <Compile Include="Utils\ServerResponse.cs" />
     <Page Include="ConfirmAccountPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FriendsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -128,6 +138,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ProfilePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="RegisterPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -157,8 +171,12 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ActiveUser.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ArrayOfFriendResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ArrayOfTopPlayerResponse.datasource">
@@ -168,9 +186,6 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ProfileResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.UserResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\GameServices\item.xsd">
@@ -259,7 +274,28 @@
     <Resource Include="Resources\cross-icon.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\check-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Resources\search-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\folder-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\edit-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\save-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\cancel-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\add-friend-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\send-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

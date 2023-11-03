@@ -76,7 +76,7 @@ namespace GuessWhoClient.GameServices {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Profile", Namespace="http://schemas.datacontract.org/2004/07/GuessWhoServices")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Profile", Namespace="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess")]
     [System.SerializableAttribute()]
     public partial class Profile : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -91,6 +91,9 @@ namespace GuessWhoClient.GameServices {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string FullNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdUserField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NickNameField;
@@ -143,6 +146,19 @@ namespace GuessWhoClient.GameServices {
                 if ((object.ReferenceEquals(this.FullNameField, value) != true)) {
                     this.FullNameField = value;
                     this.RaisePropertyChanged("FullName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int IdUser {
+            get {
+                return this.IdUserField;
+            }
+            set {
+                if ((this.IdUserField.Equals(value) != true)) {
+                    this.IdUserField = value;
+                    this.RaisePropertyChanged("IdUser");
                 }
             }
         }
@@ -324,583 +340,6 @@ namespace GuessWhoClient.GameServices {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UserResponse", Namespace="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess")]
-    [System.SerializableAttribute()]
-    public partial class UserResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private GuessWhoClient.GameServices.ResponseStatus StatusCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private GuessWhoClient.GameServices.User ValueField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public GuessWhoClient.GameServices.ResponseStatus StatusCode {
-            get {
-                return this.StatusCodeField;
-            }
-            set {
-                if ((this.StatusCodeField.Equals(value) != true)) {
-                    this.StatusCodeField = value;
-                    this.RaisePropertyChanged("StatusCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public GuessWhoClient.GameServices.User Value {
-            get {
-                return this.ValueField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ValueField, value) != true)) {
-                    this.ValueField = value;
-                    this.RaisePropertyChanged("Value");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess")]
-    [System.SerializableAttribute()]
-    public partial class User : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private GuessWhoClient.GameServices.Account AccountField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private GuessWhoClient.GameServices.Friendship[] FriendshipsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private GuessWhoClient.GameServices.Friendship[] Friendships1Field;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private GuessWhoClient.GameServices.Match[] MatchesField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private byte[] avatarField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string fullNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int idAccountField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int idUserField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string nicknameField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public GuessWhoClient.GameServices.Account Account {
-            get {
-                return this.AccountField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.AccountField, value) != true)) {
-                    this.AccountField = value;
-                    this.RaisePropertyChanged("Account");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public GuessWhoClient.GameServices.Friendship[] Friendships {
-            get {
-                return this.FriendshipsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FriendshipsField, value) != true)) {
-                    this.FriendshipsField = value;
-                    this.RaisePropertyChanged("Friendships");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public GuessWhoClient.GameServices.Friendship[] Friendships1 {
-            get {
-                return this.Friendships1Field;
-            }
-            set {
-                if ((object.ReferenceEquals(this.Friendships1Field, value) != true)) {
-                    this.Friendships1Field = value;
-                    this.RaisePropertyChanged("Friendships1");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public GuessWhoClient.GameServices.Match[] Matches {
-            get {
-                return this.MatchesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MatchesField, value) != true)) {
-                    this.MatchesField = value;
-                    this.RaisePropertyChanged("Matches");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public byte[] avatar {
-            get {
-                return this.avatarField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.avatarField, value) != true)) {
-                    this.avatarField = value;
-                    this.RaisePropertyChanged("avatar");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string fullName {
-            get {
-                return this.fullNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.fullNameField, value) != true)) {
-                    this.fullNameField = value;
-                    this.RaisePropertyChanged("fullName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int idAccount {
-            get {
-                return this.idAccountField;
-            }
-            set {
-                if ((this.idAccountField.Equals(value) != true)) {
-                    this.idAccountField = value;
-                    this.RaisePropertyChanged("idAccount");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int idUser {
-            get {
-                return this.idUserField;
-            }
-            set {
-                if ((this.idUserField.Equals(value) != true)) {
-                    this.idUserField = value;
-                    this.RaisePropertyChanged("idUser");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string nickname {
-            get {
-                return this.nicknameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.nicknameField, value) != true)) {
-                    this.nicknameField = value;
-                    this.RaisePropertyChanged("nickname");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Account", Namespace="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess")]
-    [System.SerializableAttribute()]
-    public partial class Account : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private GuessWhoClient.GameServices.User[] UsersField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string emailField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int idAccountField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string passwordField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public GuessWhoClient.GameServices.User[] Users {
-            get {
-                return this.UsersField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UsersField, value) != true)) {
-                    this.UsersField = value;
-                    this.RaisePropertyChanged("Users");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string email {
-            get {
-                return this.emailField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.emailField, value) != true)) {
-                    this.emailField = value;
-                    this.RaisePropertyChanged("email");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int idAccount {
-            get {
-                return this.idAccountField;
-            }
-            set {
-                if ((this.idAccountField.Equals(value) != true)) {
-                    this.idAccountField = value;
-                    this.RaisePropertyChanged("idAccount");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string password {
-            get {
-                return this.passwordField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.passwordField, value) != true)) {
-                    this.passwordField = value;
-                    this.RaisePropertyChanged("password");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Friendship", Namespace="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess")]
-    [System.SerializableAttribute()]
-    public partial class Friendship : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private GuessWhoClient.GameServices.User UserField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private GuessWhoClient.GameServices.User User1Field;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int idFriendRequestedField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int idFriendRequesterField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int idFriendshipField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string statusField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public GuessWhoClient.GameServices.User User {
-            get {
-                return this.UserField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UserField, value) != true)) {
-                    this.UserField = value;
-                    this.RaisePropertyChanged("User");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public GuessWhoClient.GameServices.User User1 {
-            get {
-                return this.User1Field;
-            }
-            set {
-                if ((object.ReferenceEquals(this.User1Field, value) != true)) {
-                    this.User1Field = value;
-                    this.RaisePropertyChanged("User1");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int idFriendRequested {
-            get {
-                return this.idFriendRequestedField;
-            }
-            set {
-                if ((this.idFriendRequestedField.Equals(value) != true)) {
-                    this.idFriendRequestedField = value;
-                    this.RaisePropertyChanged("idFriendRequested");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int idFriendRequester {
-            get {
-                return this.idFriendRequesterField;
-            }
-            set {
-                if ((this.idFriendRequesterField.Equals(value) != true)) {
-                    this.idFriendRequesterField = value;
-                    this.RaisePropertyChanged("idFriendRequester");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int idFriendship {
-            get {
-                return this.idFriendshipField;
-            }
-            set {
-                if ((this.idFriendshipField.Equals(value) != true)) {
-                    this.idFriendshipField = value;
-                    this.RaisePropertyChanged("idFriendship");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string status {
-            get {
-                return this.statusField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.statusField, value) != true)) {
-                    this.statusField = value;
-                    this.RaisePropertyChanged("status");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Match", Namespace="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess")]
-    [System.SerializableAttribute()]
-    public partial class Match : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private GuessWhoClient.GameServices.User UserField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int idMatchField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int idWinnerField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string invitationCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<int> scoreField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string statusField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public GuessWhoClient.GameServices.User User {
-            get {
-                return this.UserField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UserField, value) != true)) {
-                    this.UserField = value;
-                    this.RaisePropertyChanged("User");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int idMatch {
-            get {
-                return this.idMatchField;
-            }
-            set {
-                if ((this.idMatchField.Equals(value) != true)) {
-                    this.idMatchField = value;
-                    this.RaisePropertyChanged("idMatch");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int idWinner {
-            get {
-                return this.idWinnerField;
-            }
-            set {
-                if ((this.idWinnerField.Equals(value) != true)) {
-                    this.idWinnerField = value;
-                    this.RaisePropertyChanged("idWinner");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string invitationCode {
-            get {
-                return this.invitationCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.invitationCodeField, value) != true)) {
-                    this.invitationCodeField = value;
-                    this.RaisePropertyChanged("invitationCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<int> score {
-            get {
-                return this.scoreField;
-            }
-            set {
-                if ((this.scoreField.Equals(value) != true)) {
-                    this.scoreField = value;
-                    this.RaisePropertyChanged("score");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string status {
-            get {
-                return this.statusField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.statusField, value) != true)) {
-                    this.statusField = value;
-                    this.RaisePropertyChanged("status");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ArrayOfTopPlayerResponse", Namespace="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess")]
     [System.SerializableAttribute()]
     public partial class ArrayOfTopPlayerResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -1037,6 +476,176 @@ namespace GuessWhoClient.GameServices {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ArrayOfFriendResponse", Namespace="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess")]
+    [System.SerializableAttribute()]
+    public partial class ArrayOfFriendResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private GuessWhoClient.GameServices.ResponseStatus StatusCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private GuessWhoClient.GameServices.Friend[] ValueField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GuessWhoClient.GameServices.ResponseStatus StatusCode {
+            get {
+                return this.StatusCodeField;
+            }
+            set {
+                if ((this.StatusCodeField.Equals(value) != true)) {
+                    this.StatusCodeField = value;
+                    this.RaisePropertyChanged("StatusCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GuessWhoClient.GameServices.Friend[] Value {
+            get {
+                return this.ValueField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ValueField, value) != true)) {
+                    this.ValueField = value;
+                    this.RaisePropertyChanged("Value");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Friend", Namespace="http://schemas.datacontract.org/2004/07/GuessWhoServices")]
+    [System.SerializableAttribute()]
+    public partial class Friend : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private byte[] AvatarField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FullNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdFriendshipField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NicknameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StatusField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public byte[] Avatar {
+            get {
+                return this.AvatarField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AvatarField, value) != true)) {
+                    this.AvatarField = value;
+                    this.RaisePropertyChanged("Avatar");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FullName {
+            get {
+                return this.FullNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FullNameField, value) != true)) {
+                    this.FullNameField = value;
+                    this.RaisePropertyChanged("FullName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int IdFriendship {
+            get {
+                return this.IdFriendshipField;
+            }
+            set {
+                if ((this.IdFriendshipField.Equals(value) != true)) {
+                    this.IdFriendshipField = value;
+                    this.RaisePropertyChanged("IdFriendship");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Nickname {
+            get {
+                return this.NicknameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NicknameField, value) != true)) {
+                    this.NicknameField = value;
+                    this.RaisePropertyChanged("Nickname");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Status {
+            get {
+                return this.StatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StatusField, value) != true)) {
+                    this.StatusField = value;
+                    this.RaisePropertyChanged("Status");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameServices.IUserService", CallbackContract=typeof(GuessWhoClient.GameServices.IUserServiceCallback))]
     public interface IUserService {
@@ -1137,16 +746,16 @@ namespace GuessWhoClient.GameServices {
         System.Threading.Tasks.Task<GuessWhoClient.GameServices.ProfileResponse> LoginAsync(string email, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/VerifyUserRegisteredByEmail", ReplyAction="http://tempuri.org/IAuthenticationService/VerifyUserRegisteredByEmailResponse")]
-        GuessWhoClient.GameServices.UserResponse VerifyUserRegisteredByEmail(string email);
+        GuessWhoClient.GameServices.ProfileResponse VerifyUserRegisteredByEmail(string email);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/VerifyUserRegisteredByEmail", ReplyAction="http://tempuri.org/IAuthenticationService/VerifyUserRegisteredByEmailResponse")]
-        System.Threading.Tasks.Task<GuessWhoClient.GameServices.UserResponse> VerifyUserRegisteredByEmailAsync(string email);
+        System.Threading.Tasks.Task<GuessWhoClient.GameServices.ProfileResponse> VerifyUserRegisteredByEmailAsync(string email);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/VerifyUserRegisteredByNickName", ReplyAction="http://tempuri.org/IAuthenticationService/VerifyUserRegisteredByNickNameResponse")]
-        GuessWhoClient.GameServices.UserResponse VerifyUserRegisteredByNickName(string nickname);
+        GuessWhoClient.GameServices.ProfileResponse VerifyUserRegisteredByNickName(string nickname);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/VerifyUserRegisteredByNickName", ReplyAction="http://tempuri.org/IAuthenticationService/VerifyUserRegisteredByNickNameResponse")]
-        System.Threading.Tasks.Task<GuessWhoClient.GameServices.UserResponse> VerifyUserRegisteredByNickNameAsync(string nickname);
+        System.Threading.Tasks.Task<GuessWhoClient.GameServices.ProfileResponse> VerifyUserRegisteredByNickNameAsync(string nickname);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/Logout", ReplyAction="http://tempuri.org/IAuthenticationService/LogoutResponse")]
         void Logout(string nickname);
@@ -1198,19 +807,19 @@ namespace GuessWhoClient.GameServices {
             return base.Channel.LoginAsync(email, password);
         }
         
-        public GuessWhoClient.GameServices.UserResponse VerifyUserRegisteredByEmail(string email) {
+        public GuessWhoClient.GameServices.ProfileResponse VerifyUserRegisteredByEmail(string email) {
             return base.Channel.VerifyUserRegisteredByEmail(email);
         }
         
-        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.UserResponse> VerifyUserRegisteredByEmailAsync(string email) {
+        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.ProfileResponse> VerifyUserRegisteredByEmailAsync(string email) {
             return base.Channel.VerifyUserRegisteredByEmailAsync(email);
         }
         
-        public GuessWhoClient.GameServices.UserResponse VerifyUserRegisteredByNickName(string nickname) {
+        public GuessWhoClient.GameServices.ProfileResponse VerifyUserRegisteredByNickName(string nickname) {
             return base.Channel.VerifyUserRegisteredByNickName(nickname);
         }
         
-        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.UserResponse> VerifyUserRegisteredByNickNameAsync(string nickname) {
+        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.ProfileResponse> VerifyUserRegisteredByNickNameAsync(string nickname) {
             return base.Channel.VerifyUserRegisteredByNickNameAsync(nickname);
         }
         
@@ -1267,6 +876,95 @@ namespace GuessWhoClient.GameServices {
         
         public System.Threading.Tasks.Task<GuessWhoClient.GameServices.ArrayOfTopPlayerResponse> GetBestPlayersAsync(string query, int totalPlayers) {
             return base.Channel.GetBestPlayersAsync(query, totalPlayers);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameServices.IFriendsService")]
+    public interface IFriendsService {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsService/SendRequest", ReplyAction="http://tempuri.org/IFriendsService/SendRequestResponse")]
+        GuessWhoClient.GameServices.booleanResponse SendRequest(int idUserRequester, int idUserRequested);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsService/SendRequest", ReplyAction="http://tempuri.org/IFriendsService/SendRequestResponse")]
+        System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> SendRequestAsync(int idUserRequester, int idUserRequested);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsService/GetFriends", ReplyAction="http://tempuri.org/IFriendsService/GetFriendsResponse")]
+        GuessWhoClient.GameServices.ArrayOfFriendResponse GetFriends(int idUser);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsService/GetFriends", ReplyAction="http://tempuri.org/IFriendsService/GetFriendsResponse")]
+        System.Threading.Tasks.Task<GuessWhoClient.GameServices.ArrayOfFriendResponse> GetFriendsAsync(int idUser);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsService/GetRequests", ReplyAction="http://tempuri.org/IFriendsService/GetRequestsResponse")]
+        GuessWhoClient.GameServices.ArrayOfFriendResponse GetRequests(int idUser);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsService/GetRequests", ReplyAction="http://tempuri.org/IFriendsService/GetRequestsResponse")]
+        System.Threading.Tasks.Task<GuessWhoClient.GameServices.ArrayOfFriendResponse> GetRequestsAsync(int idUser);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsService/AnswerRequest", ReplyAction="http://tempuri.org/IFriendsService/AnswerRequestResponse")]
+        GuessWhoClient.GameServices.booleanResponse AnswerRequest(int idFriendship, string answer);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsService/AnswerRequest", ReplyAction="http://tempuri.org/IFriendsService/AnswerRequestResponse")]
+        System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> AnswerRequestAsync(int idFriendship, string answer);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IFriendsServiceChannel : GuessWhoClient.GameServices.IFriendsService, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class FriendsServiceClient : System.ServiceModel.ClientBase<GuessWhoClient.GameServices.IFriendsService>, GuessWhoClient.GameServices.IFriendsService {
+        
+        public FriendsServiceClient() {
+        }
+        
+        public FriendsServiceClient(string endpointConfigurationName) : 
+                base(endpointConfigurationName) {
+        }
+        
+        public FriendsServiceClient(string endpointConfigurationName, string remoteAddress) : 
+                base(endpointConfigurationName, remoteAddress) {
+        }
+        
+        public FriendsServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(endpointConfigurationName, remoteAddress) {
+        }
+        
+        public FriendsServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(binding, remoteAddress) {
+        }
+        
+        public GuessWhoClient.GameServices.booleanResponse SendRequest(int idUserRequester, int idUserRequested) {
+            return base.Channel.SendRequest(idUserRequester, idUserRequested);
+        }
+        
+        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> SendRequestAsync(int idUserRequester, int idUserRequested) {
+            return base.Channel.SendRequestAsync(idUserRequester, idUserRequested);
+        }
+        
+        public GuessWhoClient.GameServices.ArrayOfFriendResponse GetFriends(int idUser) {
+            return base.Channel.GetFriends(idUser);
+        }
+        
+        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.ArrayOfFriendResponse> GetFriendsAsync(int idUser) {
+            return base.Channel.GetFriendsAsync(idUser);
+        }
+        
+        public GuessWhoClient.GameServices.ArrayOfFriendResponse GetRequests(int idUser) {
+            return base.Channel.GetRequests(idUser);
+        }
+        
+        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.ArrayOfFriendResponse> GetRequestsAsync(int idUser) {
+            return base.Channel.GetRequestsAsync(idUser);
+        }
+        
+        public GuessWhoClient.GameServices.booleanResponse AnswerRequest(int idFriendship, string answer) {
+            return base.Channel.AnswerRequest(idFriendship, answer);
+        }
+        
+        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> AnswerRequestAsync(int idFriendship, string answer) {
+            return base.Channel.AnswerRequestAsync(idFriendship, answer);
         }
     }
 }

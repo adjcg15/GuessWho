@@ -50,7 +50,7 @@
   <xs:element name="RegisterUser">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/GuessWhoServices" minOccurs="0" name="user" nillable="true" type="q3:Profile" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="user" nillable="true" type="q3:Profile" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -86,7 +86,7 @@
   <xs:element name="VerifyUserRegisteredByEmailResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="VerifyUserRegisteredByEmailResult" nillable="true" type="q6:UserResponse" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="VerifyUserRegisteredByEmailResult" nillable="true" type="q6:ProfileResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -100,7 +100,7 @@
   <xs:element name="VerifyUserRegisteredByNickNameResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="VerifyUserRegisteredByNickNameResult" nillable="true" type="q7:UserResponse" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="VerifyUserRegisteredByNickNameResult" nillable="true" type="q7:ProfileResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -128,6 +128,64 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="GetBestPlayersResult" nillable="true" type="q8:ArrayOfTopPlayerResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idUserRequester" type="xs:int" />
+        <xs:element minOccurs="0" name="idUserRequested" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendRequestResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="SendRequestResult" nillable="true" type="q9:booleanResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFriends">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idUser" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFriendsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="GetFriendsResult" nillable="true" type="q10:ArrayOfFriendResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRequests">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idUser" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRequestsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="GetRequestsResult" nillable="true" type="q11:ArrayOfFriendResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AnswerRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idFriendship" type="xs:int" />
+        <xs:element minOccurs="0" name="answer" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AnswerRequestResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="AnswerRequestResult" nillable="true" type="q12:booleanResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

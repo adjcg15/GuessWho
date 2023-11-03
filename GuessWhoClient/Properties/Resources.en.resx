@@ -252,12 +252,6 @@
   <data name="lbHowToPlayDescription" xml:space="preserve">
     <value>Draw! Unlike the original game, here you will not be able to ask questions to your opponent, instead, you must use your imagination and make a drawing to convey your question. Once your drawing is finished, finish your attempt and go to the next step.</value>
   </data>
-  <data name="lbOfflineFriends" xml:space="preserve">
-    <value>Offline</value>
-  </data>
-  <data name="lbOnlineFriends" xml:space="preserve">
-    <value>Online</value>
-  </data>
   <data name="lbPasswordGlobal" xml:space="preserve">
     <value>Password</value>
   </data>
@@ -404,6 +398,12 @@
   </data>
   <data name="txtConfirmationEmailSubject" xml:space="preserve">
     <value>Email confirmation</value>
+  </data>
+  <data name="txtFriendRequests" xml:space="preserve">
+    <value>Requests</value>
+  </data>
+  <data name="txtFriends" xml:space="preserve">
+    <value>Friends</value>
   </data>
   <data name="txtLeaderboardGlobal" xml:space="preserve">
     <value>Leaderboard</value>

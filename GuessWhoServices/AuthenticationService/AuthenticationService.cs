@@ -6,7 +6,7 @@ namespace GuessWhoServices
     {
         public Response<Profile> Login(string email, string password)
         {
-            GuessWhoDataAccess.Response<Profile> response = new GuessWhoDataAccess.Response<Profile>()
+            Response<Profile> response = new Response<Profile>()
             {
                 StatusCode = ResponseStatus.OK,
                 Value = null
@@ -40,6 +40,7 @@ namespace GuessWhoServices
                 NickName = user.nickname,
                 FullName = user.fullName,
                 Avatar = user.avatar,
+                IdUser = user.idUser
             };
             return response;
         }
@@ -61,15 +62,15 @@ namespace GuessWhoServices
             return UserDAO.RegisterUser(user, account);
         }
 
-        public Response<User> VerifyUserRegisteredByEmail(string email)
+        public Response<Profile> VerifyUserRegisteredByEmail(string email)
         {
-            Response<User> userStored = UserDAO.GetUserByEmail(email);
+            Response<Profile> userStored = UserDAO.GetUserByEmail(email);
             return userStored;
         }
 
-        public Response<User> VerifyUserRegisteredByNickName(string nickname)
+        public Response<Profile> VerifyUserRegisteredByNickName(string nickname)
         {
-            Response<User> userStored = UserDAO.GetUserByNickName(nickname);
+            Response<Profile> userStored = UserDAO.GetUserByNickName(nickname);
             return userStored;
         }
 

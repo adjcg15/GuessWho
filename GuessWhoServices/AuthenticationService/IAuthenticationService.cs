@@ -1,5 +1,4 @@
 ﻿using GuessWhoDataAccess;
-using System.Runtime.Serialization;
 using System.ServiceModel;
 
 namespace GuessWhoServices
@@ -14,36 +13,12 @@ namespace GuessWhoServices
         Response<Profile> Login(string email, string password);
 
         [OperationContract]
-        Response<User> VerifyUserRegisteredByEmail(string email);
+        Response<Profile> VerifyUserRegisteredByEmail(string email);
 
         [OperationContract]
-        Response<User> VerifyUserRegisteredByNickName(string nickname);
+        Response<Profile> VerifyUserRegisteredByNickName(string nickname);
+
         [OperationContract]
         void Logout(string nickname);
-    }
-
-    [DataContract]
-    public class Profile
-    {
-        private string nickName;
-        private string fullName;
-        private byte[] avatar;
-        private string email;
-        private string password;
-
-        [DataMember]
-        public string NickName { get { return nickName; } set { nickName = value; } }
-
-        [DataMember]
-        public string FullName { get { return fullName; } set { fullName = value; } }
-
-        [DataMember]
-        public byte[] Avatar { get { return avatar; } set { avatar = value; } }
-
-        [DataMember]
-        public string Email { get { return email; } set { email = value; } }
-
-        [DataMember]
-        public string Password { get { return password; } set { password = value; } }
     }
 }

@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FriendsService\FriendsService.cs" />
+    <Compile Include="FriendsService\IFriendsService.cs" />
     <Compile Include="PlayerService\IPlayerService.cs" />
     <Compile Include="PlayerService\PlayerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

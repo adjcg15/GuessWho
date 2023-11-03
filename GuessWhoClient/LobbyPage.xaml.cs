@@ -54,5 +54,15 @@ namespace GuessWhoClient
         {
             userServiceClient.Unsubscribe();
         }
+
+        private void ListBoxActiveUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ListBoxActiveUsers_SelectionChanged_1()
+        {
+
+        }
     }
 }
