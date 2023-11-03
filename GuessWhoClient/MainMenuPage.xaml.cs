@@ -1,7 +1,6 @@
 ﻿using GuessWhoClient.GameServices;
 using GuessWhoClient.Utils;
 using System;
-using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -75,6 +74,12 @@ namespace GuessWhoClient
         {
             FriendsPage friendsPage = new FriendsPage();
             this.NavigationService.Navigate(friendsPage);
+        }
+
+        private void BorderProfileClick(object sender, RoutedEventArgs e)
+        {
+            ProfilePage profilePage = new ProfilePage();
+            this.NavigationService.Navigate(profilePage);
         }
 
         public void LoginProfile()

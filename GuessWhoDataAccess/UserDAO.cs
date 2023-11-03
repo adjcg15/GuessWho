@@ -66,9 +66,9 @@ namespace GuessWhoDataAccess
             }
         }
 
-        public static Response<User> GetUserByEmail(string email)
+        public static Response<Profile> GetUserByEmail(string email)
         {
-            Response<User> response = new Response<User>
+            Response<Profile> response = new Response<Profile>
             {
                 StatusCode = ResponseStatus.OK,
                 Value = null
@@ -79,13 +79,19 @@ namespace GuessWhoDataAccess
                 using (var context = new GuessWhoContext())
                 {
                     var account = context.Accounts.FirstOrDefault(a => a.email == email);
-                    if (account == null)
+                    if (account != null)
                     {
-                        return null;
-                    }
+                        var user = context.Users.FirstOrDefault(a => a.idAccount == account.idAccount);
 
-                    var user = context.Users.FirstOrDefault(a => a.idAccount == account.idAccount);
-                    response.Value = user;
+                        response.Value = new Profile
+                        {
+                            NickName = user.nickname,
+                            FullName = user.fullName,
+                            Avatar = user.avatar,
+                            Email = account.email,
+                            Password = account.password
+                        };
+                    }
                 }
             }
             catch (SqlException ex)
@@ -96,9 +102,9 @@ namespace GuessWhoDataAccess
             return response;
         }
 
-        public static Response<User> GetUserByNickName(string nickname)
+        public static Response<Profile> GetUserByNickName(string nickname)
         {
-            Response<User> response = new Response<User>
+            Response<Profile> response = new Response<Profile>
             {
                 StatusCode = ResponseStatus.OK,
                 Value = null
@@ -109,7 +115,19 @@ namespace GuessWhoDataAccess
                 using (var context = new GuessWhoContext())
                 {
                     var user = context.Users.FirstOrDefault(a => a.nickname == nickname);
-                    response.Value = user;
+                    if (user != null)
+                    {
+                        var account = context.Accounts.FirstOrDefault(a => a.idAccount == user.idAccount);
+
+                        response.Value = new Profile
+                        {
+                            NickName = user.nickname,
+                            FullName = user.fullName,
+                            Avatar = user.avatar,
+                            Email = account.email,
+                            Password = account.password
+                        };
+                    }
                 }
             }
             catch (SqlException ex)

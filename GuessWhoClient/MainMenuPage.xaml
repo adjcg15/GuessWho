@@ -54,7 +54,7 @@
             <Image Source="/Resources/help-icon.png" Width="18" Height="18" Cursor=""/>
         </Button>
         <StackPanel HorizontalAlignment="Right" Orientation="Vertical" VerticalAlignment="Top" Margin="0,10,10,0">
-            <Border x:Name ="BorderProfile" CornerRadius="24,24,24,24" Width="120" Height="120" Background="#8E8E8E" BorderBrush="#BCBCBC" BorderThickness="4" HorizontalAlignment="Right" Visibility="Collapsed">
+            <Border MouseDown="BorderProfileClick" Cursor="Hand" x:Name ="BorderProfile" CornerRadius="24,24,24,24" Width="120" Height="120" Background="#8E8E8E" BorderBrush="#BCBCBC" BorderThickness="4" HorizontalAlignment="Right"  Visibility="Collapsed">
                 <StackPanel>
                     <Border 
                         Width="70" Height="70" 
