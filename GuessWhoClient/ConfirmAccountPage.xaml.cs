@@ -97,14 +97,14 @@ namespace GuessWhoClient
 
         private static string GenerateConfirmationCode(int length)
         {
-            const string charactersSet = "abcdefghijklmnopqrstuvwxyz0123456789";
+            const string CHARACTER_SET = "abcdefghijklmnopqrstuvwxyz0123456789";
             StringBuilder confirmationCode = new StringBuilder(length);
             Random random = new Random();
 
             for (int i = 0; i < length; i++)
             {
-                int characterPosition = random.Next(0, charactersSet.Length);
-                confirmationCode.Append(charactersSet[characterPosition]);
+                int characterPosition = random.Next(0, CHARACTER_SET.Length);
+                confirmationCode.Append(CHARACTER_SET[characterPosition]);
             }
 
             return confirmationCode.ToString();
