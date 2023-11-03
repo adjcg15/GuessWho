@@ -398,6 +398,29 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+
+            <Style TargetType="Button" x:Key="CircularButtonOnlyWithIcon">
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="BorderBrush" Value="#BDCDD9"/>
+                <Setter Property="BorderThickness" Value="4"/>
+                <Setter Property="Background" Value="#0A6EBD"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}"
+                             BorderBrush="{TemplateBinding BorderBrush}"
+                             BorderThickness="{TemplateBinding BorderThickness}"
+                             CornerRadius="24"
+                             Padding="{TemplateBinding Padding}" Cursor="Hand">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
