@@ -122,12 +122,14 @@
             </TabItem>
         </TabControl>
         <TextBox Name="TbNameRequest" Style="{StaticResource Input}" HorizontalAlignment="Left" Margin="488,45,0,0" VerticalAlignment="Top" Width="194"/>
-        <Button Name="BtnAddFriend" Style="{StaticResource SecondaryButtonWithIcon}" HorizontalAlignment="Left" Margin="743,40,0,0" VerticalAlignment="Top" Click="BtnAddFriendClick">
+        <Button Name="BtnAddFriend" Style="{StaticResource SecondaryButtonWithIcon}" HorizontalAlignment="Left" Margin="743,40,0,0" VerticalAlignment="Top" Click="BtnAddFriendClick" IsDefault="True">
             <StackPanel Orientation="Horizontal">
                 <Image Source="/Resources/add-friend-icon.png" Width="19" Height="16"/>
                 <TextBlock Text="{x:Static p:Resources.btnAddFriend}" x:Name="TbBtnJoinMatch" VerticalAlignment="Center" FontWeight="SemiBold" Margin="3,0,0,0"/>
             </StackPanel>
         </Button>
-        <TextBox x:Name="TbMessage" Visibility="Hidden" HorizontalAlignment="Left" Height="32" Margin="492,43,0,0" VerticalAlignment="Top" Width="242" BorderThickness="0,0,0,0" Background="{x:Null}" TextAlignment="Center" IsEnabled="False" TextWrapping="Wrap" FontSize="10"/>
+        <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="492,46,0,0" Height="28" Width="246">
+            <TextBox x:Name="TbMessage" IsReadOnly="True" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,0,0,0" Background="{x:Null}" TextAlignment="Center" TextWrapping="Wrap" FontSize="10"/>
+        </Grid>
     </Grid>
 </Page>

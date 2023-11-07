@@ -1,4 +1,5 @@
-﻿using System.Data.Entity.Infrastructure;
+﻿using System;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Linq;
@@ -104,6 +105,8 @@ namespace GuessWhoDataAccess
 
         public static Response<Profile> GetUserByNickName(string nickname)
         {
+            Console.WriteLine(nickname + " Entrando a DAO");
+
             Response<Profile> response = new Response<Profile>
             {
                 StatusCode = ResponseStatus.OK,
@@ -125,7 +128,8 @@ namespace GuessWhoDataAccess
                             FullName = user.fullName,
                             Avatar = user.avatar,
                             Email = account.email,
-                            Password = account.password
+                            Password = account.password,
+                            IdUser = user.idAccount,
                         };
                     }
                 }
