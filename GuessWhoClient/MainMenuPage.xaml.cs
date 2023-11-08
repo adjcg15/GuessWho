@@ -20,6 +20,12 @@ namespace GuessWhoClient
             InitializeComponent();
         }
 
+        public void initializeFromCanceledMatch()
+        {
+            BorderCanceledMatch.Visibility = Visibility.Visible;
+            BorderOpacityCanceledMatch.Visibility = Visibility.Visible;
+        }
+
         private void BtnLoginClick(object sender, RoutedEventArgs e)
         {
             LoginPage loginPage = new LoginPage();
@@ -208,6 +214,12 @@ namespace GuessWhoClient
             {
                 TbCodePlaceholder.Visibility = Visibility.Visible;
             }
+        }
+
+        private void BorderCanceledMatchClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            BorderCanceledMatch.Visibility = Visibility.Collapsed;
+            BorderOpacityCanceledMatch.Visibility = Visibility.Collapsed;
         }
     }
 }

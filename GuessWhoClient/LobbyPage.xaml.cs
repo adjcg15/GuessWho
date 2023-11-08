@@ -143,16 +143,8 @@ namespace GuessWhoClient
 
         private void FinishGameForGuest()
         {
-            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
-
-            MessageBox.Show(
-                resourceManager.GetString("msgbGameFinishedByHostMessage"),
-                resourceManager.GetString("msgbGameFinishedByHostTitle"),
-                MessageBoxButton.OK,
-                MessageBoxImage.Warning
-            );
-
             MainMenuPage mainMenu = new MainMenuPage();
+            mainMenu.initializeFromCanceledMatch();
             this.NavigationService.Navigate(mainMenu);
         }
 
