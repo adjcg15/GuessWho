@@ -17,7 +17,6 @@ namespace GuessWhoClient
     {
         private const string DEFAULT_PROFILE_PICTURE_ROUTE = "pack://application:,,,/Resources/user-icon.png";
         private string invitationCode;
-        private bool isHost;
         private UserServiceClient userServiceClient;
         private MatchServiceClient matchServiceClient;
         public ObservableCollection<ActiveUser> activeUsers { get; set; } = new ObservableCollection<ActiveUser>();
@@ -29,13 +28,13 @@ namespace GuessWhoClient
             string userNickname = DataStore.Profile != null ? DataStore.Profile.NickName : "";
             userServiceClient = new UserServiceClient(new InstanceContext(this));
             matchServiceClient = new MatchServiceClient(new InstanceContext(this));
-            isHost = true;
+
             BtnCancelGame.Visibility = Visibility.Visible;
             BtnStartGame.Visibility = Visibility.Visible;
 
             userServiceClient.Subscribe();
-            var createMatchResponse = matchServiceClient.CreateMatch(userNickname);
 
+            var createMatchResponse = matchServiceClient.CreateMatch(userNickname);
             if (createMatchResponse.StatusCode == ResponseStatus.OK)
             {
                 this.invitationCode = createMatchResponse.Value;
@@ -61,12 +60,12 @@ namespace GuessWhoClient
             string userNickname = DataStore.Profile != null ? DataStore.Profile.NickName : "";
             userServiceClient = new UserServiceClient(new InstanceContext(this));
             matchServiceClient = new MatchServiceClient(new InstanceContext(this));
-            isHost = false;
+
             BtnExitGame.Visibility = Visibility.Visible;
 
             userServiceClient.Subscribe();
-            var joinGameResponse = matchServiceClient.JoinGame(invitationCode, userNickname);
 
+            var joinGameResponse = matchServiceClient.JoinGame(invitationCode, userNickname);
             if (joinGameResponse.StatusCode == ResponseStatus.OK)
             {
                 PlayerInMatch host = joinGameResponse.Value;
@@ -117,21 +116,26 @@ namespace GuessWhoClient
             }
         }
 
-        public void PlayerStatusInMatchChanged(PlayerInMatch user, bool isInMatch)
+        public void PlayerStatusInMatchChanged(PlayerInMatch user, bool isJoiningMatch)
         {
             if(user.IsHost)
             {
-                Console.WriteLine("Llegando notificación de que host salió por canal " + matchServiceClient.GetHashCode());
-                FinishGameForGuest();
+                if(!isJoiningMatch)
+                {
+                    Console.WriteLine("Llamado por una salida del host");
+                    FinishGameForGuest();
+                }
             }
             else
             {
-                if(isInMatch)
+                if (isJoiningMatch)
                 {
+                    Console.WriteLine("Llamado por llegada de jugador");
                     ShowGuestInformation(user);
                 }
                 else
                 {
+                    Console.WriteLine("Llamado por salida de jugador");
                     HideGuestInformation();
                 }
             }
