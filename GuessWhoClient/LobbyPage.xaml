@@ -19,7 +19,7 @@
             <Grid>
                 <Ellipse Margin="28,9,370,9">
                     <Ellipse.Fill>
-                        <ImageBrush x:Name="ImgProfilePicture2" ImageSource="/Resources/user-icon.png"/>
+                        <ImageBrush x:Name="ImgChatProfilePicture" ImageSource="/Resources/user-icon.png"/>
                     </Ellipse.Fill>
                 </Ellipse>
                 <TextBlock x:Name="TbOponentChat" Text="{x:Static p:Resources.lbWaitingPlayer}" FontSize="16" FontWeight="Medium" Margin="93,23,207,23"/>
@@ -28,7 +28,7 @@
         <Border Background ="White" BorderThickness="2,0,0,0" BorderBrush="#E2E2E2" Grid.Column="1" HorizontalAlignment="Center" Height="522" VerticalAlignment="Center" Width="450">
             <Grid>
                 <Grid>
-                    <Border Background="#E2E2E2" CornerRadius="30" Width="430" Height="60" Margin="8,84,10,378">
+                    <Border x:Name="BorderOponent" Background="#E2E2E2" CornerRadius="30" Width="430" Height="60" Margin="8,84,10,378">
                         <Grid>
                             <StackPanel Orientation="Horizontal">
                                 <Ellipse Width="50" Height="50" Margin="6,5,5,5">
@@ -37,18 +37,6 @@
                                     </Ellipse.Fill>
                                 </Ellipse>
                                 <TextBlock x:Name="TbOponent" Text="{x:Static p:Resources.lbWaitingPlayer}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="16" FontWeight="Medium" Opacity="0.5"/>
-                            </StackPanel>
-                        </Grid>
-                    </Border>
-                    <Border Background="#E2E2E2" CornerRadius="30" Width="430" Height="60" Margin="8,84,10,378">
-                        <Grid>
-                            <StackPanel Orientation="Horizontal">
-                                <Ellipse Width="50" Height="50" Margin="6,5,5,5">
-                                    <Ellipse.Fill>
-                                        <ImageBrush x:Name="ImgProfilePicture1" ImageSource="/Resources/user-icon.png"/>
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <TextBlock x:Name="TbOponent1" Text="{x:Static p:Resources.lbWaitingPlayer}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="16" FontWeight="Medium" Opacity="0.5"/>
                             </StackPanel>
                         </Grid>
                     </Border>
@@ -66,7 +54,7 @@
                     </StackPanel>
                 </Button>
 
-                <Button x:Name="BtnInvitationCode" HorizontalAlignment="Left" Margin="10,176,0,0" VerticalAlignment="Top" Style="{StaticResource SecondaryButtonWithIcon}">
+                <Button Click="BtnCopyInvitationCodeClick" x:Name="BtnInvitationCode" HorizontalAlignment="Left" Margin="10,176,0,0" VerticalAlignment="Top" Style="{StaticResource SecondaryButtonWithIcon}">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Image Source="/Resources/invitation-code-icon.png" Height="16" Width="16"/>
                         <TextBlock Text="{x:Static p:Resources.btnInvitationCode}" VerticalAlignment="Center" FontWeight="SemiBold" Margin="5,0,0,0"/>

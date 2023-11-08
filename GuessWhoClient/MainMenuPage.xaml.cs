@@ -190,7 +190,8 @@ namespace GuessWhoClient
 
         private void ImgSendInvitationCodeClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-
+            LobbyPage lobby = new LobbyPage(TbInvitationCode.Text);
+            this.NavigationService.Navigate(lobby);
         }
 
         private void TbInvitationCodeGotFocus(object sender, RoutedEventArgs e)

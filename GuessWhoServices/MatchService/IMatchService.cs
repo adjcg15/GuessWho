@@ -11,6 +11,9 @@ namespace GuessWhoServices
 
         [OperationContract]
         Response<PlayerInMatch> JoinGame(string invitationCode, string nickname);
+
+        [OperationContract]
+        Response<bool> ExitGame(string invitationCode, string nickname);
     }
 
     [ServiceContract]

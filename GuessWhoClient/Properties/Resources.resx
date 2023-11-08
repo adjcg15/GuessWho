@@ -315,6 +315,12 @@
   <data name="msgbEmptyField" xml:space="preserve">
     <value>El correo electrónico y la contraseña son requeridos</value>
   </data>
+  <data name="msgbErrorCreatingMatchTitle" xml:space="preserve">
+    <value>Ocurrió un error creando la partida</value>
+  </data>
+  <data name="msgbErrorJoiningMatchTitle" xml:space="preserve">
+    <value>Ocurrió un error al unirse a la partida</value>
+  </data>
   <data name="msgbRegisterAlertImageSizeMessage" xml:space="preserve">
     <value>La imagen debe tener un tamaño de 20kb o menos.</value>
   </data>
@@ -407,6 +413,9 @@
   </data>
   <data name="txtFriends" xml:space="preserve">
     <value>Amigos</value>
+  </data>
+  <data name="txtGuest" xml:space="preserve">
+    <value>Invitado</value>
   </data>
   <data name="txtLeaderboardGlobal" xml:space="preserve">
     <value>Marcador</value>

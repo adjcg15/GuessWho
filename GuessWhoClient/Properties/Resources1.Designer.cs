@@ -655,6 +655,24 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Ocurrió un error creando la partida.
+        /// </summary>
+        public static string msgbErrorCreatingMatchTitle {
+            get {
+                return ResourceManager.GetString("msgbErrorCreatingMatchTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ocurrió un error al unirse a la partida.
+        /// </summary>
+        public static string msgbErrorJoiningMatchTitle {
+            get {
+                return ResourceManager.GetString("msgbErrorJoiningMatchTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a La imagen debe tener un tamaño de 20kb o menos..
         /// </summary>
         public static string msgbRegisterAlertImageSizeMessage {
@@ -930,6 +948,15 @@ namespace GuessWhoClient.Properties {
         public static string txtFriends {
             get {
                 return ResourceManager.GetString("txtFriends", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Invitado.
+        /// </summary>
+        public static string txtGuest {
+            get {
+                return ResourceManager.GetString("txtGuest", resourceCulture);
             }
         }
         
