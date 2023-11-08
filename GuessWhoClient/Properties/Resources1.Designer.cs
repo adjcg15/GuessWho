@@ -151,6 +151,15 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Abandonar partida.
+        /// </summary>
+        public static string btnExitGame {
+            get {
+                return ResourceManager.GetString("btnExitGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Terminar intento.
         /// </summary>
         public static string btnFinishAttempt {
@@ -669,6 +678,15 @@ namespace GuessWhoClient.Properties {
         public static string msgbErrorJoiningMatchTitle {
             get {
                 return ResourceManager.GetString("msgbErrorJoiningMatchTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error al abandonar la partida, intente nuevamente.
+        /// </summary>
+        public static string msgbErrorLeavingMatchTitle {
+            get {
+                return ResourceManager.GetString("msgbErrorLeavingMatchTitle", resourceCulture);
             }
         }
         

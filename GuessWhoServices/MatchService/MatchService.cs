@@ -45,10 +45,10 @@ namespace GuessWhoServices
             if (matches.ContainsKey(invitationCode))
             {
                 var storedMatch = matches[invitationCode];
-                storedMatch.GuestChannel = OperationContext.Current.GetCallbackChannel<IMatchCallback>();
 
                 if(storedMatch.GuestChannel == null)
                 {
+                    storedMatch.GuestChannel = OperationContext.Current.GetCallbackChannel<IMatchCallback>();
                     response.StatusCode = ResponseStatus.OK;
 
                     response.Value = new PlayerInMatch();
@@ -99,6 +99,42 @@ namespace GuessWhoServices
                     }
 
                     storedMatch.HostChannel.PlayerStatusInMatchChanged(guest, true);
+                }
+            }
+
+            return response;
+        }
+
+        public Response<bool> ExitGame(string invitationCode)
+        {
+            var response = new Response<bool>
+            {
+                StatusCode = ResponseStatus.VALIDATION_ERROR,
+                Value = false
+            };
+
+            if (matches.ContainsKey(invitationCode))
+            {
+                var storedMatch = matches[invitationCode];
+                var storedGuestChannel = storedMatch.GuestChannel;
+                var clientChannel = OperationContext.Current.GetCallbackChannel<IMatchCallback>();
+
+                bool isClientStoredInMatch = storedGuestChannel != null && (clientChannel.GetHashCode() == storedGuestChannel.GetHashCode());
+                if (isClientStoredInMatch)
+                {
+                    response.StatusCode = ResponseStatus.OK;
+                    response.Value = true;
+
+                    storedMatch.GuestNickname = null;
+                    storedMatch.GuestChannel = null;
+
+                    PlayerInMatch emptyPlayer = new PlayerInMatch();
+                    emptyPlayer.Nickname = "";
+                    emptyPlayer.Avatar = null;
+                    emptyPlayer.FullName = "";
+                    emptyPlayer.IsHost = false;
+
+                    storedMatch.HostChannel.PlayerStatusInMatchChanged(emptyPlayer, false);
                 }
             }
 

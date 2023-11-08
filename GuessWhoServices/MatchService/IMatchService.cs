@@ -13,7 +13,7 @@ namespace GuessWhoServices
         Response<PlayerInMatch> JoinGame(string invitationCode, string nickname);
 
         [OperationContract]
-        Response<bool> ExitGame(string invitationCode, string nickname);
+        Response<bool> ExitGame(string invitationCode);
     }
 
     [ServiceContract]

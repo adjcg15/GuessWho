@@ -147,6 +147,9 @@
   <data name="btnEmailInvitation" xml:space="preserve">
     <value>Invite via email</value>
   </data>
+  <data name="btnExitGame" xml:space="preserve">
+    <value>Exit game</value>
+  </data>
   <data name="btnFinishAttempt" xml:space="preserve">
     <value>End try</value>
   </data>
@@ -320,6 +323,9 @@
   </data>
   <data name="msgbErrorJoiningMatchTitle" xml:space="preserve">
     <value>An error occurred while joining the game</value>
+  </data>
+  <data name="msgbErrorLeavingMatchTitle" xml:space="preserve">
+    <value>Error leaving game, try again</value>
   </data>
   <data name="msgbRegisterAlertImageSizeMessage" xml:space="preserve">
     <value>The image must be 20kb or less in size.</value>

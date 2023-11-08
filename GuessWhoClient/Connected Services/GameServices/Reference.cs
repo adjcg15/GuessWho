@@ -1198,6 +1198,12 @@ namespace GuessWhoClient.GameServices {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchService/JoinGame", ReplyAction="http://tempuri.org/IMatchService/JoinGameResponse")]
         System.Threading.Tasks.Task<GuessWhoClient.GameServices.PlayerInMatchResponse> JoinGameAsync(string invitationCode, string nickname);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchService/ExitGame", ReplyAction="http://tempuri.org/IMatchService/ExitGameResponse")]
+        GuessWhoClient.GameServices.booleanResponse ExitGame(string invitationCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchService/ExitGame", ReplyAction="http://tempuri.org/IMatchService/ExitGameResponse")]
+        System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> ExitGameAsync(string invitationCode);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1249,6 +1255,14 @@ namespace GuessWhoClient.GameServices {
         
         public System.Threading.Tasks.Task<GuessWhoClient.GameServices.PlayerInMatchResponse> JoinGameAsync(string invitationCode, string nickname) {
             return base.Channel.JoinGameAsync(invitationCode, nickname);
+        }
+        
+        public GuessWhoClient.GameServices.booleanResponse ExitGame(string invitationCode) {
+            return base.Channel.ExitGame(invitationCode);
+        }
+        
+        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> ExitGameAsync(string invitationCode) {
+            return base.Channel.ExitGameAsync(invitationCode);
         }
     }
 }

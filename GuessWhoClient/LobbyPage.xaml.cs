@@ -9,12 +9,15 @@ using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace GuessWhoClient
 {
     public partial class LobbyPage : Page, IUserServiceCallback, IMatchServiceCallback
     {
+        private const string DEFAULT_PROFILE_PICTURE_ROUTE = "pack://application:,,,/Resources/user-icon.png";
         private string invitationCode;
+        private bool isHost;
         private UserServiceClient userServiceClient;
         private MatchServiceClient matchServiceClient;
         public ObservableCollection<ActiveUser> activeUsers { get; set; } = new ObservableCollection<ActiveUser>();
@@ -26,6 +29,9 @@ namespace GuessWhoClient
             string userNickname = DataStore.Profile != null ? DataStore.Profile.NickName : "";
             userServiceClient = new UserServiceClient(new InstanceContext(this));
             matchServiceClient = new MatchServiceClient(new InstanceContext(this));
+            isHost = true;
+            BtnExitGame.Visibility = Visibility.Collapsed;
+            BtnCancelGame.Visibility = Visibility.Visible;
 
             userServiceClient.Subscribe();
             var createMatchResponse = matchServiceClient.CreateMatch(userNickname);
@@ -55,6 +61,9 @@ namespace GuessWhoClient
             string userNickname = DataStore.Profile != null ? DataStore.Profile.NickName : "";
             userServiceClient = new UserServiceClient(new InstanceContext(this));
             matchServiceClient = new MatchServiceClient(new InstanceContext(this));
+            isHost = false;
+            BtnExitGame.Visibility = Visibility.Visible;
+            BtnCancelGame.Visibility = Visibility.Collapsed;
 
             userServiceClient.Subscribe();
             var joinGameResponse = matchServiceClient.JoinGame(invitationCode, userNickname);
@@ -117,7 +126,14 @@ namespace GuessWhoClient
             }
             else
             {
-                ShowGuestInformation(user);
+                if(isInMatch)
+                {
+                    ShowGuestInformation(user);
+                }
+                else
+                {
+                    HideGuestInformation();
+                }
             }
         }
 
@@ -150,24 +166,71 @@ namespace GuessWhoClient
             }
         }
 
+        private void HideGuestInformation()
+        {
+            ShowDefaultUserInfoInBanner();
+            ShowDefaultUserInfoInChat();
+        }
+
+        private void ShowDefaultUserInfoInBanner()
+        {
+            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
+
+            BorderOponent.Background = new SolidColorBrush(Color.FromRgb(226, 226, 226));
+            TbOponent.Text = resourceManager.GetString("lbWaitingPlayer");
+            Uri uri = new Uri(DEFAULT_PROFILE_PICTURE_ROUTE);
+            BitmapImage defaultImage = new BitmapImage(uri);
+            ImgProfilePicture.ImageSource = defaultImage;
+        }
+
+        private void ShowDefaultUserInfoInChat()
+        {
+            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
+
+            TbOponentChat.Text = resourceManager.GetString("lbWaitingPlayer");
+            Uri uri = new Uri(DEFAULT_PROFILE_PICTURE_ROUTE);
+            BitmapImage defaultImage = new BitmapImage(uri);
+            ImgChatProfilePicture.ImageSource = defaultImage;
+        }
+
         private void BtnCopyInvitationCodeClick(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(invitationCode);
         }
 
-        private void ClosingPage(object sender, RoutedEventArgs e)
+        private void BtnExitGameClick(object sender, RoutedEventArgs e)
         {
             userServiceClient.Unsubscribe();
+            
+            if(isHost)
+            {
+                
+            }
+            else
+            {
+                ExitGame();
+            }
         }
 
-        private void ListBoxActiveUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ExitGame()
         {
+            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
+            booleanResponse response = matchServiceClient.ExitGame(invitationCode);
 
-        }
-
-        private void ListBoxActiveUsers_SelectionChanged_1()
-        {
-
+            if (response.StatusCode == ResponseStatus.OK)
+            {
+                MainMenuPage mainMenu = new MainMenuPage();
+                this.NavigationService.Navigate(mainMenu);
+            }
+            else
+            {
+                MessageBox.Show(
+                    ServerResponse.GetMessageFromStatusCode(response.StatusCode),
+                    resourceManager.GetString("msgbErrorLeavingMatchTitle"),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+            }
         }
     }
 }
