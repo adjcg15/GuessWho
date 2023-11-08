@@ -327,6 +327,12 @@
   <data name="msgbErrorLeavingMatchTitle" xml:space="preserve">
     <value>Error leaving game, try again</value>
   </data>
+  <data name="msgbGameFinishedByHostMessage" xml:space="preserve">
+    <value>The host has ended the game</value>
+  </data>
+  <data name="msgbGameFinishedByHostTitle" xml:space="preserve">
+    <value>Game over</value>
+  </data>
   <data name="msgbRegisterAlertImageSizeMessage" xml:space="preserve">
     <value>The image must be 20kb or less in size.</value>
   </data>

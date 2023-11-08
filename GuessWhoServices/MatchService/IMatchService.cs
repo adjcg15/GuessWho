@@ -14,6 +14,9 @@ namespace GuessWhoServices
 
         [OperationContract]
         Response<bool> ExitGame(string invitationCode);
+
+        [OperationContract]
+        Response<bool> FinishGame(string invitationCode);
     }
 
     [ServiceContract]

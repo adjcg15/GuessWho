@@ -232,10 +232,24 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="FinishGame">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="invitationCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FinishGameResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="FinishGameResult" nillable="true" type="q16:booleanResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="PlayerStatusInMatchChanged">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="player" nillable="true" type="q16:PlayerInMatch" />
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="player" nillable="true" type="q17:PlayerInMatch" />
         <xs:element minOccurs="0" name="isInMatch" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>

@@ -1,7 +1,9 @@
 ﻿using GuessWhoDataAccess;
 using GuessWhoServices.Utils;
+using System;
 using System.Collections.Generic;
 using System.ServiceModel;
+using System.Text.RegularExpressions;
 
 namespace GuessWhoServices
 {
@@ -28,6 +30,7 @@ namespace GuessWhoServices
             match.HostNickname = hostNickname;
             match.HostChannel = OperationContext.Current.GetCallbackChannel<IMatchCallback>();
             matches[invitationCode] = match;
+            Console.WriteLine("Creando partida para host " + match.HostChannel.GetHashCode());
 
             response.Value = invitationCode;
 
@@ -49,6 +52,7 @@ namespace GuessWhoServices
                 if(storedMatch.GuestChannel == null)
                 {
                     storedMatch.GuestChannel = OperationContext.Current.GetCallbackChannel<IMatchCallback>();
+                    Console.WriteLine("Uniéndose a partida el invitado " + storedMatch.GuestChannel.GetHashCode());
                     response.StatusCode = ResponseStatus.OK;
 
                     response.Value = new PlayerInMatch();
@@ -98,6 +102,7 @@ namespace GuessWhoServices
                         }
                     }
 
+                    Console.WriteLine("Avisando a host " + storedMatch.HostChannel.GetHashCode() + " que invitado se unió");
                     storedMatch.HostChannel.PlayerStatusInMatchChanged(guest, true);
                 }
             }
@@ -134,7 +139,47 @@ namespace GuessWhoServices
                     emptyPlayer.FullName = "";
                     emptyPlayer.IsHost = false;
 
+                    Console.WriteLine("Avisando a host " + storedMatch.HostChannel.GetHashCode() + " que invitado se va");
                     storedMatch.HostChannel.PlayerStatusInMatchChanged(emptyPlayer, false);
+                }
+            }
+
+            return response;
+        }
+
+        public Response<bool> FinishGame(string invitationCode)
+        {
+            var response = new Response<bool>
+            {
+                StatusCode = ResponseStatus.VALIDATION_ERROR,
+                Value = false
+            };
+
+            if (matches.ContainsKey(invitationCode))
+            {
+                var storedMatch = matches[invitationCode];
+                var storedHostChannel = storedMatch.HostChannel;
+                var clientChannel = OperationContext.Current.GetCallbackChannel<IMatchCallback>();
+
+                bool hostMatch = clientChannel.GetHashCode() == storedHostChannel.GetHashCode();
+                if (hostMatch)
+                {
+                    response.StatusCode = ResponseStatus.OK;
+                    response.Value = true;
+
+                    PlayerInMatch emptyPlayer = new PlayerInMatch();
+                    emptyPlayer.Nickname = "";
+                    emptyPlayer.Avatar = null;
+                    emptyPlayer.FullName = "";
+                    emptyPlayer.IsHost = true;
+
+                    if(storedMatch.GuestChannel != null)
+                    {
+                        Console.WriteLine("Avisando a invitado " + storedMatch.GuestChannel.GetHashCode() + " que host se fue");
+                        storedMatch.GuestChannel.PlayerStatusInMatchChanged(emptyPlayer, false);
+                    }
+
+                    matches.Remove(invitationCode);
                 }
             }
 

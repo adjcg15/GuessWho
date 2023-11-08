@@ -30,8 +30,8 @@ namespace GuessWhoClient
             userServiceClient = new UserServiceClient(new InstanceContext(this));
             matchServiceClient = new MatchServiceClient(new InstanceContext(this));
             isHost = true;
-            BtnExitGame.Visibility = Visibility.Collapsed;
             BtnCancelGame.Visibility = Visibility.Visible;
+            BtnStartGame.Visibility = Visibility.Visible;
 
             userServiceClient.Subscribe();
             var createMatchResponse = matchServiceClient.CreateMatch(userNickname);
@@ -63,7 +63,6 @@ namespace GuessWhoClient
             matchServiceClient = new MatchServiceClient(new InstanceContext(this));
             isHost = false;
             BtnExitGame.Visibility = Visibility.Visible;
-            BtnCancelGame.Visibility = Visibility.Collapsed;
 
             userServiceClient.Subscribe();
             var joinGameResponse = matchServiceClient.JoinGame(invitationCode, userNickname);
@@ -122,7 +121,8 @@ namespace GuessWhoClient
         {
             if(user.IsHost)
             {
-
+                Console.WriteLine("Llegando notificación de que host salió por canal " + matchServiceClient.GetHashCode());
+                FinishGameForGuest();
             }
             else
             {
@@ -135,6 +135,21 @@ namespace GuessWhoClient
                     HideGuestInformation();
                 }
             }
+        }
+
+        private void FinishGameForGuest()
+        {
+            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
+
+            MessageBox.Show(
+                resourceManager.GetString("msgbGameFinishedByHostMessage"),
+                resourceManager.GetString("msgbGameFinishedByHostTitle"),
+                MessageBoxButton.OK,
+                MessageBoxImage.Warning
+            );
+
+            MainMenuPage mainMenu = new MainMenuPage();
+            this.NavigationService.Navigate(mainMenu);
         }
 
         private void ShowGuestInformation(PlayerInMatch guest)
@@ -201,21 +216,40 @@ namespace GuessWhoClient
         private void BtnExitGameClick(object sender, RoutedEventArgs e)
         {
             userServiceClient.Unsubscribe();
-            
-            if(isHost)
-            {
-                
-            }
-            else
-            {
-                ExitGame();
-            }
+            ExitGame();
         }
 
         private void ExitGame()
         {
             ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
             booleanResponse response = matchServiceClient.ExitGame(invitationCode);
+
+            if (response.StatusCode == ResponseStatus.OK)
+            {
+                MainMenuPage mainMenu = new MainMenuPage();
+                this.NavigationService.Navigate(mainMenu);
+            }
+            else
+            {
+                MessageBox.Show(
+                    ServerResponse.GetMessageFromStatusCode(response.StatusCode),
+                    resourceManager.GetString("msgbErrorLeavingMatchTitle"),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+            }
+        }
+
+        private void BtnFinishGameClick(object sender, RoutedEventArgs e)
+        {
+            userServiceClient.Unsubscribe();
+            FinishGame();
+        }
+
+        private void FinishGame()
+        {
+            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
+            booleanResponse response = matchServiceClient.FinishGame(invitationCode);
 
             if (response.StatusCode == ResponseStatus.OK)
             {

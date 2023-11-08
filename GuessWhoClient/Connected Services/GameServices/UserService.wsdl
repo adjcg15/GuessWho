@@ -255,6 +255,12 @@
   <wsdl:message name="IMatchService_ExitGame_OutputMessage">
     <wsdl:part name="parameters" element="tns:ExitGameResponse" />
   </wsdl:message>
+  <wsdl:message name="IMatchService_FinishGame_InputMessage">
+    <wsdl:part name="parameters" element="tns:FinishGame" />
+  </wsdl:message>
+  <wsdl:message name="IMatchService_FinishGame_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FinishGameResponse" />
+  </wsdl:message>
   <wsdl:message name="IMatchService_PlayerStatusInMatchChanged_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:PlayerStatusInMatchChanged" />
   </wsdl:message>
@@ -337,6 +343,10 @@
     <wsdl:operation name="ExitGame">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchService/ExitGame" message="tns:IMatchService_ExitGame_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMatchService/ExitGameResponse" message="tns:IMatchService_ExitGame_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FinishGame">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMatchService/FinishGame" message="tns:IMatchService_FinishGame_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchService/FinishGameResponse" message="tns:IMatchService_FinishGame_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="PlayerStatusInMatchChanged">
       <wsdl:output wsaw:Action="http://tempuri.org/IMatchService/PlayerStatusInMatchChanged" message="tns:IMatchService_PlayerStatusInMatchChanged_OutputCallbackMessage" />
@@ -508,6 +518,15 @@
     </wsdl:operation>
     <wsdl:operation name="ExitGame">
       <soap12:operation soapAction="http://tempuri.org/IMatchService/ExitGame" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FinishGame">
+      <soap12:operation soapAction="http://tempuri.org/IMatchService/FinishGame" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

@@ -691,6 +691,24 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a El anfitrión ha finalizado la partida.
+        /// </summary>
+        public static string msgbGameFinishedByHostMessage {
+            get {
+                return ResourceManager.GetString("msgbGameFinishedByHostMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Partida finalizada.
+        /// </summary>
+        public static string msgbGameFinishedByHostTitle {
+            get {
+                return ResourceManager.GetString("msgbGameFinishedByHostTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a La imagen debe tener un tamaño de 20kb o menos..
         /// </summary>
         public static string msgbRegisterAlertImageSizeMessage {
