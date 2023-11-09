@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -14,13 +15,22 @@ namespace GuessWhoClient
     {
         private const int INVITATION_CODE_LENGTH = 8;
         private bool isFirstTime = true;
+        private string previousCode = string.Empty;
 
         public MainMenuPage()
         {
             InitializeComponent();
         }
 
-        public void initializeFromCanceledMatch()
+        public void initializeFromLobby()
+        {
+            if(DataStore.Profile != null)
+            {
+                LoginProfile();
+            }
+        }
+
+        public void showCanceledMatchMessage()
         {
             BorderCanceledMatch.Visibility = Visibility.Visible;
             BorderOpacityCanceledMatch.Visibility = Visibility.Visible;
@@ -162,26 +172,23 @@ namespace GuessWhoClient
         {
             string code = TbInvitationCode.Text;
 
-            if (isFirstTime)
+            if (code != previousCode)
             {
-                isFirstTime = false;
-            }
-            else
-            {
+                previousCode = code;
+
                 if (code.Length > INVITATION_CODE_LENGTH)
                 {
                     TbInvitationCode.Text = code.Substring(0, INVITATION_CODE_LENGTH);
-                    TbInvitationCode.CaretIndex = TbInvitationCode.Text.Length;
+                    code = TbInvitationCode.Text;
                 }
 
-                code = TbInvitationCode.Text;
                 if (!Regex.IsMatch(code, @"^[a-zA-Z0-9]*$"))
                 {
                     TbInvitationCode.Text = new string(code.Where(char.IsLetterOrDigit).ToArray());
-                    TbInvitationCode.CaretIndex = TbInvitationCode.Text.Length;
+                    code = TbInvitationCode.Text;
                 }
 
-                if (TbInvitationCode.Text.Length == INVITATION_CODE_LENGTH)
+                if (code.Length == INVITATION_CODE_LENGTH)
                 {
                     ImgSendInvitationCode.IsEnabled = true;
                     ImgSendInvitationCode.Opacity = 1.0;
