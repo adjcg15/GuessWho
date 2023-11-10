@@ -24,7 +24,6 @@ namespace GuessWhoClient
         public LobbyPage()
         {
             InitializeComponent();
-            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
             string userNickname = DataStore.Profile != null ? DataStore.Profile.NickName : "";
             userServiceClient = new UserServiceClient(new InstanceContext(this));
             matchServiceClient = new MatchServiceClient(new InstanceContext(this));
@@ -43,7 +42,7 @@ namespace GuessWhoClient
             {
                 MessageBox.Show(
                     ServerResponse.GetMessageFromStatusCode(createMatchResponse.StatusCode),
-                    resourceManager.GetString("msgbErrorCreatingMatchTitle"),
+                    Properties.Resources.msgbErrorCreatingMatchTitle,
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -55,7 +54,6 @@ namespace GuessWhoClient
         public LobbyPage(string invitationCode)
         {
             InitializeComponent();
-            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
             this.invitationCode = invitationCode;
             string userNickname = DataStore.Profile != null ? DataStore.Profile.NickName : "";
             userServiceClient = new UserServiceClient(new InstanceContext(this));
@@ -77,7 +75,7 @@ namespace GuessWhoClient
             {
                 MessageBox.Show(
                     ServerResponse.GetMessageFromStatusCode(joinGameResponse.StatusCode),
-                    resourceManager.GetString("msgbErrorJoiningMatchTitle"),
+                    Properties.Resources.msgbErrorJoiningMatchTitle,
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -156,10 +154,8 @@ namespace GuessWhoClient
 
         private void ShowUserInfoInBanner(string nickname, byte[] avatar)
         {
-            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
-
             BorderOponent.Background = new SolidColorBrush(Color.FromRgb(182, 216, 242));
-            TbOponent.Text = nickname != "" ? nickname : resourceManager.GetString("txtGuest");
+            TbOponent.Text = nickname != "" ? nickname : Properties.Resources.txtGuest;
             if (avatar != null)
             {
                 ImgProfilePicture.ImageSource = ImageTransformator.GetBitmapImageFromByteArray(avatar);
@@ -168,9 +164,7 @@ namespace GuessWhoClient
 
         private void ShowUserInfoInChat(string nickname, byte[] avatar)
         {
-            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
-
-            TbOponentChat.Text = nickname != "" ? nickname : resourceManager.GetString("txtGuest");
+            TbOponentChat.Text = nickname != "" ? nickname : Properties.Resources.txtGuest;
             if (avatar != null)
             {
                 ImgChatProfilePicture.ImageSource = ImageTransformator.GetBitmapImageFromByteArray(avatar);
@@ -185,10 +179,8 @@ namespace GuessWhoClient
 
         private void ShowDefaultUserInfoInBanner()
         {
-            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
-
             BorderOponent.Background = new SolidColorBrush(Color.FromRgb(226, 226, 226));
-            TbOponent.Text = resourceManager.GetString("lbWaitingPlayer");
+            TbOponent.Text = Properties.Resources.lbWaitingPlayer;
             Uri uri = new Uri(DEFAULT_PROFILE_PICTURE_ROUTE);
             BitmapImage defaultImage = new BitmapImage(uri);
             ImgProfilePicture.ImageSource = defaultImage;
@@ -196,9 +188,7 @@ namespace GuessWhoClient
 
         private void ShowDefaultUserInfoInChat()
         {
-            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
-
-            TbOponentChat.Text = resourceManager.GetString("lbWaitingPlayer");
+            TbOponentChat.Text = Properties.Resources.lbWaitingPlayer;
             Uri uri = new Uri(DEFAULT_PROFILE_PICTURE_ROUTE);
             BitmapImage defaultImage = new BitmapImage(uri);
             ImgChatProfilePicture.ImageSource = defaultImage;
@@ -217,7 +207,6 @@ namespace GuessWhoClient
 
         private void ExitGame()
         {
-            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
             booleanResponse response = matchServiceClient.ExitGame(invitationCode);
 
             if (response.StatusCode == ResponseStatus.OK)
@@ -229,7 +218,7 @@ namespace GuessWhoClient
             {
                 MessageBox.Show(
                     ServerResponse.GetMessageFromStatusCode(response.StatusCode),
-                    resourceManager.GetString("msgbErrorLeavingMatchTitle"),
+                    Properties.Resources.msgbErrorLeavingMatchTitle,
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -244,7 +233,6 @@ namespace GuessWhoClient
 
         private void FinishGame()
         {
-            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
             booleanResponse response = matchServiceClient.FinishGame(invitationCode);
 
             if (response.StatusCode == ResponseStatus.OK)
@@ -256,7 +244,7 @@ namespace GuessWhoClient
             {
                 MessageBox.Show(
                     ServerResponse.GetMessageFromStatusCode(response.StatusCode),
-                    resourceManager.GetString("msgbErrorLeavingMatchTitle"),
+                    Properties.Resources.msgbErrorLeavingMatchTitle,
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
