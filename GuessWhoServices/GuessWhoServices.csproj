@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChatService\IChatService.cs" />
     <Compile Include="FriendsService\FriendsService.cs" />
     <Compile Include="FriendsService\IFriendsService.cs" />
     <Compile Include="MatchInformation.cs" />
