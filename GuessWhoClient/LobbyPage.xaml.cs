@@ -91,7 +91,7 @@ namespace GuessWhoClient
                     if (host != null)
                     {
                         ShowUserInfoInBanner(host.Nickname, host.Avatar);
-                        ShowUserInfoInChat(userNickname, host.Avatar);
+                        ShowUserInfoInChat(host.Nickname, host.Avatar);
                     }
                     else
                     {
