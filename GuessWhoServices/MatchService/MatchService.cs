@@ -150,7 +150,16 @@ namespace GuessWhoServices
                     emptyPlayer.FullName = "";
                     emptyPlayer.IsHost = false;
 
-                    storedMatch.HostChannel.PlayerStatusInMatchChanged(emptyPlayer, false);
+                    try
+                    {
+                        storedMatch.HostChannel.PlayerStatusInMatchChanged(emptyPlayer, false);
+                    }
+                    catch (CommunicationObjectAbortedException)
+                    {
+                        response.StatusCode = ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR;
+
+                        matches.Remove(invitationCode);
+                    }
                 }
             }
 
@@ -185,7 +194,14 @@ namespace GuessWhoServices
 
                     if (storedMatch.GuestChannel != null)
                     {
-                        storedMatch.GuestChannel.PlayerStatusInMatchChanged(emptyPlayer, false);
+                        try
+                        {
+                            storedMatch.GuestChannel.PlayerStatusInMatchChanged(emptyPlayer, false);
+                        }
+                        catch (CommunicationObjectAbortedException)
+                        {
+                            response.StatusCode = ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR;
+                        }
                     }
 
                     matches.Remove(invitationCode);

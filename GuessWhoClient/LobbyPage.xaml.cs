@@ -256,56 +256,57 @@ namespace GuessWhoClient
 
         private void BtnExitGameClick(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                UnsubscribeToActiveUsersList();
+                ExitGame();
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(
+                    Properties.Resources.msgbErrorConexionServidorMessage,
+                    Properties.Resources.msgbErrorConexionServidorTitle,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+                RedirectPermanentlyToMainMenu();
+            }
+        }
+
+        private void UnsubscribeToActiveUsersList()
+        {
             userServiceClient.Unsubscribe();
-            ExitGame();
         }
 
         private void ExitGame()
         {
-            booleanResponse response = matchServiceClient.ExitGame(invitationCode);
-
-            if (response.StatusCode == ResponseStatus.OK)
-            {
-                ShowsNavigationUI = true;
-                MainMenuPage mainMenu = new MainMenuPage();
-                this.NavigationService.Navigate(mainMenu);
-            }
-            else
-            {
-                MessageBox.Show(
-                    ServerResponse.GetMessageFromStatusCode(response.StatusCode),
-                    Properties.Resources.msgbErrorLeavingMatchTitle,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning
-                );
-            }
+            matchServiceClient.ExitGame(invitationCode);
+            RedirectPermanentlyToMainMenu();
         }
 
         private void BtnFinishGameClick(object sender, RoutedEventArgs e)
         {
-            userServiceClient.Unsubscribe();
-            FinishGame();
+            try
+            {
+                UnsubscribeToActiveUsersList();
+                FinishGame();
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(
+                    Properties.Resources.msgbErrorConexionServidorMessage,
+                    Properties.Resources.msgbErrorConexionServidorTitle,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+                RedirectPermanentlyToMainMenu();
+            }
         }
 
         private void FinishGame()
         {
-            booleanResponse response = matchServiceClient.FinishGame(invitationCode);
-
-            if (response.StatusCode == ResponseStatus.OK)
-            {
-                ShowsNavigationUI = true;
-                MainMenuPage mainMenu = new MainMenuPage();
-                this.NavigationService.Navigate(mainMenu);
-            }
-            else
-            {
-                MessageBox.Show(
-                    ServerResponse.GetMessageFromStatusCode(response.StatusCode),
-                    Properties.Resources.msgbErrorLeavingMatchTitle,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning
-                );
-            }
+            matchServiceClient.FinishGame(invitationCode);
+            RedirectPermanentlyToMainMenu();
         }
     }
 }
