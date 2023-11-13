@@ -7,7 +7,9 @@
       xmlns:p="clr-namespace:GuessWhoClient.Properties"
       mc:Ignorable="d" 
       d:DesignHeight="520" d:DesignWidth="900"
-      Title="LobbyPage" ShowsNavigationUI="False">
+      Title="LobbyPage"
+      ShowsNavigationUI="False"
+      Loaded="PageLoaded">
 
     <Grid>
         <Grid.ColumnDefinitions>

@@ -318,8 +318,11 @@
   <data name="msgbEmptyField" xml:space="preserve">
     <value>Email and password are required</value>
   </data>
-  <data name="msgbErrorCreatingMatchTitle" xml:space="preserve">
-    <value>An error occurred creating the game</value>
+  <data name="msgbErrorConexionServidorMessage" xml:space="preserve">
+    <value>Could not establish a connection to the server, try another time</value>
+  </data>
+  <data name="msgbErrorConexionServidorTitle" xml:space="preserve">
+    <value>Server connection error</value>
   </data>
   <data name="msgbErrorJoiningMatchTitle" xml:space="preserve">
     <value>An error occurred while joining the game</value>
@@ -332,6 +335,24 @@
   </data>
   <data name="msgbGameFinishedByHostTitle" xml:space="preserve">
     <value>Game over</value>
+  </data>
+  <data name="msgbHostInformationMissingMessage" xml:space="preserve">
+    <value>An error occurred while retrieving host information, but you can continue playing without any problems</value>
+  </data>
+  <data name="msgbHostInformationMissingTitle" xml:space="preserve">
+    <value>Could not retrieve host information</value>
+  </data>
+  <data name="msgbHostLeftMatchMessage" xml:space="preserve">
+    <value>The match has been ended by the host, so it is not possible to join</value>
+  </data>
+  <data name="msgbHostLeftMatchTitle" xml:space="preserve">
+    <value>Match ended by the host</value>
+  </data>
+  <data name="msgbInvalidMatchCodeMessage" xml:space="preserve">
+    <value>The match you are trying to access could not be found, or it may already be full</value>
+  </data>
+  <data name="msgbInvalidMatchCodeTitle" xml:space="preserve">
+    <value>Invalid match</value>
   </data>
   <data name="msgbRegisterAlertImageSizeMessage" xml:space="preserve">
     <value>The image must be 20kb or less in size.</value>
@@ -428,6 +449,9 @@
   </data>
   <data name="txtGuest" xml:space="preserve">
     <value>Guest</value>
+  </data>
+  <data name="txtHost" xml:space="preserve">
+    <value>Host</value>
   </data>
   <data name="txtLeaderboardGlobal" xml:space="preserve">
     <value>Leaderboard</value>

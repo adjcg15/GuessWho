@@ -32,9 +32,6 @@ namespace GuessWhoServices
 
             matches[invitationCode] = match;
 
-            Console.WriteLine("Creando la partida " + invitationCode);
-            Console.WriteLine("Canal del Host creador: " +  match.HostChannel.GetHashCode());
-
             response.Value = invitationCode;
             return response;
         }
@@ -49,7 +46,6 @@ namespace GuessWhoServices
 
             if (matches.ContainsKey(invitationCode))
             {
-                Console.WriteLine("Accediendo a la partida " + invitationCode + " para agregar un jugador");
                 var storedMatch = matches[invitationCode];
 
                 //If guest channel stored in match is null it means than no player is in match with the host
@@ -108,15 +104,17 @@ namespace GuessWhoServices
                         }
                     }
 
-                    Console.WriteLine("Avisando a host con canal " 
-                        + storedMatch.HostChannel.GetHashCode() 
-                        + " que el jugador " 
-                        + (guest.Nickname == "" ? "Invitado" : guest.Nickname)
-                        + " está uniéndose a la partida"
-                    );
-                    Console.WriteLine("El canal del nuevo jugador es " + storedMatch.GuestChannel.GetHashCode());
+                    try
+                    {
+                        storedMatch.HostChannel.PlayerStatusInMatchChanged(guest, true);
+                    } 
+                    catch(CommunicationObjectAbortedException)
+                    {
+                        response.StatusCode = ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR;
+                        response.Value = null;
 
-                    storedMatch.HostChannel.PlayerStatusInMatchChanged(guest, true);
+                        matches.Remove(invitationCode);
+                    }
                 }
             }
 
@@ -152,11 +150,16 @@ namespace GuessWhoServices
                     emptyPlayer.FullName = "";
                     emptyPlayer.IsHost = false;
 
-                    Console.WriteLine("Se informa al host con canal " + storedMatch.HostChannel.GetHashCode() + " que el jugador ha salido de la partida");
-                    Console.WriteLine("Nickname de jugador: " + storedMatch.GuestNickname);
-                    Console.WriteLine("Canal de jugador: " + (storedMatch.GuestChannel != null ? "no vacío" : "vacío"));
+                    try
+                    {
+                        storedMatch.HostChannel.PlayerStatusInMatchChanged(emptyPlayer, false);
+                    }
+                    catch (CommunicationObjectAbortedException)
+                    {
+                        response.StatusCode = ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR;
 
-                    storedMatch.HostChannel.PlayerStatusInMatchChanged(emptyPlayer, false);
+                        matches.Remove(invitationCode);
+                    }
                 }
             }
 
@@ -165,14 +168,12 @@ namespace GuessWhoServices
 
         public Response<bool> FinishGame(string invitationCode)
         {
-            Console.WriteLine("INICIANDO FINALIZACÍÓN DE PARTIDA");
             var response = new Response<bool>
             {
                 StatusCode = ResponseStatus.VALIDATION_ERROR,
                 Value = false
             };
 
-            Console.WriteLine("Partida eliminada: " +  invitationCode);
             if (matches.ContainsKey(invitationCode))
             {
                 var storedMatch = matches[invitationCode];
@@ -180,7 +181,6 @@ namespace GuessWhoServices
                 var clientChannel = OperationContext.Current.GetCallbackChannel<IMatchCallback>();
 
                 bool isClientAllowedToFinishGame = clientChannel.GetHashCode() == storedHostChannel.GetHashCode();
-                Console.WriteLine(isClientAllowedToFinishGame ? "El cliente SÍ puede finalizar esta partida" : "El cliente NO puede finalizar esta partida");
                 if (isClientAllowedToFinishGame)
                 {
                     response.StatusCode = ResponseStatus.OK;
@@ -194,16 +194,20 @@ namespace GuessWhoServices
 
                     if (storedMatch.GuestChannel != null)
                     {
-                        Console.WriteLine("Canal de jugador informado: " + storedMatch.GuestChannel.GetHashCode());
-                        storedMatch.GuestChannel.PlayerStatusInMatchChanged(emptyPlayer, false);
-                        Console.WriteLine("Jugador informado!");
+                        try
+                        {
+                            storedMatch.GuestChannel.PlayerStatusInMatchChanged(emptyPlayer, false);
+                        }
+                        catch (CommunicationObjectAbortedException)
+                        {
+                            response.StatusCode = ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR;
+                        }
                     }
 
                     matches.Remove(invitationCode);
                 }
             }
 
-            Console.WriteLine("Regresando respuesta a cliente (host): " + (response.Value ? "Exitoso": "Fallido"));
             return response;
         }
     }

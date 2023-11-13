@@ -664,11 +664,20 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Ocurrió un error creando la partida.
+        ///   Busca una cadena traducida similar a No fue posible establecer una conexión con el servidor, intente en otro momento.
         /// </summary>
-        public static string msgbErrorCreatingMatchTitle {
+        public static string msgbErrorConexionServidorMessage {
             get {
-                return ResourceManager.GetString("msgbErrorCreatingMatchTitle", resourceCulture);
+                return ResourceManager.GetString("msgbErrorConexionServidorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error de conexión con el servidor.
+        /// </summary>
+        public static string msgbErrorConexionServidorTitle {
+            get {
+                return ResourceManager.GetString("msgbErrorConexionServidorTitle", resourceCulture);
             }
         }
         
@@ -705,6 +714,60 @@ namespace GuessWhoClient.Properties {
         public static string msgbGameFinishedByHostTitle {
             get {
                 return ResourceManager.GetString("msgbGameFinishedByHostTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ocurrió un error a la hora de recuperar la información del anfitrión, pero puede continuar jugando sin ningún problema.
+        /// </summary>
+        public static string msgbHostInformationMissingMessage {
+            get {
+                return ResourceManager.GetString("msgbHostInformationMissingMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se pudo recuperar la información del anfitrión.
+        /// </summary>
+        public static string msgbHostInformationMissingTitle {
+            get {
+                return ResourceManager.GetString("msgbHostInformationMissingTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a La partida ha sido finalizada por el anfitrión, por lo que no es posible unirse.
+        /// </summary>
+        public static string msgbHostLeftMatchMessage {
+            get {
+                return ResourceManager.GetString("msgbHostLeftMatchMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Partida finalizada por el anfitrión.
+        /// </summary>
+        public static string msgbHostLeftMatchTitle {
+            get {
+                return ResourceManager.GetString("msgbHostLeftMatchTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a La partida a la que intenta acceder no pudo ser encontrada, o es posible que ya se encuentre llena.
+        /// </summary>
+        public static string msgbInvalidMatchCodeMessage {
+            get {
+                return ResourceManager.GetString("msgbInvalidMatchCodeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Partida inválida.
+        /// </summary>
+        public static string msgbInvalidMatchCodeTitle {
+            get {
+                return ResourceManager.GetString("msgbInvalidMatchCodeTitle", resourceCulture);
             }
         }
         
@@ -993,6 +1056,15 @@ namespace GuessWhoClient.Properties {
         public static string txtGuest {
             get {
                 return ResourceManager.GetString("txtGuest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Anfitrión.
+        /// </summary>
+        public static string txtHost {
+            get {
+                return ResourceManager.GetString("txtHost", resourceCulture);
             }
         }
         

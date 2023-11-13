@@ -5,8 +5,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace GuessWhoClient
@@ -14,7 +12,6 @@ namespace GuessWhoClient
     public partial class MainMenuPage : Page
     {
         private const int INVITATION_CODE_LENGTH = 8;
-        private bool isFirstTime = true;
         private string previousCode = string.Empty;
 
         public MainMenuPage()
@@ -22,18 +19,15 @@ namespace GuessWhoClient
             InitializeComponent();
         }
 
-        public void initializeFromLobby()
+        public void initializeFromCanceledMatch()
         {
+            BorderCanceledMatch.Visibility = Visibility.Visible;
+            BorderOpacityCanceledMatch.Visibility = Visibility.Visible;
+
             if(DataStore.Profile != null)
             {
                 LoginProfile();
             }
-        }
-
-        public void showCanceledMatchMessage()
-        {
-            BorderCanceledMatch.Visibility = Visibility.Visible;
-            BorderOpacityCanceledMatch.Visibility = Visibility.Visible;
         }
 
         private void BtnLoginClick(object sender, RoutedEventArgs e)
