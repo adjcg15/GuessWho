@@ -19,7 +19,15 @@ namespace GuessWhoClient
             InitializeComponent();
         }
 
-        public void initializeFromCanceledMatch()
+        public void initializeFromLobby()
+        {
+            if(DataStore.Profile != null)
+            {
+                LoginProfile();
+            }
+        }
+
+        public void showCanceledMatchMessage()
         {
             BorderCanceledMatch.Visibility = Visibility.Visible;
             BorderOpacityCanceledMatch.Visibility = Visibility.Visible;

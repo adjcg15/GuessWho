@@ -139,6 +139,7 @@ namespace GuessWhoClient
         {
             ShowsNavigationUI = true;
             MainMenuPage menuPage = new MainMenuPage();
+            menuPage.initializeFromLobby();
             NavigationService.Navigate(menuPage);
         }
 
@@ -197,7 +198,8 @@ namespace GuessWhoClient
         private void FinishGameForGuest()
         {
             MainMenuPage mainMenu = new MainMenuPage();
-            mainMenu.initializeFromCanceledMatch();
+            mainMenu.showCanceledMatchMessage();
+            mainMenu.initializeFromLobby();
             this.NavigationService.Navigate(mainMenu);
         }
 
