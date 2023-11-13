@@ -1,9 +1,7 @@
 ﻿using GuessWhoDataAccess;
 using GuessWhoServices.Utils;
-using System;
 using System.Collections.Generic;
 using System.ServiceModel;
-using System.Text.RegularExpressions;
 
 namespace GuessWhoServices
 {
