@@ -271,6 +271,9 @@ namespace GuessWhoClient.GameServices {
         VALIDATION_ERROR = 400,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
+        CLIENT_CHANNEL_CONNECTION_ERROR = 401,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
         UPDATE_ERROR = 500,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
