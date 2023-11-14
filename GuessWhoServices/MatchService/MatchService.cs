@@ -2,6 +2,7 @@
 using GuessWhoServices.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.ServiceModel;
 using System.Text.RegularExpressions;
 
@@ -203,6 +204,53 @@ namespace GuessWhoServices
                             response.StatusCode = ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR;
                         }
                     }
+
+                    matches.Remove(invitationCode);
+                }
+            }
+
+            return response;
+        }
+
+        public Response<bool> SendMessage(string invitationCode, string message)
+        {
+            var response = new Response<bool>
+            {
+                StatusCode = ResponseStatus.VALIDATION_ERROR,
+                Value = false
+            };
+
+            if (matches.ContainsKey(invitationCode))
+            {
+                var storedMatch = matches[invitationCode];
+                var senderChannel = OperationContext.Current.GetCallbackChannel<IMatchCallback>();
+
+                response.StatusCode = ResponseStatus.OK;
+                response.Value = true;
+
+                try
+                {
+                    bool isHostSendingMessage = senderChannel.GetHashCode() == storedMatch.HostChannel.GetHashCode();  
+                    if (isHostSendingMessage)
+                    {
+                        if(storedMatch.GuestChannel != null)
+                        {
+                            storedMatch.GuestChannel.NotifyNewMessage(message, storedMatch.HostNickname);
+                        }
+                        else
+                        {
+                            response.Value = false;
+                        }
+                    }
+                    else
+                    {
+                        storedMatch.HostChannel.NotifyNewMessage(message, storedMatch.GuestNickname);
+                    }
+                }
+                catch (CommunicationObjectAbortedException)
+                {
+                    response.StatusCode = ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR;
+                    response.Value = false;
 
                     matches.Remove(invitationCode);
                 }

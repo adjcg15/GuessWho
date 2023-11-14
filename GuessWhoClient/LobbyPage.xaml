@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GuessWhoClient"
-      xmlns:p="clr-namespace:GuessWhoClient.Properties"
+      xmlns:p="clr-namespace:GuessWhoClient.Properties" xmlns:components="clr-namespace:GuessWhoClient.Components"
       mc:Ignorable="d" 
       d:DesignHeight="520" d:DesignWidth="900"
       Title="LobbyPage"
@@ -130,45 +130,13 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <TextBox HorizontalAlignment="Left" Style="{StaticResource Input}" Margin="10,476,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="390" FontSize="16"/>
-        <Button Style="{StaticResource CircularButtonOnlyWithIcon}" HorizontalAlignment="Left" Height="32" Margin="405,475,0,0" VerticalAlignment="Top" Width="32" IsDefault="True">
+        <TextBox x:Name="TbMessage" HorizontalAlignment="Left" Style="{StaticResource Input}" Margin="10,476,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="390" FontSize="16"/>
+        <Button Click="BtnSendMessageClick" Style="{StaticResource CircularButtonOnlyWithIcon}" HorizontalAlignment="Left" Height="32" Margin="405,475,0,0" VerticalAlignment="Top" Width="32" IsDefault="True">
             <Image Source="/Resources/send-icon.png" Height="16" Width="15"/>
         </Button>
-        <ListBox x:Name="ListBoxActiveUsers_Copiar" Margin="0,75,0,0" BorderThickness="0,0,0,1" Background="{x:Null}" 
-            MaxHeight="250" HorizontalAlignment="Center" VerticalAlignment="Top" d:ItemsSource="{d:SampleData ItemCount=5}" Height="392">
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel />
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-            <ListBox.Template>
-                <ControlTemplate>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <ItemsPresenter />
-                    </ScrollViewer>
-                </ControlTemplate>
-            </ListBox.Template>
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="IsSelected" Value="False" />
-                </Style>
-            </ListBox.ItemContainerStyle>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Border Background="#FFE9B2" CornerRadius="30" Width="400" Height="60" HorizontalAlignment="Center">
-                        <Grid>
-                            <StackPanel Orientation="Horizontal">
-                                <Ellipse Width="50" Height="50" Margin="6,5,5,5">
-                                    <Ellipse.Fill>
-                                        <ImageBrush ImageSource="{Binding Avatar}" />
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <TextBlock Text="{Binding Nickname}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="16" FontWeight="Medium" />
-                            </StackPanel>
-                        </Grid>
-                    </Border>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <ScrollViewer x:Name="SvChatMessages" Padding="30, 0, 30, 0" Margin="0,75,0,50" MaxHeight="395" VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="SpChatMessages">
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

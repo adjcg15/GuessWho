@@ -354,6 +354,12 @@
   <data name="msgbInvalidMatchCodeTitle" xml:space="preserve">
     <value>Invalid match</value>
   </data>
+  <data name="msgbMesageNotSentMessage" xml:space="preserve">
+    <value>It was not possible to send the message, because the player has abandoned the game</value>
+  </data>
+  <data name="msgbMessageNotSentTitle" xml:space="preserve">
+    <value>Could not send message</value>
+  </data>
   <data name="msgbRegisterAlertImageSizeMessage" xml:space="preserve">
     <value>The image must be 20kb or less in size.</value>
   </data>
@@ -407,6 +413,9 @@
   </data>
   <data name="msgbRegisterRegisteredNicknameTitle" xml:space="preserve">
     <value>Nickname already registered</value>
+  </data>
+  <data name="msgbSendMessageMatchFinishedMessage" xml:space="preserve">
+    <value>The game you are trying to send the message to no longer exists</value>
   </data>
   <data name="msgbUserNotFound" xml:space="preserve">
     <value>Email and/or password are incorrect, please verify the information.</value>

@@ -1,4 +1,5 @@
-﻿using GuessWhoClient.GameServices;
+﻿using GuessWhoClient.Components;
+using GuessWhoClient.GameServices;
 using GuessWhoClient.Utils;
 using System;
 using System.Collections.ObjectModel;
@@ -139,7 +140,6 @@ namespace GuessWhoClient
         {
             ShowsNavigationUI = true;
             MainMenuPage menuPage = new MainMenuPage();
-            menuPage.initializeFromLobby();
             NavigationService.Navigate(menuPage);
         }
 
@@ -198,8 +198,7 @@ namespace GuessWhoClient
         private void FinishGameForGuest()
         {
             MainMenuPage mainMenu = new MainMenuPage();
-            mainMenu.showCanceledMatchMessage();
-            mainMenu.initializeFromLobby();
+            mainMenu.initializeFromCanceledMatch();
             this.NavigationService.Navigate(mainMenu);
         }
 
@@ -249,6 +248,104 @@ namespace GuessWhoClient
             Uri uri = new Uri(DEFAULT_PROFILE_PICTURE_ROUTE);
             BitmapImage defaultImage = new BitmapImage(uri);
             ImgChatProfilePicture.ImageSource = defaultImage;
+        }
+
+        private void BtnSendMessageClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SendMessage();
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(
+                    Properties.Resources.msgbErrorConexionServidorMessage,
+                    Properties.Resources.msgbErrorConexionServidorTitle,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+                RedirectPermanentlyToMainMenu();
+            }
+        }
+
+        private void SendMessage()
+        {
+            string message = TbMessage.Text;
+
+            if (!string.IsNullOrEmpty(message))
+            {
+                var response = matchServiceClient.SendMessage(invitationCode, message);
+
+                switch (response.StatusCode)
+                {
+                    case ResponseStatus.OK:
+                        if (response.Value)
+                        {
+                            ShowOwnMessageInChat(message);
+                        }
+                        break;
+                    case ResponseStatus.VALIDATION_ERROR:
+                        MessageBox.Show(
+                            Properties.Resources.msgbSendMessageMatchFinishedMessage,
+                            Properties.Resources.msgbInvalidMatchCodeTitle,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
+                        );
+                        RedirectPermanentlyToMainMenu();
+                        break;
+                    case ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR:
+                        MessageBox.Show(
+                            Properties.Resources.msgbMesageNotSentMessage,
+                            Properties.Resources.msgbMessageNotSentTitle,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
+                        );
+                        if(!isHost)
+                        {
+                            RedirectPermanentlyToMainMenu();
+                        }
+                        else
+                        {
+                            ShowDefaultUserInfoInChat();
+                            ShowDefaultUserInfoInBanner();
+                        }
+                        break;
+                    default:
+                        MessageBox.Show(
+                            ServerResponse.GetMessageFromStatusCode(response.StatusCode),
+                            Properties.Resources.msgbInvalidMatchCodeTitle,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
+                        );
+                        RedirectPermanentlyToMainMenu();
+                        break;
+                }
+            }
+        }
+
+        private void ShowOwnMessageInChat(string message)
+        {
+            OwnChatMessage messageElement = new OwnChatMessage();
+            messageElement.TbMessage.Text = message;
+            SpChatMessages.Children.Add(messageElement);
+            SvChatMessages.ScrollToBottom();
+            TbMessage.Text = "";
+        }
+
+        public void NotifyNewMessage(string message, string senderNickname)
+        {
+            string defaultAdversaryNickname = isHost ? Properties.Resources.txtGuest : Properties.Resources.txtHost;
+            ShowPlayerMessageInChat(message, senderNickname == "" ? defaultAdversaryNickname : senderNickname);
+        }
+
+        private void ShowPlayerMessageInChat(string message, string playerNickname)
+        {
+            ChatMessage messageElement = new ChatMessage();
+            messageElement.TbMessage.Text = message;
+            messageElement.TbNickname.Text = playerNickname;
+            SpChatMessages.Children.Add(messageElement);
+            SvChatMessages.ScrollToBottom();
+            TbMessage.Text = "";
         }
 
         private void BtnCopyInvitationCodeClick(object sender, RoutedEventArgs e)

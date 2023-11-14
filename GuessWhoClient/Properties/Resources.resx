@@ -354,6 +354,12 @@
   <data name="msgbInvalidMatchCodeTitle" xml:space="preserve">
     <value>Partida inválida</value>
   </data>
+  <data name="msgbMesageNotSentMessage" xml:space="preserve">
+    <value>No ha sido posible enviar el mensaje, pues el jugador ha abandonado la partida</value>
+  </data>
+  <data name="msgbMessageNotSentTitle" xml:space="preserve">
+    <value>No se pudo enviar el mensaje</value>
+  </data>
   <data name="msgbRegisterAlertImageSizeMessage" xml:space="preserve">
     <value>La imagen debe tener un tamaño de 20kb o menos.</value>
   </data>
@@ -407,6 +413,9 @@
   </data>
   <data name="msgbRegisterRegisteredNicknameTitle" xml:space="preserve">
     <value>Nombre de usuario registrado</value>
+  </data>
+  <data name="msgbSendMessageMatchFinishedMessage" xml:space="preserve">
+    <value>La partida a la que intenta enviar el mensaje ya no existe</value>
   </data>
   <data name="msgbUserNotFound" xml:space="preserve">
     <value>El correo y/o contraseña son incorrectas, por favor verifique la información</value>

@@ -772,6 +772,24 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No ha sido posible enviar el mensaje, pues el jugador ha abandonado la partida.
+        /// </summary>
+        public static string msgbMesageNotSentMessage {
+            get {
+                return ResourceManager.GetString("msgbMesageNotSentMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se pudo enviar el mensaje.
+        /// </summary>
+        public static string msgbMessageNotSentTitle {
+            get {
+                return ResourceManager.GetString("msgbMessageNotSentTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a La imagen debe tener un tamaño de 20kb o menos..
         /// </summary>
         public static string msgbRegisterAlertImageSizeMessage {
@@ -930,6 +948,15 @@ namespace GuessWhoClient.Properties {
         public static string msgbRegisterRegisteredNicknameTitle {
             get {
                 return ResourceManager.GetString("msgbRegisterRegisteredNicknameTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a La partida a la que intenta enviar el mensaje ya no existe.
+        /// </summary>
+        public static string msgbSendMessageMatchFinishedMessage {
+            get {
+                return ResourceManager.GetString("msgbSendMessageMatchFinishedMessage", resourceCulture);
             }
         }
         
