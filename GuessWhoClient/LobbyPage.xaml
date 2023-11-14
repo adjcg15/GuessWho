@@ -130,13 +130,13 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <TextBox HorizontalAlignment="Left" Style="{StaticResource Input}" Margin="10,476,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="390" FontSize="16"/>
-        <Button Style="{StaticResource CircularButtonOnlyWithIcon}" HorizontalAlignment="Left" Height="32" Margin="405,475,0,0" VerticalAlignment="Top" Width="32" IsDefault="True">
+        <TextBox x:Name="TbMessage" HorizontalAlignment="Left" Style="{StaticResource Input}" Margin="10,476,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="390" FontSize="16"/>
+        <Button Click="BtnSendMessageClick" Style="{StaticResource CircularButtonOnlyWithIcon}" HorizontalAlignment="Left" Height="32" Margin="405,475,0,0" VerticalAlignment="Top" Width="32" IsDefault="True">
             <Image Source="/Resources/send-icon.png" Height="16" Width="15"/>
         </Button>
-        <StackPanel x:Name="SpChatMessages" Margin="30,75,30,50">
-            <components:OwnChatMessage />
-            <components:ChatMessage />
-        </StackPanel>
+        <ScrollViewer x:Name="SvChatMessages" Padding="30, 0, 30, 0" Margin="0,75,0,50" MaxHeight="395" VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="SpChatMessages">
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>
