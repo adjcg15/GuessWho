@@ -194,6 +194,11 @@ namespace GuessWhoClient
             }
         }
 
+        public void NotifyNewMessage(string message, string senderNickname)
+        {
+
+        }
+
         private void FinishGameForGuest()
         {
             MainMenuPage mainMenu = new MainMenuPage();

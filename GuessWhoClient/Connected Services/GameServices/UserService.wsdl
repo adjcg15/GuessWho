@@ -145,35 +145,6 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="NetTcpBinding_IChatService_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
-        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <wsp:Policy>
-            <sp:TransportToken>
-              <wsp:Policy>
-                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
-                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
-                </msf:WindowsTransportSecurity>
-              </wsp:Policy>
-            </sp:TransportToken>
-            <sp:AlgorithmSuite>
-              <wsp:Policy>
-                <sp:Basic256 />
-              </wsp:Policy>
-            </sp:AlgorithmSuite>
-            <sp:Layout>
-              <wsp:Policy>
-                <sp:Strict />
-              </wsp:Policy>
-            </sp:Layout>
-          </wsp:Policy>
-        </sp:TransportBinding>
-        <wsaw:UsingAddressing />
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:6969/?xsd=xsd0" namespace="http://tempuri.org/" />
@@ -290,22 +261,22 @@
   <wsdl:message name="IMatchService_FinishGame_OutputMessage">
     <wsdl:part name="parameters" element="tns:FinishGameResponse" />
   </wsdl:message>
+  <wsdl:message name="IMatchService_SendMessage_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendMessage" />
+  </wsdl:message>
+  <wsdl:message name="IMatchService_SendMessage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendMessageResponse" />
+  </wsdl:message>
   <wsdl:message name="IMatchService_PlayerStatusInMatchChanged_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:PlayerStatusInMatchChanged" />
   </wsdl:message>
   <wsdl:message name="IMatchService_PlayerStatusInMatchChanged_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:PlayerStatusInMatchChangedResponse" />
   </wsdl:message>
-  <wsdl:message name="IChatService_SendMessage_InputMessage">
-    <wsdl:part name="parameters" element="tns:SendMessage" />
-  </wsdl:message>
-  <wsdl:message name="IChatService_SendMessage_OutputMessage">
-    <wsdl:part name="parameters" element="tns:SendMessageResponse" />
-  </wsdl:message>
-  <wsdl:message name="IChatService_NotifyNewMessage_OutputCallbackMessage">
+  <wsdl:message name="IMatchService_NotifyNewMessage_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NotifyNewMessage" />
   </wsdl:message>
-  <wsdl:message name="IChatService_NotifyNewMessage_InputCallbackMessage">
+  <wsdl:message name="IMatchService_NotifyNewMessage_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NotifyNewMessageResponse" />
   </wsdl:message>
   <wsdl:portType name="IUserService">
@@ -389,19 +360,17 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchService/FinishGame" message="tns:IMatchService_FinishGame_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMatchService/FinishGameResponse" message="tns:IMatchService_FinishGame_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="SendMessage">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMatchService/SendMessage" message="tns:IMatchService_SendMessage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchService/SendMessageResponse" message="tns:IMatchService_SendMessage_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="PlayerStatusInMatchChanged">
       <wsdl:output wsaw:Action="http://tempuri.org/IMatchService/PlayerStatusInMatchChanged" message="tns:IMatchService_PlayerStatusInMatchChanged_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchService/PlayerStatusInMatchChangedResponse" message="tns:IMatchService_PlayerStatusInMatchChanged_InputCallbackMessage" />
     </wsdl:operation>
-  </wsdl:portType>
-  <wsdl:portType name="IChatService">
-    <wsdl:operation name="SendMessage">
-      <wsdl:input wsaw:Action="http://tempuri.org/IChatService/SendMessage" message="tns:IChatService_SendMessage_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IChatService/SendMessageResponse" message="tns:IChatService_SendMessage_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="NotifyNewMessage">
-      <wsdl:output wsaw:Action="http://tempuri.org/IChatService/NotifyNewMessage" message="tns:IChatService_NotifyNewMessage_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IChatService/NotifyNewMessageResponse" message="tns:IChatService_NotifyNewMessage_InputCallbackMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchService/NotifyNewMessage" message="tns:IMatchService_NotifyNewMessage_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IMatchService/NotifyNewMessageResponse" message="tns:IMatchService_NotifyNewMessage_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IUserService" type="tns:IUserService">
@@ -585,6 +554,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="SendMessage">
+      <soap12:operation soapAction="http://tempuri.org/IMatchService/SendMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="PlayerStatusInMatchChanged">
       <soap12:operation soapAction="http://tempuri.org/IMatchService/PlayerStatusInMatchChanged" style="document" />
       <wsdl:input>
@@ -594,21 +572,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-  </wsdl:binding>
-  <wsdl:binding name="NetTcpBinding_IChatService" type="tns:IChatService">
-    <wsp:PolicyReference URI="#NetTcpBinding_IChatService_policy" />
-    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
-    <wsdl:operation name="SendMessage">
-      <soap12:operation soapAction="http://tempuri.org/IChatService/SendMessage" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="NotifyNewMessage">
-      <soap12:operation soapAction="http://tempuri.org/IChatService/NotifyNewMessage" style="document" />
+      <soap12:operation soapAction="http://tempuri.org/IMatchService/NotifyNewMessage" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -655,15 +620,6 @@
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IMatchService" binding="tns:NetTcpBinding_IMatchService">
-      <soap12:address location="net.tcp://localhost:6970/GuessWhoService" />
-      <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
-        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
-        </Identity>
-      </wsa10:EndpointReference>
-    </wsdl:port>
-    <wsdl:port name="NetTcpBinding_IChatService" binding="tns:NetTcpBinding_IChatService">
       <soap12:address location="net.tcp://localhost:6970/GuessWhoService" />
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
