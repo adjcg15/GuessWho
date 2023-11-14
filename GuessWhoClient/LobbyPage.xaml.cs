@@ -1,5 +1,5 @@
-﻿using GuessWhoClient.GameServices;
-using GuessWhoClient.Properties;
+﻿using GuessWhoClient.Components;
+using GuessWhoClient.GameServices;
 using GuessWhoClient.Utils;
 using System;
 using System.Collections.ObjectModel;
@@ -17,6 +17,7 @@ namespace GuessWhoClient
     {
         private const string DEFAULT_PROFILE_PICTURE_ROUTE = "pack://application:,,,/Resources/user-icon.png";
         private string invitationCode;
+        private bool isHost;
         private UserServiceClient userServiceClient;
         private MatchServiceClient matchServiceClient;
         public ObservableCollection<ActiveUser> activeUsers { get; set; } = new ObservableCollection<ActiveUser>();
@@ -24,64 +25,123 @@ namespace GuessWhoClient
         public LobbyPage()
         {
             InitializeComponent();
-            string userNickname = DataStore.Profile != null ? DataStore.Profile.NickName : "";
-            userServiceClient = new UserServiceClient(new InstanceContext(this));
-            matchServiceClient = new MatchServiceClient(new InstanceContext(this));
-
+            isHost = true;
+            
             BtnCancelGame.Visibility = Visibility.Visible;
             BtnStartGame.Visibility = Visibility.Visible;
-
-            userServiceClient.Subscribe();
-
-            var createMatchResponse = matchServiceClient.CreateMatch(userNickname);
-            if (createMatchResponse.StatusCode == ResponseStatus.OK)
-            {
-                this.invitationCode = createMatchResponse.Value;
-            }
-            else
-            {
-                MessageBox.Show(
-                    ServerResponse.GetMessageFromStatusCode(createMatchResponse.StatusCode),
-                    Properties.Resources.msgbErrorCreatingMatchTitle,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning
-                );
-            }
-
-            ShowActiveUsers(userNickname);
         }
 
         public LobbyPage(string invitationCode)
         {
             InitializeComponent();
+            isHost = false;
             this.invitationCode = invitationCode;
-            string userNickname = DataStore.Profile != null ? DataStore.Profile.NickName : "";
-            userServiceClient = new UserServiceClient(new InstanceContext(this));
-            matchServiceClient = new MatchServiceClient(new InstanceContext(this));
 
             BtnExitGame.Visibility = Visibility.Visible;
+        }
 
-            userServiceClient.Subscribe();
+        private void PageLoaded(object sender, RoutedEventArgs e)
+        {
+            userServiceClient = new UserServiceClient(new InstanceContext(this));
+            matchServiceClient = new MatchServiceClient(new InstanceContext(this));
+            string userNickname = DataStore.Profile != null ? DataStore.Profile.NickName : "";
 
-            var joinGameResponse = matchServiceClient.JoinGame(invitationCode, userNickname);
-            if (joinGameResponse.StatusCode == ResponseStatus.OK)
+            try
             {
-                PlayerInMatch host = joinGameResponse.Value;
-
-                ShowUserInfoInBanner(host.Nickname, host.Avatar);
-                ShowUserInfoInChat(userNickname, host.Avatar);
+                SubscribeToActiveUsersList();
+                if (isHost)
+                {
+                    CreateNewGame(userNickname);
+                }
+                else
+                {
+                    JoinGame(userNickname);
+                }
+                ShowActiveUsers(userNickname);
             }
-            else
+            catch (EndpointNotFoundException)
             {
                 MessageBox.Show(
-                    ServerResponse.GetMessageFromStatusCode(joinGameResponse.StatusCode),
-                    Properties.Resources.msgbErrorJoiningMatchTitle,
+                    Properties.Resources.msgbErrorConexionServidorMessage,
+                    Properties.Resources.msgbErrorConexionServidorTitle,
                     MessageBoxButton.OK,
-                    MessageBoxImage.Warning
+                    MessageBoxImage.Error
                 );
+                RedirectPermanentlyToMainMenu();
             }
+        }
 
-            ShowActiveUsers(userNickname);
+        private void SubscribeToActiveUsersList()
+        {
+            userServiceClient.Subscribe();
+        }
+
+        private void CreateNewGame(string userNickname)
+        {
+            var createMatchResponse = matchServiceClient.CreateMatch(userNickname);
+            invitationCode = createMatchResponse.Value;
+        }
+
+        private void JoinGame(string userNickname)
+        {
+            var joinGameResponse = matchServiceClient.JoinGame(invitationCode, userNickname);
+            switch (joinGameResponse.StatusCode)
+            {
+                case ResponseStatus.OK:
+                    PlayerInMatch host = joinGameResponse.Value;
+
+                    if (host != null)
+                    {
+                        ShowUserInfoInBanner(host.Nickname, host.Avatar);
+                        ShowUserInfoInChat(host.Nickname, host.Avatar);
+                    }
+                    else
+                    {
+                        MessageBox.Show(
+                            Properties.Resources.msgbHostInformationMissingMessage,
+                            Properties.Resources.msgbHostInformationMissingTitle,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
+                        );
+                        ShowUserInfoInBanner(Properties.Resources.txtHost, null);
+                        ShowUserInfoInChat(Properties.Resources.txtHost, null);
+                    }
+                    break;
+                case ResponseStatus.VALIDATION_ERROR:
+                    MessageBox.Show(
+                        Properties.Resources.msgbInvalidMatchCodeMessage,
+                        Properties.Resources.msgbInvalidMatchCodeTitle,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning
+                    );
+                    RedirectPermanentlyToMainMenu();
+                    break;
+                case ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR:
+                    MessageBox.Show(
+                        Properties.Resources.msgbHostLeftMatchMessage,
+                        Properties.Resources.msgbHostLeftMatchTitle,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning
+                    );
+                    RedirectPermanentlyToMainMenu();
+                    break;
+                default:
+                    MessageBox.Show(
+                        ServerResponse.GetMessageFromStatusCode(joinGameResponse.StatusCode),
+                        Properties.Resources.msgbErrorJoiningMatchTitle,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning
+                    );
+                    RedirectPermanentlyToMainMenu();
+                    break;
+            }
+        }
+
+        private void RedirectPermanentlyToMainMenu()
+        {
+            ShowsNavigationUI = true;
+            MainMenuPage menuPage = new MainMenuPage();
+            NavigationService.Navigate(menuPage);
         }
 
         private void ShowActiveUsers(string userNickname)
@@ -120,7 +180,6 @@ namespace GuessWhoClient
             {
                 if(!isJoiningMatch)
                 {
-                    Console.WriteLine("Llamado por una salida del host");
                     FinishGameForGuest();
                 }
             }
@@ -128,12 +187,10 @@ namespace GuessWhoClient
             {
                 if (isJoiningMatch)
                 {
-                    Console.WriteLine("Llamado por llegada de jugador");
                     ShowGuestInformation(user);
                 }
                 else
                 {
-                    Console.WriteLine("Llamado por salida de jugador");
                     HideGuestInformation();
                 }
             }
@@ -194,6 +251,104 @@ namespace GuessWhoClient
             ImgChatProfilePicture.ImageSource = defaultImage;
         }
 
+        private void BtnSendMessageClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SendMessage();
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(
+                    Properties.Resources.msgbErrorConexionServidorMessage,
+                    Properties.Resources.msgbErrorConexionServidorTitle,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+                RedirectPermanentlyToMainMenu();
+            }
+        }
+
+        private void SendMessage()
+        {
+            string message = TbMessage.Text;
+
+            if (!string.IsNullOrEmpty(message))
+            {
+                var response = matchServiceClient.SendMessage(invitationCode, message);
+
+                switch (response.StatusCode)
+                {
+                    case ResponseStatus.OK:
+                        if (response.Value)
+                        {
+                            ShowOwnMessageInChat(message);
+                        }
+                        break;
+                    case ResponseStatus.VALIDATION_ERROR:
+                        MessageBox.Show(
+                            Properties.Resources.msgbSendMessageMatchFinishedMessage,
+                            Properties.Resources.msgbInvalidMatchCodeTitle,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
+                        );
+                        RedirectPermanentlyToMainMenu();
+                        break;
+                    case ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR:
+                        MessageBox.Show(
+                            Properties.Resources.msgbMesageNotSentMessage,
+                            Properties.Resources.msgbMessageNotSentTitle,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
+                        );
+                        if(!isHost)
+                        {
+                            RedirectPermanentlyToMainMenu();
+                        }
+                        else
+                        {
+                            ShowDefaultUserInfoInChat();
+                            ShowDefaultUserInfoInBanner();
+                        }
+                        break;
+                    default:
+                        MessageBox.Show(
+                            ServerResponse.GetMessageFromStatusCode(response.StatusCode),
+                            Properties.Resources.msgbInvalidMatchCodeTitle,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
+                        );
+                        RedirectPermanentlyToMainMenu();
+                        break;
+                }
+            }
+        }
+
+        private void ShowOwnMessageInChat(string message)
+        {
+            OwnChatMessage messageElement = new OwnChatMessage();
+            messageElement.TbMessage.Text = message;
+            SpChatMessages.Children.Add(messageElement);
+            SvChatMessages.ScrollToBottom();
+            TbMessage.Text = "";
+        }
+
+        public void NotifyNewMessage(string message, string senderNickname)
+        {
+            string defaultAdversaryNickname = isHost ? Properties.Resources.txtGuest : Properties.Resources.txtHost;
+            ShowPlayerMessageInChat(message, senderNickname == "" ? defaultAdversaryNickname : senderNickname);
+        }
+
+        private void ShowPlayerMessageInChat(string message, string playerNickname)
+        {
+            ChatMessage messageElement = new ChatMessage();
+            messageElement.TbMessage.Text = message;
+            messageElement.TbNickname.Text = playerNickname;
+            SpChatMessages.Children.Add(messageElement);
+            SvChatMessages.ScrollToBottom();
+            TbMessage.Text = "";
+        }
+
         private void BtnCopyInvitationCodeClick(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(invitationCode);
@@ -201,54 +356,58 @@ namespace GuessWhoClient
 
         private void BtnExitGameClick(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                UnsubscribeToActiveUsersList();
+                ExitGame();
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(
+                    Properties.Resources.msgbErrorConexionServidorMessage,
+                    Properties.Resources.msgbErrorConexionServidorTitle,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+                RedirectPermanentlyToMainMenu();
+            }
+        }
+
+        private void UnsubscribeToActiveUsersList()
+        {
             userServiceClient.Unsubscribe();
             ExitGame();
         }
 
         private void ExitGame()
         {
-            booleanResponse response = matchServiceClient.ExitGame(invitationCode);
-
-            if (response.StatusCode == ResponseStatus.OK)
-            {
-                MainMenuPage mainMenu = new MainMenuPage();
-                this.NavigationService.Navigate(mainMenu);
-            }
-            else
-            {
-                MessageBox.Show(
-                    ServerResponse.GetMessageFromStatusCode(response.StatusCode),
-                    Properties.Resources.msgbErrorLeavingMatchTitle,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning
-                );
-            }
+            matchServiceClient.ExitGame(invitationCode);
+            RedirectPermanentlyToMainMenu();
         }
 
         private void BtnFinishGameClick(object sender, RoutedEventArgs e)
         {
-            userServiceClient.Unsubscribe();
-            FinishGame();
+            try
+            {
+                UnsubscribeToActiveUsersList();
+                FinishGame();
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(
+                    Properties.Resources.msgbErrorConexionServidorMessage,
+                    Properties.Resources.msgbErrorConexionServidorTitle,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+                RedirectPermanentlyToMainMenu();
+            }
         }
 
         private void FinishGame()
         {
-            booleanResponse response = matchServiceClient.FinishGame(invitationCode);
-
-            if (response.StatusCode == ResponseStatus.OK)
-            {
-                MainMenuPage mainMenu = new MainMenuPage();
-                this.NavigationService.Navigate(mainMenu);
-            }
-            else
-            {
-                MessageBox.Show(
-                    ServerResponse.GetMessageFromStatusCode(response.StatusCode),
-                    Properties.Resources.msgbErrorLeavingMatchTitle,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning
-                );
-            }
+            matchServiceClient.FinishGame(invitationCode);
+            RedirectPermanentlyToMainMenu();
         }
     }
 }

@@ -2,6 +2,7 @@
 using GuessWhoServices.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.ServiceModel;
 using System.Text.RegularExpressions;
 
@@ -108,15 +109,17 @@ namespace GuessWhoServices
                         }
                     }
 
-                    Console.WriteLine("Avisando a host con canal " 
-                        + storedMatch.HostChannel.GetHashCode() 
-                        + " que el jugador " 
-                        + (guest.Nickname == "" ? "Invitado" : guest.Nickname)
-                        + " está uniéndose a la partida"
-                    );
-                    Console.WriteLine("El canal del nuevo jugador es " + storedMatch.GuestChannel.GetHashCode());
+                    try
+                    {
+                        storedMatch.HostChannel.PlayerStatusInMatchChanged(guest, true);
+                    } 
+                    catch(CommunicationObjectAbortedException)
+                    {
+                        response.StatusCode = ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR;
+                        response.Value = null;
 
-                    storedMatch.HostChannel.PlayerStatusInMatchChanged(guest, true);
+                        matches.Remove(invitationCode);
+                    }
                 }
             }
 
@@ -152,11 +155,16 @@ namespace GuessWhoServices
                     emptyPlayer.FullName = "";
                     emptyPlayer.IsHost = false;
 
-                    Console.WriteLine("Se informa al host con canal " + storedMatch.HostChannel.GetHashCode() + " que el jugador ha salido de la partida");
-                    Console.WriteLine("Nickname de jugador: " + storedMatch.GuestNickname);
-                    Console.WriteLine("Canal de jugador: " + (storedMatch.GuestChannel != null ? "no vacío" : "vacío"));
+                    try
+                    {
+                        storedMatch.HostChannel.PlayerStatusInMatchChanged(emptyPlayer, false);
+                    }
+                    catch (CommunicationObjectAbortedException)
+                    {
+                        response.StatusCode = ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR;
 
-                    storedMatch.HostChannel.PlayerStatusInMatchChanged(emptyPlayer, false);
+                        matches.Remove(invitationCode);
+                    }
                 }
             }
 
@@ -194,16 +202,67 @@ namespace GuessWhoServices
 
                     if (storedMatch.GuestChannel != null)
                     {
-                        Console.WriteLine("Canal de jugador informado: " + storedMatch.GuestChannel.GetHashCode());
-                        storedMatch.GuestChannel.PlayerStatusInMatchChanged(emptyPlayer, false);
-                        Console.WriteLine("Jugador informado!");
+                        try
+                        {
+                            storedMatch.GuestChannel.PlayerStatusInMatchChanged(emptyPlayer, false);
+                        }
+                        catch (CommunicationObjectAbortedException)
+                        {
+                            response.StatusCode = ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR;
+                        }
                     }
 
                     matches.Remove(invitationCode);
                 }
             }
 
-            Console.WriteLine("Regresando respuesta a cliente (host): " + (response.Value ? "Exitoso": "Fallido"));
+            return response;
+        }
+
+        public Response<bool> SendMessage(string invitationCode, string message)
+        {
+            var response = new Response<bool>
+            {
+                StatusCode = ResponseStatus.VALIDATION_ERROR,
+                Value = false
+            };
+
+            if (matches.ContainsKey(invitationCode))
+            {
+                var storedMatch = matches[invitationCode];
+                var senderChannel = OperationContext.Current.GetCallbackChannel<IMatchCallback>();
+
+                response.StatusCode = ResponseStatus.OK;
+                response.Value = true;
+
+                try
+                {
+                    bool isHostSendingMessage = senderChannel.GetHashCode() == storedMatch.HostChannel.GetHashCode();  
+                    if (isHostSendingMessage)
+                    {
+                        if(storedMatch.GuestChannel != null)
+                        {
+                            storedMatch.GuestChannel.NotifyNewMessage(message, storedMatch.HostNickname);
+                        }
+                        else
+                        {
+                            response.Value = false;
+                        }
+                    }
+                    else
+                    {
+                        storedMatch.HostChannel.NotifyNewMessage(message, storedMatch.GuestNickname);
+                    }
+                }
+                catch (CommunicationObjectAbortedException)
+                {
+                    response.StatusCode = ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR;
+                    response.Value = false;
+
+                    matches.Remove(invitationCode);
+                }
+            }
+
             return response;
         }
     }

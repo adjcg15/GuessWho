@@ -271,6 +271,9 @@ namespace GuessWhoClient.GameServices {
         VALIDATION_ERROR = 400,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
+        CLIENT_CHANNEL_CONNECTION_ERROR = 401,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
         UPDATE_ERROR = 500,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
@@ -1299,6 +1302,12 @@ namespace GuessWhoClient.GameServices {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchService/FinishGame", ReplyAction="http://tempuri.org/IMatchService/FinishGameResponse")]
         System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> FinishGameAsync(string invitationCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchService/SendMessage", ReplyAction="http://tempuri.org/IMatchService/SendMessageResponse")]
+        GuessWhoClient.GameServices.booleanResponse SendMessage(string invitationCode, string message);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchService/SendMessage", ReplyAction="http://tempuri.org/IMatchService/SendMessageResponse")]
+        System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> SendMessageAsync(string invitationCode, string message);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1306,6 +1315,9 @@ namespace GuessWhoClient.GameServices {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchService/PlayerStatusInMatchChanged", ReplyAction="http://tempuri.org/IMatchService/PlayerStatusInMatchChangedResponse")]
         void PlayerStatusInMatchChanged(GuessWhoClient.GameServices.PlayerInMatch player, bool isInMatch);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchService/NotifyNewMessage", ReplyAction="http://tempuri.org/IMatchService/NotifyNewMessageResponse")]
+        void NotifyNewMessage(string message, string senderNickname);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1366,6 +1378,14 @@ namespace GuessWhoClient.GameServices {
         
         public System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> FinishGameAsync(string invitationCode) {
             return base.Channel.FinishGameAsync(invitationCode);
+        }
+        
+        public GuessWhoClient.GameServices.booleanResponse SendMessage(string invitationCode, string message) {
+            return base.Channel.SendMessage(invitationCode, message);
+        }
+        
+        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> SendMessageAsync(string invitationCode, string message) {
+            return base.Channel.SendMessageAsync(invitationCode, message);
         }
     }
 }

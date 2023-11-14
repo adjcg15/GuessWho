@@ -17,6 +17,9 @@ namespace GuessWhoServices
 
         [OperationContract]
         Response<bool> FinishGame(string invitationCode);
+
+        [OperationContract]
+        Response<bool> SendMessage(string invitationCode, string message);
     }
 
     [ServiceContract]
@@ -24,5 +27,7 @@ namespace GuessWhoServices
     {
         [OperationContract]
         void PlayerStatusInMatchChanged(PlayerInMatch player, bool isInMatch);
+        [OperationContract]
+        void NotifyNewMessage(string message, string senderNickname);
     }
 }

@@ -14,7 +14,6 @@ namespace GuessWhoClient
     public partial class MainMenuPage : Page
     {
         private const int INVITATION_CODE_LENGTH = 8;
-        private bool isFirstTime = true;
         private string previousCode = string.Empty;
 
         public MainMenuPage()
@@ -23,6 +22,25 @@ namespace GuessWhoClient
         }
 
         public void initializeFromCanceledMatch()
+        {
+            BorderCanceledMatch.Visibility = Visibility.Visible;
+            BorderOpacityCanceledMatch.Visibility = Visibility.Visible;
+
+            if(DataStore.Profile != null)
+            {
+                LoginProfile();
+            }
+        }
+
+        public void initializeFromLobby()
+        {
+            if(DataStore.Profile != null)
+            {
+                LoginProfile();
+            }
+        }
+
+        public void showCanceledMatchMessage()
         {
             BorderCanceledMatch.Visibility = Visibility.Visible;
             BorderOpacityCanceledMatch.Visibility = Visibility.Visible;

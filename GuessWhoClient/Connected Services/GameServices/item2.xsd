@@ -306,15 +306,43 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="SendMessage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="invitationCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendMessageResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="SendMessageResult" nillable="true" type="q21:booleanResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="PlayerStatusInMatchChanged">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="player" nillable="true" type="q21:PlayerInMatch" />
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="player" nillable="true" type="q22:PlayerInMatch" />
         <xs:element minOccurs="0" name="isInMatch" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="PlayerStatusInMatchChangedResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NotifyNewMessage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="senderNickname" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NotifyNewMessageResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

@@ -250,7 +250,7 @@
     <value>Full Name</value>
   </data>
   <data name="lbFullNameProfile" xml:space="preserve">
-    <value>Full Name</value>
+    <value>Name</value>
   </data>
   <data name="lbHowToPlayDescription" xml:space="preserve">
     <value>Draw! Unlike the original game, here you will not be able to ask questions to your opponent, instead, you must use your imagination and make a drawing to convey your question. Once your drawing is finished, finish your attempt and go to the next step.</value>
@@ -318,8 +318,11 @@
   <data name="msgbEmptyField" xml:space="preserve">
     <value>Email and password are required</value>
   </data>
-  <data name="msgbErrorCreatingMatchTitle" xml:space="preserve">
-    <value>An error occurred creating the game</value>
+  <data name="msgbErrorConexionServidorMessage" xml:space="preserve">
+    <value>Could not establish a connection to the server, try another time</value>
+  </data>
+  <data name="msgbErrorConexionServidorTitle" xml:space="preserve">
+    <value>Server connection error</value>
   </data>
   <data name="msgbErrorJoiningMatchTitle" xml:space="preserve">
     <value>An error occurred while joining the game</value>
@@ -332,6 +335,30 @@
   </data>
   <data name="msgbGameFinishedByHostTitle" xml:space="preserve">
     <value>Game over</value>
+  </data>
+  <data name="msgbHostInformationMissingMessage" xml:space="preserve">
+    <value>An error occurred while retrieving host information, but you can continue playing without any problems</value>
+  </data>
+  <data name="msgbHostInformationMissingTitle" xml:space="preserve">
+    <value>Could not retrieve host information</value>
+  </data>
+  <data name="msgbHostLeftMatchMessage" xml:space="preserve">
+    <value>The match has been ended by the host, so it is not possible to join</value>
+  </data>
+  <data name="msgbHostLeftMatchTitle" xml:space="preserve">
+    <value>Match ended by the host</value>
+  </data>
+  <data name="msgbInvalidMatchCodeMessage" xml:space="preserve">
+    <value>The match you are trying to access could not be found, or it may already be full</value>
+  </data>
+  <data name="msgbInvalidMatchCodeTitle" xml:space="preserve">
+    <value>Invalid match</value>
+  </data>
+  <data name="msgbMesageNotSentMessage" xml:space="preserve">
+    <value>It was not possible to send the message, because the player has abandoned the game</value>
+  </data>
+  <data name="msgbMessageNotSentTitle" xml:space="preserve">
+    <value>Could not send message</value>
   </data>
   <data name="msgbRegisterAlertImageSizeMessage" xml:space="preserve">
     <value>The image must be 20kb or less in size.</value>
@@ -387,6 +414,9 @@
   <data name="msgbRegisterRegisteredNicknameTitle" xml:space="preserve">
     <value>Nickname already registered</value>
   </data>
+  <data name="msgbSendMessageMatchFinishedMessage" xml:space="preserve">
+    <value>The game you are trying to send the message to no longer exists</value>
+  </data>
   <data name="msgbUserNotFound" xml:space="preserve">
     <value>Email and/or password are incorrect, please verify the information.</value>
   </data>
@@ -439,13 +469,16 @@
     <value>Friends</value>
   </data>
   <data name="txtFullNameChangeSuccesfulMessage" xml:space="preserve">
-    <value>The full name of the profile has been changed succesfully.</value>
+    <value>Your profile name has been changed successfully</value>
   </data>
   <data name="txtFullNameChangeSuccesfulTitle" xml:space="preserve">
-    <value>Full Name Changed</value>
+    <value>Name changed</value>
   </data>
   <data name="txtGuest" xml:space="preserve">
     <value>Guest</value>
+  </data>
+  <data name="txtHost" xml:space="preserve">
+    <value>Host</value>
   </data>
   <data name="txtLeaderboardGlobal" xml:space="preserve">
     <value>Leaderboard</value>
@@ -475,16 +508,16 @@
     <value>Enter a username that is not yours</value>
   </data>
   <data name="txtPasswordChangeSuccesfulMessage" xml:space="preserve">
-    <value>Your password has been changed successfully!</value>
+    <value>The password has been changed successfully</value>
   </data>
   <data name="txtPasswordChangeSuccesfulTitle" xml:space="preserve">
-    <value>Password Changed Successfully</value>
+    <value>Password changed</value>
   </data>
   <data name="txtProfileImageChangeSuccesfulMessage" xml:space="preserve">
-    <value>The profile image has been changed successfully.</value>
+    <value>The profile image has been changed successfully</value>
   </data>
   <data name="txtProfileImageChangeSuccesfulTitle" xml:space="preserve">
-    <value>Profile Image Change Succesful</value>
+    <value>Profile image changed</value>
   </data>
   <data name="txtReportGlobal" xml:space="preserve">
     <value>Report</value>

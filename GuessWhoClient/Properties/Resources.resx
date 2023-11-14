@@ -318,8 +318,11 @@
   <data name="msgbEmptyField" xml:space="preserve">
     <value>El correo electrónico y la contraseña son requeridos</value>
   </data>
-  <data name="msgbErrorCreatingMatchTitle" xml:space="preserve">
-    <value>Ocurrió un error creando la partida</value>
+  <data name="msgbErrorConexionServidorMessage" xml:space="preserve">
+    <value>No fue posible establecer una conexión con el servidor, intente en otro momento</value>
+  </data>
+  <data name="msgbErrorConexionServidorTitle" xml:space="preserve">
+    <value>Error de conexión con el servidor</value>
   </data>
   <data name="msgbErrorJoiningMatchTitle" xml:space="preserve">
     <value>Ocurrió un error al unirse a la partida</value>
@@ -332,6 +335,30 @@
   </data>
   <data name="msgbGameFinishedByHostTitle" xml:space="preserve">
     <value>Partida finalizada</value>
+  </data>
+  <data name="msgbHostInformationMissingMessage" xml:space="preserve">
+    <value>Ocurrió un error a la hora de recuperar la información del anfitrión, pero puede continuar jugando sin ningún problema</value>
+  </data>
+  <data name="msgbHostInformationMissingTitle" xml:space="preserve">
+    <value>No se pudo recuperar la información del anfitrión</value>
+  </data>
+  <data name="msgbHostLeftMatchMessage" xml:space="preserve">
+    <value>La partida ha sido finalizada por el anfitrión, por lo que no es posible unirse</value>
+  </data>
+  <data name="msgbHostLeftMatchTitle" xml:space="preserve">
+    <value>Partida finalizada por el anfitrión</value>
+  </data>
+  <data name="msgbInvalidMatchCodeMessage" xml:space="preserve">
+    <value>La partida a la que intenta acceder no pudo ser encontrada, o es posible que ya se encuentre llena</value>
+  </data>
+  <data name="msgbInvalidMatchCodeTitle" xml:space="preserve">
+    <value>Partida inválida</value>
+  </data>
+  <data name="msgbMesageNotSentMessage" xml:space="preserve">
+    <value>No ha sido posible enviar el mensaje, pues el jugador ha abandonado la partida</value>
+  </data>
+  <data name="msgbMessageNotSentTitle" xml:space="preserve">
+    <value>No se pudo enviar el mensaje</value>
   </data>
   <data name="msgbRegisterAlertImageSizeMessage" xml:space="preserve">
     <value>La imagen debe tener un tamaño de 20kb o menos.</value>
@@ -387,6 +414,9 @@
   <data name="msgbRegisterRegisteredNicknameTitle" xml:space="preserve">
     <value>Nombre de usuario registrado</value>
   </data>
+  <data name="msgbSendMessageMatchFinishedMessage" xml:space="preserve">
+    <value>La partida a la que intenta enviar el mensaje ya no existe</value>
+  </data>
   <data name="msgbUserNotFound" xml:space="preserve">
     <value>El correo y/o contraseña son incorrectas, por favor verifique la información</value>
   </data>
@@ -439,13 +469,16 @@
     <value>Amigos</value>
   </data>
   <data name="txtFullNameChangeSuccesfulMessage" xml:space="preserve">
-    <value>Se ha cambiado el nombre completo del perfil correctamente</value>
+    <value>Se ha cambiado su nombre en el perfil correctamente</value>
   </data>
   <data name="txtFullNameChangeSuccesfulTitle" xml:space="preserve">
-    <value>Nombre completo cambiado</value>
+    <value>Nombre actualizado</value>
   </data>
   <data name="txtGuest" xml:space="preserve">
     <value>Invitado</value>
+  </data>
+  <data name="txtHost" xml:space="preserve">
+    <value>Anfitrión</value>
   </data>
   <data name="txtLeaderboardGlobal" xml:space="preserve">
     <value>Marcador</value>
@@ -475,16 +508,16 @@
     <value>Ingresa un nombre de usuario que no sea el tuyo</value>
   </data>
   <data name="txtPasswordChangeSuccesfulMessage" xml:space="preserve">
-    <value>La contraseña ha sido cambiada correctamente!</value>
+    <value>La contraseña ha sido cambiada correctamente</value>
   </data>
   <data name="txtPasswordChangeSuccesfulTitle" xml:space="preserve">
-    <value>Contraseña cambiada correctamente</value>
+    <value>Contraseña actualizada</value>
   </data>
   <data name="txtProfileImageChangeSuccesfulMessage" xml:space="preserve">
     <value>Se ha cambiado la imagen de perfil correctamente</value>
   </data>
   <data name="txtProfileImageChangeSuccesfulTitle" xml:space="preserve">
-    <value>Cambio de imagen de perfil completado</value>
+    <value>Imagen de perfil actualizada</value>
   </data>
   <data name="txtReportGlobal" xml:space="preserve">
     <value>Reportar</value>

@@ -177,8 +177,9 @@ namespace GuessWhoClient
             }
             else
             {
-                MessageBox.Show(Properties.Resources.txtPasswordChangeSuccesfulMessage,
-                   Properties.Resources.txtPasswordChangeSuccesfulTitle
+                MessageBox.Show(
+                    Properties.Resources.txtPasswordChangeSuccesfulMessage,
+                    Properties.Resources.txtPasswordChangeSuccesfulTitle
                );
             }
         }
@@ -265,14 +266,16 @@ namespace GuessWhoClient
             }
             else if(response.StatusCode == ResponseStatus.OK && !response.Value)
             {
-                MessageBox.Show(Properties.Resources.txtNicknameChangeOutOfDateMessage,
+                MessageBox.Show(
+                    Properties.Resources.txtNicknameChangeOutOfDateMessage,
                     Properties.Resources.txtNicknameChangeOutOfDateTitle
                 );
             }
             else
             {
-                MessageBox.Show(Properties.Resources.txtNicknameChangedSuccesfulMessage,
-                   Properties.Resources.txtNicknameChangedSuccesfulTitle
+                MessageBox.Show(
+                    Properties.Resources.txtNicknameChangedSuccesfulMessage,
+                    Properties.Resources.txtNicknameChangedSuccesfulTitle
                );
                 DataStore.Profile.NickName = newNickname;
             }
@@ -291,7 +294,8 @@ namespace GuessWhoClient
             }
             else
             {
-                MessageBox.Show(Properties.Resources.txtProfileImageChangeSuccesfulMessage,
+                MessageBox.Show(
+                    Properties.Resources.txtProfileImageChangeSuccesfulMessage,
                     Properties.Resources.txtProfileImageChangeSuccesfulTitle
                 );
 
@@ -365,7 +369,8 @@ namespace GuessWhoClient
             }
             else
             {
-                MessageBox.Show(Properties.Resources.txtFullNameChangeSuccesfulMessage,
+                MessageBox.Show(
+                    Properties.Resources.txtFullNameChangeSuccesfulMessage,
                     Properties.Resources.txtFullNameChangeSuccesfulTitle
                 );
 

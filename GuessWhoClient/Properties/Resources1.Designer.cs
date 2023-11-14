@@ -664,11 +664,20 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Ocurrió un error creando la partida.
+        ///   Busca una cadena traducida similar a No fue posible establecer una conexión con el servidor, intente en otro momento.
         /// </summary>
-        public static string msgbErrorCreatingMatchTitle {
+        public static string msgbErrorConexionServidorMessage {
             get {
-                return ResourceManager.GetString("msgbErrorCreatingMatchTitle", resourceCulture);
+                return ResourceManager.GetString("msgbErrorConexionServidorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error de conexión con el servidor.
+        /// </summary>
+        public static string msgbErrorConexionServidorTitle {
+            get {
+                return ResourceManager.GetString("msgbErrorConexionServidorTitle", resourceCulture);
             }
         }
         
@@ -705,6 +714,78 @@ namespace GuessWhoClient.Properties {
         public static string msgbGameFinishedByHostTitle {
             get {
                 return ResourceManager.GetString("msgbGameFinishedByHostTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ocurrió un error a la hora de recuperar la información del anfitrión, pero puede continuar jugando sin ningún problema.
+        /// </summary>
+        public static string msgbHostInformationMissingMessage {
+            get {
+                return ResourceManager.GetString("msgbHostInformationMissingMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se pudo recuperar la información del anfitrión.
+        /// </summary>
+        public static string msgbHostInformationMissingTitle {
+            get {
+                return ResourceManager.GetString("msgbHostInformationMissingTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a La partida ha sido finalizada por el anfitrión, por lo que no es posible unirse.
+        /// </summary>
+        public static string msgbHostLeftMatchMessage {
+            get {
+                return ResourceManager.GetString("msgbHostLeftMatchMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Partida finalizada por el anfitrión.
+        /// </summary>
+        public static string msgbHostLeftMatchTitle {
+            get {
+                return ResourceManager.GetString("msgbHostLeftMatchTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a La partida a la que intenta acceder no pudo ser encontrada, o es posible que ya se encuentre llena.
+        /// </summary>
+        public static string msgbInvalidMatchCodeMessage {
+            get {
+                return ResourceManager.GetString("msgbInvalidMatchCodeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Partida inválida.
+        /// </summary>
+        public static string msgbInvalidMatchCodeTitle {
+            get {
+                return ResourceManager.GetString("msgbInvalidMatchCodeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No ha sido posible enviar el mensaje, pues el jugador ha abandonado la partida.
+        /// </summary>
+        public static string msgbMesageNotSentMessage {
+            get {
+                return ResourceManager.GetString("msgbMesageNotSentMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se pudo enviar el mensaje.
+        /// </summary>
+        public static string msgbMessageNotSentTitle {
+            get {
+                return ResourceManager.GetString("msgbMessageNotSentTitle", resourceCulture);
             }
         }
         
@@ -871,6 +952,15 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a La partida a la que intenta enviar el mensaje ya no existe.
+        /// </summary>
+        public static string msgbSendMessageMatchFinishedMessage {
+            get {
+                return ResourceManager.GetString("msgbSendMessageMatchFinishedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El correo y/o contraseña son incorrectas, por favor verifique la información.
         /// </summary>
         public static string msgbUserNotFound {
@@ -1024,7 +1114,7 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Se ha cambiado el nombre completo del perfil correctamente.
+        ///   Busca una cadena traducida similar a Se ha cambiado su nombre en el perfil correctamente.
         /// </summary>
         public static string txtFullNameChangeSuccesfulMessage {
             get {
@@ -1033,7 +1123,7 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Nombre completo cambiado.
+        ///   Busca una cadena traducida similar a Nombre actualizado.
         /// </summary>
         public static string txtFullNameChangeSuccesfulTitle {
             get {
@@ -1047,6 +1137,15 @@ namespace GuessWhoClient.Properties {
         public static string txtGuest {
             get {
                 return ResourceManager.GetString("txtGuest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Anfitrión.
+        /// </summary>
+        public static string txtHost {
+            get {
+                return ResourceManager.GetString("txtHost", resourceCulture);
             }
         }
         
@@ -1132,7 +1231,7 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a La contraseña ha sido cambiada correctamente!.
+        ///   Busca una cadena traducida similar a La contraseña ha sido cambiada correctamente.
         /// </summary>
         public static string txtPasswordChangeSuccesfulMessage {
             get {
@@ -1141,7 +1240,7 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Contraseña cambiada correctamente.
+        ///   Busca una cadena traducida similar a Contraseña actualizada.
         /// </summary>
         public static string txtPasswordChangeSuccesfulTitle {
             get {
@@ -1159,7 +1258,7 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Cambio de imagen de perfil completado.
+        ///   Busca una cadena traducida similar a Imagen de perfil actualizada.
         /// </summary>
         public static string txtProfileImageChangeSuccesfulTitle {
             get {
