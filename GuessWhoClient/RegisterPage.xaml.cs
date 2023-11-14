@@ -161,8 +161,8 @@ namespace GuessWhoClient
             if (nicknameValidation.StatusCode != GameServices.ResponseStatus.OK)
             {
                 MessageBox.Show(
-                    ServerResponse.GetMessageFromStatusCode(emailValidation.StatusCode),
-                    ServerResponse.GetTitleFromStatusCode(emailValidation.StatusCode),
+                    ServerResponse.GetMessageFromStatusCode(nicknameValidation.StatusCode),
+                    ServerResponse.GetTitleFromStatusCode(nicknameValidation.StatusCode),
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );

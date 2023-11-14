@@ -131,6 +131,66 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="UpdateUserProfileImage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="newImage" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="idUser" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateUserProfileImageResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="UpdateUserProfileImageResult" nillable="true" type="q9:booleanResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateUserNickname">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="newNickname" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="idUser" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateUserNicknameResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="UpdateUserNicknameResult" nillable="true" type="q10:booleanResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateUserPassword">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="newPassword" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="idAccount" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateUserPasswordResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="UpdateUserPasswordResult" nillable="true" type="q11:booleanResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateUserFullName">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="newFullName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="idUser" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateUserFullNameResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="UpdateUserFullNameResult" nillable="true" type="q12:booleanResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="SendRequest">
     <xs:complexType>
       <xs:sequence>
@@ -142,7 +202,7 @@
   <xs:element name="SendRequestResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="SendRequestResult" nillable="true" type="q9:booleanResponse" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="SendRequestResult" nillable="true" type="q13:booleanResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -156,7 +216,7 @@
   <xs:element name="GetFriendsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="GetFriendsResult" nillable="true" type="q10:ArrayOfFriendResponse" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="GetFriendsResult" nillable="true" type="q14:ArrayOfFriendResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -170,7 +230,7 @@
   <xs:element name="GetRequestsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="GetRequestsResult" nillable="true" type="q11:ArrayOfFriendResponse" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="GetRequestsResult" nillable="true" type="q15:ArrayOfFriendResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -185,7 +245,7 @@
   <xs:element name="AnswerRequestResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="AnswerRequestResult" nillable="true" type="q12:booleanResponse" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="AnswerRequestResult" nillable="true" type="q16:booleanResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -199,7 +259,7 @@
   <xs:element name="CreateMatchResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="CreateMatchResult" nillable="true" type="q13:stringResponse" />
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="CreateMatchResult" nillable="true" type="q17:stringResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -214,7 +274,7 @@
   <xs:element name="JoinGameResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="JoinGameResult" nillable="true" type="q14:PlayerInMatchResponse" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="JoinGameResult" nillable="true" type="q18:PlayerInMatchResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -228,7 +288,7 @@
   <xs:element name="ExitGameResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="ExitGameResult" nillable="true" type="q15:booleanResponse" />
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="ExitGameResult" nillable="true" type="q19:booleanResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -242,14 +302,14 @@
   <xs:element name="FinishGameResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="FinishGameResult" nillable="true" type="q16:booleanResponse" />
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="FinishGameResult" nillable="true" type="q20:booleanResponse" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="PlayerStatusInMatchChanged">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="player" nillable="true" type="q17:PlayerInMatch" />
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="player" nillable="true" type="q21:PlayerInMatch" />
         <xs:element minOccurs="0" name="isInMatch" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>

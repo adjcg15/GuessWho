@@ -1095,6 +1095,95 @@ namespace GuessWhoClient.GameServices {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameServices.IProfileService")]
+    public interface IProfileService {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileService/UpdateUserProfileImage", ReplyAction="http://tempuri.org/IProfileService/UpdateUserProfileImageResponse")]
+        GuessWhoClient.GameServices.booleanResponse UpdateUserProfileImage(byte[] newImage, int idUser);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileService/UpdateUserProfileImage", ReplyAction="http://tempuri.org/IProfileService/UpdateUserProfileImageResponse")]
+        System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> UpdateUserProfileImageAsync(byte[] newImage, int idUser);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileService/UpdateUserNickname", ReplyAction="http://tempuri.org/IProfileService/UpdateUserNicknameResponse")]
+        GuessWhoClient.GameServices.booleanResponse UpdateUserNickname(string newNickname, int idUser);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileService/UpdateUserNickname", ReplyAction="http://tempuri.org/IProfileService/UpdateUserNicknameResponse")]
+        System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> UpdateUserNicknameAsync(string newNickname, int idUser);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileService/UpdateUserPassword", ReplyAction="http://tempuri.org/IProfileService/UpdateUserPasswordResponse")]
+        GuessWhoClient.GameServices.booleanResponse UpdateUserPassword(string newPassword, int idAccount);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileService/UpdateUserPassword", ReplyAction="http://tempuri.org/IProfileService/UpdateUserPasswordResponse")]
+        System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> UpdateUserPasswordAsync(string newPassword, int idAccount);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileService/UpdateUserFullName", ReplyAction="http://tempuri.org/IProfileService/UpdateUserFullNameResponse")]
+        GuessWhoClient.GameServices.booleanResponse UpdateUserFullName(string newFullName, int idUser);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IProfileService/UpdateUserFullName", ReplyAction="http://tempuri.org/IProfileService/UpdateUserFullNameResponse")]
+        System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> UpdateUserFullNameAsync(string newFullName, int idUser);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IProfileServiceChannel : GuessWhoClient.GameServices.IProfileService, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class ProfileServiceClient : System.ServiceModel.ClientBase<GuessWhoClient.GameServices.IProfileService>, GuessWhoClient.GameServices.IProfileService {
+        
+        public ProfileServiceClient() {
+        }
+        
+        public ProfileServiceClient(string endpointConfigurationName) : 
+                base(endpointConfigurationName) {
+        }
+        
+        public ProfileServiceClient(string endpointConfigurationName, string remoteAddress) : 
+                base(endpointConfigurationName, remoteAddress) {
+        }
+        
+        public ProfileServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(endpointConfigurationName, remoteAddress) {
+        }
+        
+        public ProfileServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(binding, remoteAddress) {
+        }
+        
+        public GuessWhoClient.GameServices.booleanResponse UpdateUserProfileImage(byte[] newImage, int idUser) {
+            return base.Channel.UpdateUserProfileImage(newImage, idUser);
+        }
+        
+        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> UpdateUserProfileImageAsync(byte[] newImage, int idUser) {
+            return base.Channel.UpdateUserProfileImageAsync(newImage, idUser);
+        }
+        
+        public GuessWhoClient.GameServices.booleanResponse UpdateUserNickname(string newNickname, int idUser) {
+            return base.Channel.UpdateUserNickname(newNickname, idUser);
+        }
+        
+        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> UpdateUserNicknameAsync(string newNickname, int idUser) {
+            return base.Channel.UpdateUserNicknameAsync(newNickname, idUser);
+        }
+        
+        public GuessWhoClient.GameServices.booleanResponse UpdateUserPassword(string newPassword, int idAccount) {
+            return base.Channel.UpdateUserPassword(newPassword, idAccount);
+        }
+        
+        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> UpdateUserPasswordAsync(string newPassword, int idAccount) {
+            return base.Channel.UpdateUserPasswordAsync(newPassword, idAccount);
+        }
+        
+        public GuessWhoClient.GameServices.booleanResponse UpdateUserFullName(string newFullName, int idUser) {
+            return base.Channel.UpdateUserFullName(newFullName, idUser);
+        }
+        
+        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> UpdateUserFullNameAsync(string newFullName, int idUser) {
+            return base.Channel.UpdateUserFullNameAsync(newFullName, idUser);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameServices.IFriendsService")]
     public interface IFriendsService {
         

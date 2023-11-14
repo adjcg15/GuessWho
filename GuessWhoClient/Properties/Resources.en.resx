@@ -420,11 +420,29 @@
   <data name="txtConfirmationEmailSubject" xml:space="preserve">
     <value>Email confirmation</value>
   </data>
+  <data name="txtEmptyFieldFullNameMessage" xml:space="preserve">
+    <value>The full name is required to change it</value>
+  </data>
+  <data name="txtEmptyFieldFullNameTitle" xml:space="preserve">
+    <value>Empty FullName Field</value>
+  </data>
+  <data name="txtEmptyFieldNicknameMessage" xml:space="preserve">
+    <value>The new username is required to change it</value>
+  </data>
+  <data name="txtEmptyFieldNicknameTitle" xml:space="preserve">
+    <value>Empty Nickname field</value>
+  </data>
   <data name="txtFriendRequests" xml:space="preserve">
     <value>Requests</value>
   </data>
   <data name="txtFriends" xml:space="preserve">
     <value>Friends</value>
+  </data>
+  <data name="txtFullNameChangeSuccesfulMessage" xml:space="preserve">
+    <value>The full name of the profile has been changed succesfully.</value>
+  </data>
+  <data name="txtFullNameChangeSuccesfulTitle" xml:space="preserve">
+    <value>Full Name Changed</value>
   </data>
   <data name="txtGuest" xml:space="preserve">
     <value>Guest</value>
@@ -438,14 +456,56 @@
   <data name="txtMainMenuTitle" xml:space="preserve">
     <value>Main Menu</value>
   </data>
+  <data name="txtNicknameChangedSuccesfulMessage" xml:space="preserve">
+    <value>Nickname changed succesfully! Remember that you won't be able to change it again until 3 months from now.</value>
+  </data>
+  <data name="txtNicknameChangedSuccesfulTitle" xml:space="preserve">
+    <value>Nickname changed</value>
+  </data>
+  <data name="txtNicknameChangeOutOfDateMessage" xml:space="preserve">
+    <value>Cannot change username at this time. You must wait at least 3 months from the last change.</value>
+  </data>
+  <data name="txtNicknameChangeOutOfDateTitle" xml:space="preserve">
+    <value>Nickname change unavailable</value>
+  </data>
   <data name="txtNicknameGlobal" xml:space="preserve">
     <value>Nickname</value>
   </data>
   <data name="txtOwnNickname" xml:space="preserve">
     <value>Enter a username that is not yours</value>
   </data>
+  <data name="txtPasswordChangeSuccesfulMessage" xml:space="preserve">
+    <value>Your password has been changed successfully!</value>
+  </data>
+  <data name="txtPasswordChangeSuccesfulTitle" xml:space="preserve">
+    <value>Password Changed Successfully</value>
+  </data>
+  <data name="txtProfileImageChangeSuccesfulMessage" xml:space="preserve">
+    <value>The profile image has been changed successfully.</value>
+  </data>
+  <data name="txtProfileImageChangeSuccesfulTitle" xml:space="preserve">
+    <value>Profile Image Change Succesful</value>
+  </data>
   <data name="txtReportGlobal" xml:space="preserve">
     <value>Report</value>
+  </data>
+  <data name="txtSameFullNameErrorMessage" xml:space="preserve">
+    <value>You are already registered with this name. Please verify the information and try again.</value>
+  </data>
+  <data name="txtSameFullNameErrorTitle" xml:space="preserve">
+    <value>Same Full name</value>
+  </data>
+  <data name="txtSameNicknameErrorMessage" xml:space="preserve">
+    <value>You already have this username, please enter another one and try again</value>
+  </data>
+  <data name="txtSameNicknameErrorTitle" xml:space="preserve">
+    <value>Same nickname as actual</value>
+  </data>
+  <data name="txtSamePasswordChangeErrorMessage" xml:space="preserve">
+    <value>Your new password must be different from the current one. Please verify the information and try again</value>
+  </data>
+  <data name="txtSamePasswordChangeErrorTitle" xml:space="preserve">
+    <value>Same Password as Current</value>
   </data>
   <data name="txtSignUpGlobal" xml:space="preserve">
     <value>Sign up</value>

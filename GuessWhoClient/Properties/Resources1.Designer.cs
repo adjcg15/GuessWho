@@ -970,6 +970,42 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a El nombre completo es requerido para cambiarlo.
+        /// </summary>
+        public static string txtEmptyFieldFullNameMessage {
+            get {
+                return ResourceManager.GetString("txtEmptyFieldFullNameMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Campo Nombre vacío.
+        /// </summary>
+        public static string txtEmptyFieldFullNameTitle {
+            get {
+                return ResourceManager.GetString("txtEmptyFieldFullNameTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El nuevo nombre de usuario es requerido para cambiarlo.
+        /// </summary>
+        public static string txtEmptyFieldNicknameMessage {
+            get {
+                return ResourceManager.GetString("txtEmptyFieldNicknameMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Campo nombre de usuario vacío.
+        /// </summary>
+        public static string txtEmptyFieldNicknameTitle {
+            get {
+                return ResourceManager.GetString("txtEmptyFieldNicknameTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Solicitudes.
         /// </summary>
         public static string txtFriendRequests {
@@ -984,6 +1020,24 @@ namespace GuessWhoClient.Properties {
         public static string txtFriends {
             get {
                 return ResourceManager.GetString("txtFriends", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Se ha cambiado el nombre completo del perfil correctamente.
+        /// </summary>
+        public static string txtFullNameChangeSuccesfulMessage {
+            get {
+                return ResourceManager.GetString("txtFullNameChangeSuccesfulMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Nombre completo cambiado.
+        /// </summary>
+        public static string txtFullNameChangeSuccesfulTitle {
+            get {
+                return ResourceManager.GetString("txtFullNameChangeSuccesfulTitle", resourceCulture);
             }
         }
         
@@ -1024,6 +1078,42 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Nombre de usuario cambiado correctamente! Recuerda que no podrás cambiarlo hasta dentro de 3 meses.
+        /// </summary>
+        public static string txtNicknameChangedSuccesfulMessage {
+            get {
+                return ResourceManager.GetString("txtNicknameChangedSuccesfulMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Nombre de usuario cambiado.
+        /// </summary>
+        public static string txtNicknameChangedSuccesfulTitle {
+            get {
+                return ResourceManager.GetString("txtNicknameChangedSuccesfulTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se puede cambiar el nombre de usuario en este momento. Debes esperar al menos 3 meses desde el último cambio.
+        /// </summary>
+        public static string txtNicknameChangeOutOfDateMessage {
+            get {
+                return ResourceManager.GetString("txtNicknameChangeOutOfDateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cambio de nombre de usuario no disponible.
+        /// </summary>
+        public static string txtNicknameChangeOutOfDateTitle {
+            get {
+                return ResourceManager.GetString("txtNicknameChangeOutOfDateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Nombre de usuario.
         /// </summary>
         public static string txtNicknameGlobal {
@@ -1042,11 +1132,101 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a La contraseña ha sido cambiada correctamente!.
+        /// </summary>
+        public static string txtPasswordChangeSuccesfulMessage {
+            get {
+                return ResourceManager.GetString("txtPasswordChangeSuccesfulMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Contraseña cambiada correctamente.
+        /// </summary>
+        public static string txtPasswordChangeSuccesfulTitle {
+            get {
+                return ResourceManager.GetString("txtPasswordChangeSuccesfulTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Se ha cambiado la imagen de perfil correctamente.
+        /// </summary>
+        public static string txtProfileImageChangeSuccesfulMessage {
+            get {
+                return ResourceManager.GetString("txtProfileImageChangeSuccesfulMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cambio de imagen de perfil completado.
+        /// </summary>
+        public static string txtProfileImageChangeSuccesfulTitle {
+            get {
+                return ResourceManager.GetString("txtProfileImageChangeSuccesfulTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Reportar.
         /// </summary>
         public static string txtReportGlobal {
             get {
                 return ResourceManager.GetString("txtReportGlobal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ya se encuentra registrado con este nombre. Verifique la información e intente de nuevo.
+        /// </summary>
+        public static string txtSameFullNameErrorMessage {
+            get {
+                return ResourceManager.GetString("txtSameFullNameErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Mismo nombre completo.
+        /// </summary>
+        public static string txtSameFullNameErrorTitle {
+            get {
+                return ResourceManager.GetString("txtSameFullNameErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ya cuentas con este nombre de usuario, ingresa otro e intenta de nuevo.
+        /// </summary>
+        public static string txtSameNicknameErrorMessage {
+            get {
+                return ResourceManager.GetString("txtSameNicknameErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Mismo nombre de usuario.
+        /// </summary>
+        public static string txtSameNicknameErrorTitle {
+            get {
+                return ResourceManager.GetString("txtSameNicknameErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Tu nueva contraseña debe ser distinta a la actual. Verifica la información e intenta de nuevo.
+        /// </summary>
+        public static string txtSamePasswordChangeErrorMessage {
+            get {
+                return ResourceManager.GetString("txtSamePasswordChangeErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Contraseña igual a la actual.
+        /// </summary>
+        public static string txtSamePasswordChangeErrorTitle {
+            get {
+                return ResourceManager.GetString("txtSamePasswordChangeErrorTitle", resourceCulture);
             }
         }
         

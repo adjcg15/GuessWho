@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
@@ -137,6 +138,226 @@ namespace GuessWhoDataAccess
             catch (SqlException ex)
             {
                 response.StatusCode = ResponseStatus.SQL_ERROR;
+            }
+
+            return response;
+        }
+
+        public static Response<bool> UpdateUserProfileImage(byte[] newImage, int idUser)
+        {
+            Response<bool> response = new Response<bool>
+            {
+                StatusCode = ResponseStatus.OK,
+                Value = true
+            };
+
+            try
+            {
+                using (var context = new GuessWhoContext())
+                {
+                    var user = context.Users.Find(idUser);
+
+                    if (user != null)
+                    {
+                        user.avatar = newImage;
+
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        response.Value = false;
+                    }
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                response.StatusCode = ResponseStatus.UPDATE_ERROR;
+                response.Value = false;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                response.StatusCode = ResponseStatus.VALIDATION_ERROR;
+                response.Value = false;
+            }
+            catch (SqlException ex)
+            {
+                response.StatusCode = ResponseStatus.SQL_ERROR;
+                response.Value = false;
+            }
+
+            return response;
+        }
+
+        public static Response<DateTime> GetLastTimeNicknameChangeById(int idUser)
+        {
+            Response<DateTime> response = new Response<DateTime>
+            {
+                StatusCode = ResponseStatus.OK,
+                Value = DateTime.MinValue,
+            };
+            try
+            {
+                using (var context = new GuessWhoContext())
+                {
+                    var user = context.Users.Find(idUser);
+
+                    if(user != null && user.lastTimeNicknameChanged.HasValue)
+                    {
+                        response.Value = (DateTime)user.lastTimeNicknameChanged;
+                    }
+                    else if(user == null)
+                    {
+                        response.Value = DateTime.MaxValue;
+                    }
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                response.StatusCode = ResponseStatus.UPDATE_ERROR;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                response.StatusCode = ResponseStatus.VALIDATION_ERROR;
+            }
+            catch (SqlException ex)
+            {
+                response.StatusCode = ResponseStatus.SQL_ERROR;
+            }
+
+            return response;
+        } 
+
+        public static Response<bool> UpdateUserNickname(string newNickname, int idUser)
+        {
+            Response<bool> response = new Response<bool>
+            {
+                StatusCode = ResponseStatus.OK,
+                Value = true
+            };
+
+            try
+            {
+                using (var context = new GuessWhoContext())
+                {
+                    var user = context.Users.Find(idUser);
+
+                    if(user != null)
+                    {
+                        user.nickname = newNickname;
+                        user.lastTimeNicknameChanged = DateTime.Now;
+
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        response.Value = false;
+                    }
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                response.StatusCode = ResponseStatus.UPDATE_ERROR;
+                response.Value = false;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                response.StatusCode = ResponseStatus.VALIDATION_ERROR;
+                response.Value = false;
+            }
+            catch (SqlException ex)
+            {
+                response.StatusCode = ResponseStatus.SQL_ERROR;
+                response.Value = false;
+            }
+
+            return response;
+        }
+
+        public static Response<bool> UpdateUserFullname(string newFullName, int idUser)
+        {
+            Response<bool> response = new Response<bool>
+            {
+                StatusCode = ResponseStatus.OK,
+                Value = true
+            };
+
+            try
+            {
+                using (var context = new GuessWhoContext())
+                {
+                    var user = context.Users.Find(idUser);
+
+                    if (user != null)
+                    {
+                        user.fullName = newFullName;
+
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        response.Value = false;
+                    }
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                response.StatusCode = ResponseStatus.UPDATE_ERROR;
+                response.Value = false;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                response.StatusCode = ResponseStatus.VALIDATION_ERROR;
+                response.Value = false;
+            }
+            catch (SqlException ex)
+            {
+                response.StatusCode = ResponseStatus.SQL_ERROR;
+                response.Value = false;
+            }
+
+            return response;
+        }
+
+        public static Response<bool> UpdateAccountPassword(string newPassword, int idAccount)
+        {
+            Response<bool> response = new Response<bool>
+            {
+                StatusCode = ResponseStatus.OK,
+                Value = true
+            };
+
+            try
+            {
+                using (var context = new GuessWhoContext())
+                {
+                    var account = context.Accounts.Find(idAccount);
+
+                    if (account != null)
+                    {
+                        account.password = newPassword;
+
+                        context.SaveChanges();
+                    }
+                    else
+                    {
+                        response.Value = false;
+                    }
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                response.StatusCode = ResponseStatus.UPDATE_ERROR;
+                response.Value = false;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                response.StatusCode = ResponseStatus.VALIDATION_ERROR;
+                response.Value = false;
+            }
+            catch (SqlException ex)
+            {
+                response.StatusCode = ResponseStatus.SQL_ERROR;
+                response.Value = false;
             }
 
             return response;
