@@ -21,26 +21,7 @@ namespace GuessWhoClient
             InitializeComponent();
         }
 
-        public void initializeFromCanceledMatch()
-        {
-            BorderCanceledMatch.Visibility = Visibility.Visible;
-            BorderOpacityCanceledMatch.Visibility = Visibility.Visible;
-
-            if(DataStore.Profile != null)
-            {
-                LoginProfile();
-            }
-        }
-
-        public void initializeFromLobby()
-        {
-            if(DataStore.Profile != null)
-            {
-                LoginProfile();
-            }
-        }
-
-        public void showCanceledMatchMessage()
+        public void ShowCanceledMatchMessage()
         {
             BorderCanceledMatch.Visibility = Visibility.Visible;
             BorderOpacityCanceledMatch.Visibility = Visibility.Visible;
@@ -242,6 +223,14 @@ namespace GuessWhoClient
         {
             BorderCanceledMatch.Visibility = Visibility.Collapsed;
             BorderOpacityCanceledMatch.Visibility = Visibility.Collapsed;
+        }
+
+        private void MainMenuPageLoaded(object sender, RoutedEventArgs e)
+        {
+            if (DataStore.Profile != null)
+            {
+                LoginProfile();
+            }
         }
     }
 }

@@ -199,7 +199,7 @@ namespace GuessWhoClient
         private void FinishGameForGuest()
         {
             MainMenuPage mainMenu = new MainMenuPage();
-            mainMenu.initializeFromCanceledMatch();
+            mainMenu.ShowCanceledMatchMessage();
             this.NavigationService.Navigate(mainMenu);
         }
 
