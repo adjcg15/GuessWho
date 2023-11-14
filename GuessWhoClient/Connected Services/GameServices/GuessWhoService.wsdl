@@ -87,6 +87,35 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="NetTcpBinding_IProfileService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsp:Policy wsu:Id="NetTcpBinding_IFriendsService_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -213,6 +242,30 @@
   <wsdl:message name="IPlayerService_GetBestPlayers_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetBestPlayersResponse" />
   </wsdl:message>
+  <wsdl:message name="IProfileService_UpdateUserProfileImage_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserProfileImage" />
+  </wsdl:message>
+  <wsdl:message name="IProfileService_UpdateUserProfileImage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserProfileImageResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProfileService_UpdateUserNickname_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserNickname" />
+  </wsdl:message>
+  <wsdl:message name="IProfileService_UpdateUserNickname_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserNicknameResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProfileService_UpdateUserPassword_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserPassword" />
+  </wsdl:message>
+  <wsdl:message name="IProfileService_UpdateUserPassword_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserPasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="IProfileService_UpdateUserFullName_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserFullName" />
+  </wsdl:message>
+  <wsdl:message name="IProfileService_UpdateUserFullName_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserFullNameResponse" />
+  </wsdl:message>
   <wsdl:message name="IFriendsService_SendRequest_InputMessage">
     <wsdl:part name="parameters" element="tns:SendRequest" />
   </wsdl:message>
@@ -323,6 +376,24 @@
     <wsdl:operation name="GetBestPlayers">
       <wsdl:input wsaw:Action="http://tempuri.org/IPlayerService/GetBestPlayers" message="tns:IPlayerService_GetBestPlayers_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPlayerService/GetBestPlayersResponse" message="tns:IPlayerService_GetBestPlayers_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IProfileService">
+    <wsdl:operation name="UpdateUserProfileImage">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProfileService/UpdateUserProfileImage" message="tns:IProfileService_UpdateUserProfileImage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProfileService/UpdateUserProfileImageResponse" message="tns:IProfileService_UpdateUserProfileImage_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserNickname">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProfileService/UpdateUserNickname" message="tns:IProfileService_UpdateUserNickname_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProfileService/UpdateUserNicknameResponse" message="tns:IProfileService_UpdateUserNickname_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserPassword">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProfileService/UpdateUserPassword" message="tns:IProfileService_UpdateUserPassword_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProfileService/UpdateUserPasswordResponse" message="tns:IProfileService_UpdateUserPassword_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserFullName">
+      <wsdl:input wsaw:Action="http://tempuri.org/IProfileService/UpdateUserFullName" message="tns:IProfileService_UpdateUserFullName_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IProfileService/UpdateUserFullNameResponse" message="tns:IProfileService_UpdateUserFullName_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IFriendsService">
@@ -475,6 +546,46 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
+  <wsdl:binding name="NetTcpBinding_IProfileService" type="tns:IProfileService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IProfileService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="UpdateUserProfileImage">
+      <soap12:operation soapAction="http://tempuri.org/IProfileService/UpdateUserProfileImage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserNickname">
+      <soap12:operation soapAction="http://tempuri.org/IProfileService/UpdateUserNickname" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserPassword">
+      <soap12:operation soapAction="http://tempuri.org/IProfileService/UpdateUserPassword" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserFullName">
+      <soap12:operation soapAction="http://tempuri.org/IProfileService/UpdateUserFullName" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
   <wsdl:binding name="NetTcpBinding_IFriendsService" type="tns:IFriendsService">
     <wsp:PolicyReference URI="#NetTcpBinding_IFriendsService_policy" />
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
@@ -602,6 +713,15 @@
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IPlayerService" binding="tns:NetTcpBinding_IPlayerService">
+      <soap12:address location="net.tcp://localhost:6970/GuessWhoService" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="NetTcpBinding_IProfileService" binding="tns:NetTcpBinding_IProfileService">
       <soap12:address location="net.tcp://localhost:6970/GuessWhoService" />
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>

@@ -35,8 +35,7 @@ namespace GuessWhoClient
             {
                 isValid = false;
 
-                ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
-                MessageBox.Show(resourceManager.GetString("msgbEmptyField"));
+                MessageBox.Show(Properties.Resources.msgbEmptyField);
             }
             if (isValid)
             {
@@ -52,8 +51,7 @@ namespace GuessWhoClient
             if (response.Value != null)
             {
                 GameServices.Profile profile = response.Value;
-                ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
-                MessageBox.Show(resourceManager.GetString("msgbWelcome1") + profile.FullName + resourceManager.GetString("msgbWelcome2"));
+                MessageBox.Show(Properties.Resources.msgbWelcome1 + profile.FullName + Properties.Resources.msgbWelcome2);
 
                 Console.WriteLine(profile.NickName);
                 DataStore.Profile = profile;
@@ -61,10 +59,21 @@ namespace GuessWhoClient
                 Console.WriteLine(DataStore.Profile?.NickName);
                 GoToMainMenuUploaded();
             }
+            else if (response.StatusCode == GameServices.ResponseStatus.UPDATE_ERROR)
+            {
+                MessageBox.Show(Properties.Resources.txtUpdateErrorMessage);
+            }
+            else if(response.StatusCode == GameServices.ResponseStatus.VALIDATION_ERROR)
+            {
+                MessageBox.Show(Properties.Resources.txtValidationErrorMessage, Properties.Resources.txtValidationErrorTitle);
+            }
+            else if(response.StatusCode == GameServices.ResponseStatus.SQL_ERROR)
+            {
+                MessageBox.Show(Properties.Resources.txtSQLErrorMessage, Properties.Resources.txtSQLErrorTitle);
+            }
             else
             {
-                ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
-                MessageBox.Show(resourceManager.GetString("msgbUserNotFound") +" "+ resourceManager.GetString("msgbConectionLost"));
+                MessageBox.Show(Properties.Resources.msgbUserNotFound);
             } 
         }
 

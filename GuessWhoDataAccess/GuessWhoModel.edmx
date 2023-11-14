@@ -41,6 +41,7 @@
           <Property Name="fullName" Type="nvarchar" MaxLength="255" />
           <Property Name="avatar" Type="varbinary(max)" />
           <Property Name="idAccount" Type="int" Nullable="false" />
+          <Property Name="lastTimeNicknameChanged" Type="date" />
         </EntityType>
         <Association Name="FK_friendships_users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
@@ -140,6 +141,7 @@
           <NavigationProperty Name="Friendships" Relationship="GuessWhoModel.FK_friendships_users" FromRole="User" ToRole="Friendship" />
           <NavigationProperty Name="Friendships1" Relationship="GuessWhoModel.FK_friendships_users1" FromRole="User" ToRole="Friendship" />
           <NavigationProperty Name="Matches" Relationship="GuessWhoModel.FK_matches_users" FromRole="User" ToRole="Match" />
+          <Property Name="lastTimeNicknameChanged" Type="DateTime" Precision="0" />
         </EntityType>
         <Association Name="FK_users_accounts">
           <End Role="Accounts" Type="Self.Account" Multiplicity="1">
@@ -253,6 +255,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="GuessWhoModel.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="lastTimeNicknameChanged" ColumnName="lastTimeNicknameChanged" />
                 <ScalarProperty Name="idUser" ColumnName="idUser" />
                 <ScalarProperty Name="nickname" ColumnName="nickname" />
                 <ScalarProperty Name="fullName" ColumnName="fullName" />

@@ -33,8 +33,6 @@ namespace GuessWhoClient
 
         private void UpdateInterfaceImageElement()
         {
-            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
-
             try
             {
                 FileInfo fileInfo = new FileInfo(imagePath);
@@ -49,8 +47,8 @@ namespace GuessWhoClient
                 else
                 {
                     MessageBox.Show(
-                        resourceManager.GetString("msgbRegisterAlertImageSizeMessage"),
-                        resourceManager.GetString("msgbRegisterAlertImageSizeTitle"),
+                        Properties.Resources.msgbRegisterAlertImageSizeMessage,
+                        Properties.Resources.msgbRegisterAlertImageSizeTitle,
                         MessageBoxButton.OK,
                         MessageBoxImage.Warning
                     );
@@ -59,8 +57,8 @@ namespace GuessWhoClient
             catch (IOException ex)
             {
                 MessageBox.Show(
-                    resourceManager.GetString("msgbRegisterImageNotFoundMessage"),
-                    resourceManager.GetString("msgbRegisterImageNotFoundTitle"),
+                    Properties.Resources.msgbRegisterImageNotFoundMessage,
+                    Properties.Resources.msgbRegisterImageNotFoundTitle,
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -69,11 +67,10 @@ namespace GuessWhoClient
 
         private void BtnCreateAccountClick(object sender, RoutedEventArgs e)
         {
-            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
             string fullName = TbName.Text;
             string nickname = TbNickname.Text;
-            string password = TbPassword.Text;
-            string passwordConfirmation = TbRepeatedPassword.Text;
+            string password = PbPassword.Password;
+            string passwordConfirmation = PbRepeatedPassword.Password;
             string email = TbEmail.Text;
             byte[] profileImage = ImageTransformator.GetImageBytesFromImagePath(imagePath);
 
@@ -81,8 +78,8 @@ namespace GuessWhoClient
                || email == "" || fullName == "")
             {
                 MessageBox.Show(
-                    resourceManager.GetString("msgbRegisterEmptyFieldsMessage"),
-                    resourceManager.GetString("msgbRegisterEmptyFieldsTitle"),
+                    Properties.Resources.msgbRegisterEmptyFieldsMessage,
+                    Properties.Resources.msgbRegisterEmptyFieldsTitle,
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -92,8 +89,8 @@ namespace GuessWhoClient
             if (!Authentication.IsValidNickname(nickname))
             {
                 MessageBox.Show(
-                    resourceManager.GetString("msgbRegisterInvalidNicknameMessage"),
-                    resourceManager.GetString("msgbRegisterInvalidNicknameTitle"),
+                    Properties.Resources.msgbRegisterInvalidNicknameMessage,
+                    Properties.Resources.msgbRegisterInvalidNicknameTitle,
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -103,8 +100,8 @@ namespace GuessWhoClient
             if (!Authentication.IsValidEmail(email))
             {
                 MessageBox.Show(
-                    resourceManager.GetString("msgbRegisterInvalidEmailMessage"),
-                    resourceManager.GetString("msgbRegisterInvalidEmailTitle"),
+                    Properties.Resources.msgbRegisterInvalidEmailMessage,
+                    Properties.Resources.msgbRegisterInvalidEmailTitle,
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -114,8 +111,8 @@ namespace GuessWhoClient
             if (!Authentication.IsSecurePassword(password))
             {
                 MessageBox.Show(
-                    resourceManager.GetString("msgbRegisterInsecurePasswordMessage"),
-                    resourceManager.GetString("msgbRegisterInsecurePasswordTitle"),
+                    Properties.Resources.msgbRegisterInsecurePasswordMessage,
+                    Properties.Resources.msgbRegisterInsecurePasswordTitle,
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -125,8 +122,8 @@ namespace GuessWhoClient
             if (password != passwordConfirmation)
             {
                 MessageBox.Show(
-                    resourceManager.GetString("msgbRegisterMismatchPasswordMessage"),
-                    resourceManager.GetString("msgbRegisterMismatchPasswordTitle"),
+                    Properties.Resources.msgbRegisterMismatchPasswordMessage,
+                    Properties.Resources.msgbRegisterMismatchPasswordTitle,
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -151,8 +148,8 @@ namespace GuessWhoClient
                 if(emailValidation.Value != null)
                 {
                     MessageBox.Show(
-                        resourceManager.GetString("msgbRegisterRegisteredEmailMessage"),
-                        resourceManager.GetString("msgbRegisterRegisteredEmailTitle"),
+                        Properties.Resources.msgbRegisterRegisteredEmailMessage,
+                        Properties.Resources.msgbRegisterRegisteredEmailTitle,
                         MessageBoxButton.OK,
                         MessageBoxImage.Warning
                     );
@@ -164,8 +161,8 @@ namespace GuessWhoClient
             if (nicknameValidation.StatusCode != GameServices.ResponseStatus.OK)
             {
                 MessageBox.Show(
-                    ServerResponse.GetMessageFromStatusCode(emailValidation.StatusCode),
-                    ServerResponse.GetTitleFromStatusCode(emailValidation.StatusCode),
+                    ServerResponse.GetMessageFromStatusCode(nicknameValidation.StatusCode),
+                    ServerResponse.GetTitleFromStatusCode(nicknameValidation.StatusCode),
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -175,8 +172,8 @@ namespace GuessWhoClient
                 if(nicknameValidation.Value != null)
                 {
                     MessageBox.Show(
-                        resourceManager.GetString("msgbRegisterRegisteredNicknameMessage"),
-                        resourceManager.GetString("msgbRegisterRegisteredNicknameTitle"),
+                        Properties.Resources.msgbRegisterRegisteredNicknameMessage,
+                        Properties.Resources.msgbRegisterRegisteredNicknameTitle,
                         MessageBoxButton.OK,
                         MessageBoxImage.Warning
                     );

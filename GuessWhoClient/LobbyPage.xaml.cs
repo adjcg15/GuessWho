@@ -4,6 +4,7 @@ using GuessWhoClient.Utils;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Resources;
 using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -375,6 +376,7 @@ namespace GuessWhoClient
         private void UnsubscribeToActiveUsersList()
         {
             userServiceClient.Unsubscribe();
+            ExitGame();
         }
 
         private void ExitGame()

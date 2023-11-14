@@ -38,15 +38,14 @@ namespace GuessWhoClient
 
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
-            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
             generatedConfirmationCode = GenerateConfirmationCode(10);
 
             bool confirmationSent = SendConfirmationEmail(email, generatedConfirmationCode);
             if (!confirmationSent)
             {
                 MessageBox.Show(
-                    resourceManager.GetString("msgbConfirmEmailSendingErrorMessage"),
-                    resourceManager.GetString("msgbConfirmEmailSendingErrorTitle"),
+                    Properties.Resources.msgbConfirmEmailSendingErrorMessage,
+                    Properties.Resources.msgbConfirmEmailSendingErrorTitle,
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -55,13 +54,11 @@ namespace GuessWhoClient
 
         private void BtnConfirmAccountClick(object sender, RoutedEventArgs e)
         {
-            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
-
             if (TbConfirmationCode.Text.Trim() != generatedConfirmationCode)
             {
                 MessageBox.Show(
-                    resourceManager.GetString("msgbWrongConfirmationCodeMessage"),
-                    resourceManager.GetString("msgbWrongConfirmationCodeTitle"),
+                    Properties.Resources.msgbWrongConfirmationCodeMessage,
+                    Properties.Resources.msgbWrongConfirmationCodeTitle,
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning
                 );
@@ -112,7 +109,6 @@ namespace GuessWhoClient
 
         private static bool SendConfirmationEmail(string email, string code)
         {
-            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
             bool successSending = true;
 
             try
@@ -127,8 +123,8 @@ namespace GuessWhoClient
                 MailMessage mailMessage = new MailMessage();
                 mailMessage.From = new MailAddress("guesswhodrawn@gmail.com");
                 mailMessage.To.Add(new MailAddress(email));
-                mailMessage.Subject = resourceManager.GetString("txtConfirmationEmailSubject");
-                mailMessage.Body = resourceManager.GetString("txtConfirmationEmailBody") + ": " + code;
+                mailMessage.Subject = Properties.Resources.txtConfirmationEmailSubject;
+                mailMessage.Body = Properties.Resources.txtConfirmationEmailBody + ": " + code;
 
                 smtpClient.Send(mailMessage);
             } 

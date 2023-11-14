@@ -50,6 +50,8 @@
     <Compile Include="MatchService\MatchService.cs" />
     <Compile Include="PlayerService\IPlayerService.cs" />
     <Compile Include="PlayerService\PlayerService.cs" />
+    <Compile Include="ProfileService\IProfileService.cs" />
+    <Compile Include="ProfileService\ProfileService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AuthenticationService\IAuthenticationService.cs" />
     <Compile Include="AuthenticationService\AuthenticationService.cs" />

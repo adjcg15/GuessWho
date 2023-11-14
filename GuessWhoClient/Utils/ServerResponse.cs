@@ -12,12 +12,11 @@ namespace GuessWhoClient.Utils
     {
         public static string GetTitleFromStatusCode(GameServices.ResponseStatus statusCode)
         {
-            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
             Dictionary<GameServices.ResponseStatus, string> titleOptions = new Dictionary<GameServices.ResponseStatus, string>();
 
-            titleOptions.Add(GameServices.ResponseStatus.UPDATE_ERROR, resourceManager.GetString("txtUpdateErrorTitle"));
-            titleOptions.Add(GameServices.ResponseStatus.VALIDATION_ERROR, resourceManager.GetString("txtValidationErrorTitle"));
-            titleOptions.Add(GameServices.ResponseStatus.SQL_ERROR, resourceManager.GetString("txtSQLErrorTitle"));
+            titleOptions.Add(GameServices.ResponseStatus.UPDATE_ERROR, Properties.Resources.txtUpdateErrorTitle);
+            titleOptions.Add(GameServices.ResponseStatus.VALIDATION_ERROR, Properties.Resources.txtValidationErrorTitle);
+            titleOptions.Add(GameServices.ResponseStatus.SQL_ERROR, Properties.Resources.txtSQLErrorTitle);
 
             string title = "";
             if(titleOptions.ContainsKey(statusCode))
@@ -30,12 +29,11 @@ namespace GuessWhoClient.Utils
 
         public static string GetMessageFromStatusCode(GameServices.ResponseStatus statusCode)
         {
-            ResourceManager resourceManager = new ResourceManager("GuessWhoClient.Properties.Resources", typeof(Resources).Assembly);
             Dictionary<GameServices.ResponseStatus, string> messageOptions = new Dictionary<GameServices.ResponseStatus, string>();
 
-            messageOptions.Add(GameServices.ResponseStatus.UPDATE_ERROR, resourceManager.GetString("txtUpdateErrorMessage"));
-            messageOptions.Add(GameServices.ResponseStatus.VALIDATION_ERROR, resourceManager.GetString("txtValidationErrorMessage"));
-            messageOptions.Add(GameServices.ResponseStatus.SQL_ERROR, resourceManager.GetString("txtSQLErrorMessage"));
+            messageOptions.Add(GameServices.ResponseStatus.UPDATE_ERROR, Properties.Resources.txtUpdateErrorMessage);
+            messageOptions.Add(GameServices.ResponseStatus.VALIDATION_ERROR, Properties.Resources.txtValidationErrorMessage);
+            messageOptions.Add(GameServices.ResponseStatus.SQL_ERROR, Properties.Resources.txtSQLErrorMessage);
 
             string message = "";
             if (messageOptions.ContainsKey(statusCode))

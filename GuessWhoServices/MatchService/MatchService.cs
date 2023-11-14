@@ -33,6 +33,9 @@ namespace GuessWhoServices
 
             matches[invitationCode] = match;
 
+            Console.WriteLine("Creando la partida " + invitationCode);
+            Console.WriteLine("Canal del Host creador: " +  match.HostChannel.GetHashCode());
+
             response.Value = invitationCode;
             return response;
         }
@@ -47,6 +50,7 @@ namespace GuessWhoServices
 
             if (matches.ContainsKey(invitationCode))
             {
+                Console.WriteLine("Accediendo a la partida " + invitationCode + " para agregar un jugador");
                 var storedMatch = matches[invitationCode];
 
                 //If guest channel stored in match is null it means than no player is in match with the host
@@ -169,12 +173,14 @@ namespace GuessWhoServices
 
         public Response<bool> FinishGame(string invitationCode)
         {
+            Console.WriteLine("INICIANDO FINALIZACÍÓN DE PARTIDA");
             var response = new Response<bool>
             {
                 StatusCode = ResponseStatus.VALIDATION_ERROR,
                 Value = false
             };
 
+            Console.WriteLine("Partida eliminada: " +  invitationCode);
             if (matches.ContainsKey(invitationCode))
             {
                 var storedMatch = matches[invitationCode];
@@ -182,6 +188,7 @@ namespace GuessWhoServices
                 var clientChannel = OperationContext.Current.GetCallbackChannel<IMatchCallback>();
 
                 bool isClientAllowedToFinishGame = clientChannel.GetHashCode() == storedHostChannel.GetHashCode();
+                Console.WriteLine(isClientAllowedToFinishGame ? "El cliente SÍ puede finalizar esta partida" : "El cliente NO puede finalizar esta partida");
                 if (isClientAllowedToFinishGame)
                 {
                     response.StatusCode = ResponseStatus.OK;

@@ -77,12 +77,11 @@
                     Margin="41,222,0,0" 
                     VerticalAlignment="Top"
                     FontWeight="Bold"/>
-                <TextBox 
-                    x:Name="TbPassword" 
-                    Style="{StaticResource Input}" 
+                <PasswordBox 
+                    x:Name="PbPassword" 
+                    Style="{StaticResource PasswordInput}" 
                     HorizontalAlignment="Left" 
                     Margin="41,248,0,0" 
-                    TextWrapping="Wrap" 
                     VerticalAlignment="Top" 
                     Width="205" Height="30"/>
                 <Label 
@@ -105,12 +104,11 @@
                     Margin="41,280,0,0" 
                     VerticalAlignment="Top" 
                     FontWeight="Bold"/>
-                <TextBox 
-                    x:Name="TbRepeatedPassword" 
-                    Style="{StaticResource Input}" 
+                <PasswordBox 
+                    x:Name="PbRepeatedPassword" 
+                    Style="{StaticResource PasswordInput}" 
                     HorizontalAlignment="Left" 
                     Margin="41,306,0,0" 
-                    TextWrapping="Wrap" 
                     VerticalAlignment="Top" 
                     Width="231" Height="30"/>
                 
