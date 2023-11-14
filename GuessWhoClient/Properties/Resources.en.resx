@@ -147,6 +147,9 @@
   <data name="btnEmailInvitation" xml:space="preserve">
     <value>Invite via email</value>
   </data>
+  <data name="btnExitGame" xml:space="preserve">
+    <value>Exit game</value>
+  </data>
   <data name="btnFinishAttempt" xml:space="preserve">
     <value>End try</value>
   </data>
@@ -315,6 +318,42 @@
   <data name="msgbEmptyField" xml:space="preserve">
     <value>Email and password are required</value>
   </data>
+  <data name="msgbErrorConexionServidorMessage" xml:space="preserve">
+    <value>Could not establish a connection to the server, try another time</value>
+  </data>
+  <data name="msgbErrorConexionServidorTitle" xml:space="preserve">
+    <value>Server connection error</value>
+  </data>
+  <data name="msgbErrorJoiningMatchTitle" xml:space="preserve">
+    <value>An error occurred while joining the game</value>
+  </data>
+  <data name="msgbErrorLeavingMatchTitle" xml:space="preserve">
+    <value>Error leaving game, try again</value>
+  </data>
+  <data name="msgbGameFinishedByHostMessage" xml:space="preserve">
+    <value>The host has ended the game</value>
+  </data>
+  <data name="msgbGameFinishedByHostTitle" xml:space="preserve">
+    <value>Game over</value>
+  </data>
+  <data name="msgbHostInformationMissingMessage" xml:space="preserve">
+    <value>An error occurred while retrieving host information, but you can continue playing without any problems</value>
+  </data>
+  <data name="msgbHostInformationMissingTitle" xml:space="preserve">
+    <value>Could not retrieve host information</value>
+  </data>
+  <data name="msgbHostLeftMatchMessage" xml:space="preserve">
+    <value>The match has been ended by the host, so it is not possible to join</value>
+  </data>
+  <data name="msgbHostLeftMatchTitle" xml:space="preserve">
+    <value>Match ended by the host</value>
+  </data>
+  <data name="msgbInvalidMatchCodeMessage" xml:space="preserve">
+    <value>The match you are trying to access could not be found, or it may already be full</value>
+  </data>
+  <data name="msgbInvalidMatchCodeTitle" xml:space="preserve">
+    <value>Invalid match</value>
+  </data>
   <data name="msgbRegisterAlertImageSizeMessage" xml:space="preserve">
     <value>The image must be 20kb or less in size.</value>
   </data>
@@ -385,13 +424,16 @@
     <value>Verify the code entered</value>
   </data>
   <data name="tbCodePlaceholder" xml:space="preserve">
-    <value>Code</value>
+    <value>CODE</value>
   </data>
   <data name="tbReportCommentPlaceholder" xml:space="preserve">
     <value>Explain the situation</value>
   </data>
   <data name="tbSendMessagePlaceholder" xml:space="preserve">
     <value>Write a message…</value>
+  </data>
+  <data name="txtAlreadyFriends" xml:space="preserve">
+    <value>This user is already your friend</value>
   </data>
   <data name="txtConfirmationEmailBody" xml:space="preserve">
     <value>Your confirmation code</value>
@@ -405,6 +447,12 @@
   <data name="txtFriends" xml:space="preserve">
     <value>Friends</value>
   </data>
+  <data name="txtGuest" xml:space="preserve">
+    <value>Guest</value>
+  </data>
+  <data name="txtHost" xml:space="preserve">
+    <value>Host</value>
+  </data>
   <data name="txtLeaderboardGlobal" xml:space="preserve">
     <value>Leaderboard</value>
   </data>
@@ -416,6 +464,9 @@
   </data>
   <data name="txtNicknameGlobal" xml:space="preserve">
     <value>Nickname</value>
+  </data>
+  <data name="txtOwnNickname" xml:space="preserve">
+    <value>Enter a username that is not yours</value>
   </data>
   <data name="txtReportGlobal" xml:space="preserve">
     <value>Report</value>

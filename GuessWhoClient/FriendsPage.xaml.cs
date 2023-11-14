@@ -89,8 +89,6 @@ namespace GuessWhoClient
             if (nicknameRequested == "")
             {
                 TbMessage.Text = Properties.Resources.lbStatusRequestFailed;
-                TbMessage.Visibility = Visibility.Visible;
-
                 StartAnimationTbMessage();
             }
             else
@@ -98,11 +96,9 @@ namespace GuessWhoClient
                 AuthenticationServiceClient authenticationServiceClient = new AuthenticationServiceClient();
                 ProfileResponse profileResponse = authenticationServiceClient.VerifyUserRegisteredByNickName(nicknameRequested);
                 
-                if(profileResponse.StatusCode == ResponseStatus.OK && profileResponse.Value == null) 
+                if(profileResponse.StatusCode == ResponseStatus.OK && profileResponse.Value.IdUser == 0) 
                 {
                     TbMessage.Text = Properties.Resources.lbStatusRequestFailed;
-                    TbMessage.Visibility = Visibility.Visible;
-
                     StartAnimationTbMessage();
                 }
                 else
@@ -113,8 +109,25 @@ namespace GuessWhoClient
                     if(booleanResponse.Value)
                     {
                         TbMessage.Text = Properties.Resources.lbStatusRequestSuccess;
-                        TbMessage.Visibility = Visibility.Visible;
                         StartAnimationTbMessage();
+                    }
+                    else
+                    {
+                        if (nicknameRequested == DataStore.Profile.NickName)
+                        {
+                            TbMessage.Text = Properties.Resources.txtOwnNickname;
+                            StartAnimationTbMessage();
+                        }
+                        else if (friends.Any(friend => friend.Nickname == nicknameRequested))
+                        {
+                            TbMessage.Text = Properties.Resources.txtAlreadyFriends;
+                            StartAnimationTbMessage();
+                        }
+                        else
+                        {
+                            TbMessage.Text = ServerResponse.GetTitleFromStatusCode(booleanResponse.StatusCode);
+                            StartAnimationTbMessage();
+                        }
                     }
                 }
 
@@ -123,9 +136,14 @@ namespace GuessWhoClient
 
         private void StartAnimationTbMessage()
         {
+            TbNameRequest.Text = "";
+            TbNameRequest.IsReadOnly = true;
+
+            TbMessage.Visibility = Visibility.Visible;
             messageTimer = new DispatcherTimer();
             messageTimer.Tick += (timerSender, args) =>
             {
+                TbNameRequest.IsReadOnly = false; 
                 TbMessage.Visibility = Visibility.Hidden;
 
                 TbNameRequest.Text = "";
@@ -138,5 +156,6 @@ namespace GuessWhoClient
             DoubleAnimation animation = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(MESSAGE_DISPLAY_DURATION));
             TbMessage.BeginAnimation(OpacityProperty, animation);
         }
+
     }
 }

@@ -147,6 +147,9 @@
   <data name="btnEmailInvitation" xml:space="preserve">
     <value>Invitar por correo</value>
   </data>
+  <data name="btnExitGame" xml:space="preserve">
+    <value>Abandonar partida</value>
+  </data>
   <data name="btnFinishAttempt" xml:space="preserve">
     <value>Terminar intento</value>
   </data>
@@ -315,6 +318,42 @@
   <data name="msgbEmptyField" xml:space="preserve">
     <value>El correo electrónico y la contraseña son requeridos</value>
   </data>
+  <data name="msgbErrorConexionServidorMessage" xml:space="preserve">
+    <value>No fue posible establecer una conexión con el servidor, intente en otro momento</value>
+  </data>
+  <data name="msgbErrorConexionServidorTitle" xml:space="preserve">
+    <value>Error de conexión con el servidor</value>
+  </data>
+  <data name="msgbErrorJoiningMatchTitle" xml:space="preserve">
+    <value>Ocurrió un error al unirse a la partida</value>
+  </data>
+  <data name="msgbErrorLeavingMatchTitle" xml:space="preserve">
+    <value>Error al abandonar la partida, intente nuevamente</value>
+  </data>
+  <data name="msgbGameFinishedByHostMessage" xml:space="preserve">
+    <value>El anfitrión ha finalizado la partida</value>
+  </data>
+  <data name="msgbGameFinishedByHostTitle" xml:space="preserve">
+    <value>Partida finalizada</value>
+  </data>
+  <data name="msgbHostInformationMissingMessage" xml:space="preserve">
+    <value>Ocurrió un error a la hora de recuperar la información del anfitrión, pero puede continuar jugando sin ningún problema</value>
+  </data>
+  <data name="msgbHostInformationMissingTitle" xml:space="preserve">
+    <value>No se pudo recuperar la información del anfitrión</value>
+  </data>
+  <data name="msgbHostLeftMatchMessage" xml:space="preserve">
+    <value>La partida ha sido finalizada por el anfitrión, por lo que no es posible unirse</value>
+  </data>
+  <data name="msgbHostLeftMatchTitle" xml:space="preserve">
+    <value>Partida finalizada por el anfitrión</value>
+  </data>
+  <data name="msgbInvalidMatchCodeMessage" xml:space="preserve">
+    <value>La partida a la que intenta acceder no pudo ser encontrada, o es posible que ya se encuentre llena</value>
+  </data>
+  <data name="msgbInvalidMatchCodeTitle" xml:space="preserve">
+    <value>Partida inválida</value>
+  </data>
   <data name="msgbRegisterAlertImageSizeMessage" xml:space="preserve">
     <value>La imagen debe tener un tamaño de 20kb o menos.</value>
   </data>
@@ -385,13 +424,16 @@
     <value>Verifique el código ingresado</value>
   </data>
   <data name="tbCodePlaceholder" xml:space="preserve">
-    <value>Código</value>
+    <value>CÓDIGO</value>
   </data>
   <data name="tbReportCommentPlaceholder" xml:space="preserve">
     <value>Explica la situación</value>
   </data>
   <data name="tbSendMessagePlaceholder" xml:space="preserve">
     <value>Escribe un mensaje…</value>
+  </data>
+  <data name="txtAlreadyFriends" xml:space="preserve">
+    <value>Este usuario ya es tu amigo</value>
   </data>
   <data name="txtConfirmationEmailBody" xml:space="preserve">
     <value>Tu código de confirmación</value>
@@ -405,6 +447,12 @@
   <data name="txtFriends" xml:space="preserve">
     <value>Amigos</value>
   </data>
+  <data name="txtGuest" xml:space="preserve">
+    <value>Invitado</value>
+  </data>
+  <data name="txtHost" xml:space="preserve">
+    <value>Anfitrión</value>
+  </data>
   <data name="txtLeaderboardGlobal" xml:space="preserve">
     <value>Marcador</value>
   </data>
@@ -416,6 +464,9 @@
   </data>
   <data name="txtNicknameGlobal" xml:space="preserve">
     <value>Nombre de usuario</value>
+  </data>
+  <data name="txtOwnNickname" xml:space="preserve">
+    <value>Ingresa un nombre de usuario que no sea el tuyo</value>
   </data>
   <data name="txtReportGlobal" xml:space="preserve">
     <value>Reportar</value>

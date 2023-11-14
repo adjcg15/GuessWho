@@ -116,6 +116,35 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="NetTcpBinding_IMatchService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:6969/?xsd=xsd0" namespace="http://tempuri.org/" />
@@ -208,6 +237,36 @@
   <wsdl:message name="IFriendsService_AnswerRequest_OutputMessage">
     <wsdl:part name="parameters" element="tns:AnswerRequestResponse" />
   </wsdl:message>
+  <wsdl:message name="IMatchService_CreateMatch_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateMatch" />
+  </wsdl:message>
+  <wsdl:message name="IMatchService_CreateMatch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateMatchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMatchService_JoinGame_InputMessage">
+    <wsdl:part name="parameters" element="tns:JoinGame" />
+  </wsdl:message>
+  <wsdl:message name="IMatchService_JoinGame_OutputMessage">
+    <wsdl:part name="parameters" element="tns:JoinGameResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMatchService_ExitGame_InputMessage">
+    <wsdl:part name="parameters" element="tns:ExitGame" />
+  </wsdl:message>
+  <wsdl:message name="IMatchService_ExitGame_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExitGameResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMatchService_FinishGame_InputMessage">
+    <wsdl:part name="parameters" element="tns:FinishGame" />
+  </wsdl:message>
+  <wsdl:message name="IMatchService_FinishGame_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FinishGameResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMatchService_PlayerStatusInMatchChanged_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:PlayerStatusInMatchChanged" />
+  </wsdl:message>
+  <wsdl:message name="IMatchService_PlayerStatusInMatchChanged_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:PlayerStatusInMatchChangedResponse" />
+  </wsdl:message>
   <wsdl:portType name="IUserService">
     <wsdl:operation name="Subscribe">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/Subscribe" message="tns:IUserService_Subscribe_InputMessage" />
@@ -270,6 +329,28 @@
     <wsdl:operation name="AnswerRequest">
       <wsdl:input wsaw:Action="http://tempuri.org/IFriendsService/AnswerRequest" message="tns:IFriendsService_AnswerRequest_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IFriendsService/AnswerRequestResponse" message="tns:IFriendsService_AnswerRequest_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IMatchService">
+    <wsdl:operation name="CreateMatch">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMatchService/CreateMatch" message="tns:IMatchService_CreateMatch_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchService/CreateMatchResponse" message="tns:IMatchService_CreateMatch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="JoinGame">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMatchService/JoinGame" message="tns:IMatchService_JoinGame_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchService/JoinGameResponse" message="tns:IMatchService_JoinGame_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ExitGame">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMatchService/ExitGame" message="tns:IMatchService_ExitGame_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchService/ExitGameResponse" message="tns:IMatchService_ExitGame_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FinishGame">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMatchService/FinishGame" message="tns:IMatchService_FinishGame_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchService/FinishGameResponse" message="tns:IMatchService_FinishGame_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PlayerStatusInMatchChanged">
+      <wsdl:output wsaw:Action="http://tempuri.org/IMatchService/PlayerStatusInMatchChanged" message="tns:IMatchService_PlayerStatusInMatchChanged_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IMatchService/PlayerStatusInMatchChangedResponse" message="tns:IMatchService_PlayerStatusInMatchChanged_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IUserService" type="tns:IUserService">
@@ -414,13 +495,62 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
+  <wsdl:binding name="NetTcpBinding_IMatchService" type="tns:IMatchService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IMatchService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="CreateMatch">
+      <soap12:operation soapAction="http://tempuri.org/IMatchService/CreateMatch" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="JoinGame">
+      <soap12:operation soapAction="http://tempuri.org/IMatchService/JoinGame" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExitGame">
+      <soap12:operation soapAction="http://tempuri.org/IMatchService/ExitGame" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FinishGame">
+      <soap12:operation soapAction="http://tempuri.org/IMatchService/FinishGame" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PlayerStatusInMatchChanged">
+      <soap12:operation soapAction="http://tempuri.org/IMatchService/PlayerStatusInMatchChanged" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
   <wsdl:service name="GuessWhoService">
     <wsdl:port name="NetTcpBinding_IUserService" binding="tns:NetTcpBinding_IUserService">
       <soap12:address location="net.tcp://localhost:6970/GuessWhoService" />
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LAPTOP-EGH\kikga</Upn>
+          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -429,7 +559,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LAPTOP-EGH\kikga</Upn>
+          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -438,7 +568,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LAPTOP-EGH\kikga</Upn>
+          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -447,7 +577,16 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LAPTOP-EGH\kikga</Upn>
+          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="NetTcpBinding_IMatchService" binding="tns:NetTcpBinding_IMatchService">
+      <soap12:address location="net.tcp://localhost:6970/GuessWhoService" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>

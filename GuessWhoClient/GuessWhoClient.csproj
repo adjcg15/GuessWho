@@ -185,7 +185,13 @@
     <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.booleanResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.PlayerInMatchResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ProfileResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.stringResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\GameServices\item.xsd">
@@ -296,6 +302,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\send-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\send-gray-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

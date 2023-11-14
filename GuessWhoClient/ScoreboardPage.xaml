@@ -30,7 +30,7 @@
                 Style="{StaticResource SecondaryButton}" 
                 Content="{x:Static p:Resources.btnSearch}" 
                 Click="BtnSearchPlayersClick"
-                HorizontalAlignment="Right" Margin="0,83,33,0" VerticalAlignment="Top"/>
+                HorizontalAlignment="Right" Margin="0,83,33,0" VerticalAlignment="Top" IsDefault="True"/>
             <Image Source="/Resources/search-icon.png" Margin="42,93,837,408"/>
 
             <Border 
