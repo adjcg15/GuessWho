@@ -67,6 +67,11 @@
     <Compile Include="ConfirmAccountPage.xaml.cs">
       <DependentUpon>ConfirmAccountPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\GameServices\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="FriendsPage.xaml.cs">
       <DependentUpon>FriendsPage.xaml</DependentUpon>
     </Compile>
@@ -139,11 +144,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Connected Services\GameServices\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="MainMenuPage.xaml.cs">
       <DependentUpon>MainMenuPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -208,6 +208,7 @@
     <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.stringResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\GameServices\GuessWhoService.wsdl" />
     <None Include="Connected Services\GameServices\item.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -220,7 +221,6 @@
     <None Include="Connected Services\GameServices\item3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\GameServices\UserService.wsdl" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -231,24 +231,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\GameServices\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\GameServices\item.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\GameServices\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\GameServices\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\GameServices\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\background.png" />
@@ -319,6 +301,24 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\send-gray-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\GameServices\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\GameServices\item.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\GameServices\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\GameServices\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\GameServices\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

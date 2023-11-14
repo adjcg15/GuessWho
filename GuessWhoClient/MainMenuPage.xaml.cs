@@ -30,6 +30,25 @@ namespace GuessWhoClient
             }
         }
 
+        public void initializeFromLobby()
+        {
+            if(DataStore.Profile != null)
+            {
+                LoginProfile();
+            }
+        }
+
+        public void showCanceledMatchMessage()
+        {
+            BorderCanceledMatch.Visibility = Visibility.Visible;
+            BorderOpacityCanceledMatch.Visibility = Visibility.Visible;
+
+            if(DataStore.Profile != null)
+            {
+                LoginProfile();
+            }
+        }
+
         private void BtnLoginClick(object sender, RoutedEventArgs e)
         {
             LoginPage loginPage = new LoginPage();
