@@ -6,23 +6,17 @@ namespace GuessWhoClient
     public class DataStore
     {
         private static Profile profile;
+        private static UserServiceClient usersClient;
 
-        private DataStore()
-        {
-            profile = null;
-        }
+        public static Profile Profile { get { return profile; } set { profile = value; } }
+        public static UserServiceClient UsersClient { get {  return usersClient; } }
 
-        public static Profile Profile
+        public static void OpenUserServiceClientChannel(IUserServiceCallback clientImplementation)
         {
-            get
+            if (usersClient == null)
             {
-                return profile;
-            }
-            set
-            {
-                profile = value; 
+                usersClient = new UserServiceClient(new InstanceContext(clientImplementation));
             }
         }
     }
-
 }

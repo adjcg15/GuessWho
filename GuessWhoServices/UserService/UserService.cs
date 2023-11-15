@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ServiceModel;
 
 namespace GuessWhoServices
@@ -12,7 +11,6 @@ namespace GuessWhoServices
         public void Subscribe()
         {
             var callback = OperationContext.Current.GetCallbackChannel<IUsersCallback>();
-            Console.WriteLine("Subscribe: " + callback.GetHashCode());
             if (!subscribers.Contains(callback))
             {
                 subscribers.Add(callback);
@@ -22,7 +20,6 @@ namespace GuessWhoServices
         public void Unsubscribe()
         {
             var callback = OperationContext.Current.GetCallbackChannel<IUsersCallback>();
-            Console.WriteLine("Unsubscribe: " + callback.GetHashCode());
             if (subscribers.Contains(callback))
             {
                 subscribers.Remove(callback);
@@ -36,7 +33,6 @@ namespace GuessWhoServices
 
         public static void UpdateUserStatus(ActiveUser user, bool isActive)
         {
-            Console.WriteLine("Cambiando estado de " + user.Nickname + " a " + (isActive ? "activo" : "inactivo"));
             if (isActive)
             {
                 if (activeUsers.Find(u => u.Nickname == user.Nickname) == null)
@@ -49,12 +45,16 @@ namespace GuessWhoServices
                 activeUsers.Remove(activeUsers.Find(u => u.Nickname == user.Nickname));
             }
 
-            Console.WriteLine("Total de jugadores suscriptores: " + subscribers.Count);
-            Console.WriteLine("Total de jugadores activos: " + activeUsers.Count);
             foreach (var subscriber in subscribers)
             {
-                Console.WriteLine("Enviando notificación al suscriptor " + subscriber.GetHashCode());
-                subscriber.UserStatusChanged(user, isActive);
+                try
+                {
+                    subscriber.UserStatusChanged(user, isActive);
+                }
+                catch (CommunicationObjectAbortedException)
+                {
+                    subscribers.Remove(subscriber);
+                }
             }
         }
     }

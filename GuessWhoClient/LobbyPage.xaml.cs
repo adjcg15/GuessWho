@@ -4,9 +4,6 @@ using GuessWhoClient.Utils;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net.Mail;
-using System.Net;
-using System.Resources;
 using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,7 +17,6 @@ namespace GuessWhoClient
         private const string DEFAULT_PROFILE_PICTURE_ROUTE = "pack://application:,,,/Resources/user-icon.png";
         private string invitationCode;
         private bool isHost;
-        private UserServiceClient userServiceClient;
         private MatchServiceClient matchServiceClient;
         public ObservableCollection<ActiveUser> activeUsers { get; set; } = new ObservableCollection<ActiveUser>();
 
@@ -44,9 +40,9 @@ namespace GuessWhoClient
 
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
-            userServiceClient = new UserServiceClient(new InstanceContext(this));
             matchServiceClient = new MatchServiceClient(new InstanceContext(this));
             string userNickname = DataStore.Profile != null ? DataStore.Profile.NickName : "";
+            DataStore.OpenUserServiceClientChannel(this);
 
             try
             {
@@ -78,7 +74,7 @@ namespace GuessWhoClient
 
         private void SubscribeToActiveUsersList()
         {
-            userServiceClient.Subscribe();
+            DataStore.UsersClient.Subscribe();
         }
 
         private void CreateNewGame(string userNickname)
@@ -175,7 +171,7 @@ namespace GuessWhoClient
 
         private void ShowActiveUsers(string userNickname)
         {
-            activeUsers = new ObservableCollection<ActiveUser>(userServiceClient.GetActiveUsers().ToList());
+            activeUsers = new ObservableCollection<ActiveUser>(DataStore.UsersClient.GetActiveUsers().ToList());
             if (DataStore.Profile != null)
             {
                 activeUsers.Remove(activeUsers.FirstOrDefault(u => u.Nickname == userNickname));
@@ -407,7 +403,7 @@ namespace GuessWhoClient
 
         private void UnsubscribeToActiveUsersList()
         {
-            userServiceClient.Unsubscribe();
+            DataStore.UsersClient.Unsubscribe();
             ExitGame();
         }
 
