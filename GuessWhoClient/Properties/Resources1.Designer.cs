@@ -718,6 +718,42 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Ocurrió un error al intentar recuperar el correo electrónico del jugador, por lo que la invitación no pudo ser enviada.
+        /// </summary>
+        public static string msgbErrorRetrievingPlayerEmailMessage {
+            get {
+                return ResourceManager.GetString("msgbErrorRetrievingPlayerEmailMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error al recuperar el correo del jugador.
+        /// </summary>
+        public static string msgbErrorRetrievingPlayerEmailTitle {
+            get {
+                return ResourceManager.GetString("msgbErrorRetrievingPlayerEmailTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No fue posible enviar el código de invitación de la partida al correo electrónico del jugador. Intente copiando y enviando directamente el código.
+        /// </summary>
+        public static string msgbErrorSendingGameInvitationMessage {
+            get {
+                return ResourceManager.GetString("msgbErrorSendingGameInvitationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error al enviar la invitación.
+        /// </summary>
+        public static string msgbErrorSendingGameInvitationTitle {
+            get {
+                return ResourceManager.GetString("msgbErrorSendingGameInvitationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El anfitrión ha finalizado la partida.
         /// </summary>
         public static string msgbGameFinishedByHostMessage {
@@ -786,6 +822,24 @@ namespace GuessWhoClient.Properties {
         public static string msgbInvalidMatchCodeTitle {
             get {
                 return ResourceManager.GetString("msgbInvalidMatchCodeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El jugador ha sido invitado a la partida exitosamente.
+        /// </summary>
+        public static string msgbInvitationSentMessage {
+            get {
+                return ResourceManager.GetString("msgbInvitationSentMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Invitación enviada.
+        /// </summary>
+        public static string msgbInvitationSentTitle {
+            get {
+                return ResourceManager.GetString("msgbInvitationSentTitle", resourceCulture);
             }
         }
         
@@ -1164,6 +1218,24 @@ namespace GuessWhoClient.Properties {
         public static string txtHost {
             get {
                 return ResourceManager.GetString("txtHost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Te han invitado a jugar una partida de Adivina Quién, él código de invitación es:.
+        /// </summary>
+        public static string txtInviteToGameBody {
+            get {
+                return ResourceManager.GetString("txtInviteToGameBody", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ¡Ven a jugar!.
+        /// </summary>
+        public static string txtInviteToGameSubject {
+            get {
+                return ResourceManager.GetString("txtInviteToGameSubject", resourceCulture);
             }
         }
         

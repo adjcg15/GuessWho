@@ -4,6 +4,8 @@ using GuessWhoClient.Utils;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.Resources;
 using System.ServiceModel;
 using System.Windows;
@@ -438,6 +440,94 @@ namespace GuessWhoClient
         {
             matchServiceClient.FinishGame(invitationCode);
             RedirectPermanentlyToMainMenu();
+        }
+
+        private void BtnInviteToGameClick(object sender, RoutedEventArgs e)
+        {
+            Button invitationButton = e.Source as Button;
+            ActiveUser activeUser = (ActiveUser)invitationButton.DataContext;
+
+            string nickname = activeUser.Nickname;
+            try
+            {
+                bool playerInvitedSuccessfully = SendInvitationToUser(nickname);
+
+                if(playerInvitedSuccessfully)
+                {
+                    MessageBox.Show(
+                        Properties.Resources.msgbInvitationSentMessage,
+                        Properties.Resources.msgbInvitationSentTitle,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Information
+                    );
+                    invitationButton.Visibility = Visibility.Hidden;
+                }
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(
+                    Properties.Resources.msgbErrorConexionServidorMessage,
+                    Properties.Resources.msgbErrorConexionServidorTitle,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+            }
+        }
+
+        private bool SendInvitationToUser(string nickname)
+        {
+            bool successSent = false;
+            var authenticationClient = new AuthenticationServiceClient();
+            ProfileResponse response = authenticationClient.VerifyUserRegisteredByNickName(nickname);
+
+            switch(response.StatusCode)
+            {
+                case ResponseStatus.OK:
+                    if(response.Value != null)
+                    {
+                        successSent = SendEmailInvitation(response.Value.Email);
+                    }
+                    break;
+                case ResponseStatus.SQL_ERROR:
+                    MessageBox.Show(
+                        Properties.Resources.msgbErrorRetrievingPlayerEmailMessage,
+                        Properties.Resources.msgbErrorRetrievingPlayerEmailTitle,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning
+                    );
+                    break;
+                default:
+                    MessageBox.Show(
+                        ServerResponse.GetMessageFromStatusCode(response.StatusCode),
+                        Properties.Resources.msgbErrorSendingGameInvitationTitle,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning
+                    );
+                    break;
+            }
+
+            return successSent;
+        }
+
+        private bool SendEmailInvitation(string email)
+        {
+            bool successSent = Email.SendMail(
+                email,
+                Properties.Resources.txtInviteToGameSubject,
+                Properties.Resources.txtInviteToGameBody + invitationCode
+            );
+
+            if (!successSent)
+            {
+                MessageBox.Show(
+                    Properties.Resources.msgbErrorSendingGameInvitationMessage,
+                    Properties.Resources.msgbErrorSendingGameInvitationTitle,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+            }
+
+            return successSent;
         }
     }
 }

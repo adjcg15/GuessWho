@@ -110,6 +110,7 @@
       <DependentUpon>ScoreboardPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\Authentication.cs" />
+    <Compile Include="Utils\Email.cs" />
     <Compile Include="Utils\ImageTransformator.cs" />
     <Compile Include="Utils\ServerResponse.cs" />
     <Page Include="Components\ChatMessage.xaml">

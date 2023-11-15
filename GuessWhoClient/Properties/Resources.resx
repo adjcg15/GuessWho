@@ -336,6 +336,18 @@
   <data name="msgbErrorLeavingMatchTitle" xml:space="preserve">
     <value>Error al abandonar la partida, intente nuevamente</value>
   </data>
+  <data name="msgbErrorRetrievingPlayerEmailMessage" xml:space="preserve">
+    <value>Ocurrió un error al intentar recuperar el correo electrónico del jugador, por lo que la invitación no pudo ser enviada</value>
+  </data>
+  <data name="msgbErrorRetrievingPlayerEmailTitle" xml:space="preserve">
+    <value>Error al recuperar el correo del jugador</value>
+  </data>
+  <data name="msgbErrorSendingGameInvitationMessage" xml:space="preserve">
+    <value>No fue posible enviar el código de invitación de la partida al correo electrónico del jugador. Intente copiando y enviando directamente el código</value>
+  </data>
+  <data name="msgbErrorSendingGameInvitationTitle" xml:space="preserve">
+    <value>Error al enviar la invitación</value>
+  </data>
   <data name="msgbGameFinishedByHostMessage" xml:space="preserve">
     <value>El anfitrión ha finalizado la partida</value>
   </data>
@@ -359,6 +371,12 @@
   </data>
   <data name="msgbInvalidMatchCodeTitle" xml:space="preserve">
     <value>Partida inválida</value>
+  </data>
+  <data name="msgbInvitationSentMessage" xml:space="preserve">
+    <value>El jugador ha sido invitado a la partida exitosamente</value>
+  </data>
+  <data name="msgbInvitationSentTitle" xml:space="preserve">
+    <value>Invitación enviada</value>
   </data>
   <data name="msgbMesageNotSentMessage" xml:space="preserve">
     <value>No ha sido posible enviar el mensaje, pues el jugador ha abandonado la partida</value>
@@ -485,6 +503,12 @@
   </data>
   <data name="txtHost" xml:space="preserve">
     <value>Anfitrión</value>
+  </data>
+  <data name="txtInviteToGameBody" xml:space="preserve">
+    <value>Te han invitado a jugar una partida de Adivina Quién, él código de invitación es:</value>
+  </data>
+  <data name="txtInviteToGameSubject" xml:space="preserve">
+    <value>¡Ven a jugar!</value>
   </data>
   <data name="txtLeaderboardGlobal" xml:space="preserve">
     <value>Marcador</value>
