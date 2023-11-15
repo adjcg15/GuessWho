@@ -52,12 +52,15 @@ namespace GuessWhoClient
                 if (isHost)
                 {
                     CreateNewGame(userNickname);
+                    ShowActiveUsers(userNickname);
+                    ShowActiveUsersList();
                 }
                 else
                 {
                     JoinGame(userNickname);
+                    ShowActiveUsers(userNickname);
+                    ShowGameFullMessage();
                 }
-                ShowActiveUsers(userNickname);
             }
             catch (EndpointNotFoundException)
             {
@@ -80,6 +83,22 @@ namespace GuessWhoClient
         {
             var createMatchResponse = matchServiceClient.CreateMatch(userNickname);
             invitationCode = createMatchResponse.Value;
+        }
+
+        private void ShowActiveUsersList()
+        {
+            if (activeUsers.Count > 0)
+            {
+                LbUsersListMessage.Visibility = Visibility.Hidden;
+                ListBoxActiveUsers.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                LbUsersListMessage.Content = Properties.Resources.lbNoPlayersOnline;
+                LbUsersListMessage.Visibility = Visibility.Visible;
+
+                ListBoxActiveUsers.Visibility = Visibility.Hidden;
+            }
         }
 
         private void JoinGame(string userNickname)
@@ -137,6 +156,14 @@ namespace GuessWhoClient
             }
         }
 
+        private void ShowGameFullMessage()
+        {
+            LbUsersListMessage.Content = Properties.Resources.lbAllPlayersReady;
+            LbUsersListMessage.Visibility = Visibility.Visible;
+
+            ListBoxActiveUsers.Visibility = Visibility.Hidden;
+        }
+
         private void RedirectPermanentlyToMainMenu()
         {
             ShowsNavigationUI = true;
@@ -172,6 +199,7 @@ namespace GuessWhoClient
                     }
                 });
             }
+            ShowActiveUsersList();
         }
 
         public void PlayerStatusInMatchChanged(PlayerInMatch user, bool isJoiningMatch)
@@ -188,10 +216,12 @@ namespace GuessWhoClient
                 if (isJoiningMatch)
                 {
                     ShowGuestInformation(user);
+                    ShowGameFullMessage();
                 }
                 else
                 {
                     HideGuestInformation();
+                    ShowActiveUsersList();
                 }
             }
         }

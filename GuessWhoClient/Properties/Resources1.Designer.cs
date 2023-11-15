@@ -367,6 +367,15 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a ¡La partida está llena y lista para comenzar!.
+        /// </summary>
+        public static string lbAllPlayersReady {
+            get {
+                return ResourceManager.GetString("lbAllPlayersReady", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Cambio de Contraseña.
         /// </summary>
         public static string lbChangePassword {
@@ -439,15 +448,6 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Amigos conectados.
-        /// </summary>
-        public static string lbFriendsConnected {
-            get {
-                return ResourceManager.GetString("lbFriendsConnected", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Busca una cadena traducida similar a Nombre completo.
         /// </summary>
         public static string lbFullName {
@@ -471,6 +471,24 @@ namespace GuessWhoClient.Properties {
         public static string lbHowToPlayDescription {
             get {
                 return ResourceManager.GetString("lbHowToPlayDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Invitar jugador.
+        /// </summary>
+        public static string lbInvitePlayer {
+            get {
+                return ResourceManager.GetString("lbInvitePlayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No hay jugadores activos por mostrar.
+        /// </summary>
+        public static string lbNoPlayersOnline {
+            get {
+                return ResourceManager.GetString("lbNoPlayersOnline", resourceCulture);
             }
         }
         

@@ -219,6 +219,9 @@
   <data name="lbAccountQuestion" xml:space="preserve">
     <value>Need an account?</value>
   </data>
+  <data name="lbAllPlayersReady" xml:space="preserve">
+    <value>The game is full and ready to start!</value>
+  </data>
   <data name="lbChangePassword" xml:space="preserve">
     <value>Password change</value>
   </data>
@@ -243,9 +246,6 @@
   <data name="lbEmptyScoreboard" xml:space="preserve">
     <value>There are no players to show</value>
   </data>
-  <data name="lbFriendsConnected" xml:space="preserve">
-    <value>Online friends</value>
-  </data>
   <data name="lbFullName" xml:space="preserve">
     <value>Full Name</value>
   </data>
@@ -254,6 +254,12 @@
   </data>
   <data name="lbHowToPlayDescription" xml:space="preserve">
     <value>Draw! Unlike the original game, here you will not be able to ask questions to your opponent, instead, you must use your imagination and make a drawing to convey your question. Once your drawing is finished, finish your attempt and go to the next step.</value>
+  </data>
+  <data name="lbInvitePlayer" xml:space="preserve">
+    <value>Invite player</value>
+  </data>
+  <data name="lbNoPlayersOnline" xml:space="preserve">
+    <value>Thera are not online players to show</value>
   </data>
   <data name="lbPasswordGlobal" xml:space="preserve">
     <value>Password</value>
