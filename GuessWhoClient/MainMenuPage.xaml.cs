@@ -2,6 +2,7 @@
 using GuessWhoClient.Utils;
 using System;
 using System.Linq;
+using System.ServiceModel;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -53,12 +54,18 @@ namespace GuessWhoClient
             BorderProfile.Visibility = Visibility.Collapsed;
             BtnFriends.Visibility = Visibility.Collapsed;
 
-            AuthenticationServiceClient authenticationServiceClient = new AuthenticationServiceClient();
 
-            Console.WriteLine(DataStore.Profile?.NickName);
-            authenticationServiceClient.Logout(DataStore.Profile.NickName);
+            try
+            {
+                AuthenticationServiceClient authenticationServiceClient = new AuthenticationServiceClient();
+                authenticationServiceClient.Logout(DataStore.Profile.NickName);
 
-            DataStore.Profile = null;
+                DataStore.Profile = null;
+            }
+            catch (EndpointNotFoundException)
+            {
+                ServerResponse.ShowServerDownMessage();
+            }
         }
 
         private void BtnQuickMatchClick(object sender, RoutedEventArgs e)

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace GuessWhoClient.Utils
 {
@@ -14,9 +15,9 @@ namespace GuessWhoClient.Utils
         {
             Dictionary<GameServices.ResponseStatus, string> titleOptions = new Dictionary<GameServices.ResponseStatus, string>();
 
-            titleOptions.Add(GameServices.ResponseStatus.UPDATE_ERROR, Properties.Resources.txtUpdateErrorTitle);
-            titleOptions.Add(GameServices.ResponseStatus.VALIDATION_ERROR, Properties.Resources.txtValidationErrorTitle);
-            titleOptions.Add(GameServices.ResponseStatus.SQL_ERROR, Properties.Resources.txtSQLErrorTitle);
+            titleOptions.Add(GameServices.ResponseStatus.UPDATE_ERROR, Resources.txtUpdateErrorTitle);
+            titleOptions.Add(GameServices.ResponseStatus.VALIDATION_ERROR, Resources.txtValidationErrorTitle);
+            titleOptions.Add(GameServices.ResponseStatus.SQL_ERROR, Resources.txtSQLErrorTitle);
 
             string title = "";
             if(titleOptions.ContainsKey(statusCode))
@@ -31,9 +32,9 @@ namespace GuessWhoClient.Utils
         {
             Dictionary<GameServices.ResponseStatus, string> messageOptions = new Dictionary<GameServices.ResponseStatus, string>();
 
-            messageOptions.Add(GameServices.ResponseStatus.UPDATE_ERROR, Properties.Resources.txtUpdateErrorMessage);
-            messageOptions.Add(GameServices.ResponseStatus.VALIDATION_ERROR, Properties.Resources.txtValidationErrorMessage);
-            messageOptions.Add(GameServices.ResponseStatus.SQL_ERROR, Properties.Resources.txtSQLErrorMessage);
+            messageOptions.Add(GameServices.ResponseStatus.UPDATE_ERROR, Resources.txtUpdateErrorMessage);
+            messageOptions.Add(GameServices.ResponseStatus.VALIDATION_ERROR, Resources.txtValidationErrorMessage);
+            messageOptions.Add(GameServices.ResponseStatus.SQL_ERROR, Resources.txtSQLErrorMessage);
 
             string message = "";
             if (messageOptions.ContainsKey(statusCode))
@@ -42,6 +43,16 @@ namespace GuessWhoClient.Utils
             }
 
             return message;
+        }
+
+        public static void ShowServerDownMessage()
+        {
+            MessageBox.Show(
+                    Resources.msgbErrorConexionServidorMessage,
+                    Resources.msgbErrorConexionServidorTitle,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+            );
         }
     }
 }

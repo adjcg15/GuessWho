@@ -115,12 +115,7 @@ namespace GuessWhoClient
             }
             catch (EndpointNotFoundException)
             {
-                MessageBox.Show(
-                    Properties.Resources.msgbErrorConexionServidorMessage,
-                    Properties.Resources.msgbErrorConexionServidorTitle,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
+                ServerResponse.ShowServerDownMessage();
             }
         }
 
@@ -201,12 +196,7 @@ namespace GuessWhoClient
                 }
             }catch (EndpointNotFoundException)
             {
-                MessageBox.Show(
-                    Properties.Resources.msgbErrorConexionServidorMessage,
-                    Properties.Resources.msgbErrorConexionServidorTitle,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
+                ServerResponse.ShowServerDownMessage();
             }
         }
 
@@ -255,12 +245,7 @@ namespace GuessWhoClient
                 }
                 catch(EndpointNotFoundException) 
                 {
-                    MessageBox.Show(
-                        Properties.Resources.msgbErrorConexionServidorMessage,
-                        Properties.Resources.msgbErrorConexionServidorTitle,
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error
-                    );
+                    ServerResponse.ShowServerDownMessage();
                 }
             }
         }
@@ -424,12 +409,7 @@ namespace GuessWhoClient
             }
             catch (EndpointNotFoundException)
             {
-                MessageBox.Show(
-                        Properties.Resources.msgbErrorConexionServidorMessage,
-                        Properties.Resources.msgbErrorConexionServidorTitle,
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error
-                    );
+                ServerResponse.ShowServerDownMessage();
             }
         }
     }

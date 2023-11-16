@@ -59,12 +59,9 @@ namespace GuessWhoClient
             }
             catch (EndpointNotFoundException)
             {
-                MessageBox.Show(
-                    Properties.Resources.msgbErrorConexionServidorMessage,
-                    Properties.Resources.msgbErrorConexionServidorTitle,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
+                ServerResponse.ShowServerDownMessage();
+                DataStore.UsersClient = null;
+                DataStore.RestartMatchValues();
                 RedirectPermanentlyToMainMenu();
             }
         }
@@ -161,6 +158,8 @@ namespace GuessWhoClient
 
         private void RedirectPermanentlyToMainMenu()
         {
+            DataStore.UsersClient = null;
+
             ShowsNavigationUI = true;
             MainMenuPage menuPage = new MainMenuPage();
             NavigationService.Navigate(menuPage);
@@ -285,12 +284,7 @@ namespace GuessWhoClient
             }
             catch (EndpointNotFoundException)
             {
-                MessageBox.Show(
-                    Properties.Resources.msgbErrorConexionServidorMessage,
-                    Properties.Resources.msgbErrorConexionServidorTitle,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
+                ServerResponse.ShowServerDownMessage();
                 RedirectPermanentlyToMainMenu();
             }
         }
@@ -389,12 +383,7 @@ namespace GuessWhoClient
             }
             catch (EndpointNotFoundException)
             {
-                MessageBox.Show(
-                    Properties.Resources.msgbErrorConexionServidorMessage,
-                    Properties.Resources.msgbErrorConexionServidorTitle,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
+                ServerResponse.ShowServerDownMessage();
                 RedirectPermanentlyToMainMenu();
             }
         }
@@ -421,12 +410,7 @@ namespace GuessWhoClient
             }
             catch (EndpointNotFoundException)
             {
-                MessageBox.Show(
-                    Properties.Resources.msgbErrorConexionServidorMessage,
-                    Properties.Resources.msgbErrorConexionServidorTitle,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
+                ServerResponse.ShowServerDownMessage();
                 RedirectPermanentlyToMainMenu();
             }
         }
@@ -461,12 +445,7 @@ namespace GuessWhoClient
             }
             catch (EndpointNotFoundException)
             {
-                MessageBox.Show(
-                    Properties.Resources.msgbErrorConexionServidorMessage,
-                    Properties.Resources.msgbErrorConexionServidorTitle,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
+                ServerResponse.ShowServerDownMessage();
             }
         }
 

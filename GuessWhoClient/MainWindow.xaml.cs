@@ -1,5 +1,6 @@
 ﻿using GuessWhoClient.GameServices;
 using System;
+using System.ServiceModel;
 using System.Windows.Navigation;
 
 namespace GuessWhoClient
@@ -13,9 +14,27 @@ namespace GuessWhoClient
 
         private void NavigationWindowClosed(object sender, EventArgs e)
         {
-            if(!string.IsNullOrEmpty(DataStore.CurrentMatchCode))
+            try
             {
-                if(DataStore.IsCurrentMatchHost)
+                LeaveCurrentGame();
+                UnsubscribeActiveUsersList();
+                Logout();
+            }
+            catch (EndpointNotFoundException)
+            {
+
+            }
+            catch (CommunicationObjectFaultedException)
+            {
+
+            }
+        }
+
+        private void LeaveCurrentGame()
+        {
+            if (!string.IsNullOrEmpty(DataStore.CurrentMatchCode))
+            {
+                if (DataStore.IsCurrentMatchHost)
                 {
                     DataStore.MatchesClient.FinishGame(DataStore.CurrentMatchCode);
                 }
@@ -25,11 +44,17 @@ namespace GuessWhoClient
                 }
                 DataStore.RestartMatchValues();
             }
+        }
 
+        private void UnsubscribeActiveUsersList()
+        {
             DataStore.UsersClient?.Unsubscribe();
             DataStore.UsersClient = null;
+        }
 
-            if(DataStore.Profile !=  null)
+        private void Logout()
+        {
+            if (DataStore.Profile != null)
             {
                 var authenticationServiceClient = new AuthenticationServiceClient();
                 authenticationServiceClient.Logout(DataStore.Profile.NickName);

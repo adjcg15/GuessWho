@@ -1,4 +1,5 @@
-﻿using GuessWhoClient.Properties;
+﻿using GuessWhoClient.GameServices;
+using GuessWhoClient.Properties;
 using GuessWhoClient.Utils;
 using System;
 using System.Resources;
@@ -51,7 +52,7 @@ namespace GuessWhoClient
             try
             {
                 GameServices.ProfileResponse response = authenticationServiceClient.Login(email, password);
-                if (response.Value != null)
+                if (response.StatusCode == ResponseStatus.OK && response.Value != null)
                 {
                     GameServices.Profile profile = response.Value;
                     MessageBox.Show(Properties.Resources.msgbWelcome1 + profile.FullName + Properties.Resources.msgbWelcome2);
@@ -60,31 +61,26 @@ namespace GuessWhoClient
 
                     GoToMainMenuUploaded();
                 }
-                else if (response.StatusCode == GameServices.ResponseStatus.UPDATE_ERROR)
+                else if(response.StatusCode == ResponseStatus.OK && response.Value == null)
+                {
+                    MessageBox.Show(Properties.Resources.msgbUserNotFound);
+                }
+                else if (response.StatusCode == ResponseStatus.UPDATE_ERROR)
                 {
                     MessageBox.Show(Properties.Resources.txtUpdateErrorMessage);
                 }
-                else if (response.StatusCode == GameServices.ResponseStatus.VALIDATION_ERROR)
+                else if (response.StatusCode == ResponseStatus.VALIDATION_ERROR)
                 {
                     MessageBox.Show(Properties.Resources.txtValidationErrorMessage, Properties.Resources.txtValidationErrorTitle);
                 }
-                else if (response.StatusCode == GameServices.ResponseStatus.SQL_ERROR)
+                else if (response.StatusCode == ResponseStatus.SQL_ERROR)
                 {
                     MessageBox.Show(Properties.Resources.txtSQLErrorMessage, Properties.Resources.txtSQLErrorTitle);
-                }
-                else
-                {
-                    MessageBox.Show(Properties.Resources.msgbUserNotFound);
                 }
             }
             catch (EndpointNotFoundException)
             {
-                MessageBox.Show(
-                    Properties.Resources.msgbErrorConexionServidorMessage,
-                    Properties.Resources.msgbErrorConexionServidorTitle,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
-                );
+                ServerResponse.ShowServerDownMessage();
             }
         }
 

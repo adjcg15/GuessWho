@@ -35,7 +35,10 @@ namespace GuessWhoClient
         public FriendsPage()
         {
             InitializeComponent();
+        }
 
+        private void PageLoaded(object sender, RoutedEventArgs e)
+        {
             try
             {
                 UploadRequests();
@@ -43,12 +46,8 @@ namespace GuessWhoClient
             }
             catch (EndpointNotFoundException)
             {
-                MessageBox.Show(
-                   Properties.Resources.msgbErrorConexionServidorMessage,
-                   Properties.Resources.msgbErrorConexionServidorTitle,
-                   MessageBoxButton.OK,
-                   MessageBoxImage.Error
-                );
+                ServerResponse.ShowServerDownMessage();
+                RedirectPermanentlyToMainMenu();
             }
         }
 
@@ -174,7 +173,7 @@ namespace GuessWhoClient
         {
             ShowsNavigationUI = true;
             MainMenuPage mainMenuPage = new MainMenuPage();
-            this.NavigationService.Navigate(mainMenuPage);
+            NavigationService.Navigate(mainMenuPage);
         }
     }
 }
