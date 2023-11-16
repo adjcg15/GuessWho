@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -35,8 +36,20 @@ namespace GuessWhoClient
         {
             InitializeComponent();
 
-            UploadRequests();
-            UploadFriends();
+            try
+            {
+                UploadRequests();
+                UploadFriends();
+            }
+            catch (EndpointNotFoundException)
+            {
+                MessageBox.Show(
+                   Properties.Resources.msgbErrorConexionServidorMessage,
+                   Properties.Resources.msgbErrorConexionServidorTitle,
+                   MessageBoxButton.OK,
+                   MessageBoxImage.Error
+                );
+            }
         }
 
         private void UploadFriends()
@@ -157,5 +170,11 @@ namespace GuessWhoClient
             TbMessage.BeginAnimation(OpacityProperty, animation);
         }
 
+        private void RedirectPermanentlyToMainMenu()
+        {
+            ShowsNavigationUI = true;
+            MainMenuPage mainMenuPage = new MainMenuPage();
+            this.NavigationService.Navigate(mainMenuPage);
+        }
     }
 }

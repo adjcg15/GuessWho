@@ -4,6 +4,7 @@ using Microsoft.Win32;
 using System;
 using System.IO;
 using System.Resources;
+using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -130,59 +131,72 @@ namespace GuessWhoClient
                 return;
             }
 
-            var authenticationServiceClient = new GameServices.AuthenticationServiceClient();
-
-            var emailValidation = authenticationServiceClient.VerifyUserRegisteredByEmail(email);
-            if (emailValidation.StatusCode != GameServices.ResponseStatus.OK)
+            try
             {
-                MessageBox.Show(
-                    ServerResponse.GetMessageFromStatusCode(emailValidation.StatusCode),
-                    ServerResponse.GetTitleFromStatusCode(emailValidation.StatusCode),
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning
-                );
-                return;
+                var authenticationServiceClient = new GameServices.AuthenticationServiceClient();
+
+                var emailValidation = authenticationServiceClient.VerifyUserRegisteredByEmail(email);
+                if (emailValidation.StatusCode != GameServices.ResponseStatus.OK)
+                {
+                    MessageBox.Show(
+                        ServerResponse.GetMessageFromStatusCode(emailValidation.StatusCode),
+                        ServerResponse.GetTitleFromStatusCode(emailValidation.StatusCode),
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning
+                    );
+                    return;
+                }
+                else
+                {
+                    if (emailValidation.Value != null)
+                    {
+                        MessageBox.Show(
+                            Properties.Resources.msgbRegisterRegisteredEmailMessage,
+                            Properties.Resources.msgbRegisterRegisteredEmailTitle,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
+                        );
+                        return;
+                    }
+                }
+
+                var nicknameValidation = authenticationServiceClient.VerifyUserRegisteredByNickName(nickname);
+                if (nicknameValidation.StatusCode != GameServices.ResponseStatus.OK)
+                {
+                    MessageBox.Show(
+                        ServerResponse.GetMessageFromStatusCode(nicknameValidation.StatusCode),
+                        ServerResponse.GetTitleFromStatusCode(nicknameValidation.StatusCode),
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning
+                    );
+                    return;
+                }
+                else
+                {
+                    if (nicknameValidation.Value != null)
+                    {
+                        MessageBox.Show(
+                            Properties.Resources.msgbRegisterRegisteredNicknameMessage,
+                            Properties.Resources.msgbRegisterRegisteredNicknameTitle,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
+                        );
+                        return;
+                    }
+                }
+
+                ConfirmAccountPage confirmAccountPage = new ConfirmAccountPage(nickname, email, password, fullName, profileImage);
+                this.NavigationService.Navigate(confirmAccountPage);
             } 
-            else
-            {
-                if(emailValidation.Value != null)
-                {
-                    MessageBox.Show(
-                        Properties.Resources.msgbRegisterRegisteredEmailMessage,
-                        Properties.Resources.msgbRegisterRegisteredEmailTitle,
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Warning
-                    );
-                    return;
-                }
-            }
-
-            var nicknameValidation = authenticationServiceClient.VerifyUserRegisteredByNickName(nickname);
-            if (nicknameValidation.StatusCode != GameServices.ResponseStatus.OK)
+            catch (EndpointNotFoundException)
             {
                 MessageBox.Show(
-                    ServerResponse.GetMessageFromStatusCode(nicknameValidation.StatusCode),
-                    ServerResponse.GetTitleFromStatusCode(nicknameValidation.StatusCode),
+                    Properties.Resources.msgbErrorConexionServidorMessage,
+                    Properties.Resources.msgbErrorConexionServidorTitle,
                     MessageBoxButton.OK,
-                    MessageBoxImage.Warning
+                    MessageBoxImage.Error
                 );
-                return;
-            } else
-            {
-                if(nicknameValidation.Value != null)
-                {
-                    MessageBox.Show(
-                        Properties.Resources.msgbRegisterRegisteredNicknameMessage,
-                        Properties.Resources.msgbRegisterRegisteredNicknameTitle,
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Warning
-                    );
-                    return;
-                }
             }
-
-            ConfirmAccountPage confirmAccountPage = new ConfirmAccountPage(nickname, email, password, fullName, profileImage);
-            this.NavigationService.Navigate(confirmAccountPage);
         }
     }
 }
