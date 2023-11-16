@@ -14,6 +14,7 @@ namespace GuessWhoClient
         private void NavigationWindowClosed(object sender, EventArgs e)
         {
             DataStore.UsersClient?.Unsubscribe();
+            DataStore.UsersClient = null;
 
             if(DataStore.Profile !=  null)
             {

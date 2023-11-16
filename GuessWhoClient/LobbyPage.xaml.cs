@@ -42,7 +42,7 @@ namespace GuessWhoClient
         {
             matchServiceClient = new MatchServiceClient(new InstanceContext(this));
             string userNickname = DataStore.Profile != null ? DataStore.Profile.NickName : "";
-            DataStore.OpenUserServiceClientChannel(this);
+            DataStore.UsersClient = new UserServiceClient(new InstanceContext(this));
 
             try
             {
@@ -404,7 +404,7 @@ namespace GuessWhoClient
         private void UnsubscribeToActiveUsersList()
         {
             DataStore.UsersClient.Unsubscribe();
-            ExitGame();
+            DataStore.UsersClient = null;
         }
 
         private void ExitGame()

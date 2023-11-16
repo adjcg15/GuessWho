@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 
 namespace GuessWhoServices
@@ -10,19 +11,21 @@ namespace GuessWhoServices
 
         public void Subscribe()
         {
-            var callback = OperationContext.Current.GetCallbackChannel<IUsersCallback>();
-            if (!subscribers.Contains(callback))
+            var channel = OperationContext.Current.GetCallbackChannel<IUsersCallback>();
+            Console.WriteLine("Suscribiendo a lista usuarios activos " + channel.GetHashCode());
+            if (!subscribers.Contains(channel))
             {
-                subscribers.Add(callback);
+                subscribers.Add(channel);
             }
         }
 
         public void Unsubscribe()
         {
-            var callback = OperationContext.Current.GetCallbackChannel<IUsersCallback>();
-            if (subscribers.Contains(callback))
+            var channel = OperationContext.Current.GetCallbackChannel<IUsersCallback>();
+            Console.WriteLine("Quitando suscripción a lista usuarios activos " + channel.GetHashCode());
+            if (subscribers.Contains(channel))
             {
-                subscribers.Remove(callback);
+                subscribers.Remove(channel);
             }
         }
 
@@ -47,6 +50,11 @@ namespace GuessWhoServices
 
             foreach (var subscriber in subscribers)
             {
+                Console.WriteLine(
+                    "Avisando a suscriptor de lista de usuarios activos " + subscriber.GetHashCode() + 
+                    " que usuario " + user.Nickname + 
+                    (isActive ? " inicia sesión" : " cierra sesión")
+                );
                 try
                 {
                     subscriber.UserStatusChanged(user, isActive);
