@@ -15,15 +15,12 @@ namespace GuessWhoClient
     public partial class LobbyPage : Page, IUserServiceCallback, IMatchServiceCallback
     {
         private const string DEFAULT_PROFILE_PICTURE_ROUTE = "pack://application:,,,/Resources/user-icon.png";
-        private string invitationCode;
-        private bool isHost;
-        private MatchServiceClient matchServiceClient;
         public ObservableCollection<ActiveUser> activeUsers { get; set; } = new ObservableCollection<ActiveUser>();
 
         public LobbyPage()
         {
             InitializeComponent();
-            isHost = true;
+            DataStore.IsCurrentMatchHost = true;
             
             BtnCancelGame.Visibility = Visibility.Visible;
             BtnStartGame.Visibility = Visibility.Visible;
@@ -32,22 +29,22 @@ namespace GuessWhoClient
         public LobbyPage(string invitationCode)
         {
             InitializeComponent();
-            isHost = false;
-            this.invitationCode = invitationCode;
+            DataStore.IsCurrentMatchHost = false;
+            DataStore.CurrentMatchCode = invitationCode;
 
             BtnExitGame.Visibility = Visibility.Visible;
         }
 
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
-            matchServiceClient = new MatchServiceClient(new InstanceContext(this));
+            DataStore.MatchesClient = new MatchServiceClient(new InstanceContext(this));
             string userNickname = DataStore.Profile != null ? DataStore.Profile.NickName : "";
             DataStore.UsersClient = new UserServiceClient(new InstanceContext(this));
 
             try
             {
                 SubscribeToActiveUsersList();
-                if (isHost)
+                if (DataStore.IsCurrentMatchHost)
                 {
                     CreateNewGame(userNickname);
                     ShowActiveUsers(userNickname);
@@ -79,8 +76,8 @@ namespace GuessWhoClient
 
         private void CreateNewGame(string userNickname)
         {
-            var createMatchResponse = matchServiceClient.CreateMatch(userNickname);
-            invitationCode = createMatchResponse.Value;
+            var createMatchResponse = DataStore.MatchesClient.CreateMatch(userNickname);
+            DataStore.CurrentMatchCode = createMatchResponse.Value;
         }
 
         private void ShowActiveUsersList()
@@ -101,7 +98,7 @@ namespace GuessWhoClient
 
         private void JoinGame(string userNickname)
         {
-            var joinGameResponse = matchServiceClient.JoinGame(invitationCode, userNickname);
+            var joinGameResponse = DataStore.MatchesClient.JoinGame(DataStore.CurrentMatchCode, userNickname);
             switch (joinGameResponse.StatusCode)
             {
                 case ResponseStatus.OK:
@@ -226,6 +223,7 @@ namespace GuessWhoClient
 
         private void FinishGameForGuest()
         {
+            DataStore.RestartMatchValues();
             MainMenuPage mainMenu = new MainMenuPage();
             mainMenu.ShowCanceledMatchMessage();
             this.NavigationService.Navigate(mainMenu);
@@ -303,7 +301,7 @@ namespace GuessWhoClient
 
             if (!string.IsNullOrEmpty(message))
             {
-                var response = matchServiceClient.SendMessage(invitationCode, message);
+                var response = DataStore.MatchesClient.SendMessage(DataStore.CurrentMatchCode, message);
 
                 switch (response.StatusCode)
                 {
@@ -329,7 +327,7 @@ namespace GuessWhoClient
                             MessageBoxButton.OK,
                             MessageBoxImage.Warning
                         );
-                        if(!isHost)
+                        if(!DataStore.IsCurrentMatchHost)
                         {
                             RedirectPermanentlyToMainMenu();
                         }
@@ -363,7 +361,7 @@ namespace GuessWhoClient
 
         public void NotifyNewMessage(string message, string senderNickname)
         {
-            string defaultAdversaryNickname = isHost ? Properties.Resources.txtGuest : Properties.Resources.txtHost;
+            string defaultAdversaryNickname = DataStore.IsCurrentMatchHost ? Properties.Resources.txtGuest : Properties.Resources.txtHost;
             ShowPlayerMessageInChat(message, senderNickname == "" ? defaultAdversaryNickname : senderNickname);
         }
 
@@ -379,7 +377,7 @@ namespace GuessWhoClient
 
         private void BtnCopyInvitationCodeClick(object sender, RoutedEventArgs e)
         {
-            Clipboard.SetText(invitationCode);
+            Clipboard.SetText(DataStore.CurrentMatchCode);
         }
 
         private void BtnExitGameClick(object sender, RoutedEventArgs e)
@@ -409,7 +407,8 @@ namespace GuessWhoClient
 
         private void ExitGame()
         {
-            matchServiceClient.ExitGame(invitationCode);
+            DataStore.MatchesClient.ExitGame(DataStore.CurrentMatchCode);
+            DataStore.RestartMatchValues();
             RedirectPermanentlyToMainMenu();
         }
 
@@ -434,7 +433,8 @@ namespace GuessWhoClient
 
         private void FinishGame()
         {
-            matchServiceClient.FinishGame(invitationCode);
+            DataStore.MatchesClient.FinishGame(DataStore.CurrentMatchCode);
+            DataStore.RestartMatchValues();
             RedirectPermanentlyToMainMenu();
         }
 
@@ -510,7 +510,7 @@ namespace GuessWhoClient
             bool successSent = Email.SendMail(
                 email,
                 Properties.Resources.txtInviteToGameSubject,
-                Properties.Resources.txtInviteToGameBody + invitationCode
+                Properties.Resources.txtInviteToGameBody + DataStore.CurrentMatchCode
             );
 
             if (!successSent)
