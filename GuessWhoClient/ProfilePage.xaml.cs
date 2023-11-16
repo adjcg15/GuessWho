@@ -3,6 +3,7 @@ using GuessWhoClient.Utils;
 using Microsoft.Win32;
 using System;
 using System.IO;
+using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -90,8 +91,8 @@ namespace GuessWhoClient
                 if (fileSizeInKilobytes <= 20)
                 {
                     BitmapImage bitmapImage = new BitmapImage(new Uri(imagePath));
-                    ImgAvatar.Source = bitmapImage;
                     UpdateNewProfileImage(ImageTransformator.GetImageBytesFromImagePath(imagePath));
+                    ImgAvatar.Source = bitmapImage;
                 }
                 else
                 {
@@ -112,6 +113,10 @@ namespace GuessWhoClient
                     MessageBoxImage.Warning
                 );
             }
+            catch (EndpointNotFoundException)
+            {
+                ServerResponse.ShowServerDownMessage();
+            }
         }
 
         private void BtnChangePasswordClick(object sender, RoutedEventArgs e)
@@ -119,6 +124,14 @@ namespace GuessWhoClient
             string newPassword = PbPassword.Password.Trim();
             string newPasswordConfirmation = PbPasswordConfirmation.Password.Trim();
 
+            ValidateNewPassword(newPassword, newPasswordConfirmation);
+
+            PbPassword.Password = "";
+            PbPasswordConfirmation.Password = "";
+        }
+
+        private void ValidateNewPassword(string newPassword, string newPasswordConfirmation)
+        {
             if (newPassword == "" || newPasswordConfirmation == "")
             {
                 MessageBox.Show(
@@ -146,7 +159,7 @@ namespace GuessWhoClient
                     MessageBoxImage.Warning
                 );
             }
-            else if(newPassword != newPasswordConfirmation)
+            else if (newPassword != newPasswordConfirmation)
             {
                 MessageBox.Show(
                     Properties.Resources.msgbRegisterMismatchPasswordMessage,
@@ -159,28 +172,31 @@ namespace GuessWhoClient
             {
                 ChangeUserPasword(newPassword);
             }
-
-            PbPassword.Password = "";
-            PbPasswordConfirmation.Password = "";
         }
 
         private void ChangeUserPasword(string newPassword)
         {
-            ProfileServiceClient profileServiceClient = new ProfileServiceClient();
-            var response = profileServiceClient.UpdateUserPassword(Authentication.HashPassword(newPassword), DataStore.Profile.IdUser);
+            try
+            {
+                ProfileServiceClient profileServiceClient = new ProfileServiceClient();
+                var response = profileServiceClient.UpdateUserPassword(Authentication.HashPassword(newPassword), DataStore.Profile.IdUser);
 
-            if (response.StatusCode != ResponseStatus.OK)
+                if (response.StatusCode != ResponseStatus.OK)
+                {
+                    MessageBox.Show(ServerResponse.GetMessageFromStatusCode(response.StatusCode),
+                        ServerResponse.GetTitleFromStatusCode(response.StatusCode)
+                    );
+                }
+                else
+                {
+                    MessageBox.Show(
+                        Properties.Resources.txtPasswordChangeSuccesfulMessage,
+                        Properties.Resources.txtPasswordChangeSuccesfulTitle
+                   );
+                }
+            }catch (EndpointNotFoundException)
             {
-                MessageBox.Show(ServerResponse.GetMessageFromStatusCode(response.StatusCode),
-                    ServerResponse.GetTitleFromStatusCode(response.StatusCode)
-                );
-            }
-            else
-            {
-                MessageBox.Show(
-                    Properties.Resources.txtPasswordChangeSuccesfulMessage,
-                    Properties.Resources.txtPasswordChangeSuccesfulTitle
-               );
+                ServerResponse.ShowServerDownMessage();
             }
         }
 
@@ -223,32 +239,44 @@ namespace GuessWhoClient
             }
             else
             {
-                AuthenticationServiceClient authenticationServiceClient = new AuthenticationServiceClient();
-                var nicknameValidation = authenticationServiceClient.VerifyUserRegisteredByNickName(newNickname);
-                if (nicknameValidation.StatusCode != ResponseStatus.OK)
+                try
+                {
+                    VerifyUnRegisteredNickname(newNickname);
+                }
+                catch(EndpointNotFoundException) 
+                {
+                    ServerResponse.ShowServerDownMessage();
+                }
+            }
+        }
+
+        private void VerifyUnRegisteredNickname(string newNickname)
+        {
+            AuthenticationServiceClient authenticationServiceClient = new AuthenticationServiceClient();
+            var nicknameValidation = authenticationServiceClient.VerifyUserRegisteredByNickName(newNickname);
+            if (nicknameValidation.StatusCode != ResponseStatus.OK)
+            {
+                MessageBox.Show(
+                    ServerResponse.GetMessageFromStatusCode(nicknameValidation.StatusCode),
+                    ServerResponse.GetTitleFromStatusCode(nicknameValidation.StatusCode),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+            }
+            else
+            {
+                if (nicknameValidation.Value != null)
                 {
                     MessageBox.Show(
-                        ServerResponse.GetMessageFromStatusCode(nicknameValidation.StatusCode),
-                        ServerResponse.GetTitleFromStatusCode(nicknameValidation.StatusCode),
+                        Properties.Resources.msgbRegisterRegisteredNicknameMessage,
+                        Properties.Resources.msgbRegisterRegisteredNicknameTitle,
                         MessageBoxButton.OK,
                         MessageBoxImage.Warning
                     );
                 }
                 else
                 {
-                    if (nicknameValidation.Value != null)
-                    {
-                        MessageBox.Show(
-                            Properties.Resources.msgbRegisterRegisteredNicknameMessage,
-                            Properties.Resources.msgbRegisterRegisteredNicknameTitle,
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Warning
-                        );
-                    }
-                    else
-                    {
-                        UpdateNewUserNickname(newNickname);
-                    }
+                    UpdateNewUserNickname(newNickname);
                 }
             }
         }
@@ -358,23 +386,30 @@ namespace GuessWhoClient
 
         private void UpdateNewFullName(string newFullName)
         {
-            ProfileServiceClient profileServiceClient = new ProfileServiceClient();
-            var response = profileServiceClient.UpdateUserFullName(newFullName, DataStore.Profile.IdUser);
-
-            if(response.StatusCode != ResponseStatus.OK) 
+            try
             {
-                MessageBox.Show(ServerResponse.GetMessageFromStatusCode(response.StatusCode),
-                    ServerResponse.GetTitleFromStatusCode(response.StatusCode)
-                );
+                ProfileServiceClient profileServiceClient = new ProfileServiceClient();
+                var response = profileServiceClient.UpdateUserFullName(newFullName, DataStore.Profile.IdUser);
+
+                if (response.StatusCode != ResponseStatus.OK)
+                {
+                    MessageBox.Show(ServerResponse.GetMessageFromStatusCode(response.StatusCode),
+                        ServerResponse.GetTitleFromStatusCode(response.StatusCode)
+                    );
+                }
+                else
+                {
+                    MessageBox.Show(
+                        Properties.Resources.txtFullNameChangeSuccesfulMessage,
+                        Properties.Resources.txtFullNameChangeSuccesfulTitle
+                    );
+
+                    DataStore.Profile.FullName = newFullName;
+                }
             }
-            else
+            catch (EndpointNotFoundException)
             {
-                MessageBox.Show(
-                    Properties.Resources.txtFullNameChangeSuccesfulMessage,
-                    Properties.Resources.txtFullNameChangeSuccesfulTitle
-                );
-
-                DataStore.Profile.FullName = newFullName;
+                ServerResponse.ShowServerDownMessage();
             }
         }
     }

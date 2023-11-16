@@ -6,6 +6,6 @@
         xmlns:local="clr-namespace:GuessWhoClient"
         mc:Ignorable="d"
         Title="Guess Who" ResizeMode="CanMinimize" Source="MainMenuPage.xaml"
-        SizeToContent="WidthAndHeight" Closing="NavigationWindowClosed">
+        SizeToContent="WidthAndHeight" Closed="NavigationWindowClosed">
 
 </NavigationWindow>

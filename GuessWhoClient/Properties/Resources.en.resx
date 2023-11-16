@@ -219,6 +219,9 @@
   <data name="lbAccountQuestion" xml:space="preserve">
     <value>Need an account?</value>
   </data>
+  <data name="lbAllPlayersReady" xml:space="preserve">
+    <value>The game is full and ready to start!</value>
+  </data>
   <data name="lbChangePassword" xml:space="preserve">
     <value>Password change</value>
   </data>
@@ -243,9 +246,6 @@
   <data name="lbEmptyScoreboard" xml:space="preserve">
     <value>There are no players to show</value>
   </data>
-  <data name="lbFriendsConnected" xml:space="preserve">
-    <value>Online friends</value>
-  </data>
   <data name="lbFullName" xml:space="preserve">
     <value>Full Name</value>
   </data>
@@ -254,6 +254,12 @@
   </data>
   <data name="lbHowToPlayDescription" xml:space="preserve">
     <value>Draw! Unlike the original game, here you will not be able to ask questions to your opponent, instead, you must use your imagination and make a drawing to convey your question. Once your drawing is finished, finish your attempt and go to the next step.</value>
+  </data>
+  <data name="lbInvitePlayer" xml:space="preserve">
+    <value>Invite player</value>
+  </data>
+  <data name="lbNoPlayersOnline" xml:space="preserve">
+    <value>Thera are not online players to show</value>
   </data>
   <data name="lbPasswordGlobal" xml:space="preserve">
     <value>Password</value>
@@ -330,6 +336,18 @@
   <data name="msgbErrorLeavingMatchTitle" xml:space="preserve">
     <value>Error leaving game, try again</value>
   </data>
+  <data name="msgbErrorRetrievingPlayerEmailMessage" xml:space="preserve">
+    <value>An error occurred while trying to retrieve the player's email, so the invitation could not be sent</value>
+  </data>
+  <data name="msgbErrorRetrievingPlayerEmailTitle" xml:space="preserve">
+    <value>Error retrieving player email</value>
+  </data>
+  <data name="msgbErrorSendingGameInvitationMessage" xml:space="preserve">
+    <value>It was not possible to send the game invitation code to the player's email. Try copying and sending the code directly</value>
+  </data>
+  <data name="msgbErrorSendingGameInvitationTitle" xml:space="preserve">
+    <value>Error sending invitation</value>
+  </data>
   <data name="msgbGameFinishedByHostMessage" xml:space="preserve">
     <value>The host has ended the game</value>
   </data>
@@ -353,6 +371,12 @@
   </data>
   <data name="msgbInvalidMatchCodeTitle" xml:space="preserve">
     <value>Invalid match</value>
+  </data>
+  <data name="msgbInvitationSentMessage" xml:space="preserve">
+    <value>The player has been invited to the game successfully</value>
+  </data>
+  <data name="msgbInvitationSentTitle" xml:space="preserve">
+    <value>Invitation sent</value>
   </data>
   <data name="msgbMesageNotSentMessage" xml:space="preserve">
     <value>It was not possible to send the message, because the player has abandoned the game</value>
@@ -479,6 +503,12 @@
   </data>
   <data name="txtHost" xml:space="preserve">
     <value>Host</value>
+  </data>
+  <data name="txtInviteToGameBody" xml:space="preserve">
+    <value>You have been invited to play a game of Guess Who, the invitation code is:</value>
+  </data>
+  <data name="txtInviteToGameSubject" xml:space="preserve">
+    <value>Come to play!</value>
   </data>
   <data name="txtLeaderboardGlobal" xml:space="preserve">
     <value>Leaderboard</value>

@@ -67,27 +67,13 @@
                         <TextBlock Text="{x:Static p:Resources.btnInvitationCode}" VerticalAlignment="Center" FontWeight="SemiBold" Margin="5,0,0,0"/>
                     </StackPanel>
                 </Button>
-                <Label HorizontalAlignment="Left" Margin="10,226,0,0" Content="{x:Static p:Resources.lbFriendsConnected}" VerticalAlignment="Top" FontWeight="Medium" FontSize="14"/>
-                <Button x:Name="BtnEmailInvitation" HorizontalAlignment="Right" Margin="0,176,10,0" VerticalAlignment="Top" Style="{StaticResource ResourceKey=SecondaryButtonWithIcon}">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Image Source="/Resources/email-invitation-icon.png" Height="18" RenderTransformOrigin="0.5,0.5" Width="18">
-                            <Image.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform ScaleX="-1"/>
-                                    <SkewTransform/>
-                                    <RotateTransform/>
-                                    <TranslateTransform/>
-                                </TransformGroup>
-                            </Image.RenderTransform>
-                        </Image>
-                        <TextBlock Text="{x:Static p:Resources.btnEmailInvitation}" VerticalAlignment="Center" FontWeight="SemiBold" Margin="5,0,0,0"/>
-                    </StackPanel>
-                </Button>
+                <Label HorizontalAlignment="Left" Margin="10,226,0,0" Content="{x:Static p:Resources.lbInvitePlayer}" VerticalAlignment="Top" FontWeight="Medium" FontSize="14"/>
                 <Button x:Name="BtnExpelPlayer" HorizontalAlignment="Left" Margin="382,90,0,0" Visibility="Collapsed" VerticalAlignment="Top" Style="{StaticResource PrimaryCancelButtonWithIcon}" IsCancel="True" Height="46">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Image Source="/Resources/cross-icon.png" Height="19" Width="19"/>
                     </StackPanel>
                 </Button>
+                <Label x:Name="LbUsersListMessage" Visibility="Hidden" HorizontalAlignment="Center" Margin="0,350,0,0" Content="{x:Static p:Resources.lbAllPlayersReady}" VerticalAlignment="Top" FontWeight="Medium" FontSize="14"/>
             </Grid>
         </Border>
         <ListBox x:Name="ListBoxActiveUsers" Margin="0,260,0,-1" Grid.Column="1" BorderThickness="0,0,0,1" Background="{x:Null}" 
@@ -121,8 +107,7 @@
                                 </Ellipse>
                                 <TextBlock Text="{Binding Nickname}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="16" FontWeight="Medium" />
                             </StackPanel>
-
-                            <Button Style="{StaticResource CircularButtonOnlyWithIcon}" Width="40" Margin="350,10,10,10">
+                            <Button Click="BtnInviteToGameClick" Style="{StaticResource CircularButtonOnlyWithIcon}" Width="40" Margin="350,10,10,10">
                                 <Image Source="/Resources/invite-icon.png" Width="18" Height="18" Cursor="Hand"/>
                             </Button>
                         </Grid>

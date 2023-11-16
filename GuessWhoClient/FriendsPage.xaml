@@ -7,7 +7,7 @@
       xmlns:p="clr-namespace:GuessWhoClient.Properties"
       mc:Ignorable="d" 
       MaxHeight="520" MaxWidth="900"
-      Title="FriendsPage">
+      Title="FriendsPage" Loaded="PageLoaded">
 
     <Grid>
         <Image Source="/Resources/background.png"  HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill"/>

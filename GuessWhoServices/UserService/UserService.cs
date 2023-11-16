@@ -11,21 +11,21 @@ namespace GuessWhoServices
 
         public void Subscribe()
         {
-            var callback = OperationContext.Current.GetCallbackChannel<IUsersCallback>();
-            Console.WriteLine("Subscribe: " + callback.GetHashCode());
-            if (!subscribers.Contains(callback))
+            var channel = OperationContext.Current.GetCallbackChannel<IUsersCallback>();
+            Console.WriteLine("Suscribiendo a lista usuarios activos " + channel.GetHashCode());
+            if (!subscribers.Contains(channel))
             {
-                subscribers.Add(callback);
+                subscribers.Add(channel);
             }
         }
 
         public void Unsubscribe()
         {
-            var callback = OperationContext.Current.GetCallbackChannel<IUsersCallback>();
-            Console.WriteLine("Unsubscribe: " + callback.GetHashCode());
-            if (subscribers.Contains(callback))
+            var channel = OperationContext.Current.GetCallbackChannel<IUsersCallback>();
+            Console.WriteLine("Quitando suscripción a lista usuarios activos " + channel.GetHashCode());
+            if (subscribers.Contains(channel))
             {
-                subscribers.Remove(callback);
+                subscribers.Remove(channel);
             }
         }
 
@@ -36,7 +36,6 @@ namespace GuessWhoServices
 
         public static void UpdateUserStatus(ActiveUser user, bool isActive)
         {
-            Console.WriteLine("Cambiando estado de " + user.Nickname + " a " + (isActive ? "activo" : "inactivo"));
             if (isActive)
             {
                 if (activeUsers.Find(u => u.Nickname == user.Nickname) == null)
@@ -49,12 +48,21 @@ namespace GuessWhoServices
                 activeUsers.Remove(activeUsers.Find(u => u.Nickname == user.Nickname));
             }
 
-            Console.WriteLine("Total de jugadores suscriptores: " + subscribers.Count);
-            Console.WriteLine("Total de jugadores activos: " + activeUsers.Count);
             foreach (var subscriber in subscribers)
             {
-                Console.WriteLine("Enviando notificación al suscriptor " + subscriber.GetHashCode());
-                subscriber.UserStatusChanged(user, isActive);
+                Console.WriteLine(
+                    "Avisando a suscriptor de lista de usuarios activos " + subscriber.GetHashCode() + 
+                    " que usuario " + user.Nickname + 
+                    (isActive ? " inicia sesión" : " cierra sesión")
+                );
+                try
+                {
+                    subscriber.UserStatusChanged(user, isActive);
+                }
+                catch (CommunicationObjectAbortedException)
+                {
+                    subscribers.Remove(subscriber);
+                }
             }
         }
     }

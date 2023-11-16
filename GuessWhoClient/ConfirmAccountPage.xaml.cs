@@ -8,6 +8,7 @@ using GuessWhoClient.GameServices;
 using GuessWhoClient.Properties;
 using System.Resources;
 using GuessWhoClient.Utils;
+using System.ServiceModel;
 
 namespace GuessWhoClient
 {
@@ -39,6 +40,7 @@ namespace GuessWhoClient
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
             generatedConfirmationCode = GenerateConfirmationCode(10);
+            Console.WriteLine(generatedConfirmationCode);
 
             bool confirmationSent = SendConfirmationEmail(email, generatedConfirmationCode);
             if (!confirmationSent)
@@ -65,7 +67,7 @@ namespace GuessWhoClient
                 return;
             }
 
-            GameServices.AuthenticationServiceClient authenticationServiceClient = new GameServices.AuthenticationServiceClient();
+            AuthenticationServiceClient authenticationServiceClient = new AuthenticationServiceClient();
             var newUser = new Profile
             {
                 NickName = nickname,
@@ -75,21 +77,28 @@ namespace GuessWhoClient
                 Avatar = profileImage
             };
 
-            GameServices.booleanResponse response = authenticationServiceClient.RegisterUser(newUser);
-            bool successRegister = response.Value;
-            if (!successRegister)
+            try
             {
-                MessageBox.Show(
-                    ServerResponse.GetMessageFromStatusCode(response.StatusCode),
-                    ServerResponse.GetTitleFromStatusCode(response.StatusCode),
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning
-                );
-                return;
-            }
+                booleanResponse response = authenticationServiceClient.RegisterUser(newUser);
+                bool successRegister = response.Value;
+                if (!successRegister)
+                {
+                    MessageBox.Show(
+                        ServerResponse.GetMessageFromStatusCode(response.StatusCode),
+                        ServerResponse.GetTitleFromStatusCode(response.StatusCode),
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning
+                    );
+                    return;
+                }
 
-            MainMenuPage mainMenu = new MainMenuPage();
-            this.NavigationService.Navigate(mainMenu);
+                MainMenuPage mainMenu = new MainMenuPage();
+                this.NavigationService.Navigate(mainMenu);
+            }
+            catch (EndpointNotFoundException)
+            {
+                ServerResponse.ShowServerDownMessage();
+            }
         }
 
         private static string GenerateConfirmationCode(int length)

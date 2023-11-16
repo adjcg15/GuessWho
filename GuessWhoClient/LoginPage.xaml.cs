@@ -1,7 +1,9 @@
-﻿using GuessWhoClient.Properties;
+﻿using GuessWhoClient.GameServices;
+using GuessWhoClient.Properties;
 using GuessWhoClient.Utils;
 using System;
 using System.Resources;
+using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -46,41 +48,46 @@ namespace GuessWhoClient
         private void ValidateUserCredentials(string email, string password)
         {
             GameServices.AuthenticationServiceClient authenticationServiceClient = new GameServices.AuthenticationServiceClient();
-            GameServices.ProfileResponse response = authenticationServiceClient.Login(email, password);
 
-            if (response.Value != null)
+            try
             {
-                GameServices.Profile profile = response.Value;
-                MessageBox.Show(Properties.Resources.msgbWelcome1 + profile.FullName + Properties.Resources.msgbWelcome2);
+                GameServices.ProfileResponse response = authenticationServiceClient.Login(email, password);
+                if (response.StatusCode == ResponseStatus.OK && response.Value != null)
+                {
+                    GameServices.Profile profile = response.Value;
+                    MessageBox.Show(Properties.Resources.msgbWelcome1 + profile.FullName + Properties.Resources.msgbWelcome2);
 
-                Console.WriteLine(profile.NickName);
-                DataStore.Profile = profile;
+                    DataStore.Profile = profile;
 
-                Console.WriteLine(DataStore.Profile?.NickName);
-                GoToMainMenuUploaded();
+                    GoToMainMenuUploaded();
+                }
+                else if(response.StatusCode == ResponseStatus.OK && response.Value == null)
+                {
+                    MessageBox.Show(Properties.Resources.msgbUserNotFound);
+                }
+                else if (response.StatusCode == ResponseStatus.UPDATE_ERROR)
+                {
+                    MessageBox.Show(Properties.Resources.txtUpdateErrorMessage);
+                }
+                else if (response.StatusCode == ResponseStatus.VALIDATION_ERROR)
+                {
+                    MessageBox.Show(Properties.Resources.txtValidationErrorMessage, Properties.Resources.txtValidationErrorTitle);
+                }
+                else if (response.StatusCode == ResponseStatus.SQL_ERROR)
+                {
+                    MessageBox.Show(Properties.Resources.txtSQLErrorMessage, Properties.Resources.txtSQLErrorTitle);
+                }
             }
-            else if (response.StatusCode == GameServices.ResponseStatus.UPDATE_ERROR)
+            catch (EndpointNotFoundException)
             {
-                MessageBox.Show(Properties.Resources.txtUpdateErrorMessage);
+                ServerResponse.ShowServerDownMessage();
             }
-            else if(response.StatusCode == GameServices.ResponseStatus.VALIDATION_ERROR)
-            {
-                MessageBox.Show(Properties.Resources.txtValidationErrorMessage, Properties.Resources.txtValidationErrorTitle);
-            }
-            else if(response.StatusCode == GameServices.ResponseStatus.SQL_ERROR)
-            {
-                MessageBox.Show(Properties.Resources.txtSQLErrorMessage, Properties.Resources.txtSQLErrorTitle);
-            }
-            else
-            {
-                MessageBox.Show(Properties.Resources.msgbUserNotFound);
-            } 
         }
 
         private void GoToMainMenuUploaded()
         {
+            ShowsNavigationUI = true;
             MainMenuPage mainMenuPage = new MainMenuPage();
-            mainMenuPage.LoginProfile();
             this.NavigationService.Navigate(mainMenuPage);
         }
     }
