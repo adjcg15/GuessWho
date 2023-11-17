@@ -31,15 +31,12 @@ namespace GuessWhoClient
         {
             string email = tbEmail.Text.Trim();
             string password = Authentication.HashPassword(pbPassword.Password.Trim());
-            bool isValid = true;
 
             if(string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
-                isValid = false;
-
                 MessageBox.Show(Properties.Resources.msgbEmptyField);
             }
-            if (isValid)
+            else
             {
                 ValidateUserCredentials(email, password);
             }
@@ -47,35 +44,44 @@ namespace GuessWhoClient
 
         private void ValidateUserCredentials(string email, string password)
         {
-            GameServices.AuthenticationServiceClient authenticationServiceClient = new GameServices.AuthenticationServiceClient();
-
             try
             {
-                GameServices.ProfileResponse response = authenticationServiceClient.Login(email, password);
-                if (response.StatusCode == ResponseStatus.OK && response.Value != null)
-                {
-                    GameServices.Profile profile = response.Value;
-                    MessageBox.Show(Properties.Resources.msgbWelcome1 + profile.FullName + Properties.Resources.msgbWelcome2);
+                AuthenticationServiceClient authenticationServiceClient = new AuthenticationServiceClient();
+                ProfileResponse response = authenticationServiceClient.Login(email, password);
 
-                    DataStore.Profile = profile;
-
-                    GoToMainMenuUploaded();
-                }
-                else if(response.StatusCode == ResponseStatus.OK && response.Value == null)
+                switch (response.StatusCode)
                 {
-                    MessageBox.Show(Properties.Resources.msgbUserNotFound);
-                }
-                else if (response.StatusCode == ResponseStatus.UPDATE_ERROR)
-                {
-                    MessageBox.Show(Properties.Resources.txtUpdateErrorMessage);
-                }
-                else if (response.StatusCode == ResponseStatus.VALIDATION_ERROR)
-                {
-                    MessageBox.Show(Properties.Resources.txtValidationErrorMessage, Properties.Resources.txtValidationErrorTitle);
-                }
-                else if (response.StatusCode == ResponseStatus.SQL_ERROR)
-                {
-                    MessageBox.Show(Properties.Resources.txtSQLErrorMessage, Properties.Resources.txtSQLErrorTitle);
+                    case ResponseStatus.OK:
+                        if (response.Value != null)
+                        {
+                            Profile profile = response.Value;
+                            MessageBox.Show(Properties.Resources.msgbWelcome1 + profile.FullName + Properties.Resources.msgbWelcome2);
+                            DataStore.Profile = profile;
+                            RedirectToMainMenu();
+                        }
+                        else
+                        {
+                            MessageBox.Show(Properties.Resources.msgbUserNotFound);
+                        }
+                        break;
+                    case ResponseStatus.UPDATE_ERROR:
+                        MessageBox.Show(Properties.Resources.txtUpdateErrorMessage);
+                        break;
+                    case ResponseStatus.VALIDATION_ERROR:
+                        MessageBox.Show(Properties.Resources.txtValidationErrorMessage, Properties.Resources.txtValidationErrorTitle);
+                        break;
+                    case ResponseStatus.SQL_ERROR:
+                        MessageBox.Show(Properties.Resources.txtSQLErrorMessage, Properties.Resources.txtSQLErrorTitle);
+                        break;
+                    default:
+                        MessageBox.Show(
+                            ServerResponse.GetMessageFromStatusCode(response.StatusCode),
+                            ServerResponse.GetTitleFromStatusCode(response.StatusCode),
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
+                        );
+                        RedirectToMainMenu();
+                        break;
                 }
             }
             catch (EndpointNotFoundException)
@@ -84,7 +90,7 @@ namespace GuessWhoClient
             }
         }
 
-        private void GoToMainMenuUploaded()
+        private void RedirectToMainMenu()
         {
             ShowsNavigationUI = true;
             MainMenuPage mainMenuPage = new MainMenuPage();

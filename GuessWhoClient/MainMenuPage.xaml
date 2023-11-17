@@ -98,7 +98,7 @@
                 </StackPanel>
             </Button>
         </StackPanel>
-        <Image Name="ImgSendInvitationCode" Visibility="Collapsed" Source="/Resources/send-gray-icon.png" Opacity="0.5" HorizontalAlignment="Left" Margin="490,455,0,0" VerticalAlignment="Top" Height="16" Width="14" MouseDown="ImgSendInvitationCodeClick" IsEnabled="False"/>
+        <Image Name="ImgSendInvitationCode" Visibility="Collapsed" Source="/Resources/send-gray-icon.png" Opacity="0.5" HorizontalAlignment="Left" Margin="490,455,0,0" VerticalAlignment="Top" Height="16" Width="14" MouseDown="ImgSendInvitationCodeClick" IsEnabled="False" Cursor="Hand"/>
         <TextBlock Name="TbCodePlaceholder" Visibility="Collapsed" MouseDown="TbInvitationCodeGotFocus" Text="{x:Static p:Resources.tbCodePlaceholder}" Opacity="0.5" FontWeight="Medium" HorizontalAlignment="Center" Height="15" Margin="0,456,0,0" VerticalAlignment="Top" Width="70" TextAlignment="Center" />
         <Border Name="BorderOpacityCanceledMatch"  Opacity="0.6" Visibility="Collapsed" HorizontalAlignment="Center" Height="520" VerticalAlignment="Center" Width="900" Background="Black" MouseDown="BorderCanceledMatchClick"/>
         <Border x:Name="BorderCanceledMatch" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" Height="78" Width="314" Background="White" CornerRadius="16,16,16,16">
