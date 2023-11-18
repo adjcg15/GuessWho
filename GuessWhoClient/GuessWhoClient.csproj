@@ -72,6 +72,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="DrawingPage.xaml.cs">
+      <DependentUpon>DrawingPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FriendsPage.xaml.cs">
       <DependentUpon>FriendsPage.xaml</DependentUpon>
     </Compile>
@@ -122,6 +125,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ConfirmAccountPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DrawingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -320,6 +327,15 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\star-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\logo-background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\seal-check-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
