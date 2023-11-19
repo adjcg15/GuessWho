@@ -28,7 +28,6 @@ namespace GuessWhoClient
             drawStartPoint = e.GetPosition(CnvsDrawing);
 
             var brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(selectedColor));
-
             var line = new Line
             {
                 X1 = drawStartPoint.X,
@@ -36,6 +35,8 @@ namespace GuessWhoClient
                 X2 = drawStartPoint.X + 1,
                 Y2 = drawStartPoint.Y + 1,
                 Stroke = brush,
+                StrokeEndLineCap = PenLineCap.Round,
+                StrokeStartLineCap = PenLineCap.Round,
                 StrokeThickness = PEN_THICKNESS
             };
 
@@ -67,25 +68,26 @@ namespace GuessWhoClient
                 X2 = point.X,
                 Y2 = point.Y,
                 Stroke = new SolidColorBrush((Color)ColorConverter.ConvertFromString(selectedColor)),
+                StrokeEndLineCap = PenLineCap.Round,
+                StrokeStartLineCap = PenLineCap.Round,
                 StrokeThickness = PEN_THICKNESS
             };
 
             CnvsDrawing.Children.Add(line);
-
             drawStartPoint = point;
         }
 
         private void EraseDrawInCanvas(Point point)
         {
-            var linesToRemove = new List<Line>();
+            List<Line> linesToRemove = new List<Line>();
+            const int ERASER_SIZE = 15;
 
-            foreach (var element in CnvsDrawing.Children.OfType<Line>())
+            foreach (var line in CnvsDrawing.Children.OfType<Line>())
             {
-                var distanceToLine = DistancePointToLine(point, new Point(element.X1, element.Y1), new Point(element.X2, element.Y2));
-
-                if (distanceToLine < 10)
+                double distanceToLine = DistancePointToLine(point, line);
+                if (distanceToLine < ERASER_SIZE)
                 {
-                    linesToRemove.Add(element);
+                    linesToRemove.Add(line);
                 }
             }
 
@@ -95,38 +97,39 @@ namespace GuessWhoClient
             }
         }
 
-        private double DistancePointToLine(Point point, Point lineStart, Point lineEnd)
+        private double DistancePointToLine(Point point, Line line)
         {
-            double a = point.X - lineStart.X;
-            double b = point.Y - lineStart.Y;
-            double c = lineEnd.X - lineStart.X;
-            double d = lineEnd.Y - lineStart.Y;
+            double lineStartX = line.X1, lineStartY = line.Y1,
+                   lineEndX = line.X2, lineEndY = line.Y2;
+
+            double a = point.X - lineStartX;
+            double b = point.Y - lineStartY;
+            double c = lineEndX - lineStartX;
+            double d = lineEndY - lineStartY;
 
             double dot = a * c + b * d;
             double lenSq = c * c + d * d;
             double param = dot / lenSq;
 
-            double xx, yy;
-
-            if (param < 0 || (lineStart.X == lineEnd.X && lineStart.Y == lineEnd.Y))
+            double projectedVectorX, projectedVectorY;
+            if (param < 0 || (lineStartX == lineEndX && lineStartY == lineEndY))
             {
-                xx = lineStart.X;
-                yy = lineStart.Y;
+                projectedVectorX = lineStartX;
+                projectedVectorY = lineStartY;
             }
             else if (param > 1)
             {
-                xx = lineEnd.X;
-                yy = lineEnd.Y;
+                projectedVectorX = lineEndX;
+                projectedVectorY = lineEndY;
             }
             else
             {
-                xx = lineStart.X + param * c;
-                yy = lineStart.Y + param * d;
+                projectedVectorX = lineStartX + param * c;
+                projectedVectorY = lineStartY + param * d;
             }
 
-            double dx = point.X - xx;
-            double dy = point.Y - yy;
-
+            double dx = point.X - projectedVectorX;
+            double dy = point.Y - projectedVectorY;
             return Math.Sqrt(dx * dx + dy * dy);
         }
 
@@ -143,17 +146,16 @@ namespace GuessWhoClient
                 selectedColor = color;
             }
 
-            foreach (Button otherButton in GridColors.Children )
+            foreach (Button colorButton in GridColors.Children )
             {
-                string otherColorTag = otherButton.Tag as string;
-
-                if (selectedColor == otherColorTag)
+                string colorTag = colorButton.Tag as string;
+                if (selectedColor == colorTag)
                 {
-                    otherButton.BorderBrush = Brushes.Blue;
+                    colorButton.BorderBrush = Brushes.Blue;
                 }
                 else
                 {
-                    otherButton.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(otherColorTag));
+                    colorButton.BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(colorTag));
                 }
             }
         }
