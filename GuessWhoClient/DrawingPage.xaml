@@ -2,8 +2,7 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:GuessWhoClient"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       mc:Ignorable="d" 
       Height="520" Width="900"
       Title="DrawingPage">
@@ -50,7 +49,7 @@
                     FontSize="35"
                     HorizontalAlignment="Left"
                 />
-                
+
                 <Button 
                     Click="BtnFinishClick"
                     HorizontalAlignment="Left" 
@@ -63,12 +62,153 @@
                 </Button>
             </Grid>
 
-            <Image Margin="40,67,40,0" Source="/Resources/logo-background.png"/>
-            <Canvas Margin="0,67,0,0">
-                <Canvas.Background>
-                    <SolidColorBrush Color="White" Opacity="0"/>
-                </Canvas.Background>
-            </Canvas>
+            <Grid Margin="0,67,0,0">
+                <Grid Background="LightGray" Margin="0,0,0,414">
+                    <Grid Margin="0,0,225,0">
+                        <Button 
+                            Width="28"
+                            Height="28"
+                            Background="#E21818"
+                            BorderBrush="#E21818"
+                            HorizontalAlignment="Left" 
+                            Margin="10,0,0,0" VerticalAlignment="Center" Click="BtnClearDrawingCanvasClick">
+                            <StackPanel Height="24" Width="24">
+                                <Image Height="24" Width="24" Source="/Resources/clear-draw-icon.png"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button 
+                            x:Name="BtnDrawingMode"
+                            Width="28"
+                            Height="28"
+                            Background="#666666"
+                            BorderBrush="Blue"
+                            BorderThickness="3"
+                            HorizontalAlignment="Left" 
+                            Margin="72,0,0,0" VerticalAlignment="Center" Click="BtnDrawingModeClick">
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Height="22" Width="22">
+                                <Image Height="22" Width="22" Source="/Resources/pencil-icon.png"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button 
+                            x:Name="BtnErasingMode"
+                            Width="28"
+                            Height="28"
+                            Background="#666666"
+                            BorderBrush="#666666"
+                            BorderThickness="3"
+                            HorizontalAlignment="Left" VerticalAlignment="Center" Margin="106,0,0,0" Click="BtnEraserModeClick">
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Height="22" Width="22">
+                                <Image Height="22" Width="22" Source="/Resources/eraser-icon.png"/>
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+
+                    <Grid x:Name="GridColors" HorizontalAlignment="Left" Margin="230,0,0,0" Width="210">
+                        <Button 
+                            Click="BtnColorClick"
+                            Width="16"
+                            Height="28"
+                            Background="#000000"
+                            BorderBrush="Blue"
+                            BorderThickness="2"
+                            Tag="#000000"
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Center" Grid.Column="1"/>
+                        <Button 
+                            Click="BtnColorClick"
+                            Width="16"
+                            Height="28"
+                            Background="#793605"
+                            BorderBrush="#793605"
+                            BorderThickness="2"
+                            Tag="#793605"
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Center" Grid.Column="1"
+                            Margin="0, 0, 20, 0"/>
+                        <Button 
+                            Click="BtnColorClick"
+                            Width="16"
+                            Height="28"
+                            Background="#EC2A00"
+                            BorderBrush="#EC2A00"
+                            BorderThickness="2"
+                            Tag="#EC2A00"
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Center" Grid.Column="1"
+                            Margin="0, 0, 40, 0"/>
+                        <Button 
+                            Click="BtnColorClick"
+                            Width="16"
+                            Height="28"
+                            Background="#FFC700"
+                            BorderBrush="#FFC700"
+                            BorderThickness="2"
+                            Tag="#FFC700"
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Center" Grid.Column="1"
+                            Margin="0, 0, 60, 0"/>
+                        <Button 
+                            Click="BtnColorClick"
+                            Width="16"
+                            Height="28"
+                            Background="#C6C6C6"
+                            BorderBrush="#C6C6C6"
+                            BorderThickness="2"
+                            Tag="#C6C6C6"
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Center" Grid.Column="1"
+                            Margin="0, 0, 80, 0"/>
+                        <Button 
+                            Click="BtnColorClick"
+                            Width="16"
+                            Height="28"
+                            Background="#3F210B"
+                            BorderBrush="#3F210B"
+                            BorderThickness="2"
+                            Tag="#3F210B"
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Center" Grid.Column="1"
+                            Margin="0, 0, 100, 0"/>
+                        <Button 
+                            Click="BtnColorClick"
+                            Width="16"
+                            Height="28"
+                            Background="#A97231"
+                            BorderBrush="#A97231"
+                            BorderThickness="2"
+                            Tag="#A97231"
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Center" Grid.Column="1"
+                            Margin="0, 0, 120, 0"/>
+                        <Button 
+                            Click="BtnColorClick"
+                            Width="16"
+                            Height="28"
+                            Background="#F3BC7C"
+                            BorderBrush="#F3BC7C"
+                            BorderThickness="2"
+                            Tag="#F3BC7C"
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Center"
+                            Margin="0, 0, 140, 0"/>
+                    </Grid>
+                </Grid>
+
+                <Grid Margin="0,39,0,0">
+                    <Image Margin="40,0,40,0" Source="/Resources/logo-background.png"/>
+                    <Canvas 
+                        x:Name="CnvsDrawing"
+                        MouseMove="CnvsOnDrawing"
+                        MouseDown="CnvsStartDrawing"
+                        MouseUp="CnvsEndDrawing">
+                        <Canvas.Background>
+                            <SolidColorBrush Color="White" Opacity="0"/>
+                        </Canvas.Background>
+                    </Canvas>
+                </Grid>
+            </Grid>
         </Grid>
     </Grid>
 </Page>
