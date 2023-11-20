@@ -394,5 +394,8 @@
     <Resource Include="Resources\eraser-icon.png" />
     <Resource Include="Resources\pencil-icon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\tiny-logo.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
