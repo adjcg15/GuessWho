@@ -397,5 +397,8 @@
   <ItemGroup>
     <Resource Include="Resources\tiny-logo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\cancel-guess-icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -673,6 +673,24 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a ¿Dese elegir este personaje?.
+        /// </summary>
+        public static string msgbConfirmGuessChoiceMessage {
+            get {
+                return ResourceManager.GetString("msgbConfirmGuessChoiceMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Confirme su elección.
+        /// </summary>
+        public static string msgbConfirmGuessChoiceTitle {
+            get {
+                return ResourceManager.GetString("msgbConfirmGuessChoiceTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El correo electrónico y la contraseña son requeridos.
         /// </summary>
         public static string msgbEmptyField {

@@ -5,37 +5,60 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       mc:Ignorable="d" 
       Height="520" Width="900"
-      Title="DrawingPage" Loaded="PageLoaded">
+      xmlns:p="clr-namespace:GuessWhoClient.Properties"
+      Title="DrawingPage" Loaded="PageLoaded"
+      DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
     <Grid Background="White">
         <Grid Margin="0,0,450,0">
             <Grid Background="#FFC436" Margin="0,0,0,453">
-                <!--{x:Static p:Resources.btnCancelGame}-->
                 <Button 
-                    Click="BtnExitClick" 
-                    x:Name="BtnExit" 
+                    Click="BtnExitClick"
                     HorizontalAlignment="Left" 
                     Margin="10,0,0,0" VerticalAlignment="Center" 
-                    Style="{StaticResource PrimaryCancelButtonWithIcon}" IsCancel="True">
+                    Style="{StaticResource PrimaryCancelButtonWithIcon}" IsCancel="True" Width="103">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Image Source="/Resources/exit-icon.png" Height="19" Width="19"/>
-                        <TextBlock Margin="5, 3, 0, 3" Text="Salir" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                        <TextBlock Margin="5, 3, 0, 3" Text="{x:Static p:Resources.btnLeaveGame}" VerticalAlignment="Center" FontWeight="SemiBold"/>
                     </StackPanel>
                 </Button>
 
                 <Button 
                     Click="BtnGuessClick"
+                    x:Name="BtnGuess"
                     HorizontalAlignment="Left" 
                     Margin="308,0,0,0" VerticalAlignment="Center" 
                     Style="{StaticResource PrimaryButtonWithIcon}" Width="132">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Image Source="/Resources/star-icon.png" Height="19" Width="19"/>
-                        <TextBlock Margin="5, 0, 0, 0" Text="Adivinar" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                        <TextBlock Margin="5, 0, 0, 0" Text="{x:Static p:Resources.btnGuess}" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                    </StackPanel>
+                </Button>
+                <Button 
+                    Click="BtnCancelGuessClick"
+                    x:Name="BtnCancelGuess"
+                    HorizontalAlignment="Right" 
+                    Margin="10,0,0,0" VerticalAlignment="Center" 
+                    Visibility="Hidden"
+                    Style="{StaticResource PrimaryCancelButtonWithIcon}">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Image Source="/Resources/cancel-guess-icon.png" Height="19" Width="19"/>
+                        <TextBlock Margin="5, 3, 0, 3" Text="{x:Static p:Resources.btnCancelGuess}" VerticalAlignment="Center" FontWeight="SemiBold"/>
                     </StackPanel>
                 </Button>
             </Grid>
 
-            <ScrollViewer Margin="0,67,0,0" Background="#E21818">
+            <ScrollViewer Margin="0,67,0,0">
+                <ScrollViewer.Style>
+                    <Style TargetType="ScrollViewer">
+                        <Setter Property="Background" Value="#E21818" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding DataContext.IsChoosingCharacter, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" Value="True">
+                                <Setter Property="Background" Value="#0A6EBD" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ScrollViewer.Style>
                 <ItemsControl x:Name="IcCharacters">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -49,10 +72,20 @@
                                     Height="72.16666" Width="72.16666"
                                     HorizontalAlignment="Center" 
                                     VerticalAlignment="Center" 
-                                    BorderBrush="#E21818" BorderThickness="4" CornerRadius="8">
+                                    BorderThickness="4" CornerRadius="8">
                                     <Border.Background>
                                         <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Avatar}"/>
                                     </Border.Background>
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="BorderBrush" Value="#E21818" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding DataContext.IsChoosingCharacter, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" Value="True">
+                                                    <Setter Property="BorderBrush" Value="#0A6EBD" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
                                 </Border>
                                 <Border 
                                     Height="72.16666" Width="72.16666"
@@ -90,13 +123,13 @@
                 />
 
                 <Button 
-                    Click="BtnFinishClick"
+                    Click="BtnFinishDrawClick"
                     HorizontalAlignment="Left" 
                     Margin="275,0,0,0" VerticalAlignment="Center" 
                     Style="{StaticResource SecondaryButtonWithIcon}" Width="165">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Image Source="/Resources/seal-check-icon.png" Height="19" Width="19"/>
-                        <TextBlock Margin="5, 0, 0, 0" Text="Terminar intento" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                        <TextBlock Margin="5, 0, 0, 0" Text="{x:Static p:Resources.btnFinishAttempt}" VerticalAlignment="Center" FontWeight="SemiBold"/>
                     </StackPanel>
                 </Button>
             </Grid>

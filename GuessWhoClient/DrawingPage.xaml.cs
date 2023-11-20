@@ -10,7 +10,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Xml.Linq;
 
 namespace GuessWhoClient
 {
@@ -18,6 +17,7 @@ namespace GuessWhoClient
     {
         private BitmapImage avatar;
         private bool isHidden;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public BitmapImage Avatar { get { return avatar; } set {  avatar = value; } }
 
@@ -34,15 +34,13 @@ namespace GuessWhoClient
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 
-    public partial class DrawingPage : Page
+    public partial class DrawingPage : Page, INotifyPropertyChanged
     {
         private bool isInteractingWithCanvas;
         private bool isDrawingMode = true;
@@ -50,10 +48,60 @@ namespace GuessWhoClient
         private Point drawStartPoint;
         private string selectedColor = "#000000";
         private const int PEN_THICKNESS = 4;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public DrawingPage()
         {
             InitializeComponent();
+        }
+
+        public bool IsChoosingCharacter
+        {
+            get { return isChoosingCharacter; }
+            set
+            {
+                if (isChoosingCharacter != value)
+                {
+                    isChoosingCharacter = value;
+                    OnPropertyChanged(nameof(IsChoosingCharacter));
+                }
+            }
+        }
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void PageLoaded(object sender, RoutedEventArgs e)
+        {
+            ShowCharacters();
+        }
+
+        private void ShowCharacters()
+        {
+            IcCharacters.ItemsSource = RecoverChatacters();
+        }
+
+        private List<Character> RecoverChatacters()
+        {
+            List<Character> charactersList = new List<Character>();
+
+            string PROJECT_DIRECTORY = System.IO.Path.Combine(AppContext.BaseDirectory, "..\\..\\");
+            string CHARACTERS_FOLDER = System.IO.Path.Combine(PROJECT_DIRECTORY, "Resources\\Characters");
+            string[] imageFiles = Directory.GetFiles(CHARACTERS_FOLDER, "*.png");
+
+            foreach (string imagePath in imageFiles)
+            {
+                Character character = new Character
+                {
+                    IsHidden = false,
+                    Avatar = new BitmapImage(new Uri(imagePath, UriKind.Relative))
+                };
+                charactersList.Add(character);
+            }
+
+            return charactersList;
         }
 
         private void CnvsStartDrawing(object sender, MouseButtonEventArgs e)
@@ -220,52 +268,59 @@ namespace GuessWhoClient
             
         }
 
+        private void BtnCancelGuessClick(object sender, RoutedEventArgs e)
+        {
+            IsChoosingCharacter = false;
+            BtnGuess.Visibility = Visibility.Visible;
+            BtnCancelGuess.Visibility = Visibility.Hidden;
+        }
+
         private void BtnGuessClick(object sender, RoutedEventArgs e)
         {
-            isChoosingCharacter = true;
+            IsChoosingCharacter = true;
+            BtnCancelGuess.Visibility = Visibility.Visible;
+            BtnGuess.Visibility = Visibility.Hidden;
         }
 
-        private void BtnFinishClick(object sender, RoutedEventArgs e)
+        private void BtnFinishDrawClick(object sender, RoutedEventArgs e)
         {
 
-        }
-
-        private void PageLoaded(object sender, RoutedEventArgs e)
-        {
-            ShowCharacters();
-        }
-
-        private void ShowCharacters()
-        {
-            IcCharacters.ItemsSource = RecoverChatacters();
-        }
-
-        private List<Character> RecoverChatacters()
-        {
-            List<Character> charactersList = new List<Character>();
-
-            string PROJECT_DIRECTORY = System.IO.Path.Combine(AppContext.BaseDirectory, "..\\..\\");
-            string CHARACTERS_FOLDER = System.IO.Path.Combine(PROJECT_DIRECTORY, "Resources\\Characters");
-            string[] imageFiles = Directory.GetFiles(CHARACTERS_FOLDER, "*.png");
-
-            foreach (string imagePath in imageFiles)
-            {
-                Character character = new Character
-                {
-                    IsHidden = false,
-                    Avatar = new BitmapImage(new Uri(imagePath, UriKind.Relative))
-                };
-                charactersList.Add(character);
-            }
-
-            return charactersList;
         }
 
         private void GridSelectCharacterClick(object sender, MouseButtonEventArgs e)
         {
             if (sender is FrameworkElement element && element.DataContext is Character character)
             {
-                character.IsHidden = !character.IsHidden;
+                if(isChoosingCharacter)
+                {
+                    GuessCharacter(character);
+                }
+                else
+                {
+                    ToggleCharacterVisibility(character);
+                }
+            }
+        }
+
+        private void ToggleCharacterVisibility(Character character)
+        {
+            character.IsHidden = !character.IsHidden;
+        }
+
+        private void GuessCharacter(Character character)
+        {
+            if(!character.IsHidden)
+            {
+                MessageBoxResult confirmSelection = MessageBox.Show(
+                    Properties.Resources.msgbConfirmGuessChoiceMessage,
+                    Properties.Resources.msgbConfirmGuessChoiceTitle,
+                    MessageBoxButton.YesNo
+                );
+
+                if(confirmSelection == MessageBoxResult.Yes)
+                {
+                    
+                }
             }
         }
     }

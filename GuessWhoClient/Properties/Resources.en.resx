@@ -321,6 +321,12 @@
   <data name="msgbConfirmEmailSendingErrorTitle" xml:space="preserve">
     <value>Sending email error</value>
   </data>
+  <data name="msgbConfirmGuessChoiceMessage" xml:space="preserve">
+    <value>Do you want to choose this character?</value>
+  </data>
+  <data name="msgbConfirmGuessChoiceTitle" xml:space="preserve">
+    <value>Confirm your choice</value>
+  </data>
   <data name="msgbEmptyField" xml:space="preserve">
     <value>Email and password are required</value>
   </data>
