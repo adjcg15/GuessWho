@@ -321,5 +321,55 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Characters\Adela.png" />
+    <Resource Include="Resources\Characters\Aisha.png" />
+    <Resource Include="Resources\Characters\Alex.png" />
+    <Resource Include="Resources\Characters\Amara.png" />
+    <Resource Include="Resources\Characters\Andres.png" />
+    <Resource Include="Resources\Characters\Ash.png" />
+    <Resource Include="Resources\Characters\Astrid.png" />
+    <Resource Include="Resources\Characters\Aurora.png" />
+    <Resource Include="Resources\Characters\Axel.png" />
+    <Resource Include="Resources\Characters\Camila.png" />
+    <Resource Include="Resources\Characters\Dan.png" />
+    <Resource Include="Resources\Characters\Daniel.png" />
+    <Resource Include="Resources\Characters\Diego.png" />
+    <Resource Include="Resources\Characters\Eduardo.png" />
+    <Resource Include="Resources\Characters\Elena.png" />
+    <Resource Include="Resources\Characters\Elizabeth.png" />
+    <Resource Include="Resources\Characters\Enrique.png" />
+    <Resource Include="Resources\Characters\Evelyn.png" />
+    <Resource Include="Resources\Characters\Felicia.png" />
+    <Resource Include="Resources\Characters\Fernando.png" />
+    <Resource Include="Resources\Characters\Jacob.png" />
+    <Resource Include="Resources\Characters\Jamal.png" />
+    <Resource Include="Resources\Characters\Jessie.png" />
+    <Resource Include="Resources\Characters\Jim.png" />
+    <Resource Include="Resources\Characters\Jimmy.png" />
+    <Resource Include="Resources\Characters\Juan.png" />
+    <Resource Include="Resources\Characters\Karen.png" />
+    <Resource Include="Resources\Characters\Karly.png" />
+    <Resource Include="Resources\Characters\Laurie.png" />
+    <Resource Include="Resources\Characters\Lily.png" />
+    <Resource Include="Resources\Characters\Lisa.png" />
+    <Resource Include="Resources\Characters\Mary.png" />
+    <Resource Include="Resources\Characters\Maya.png" />
+    <Resource Include="Resources\Characters\Mia.png" />
+    <Resource Include="Resources\Characters\Miguel.png" />
+    <Resource Include="Resources\Characters\Mike.png" />
+    <Resource Include="Resources\Characters\Mildred.png" />
+    <Resource Include="Resources\Characters\Nadia.png" />
+    <Resource Include="Resources\Characters\Natalie.png" />
+    <Resource Include="Resources\Characters\Nathan.png" />
+    <Resource Include="Resources\Characters\Oscar.png" />
+    <Resource Include="Resources\Characters\Paty.png" />
+    <Resource Include="Resources\Characters\Randy.png" />
+    <Resource Include="Resources\Characters\Roman.png" />
+    <Resource Include="Resources\Characters\Ruben.png" />
+    <Resource Include="Resources\Characters\Sam.png" />
+    <Resource Include="Resources\Characters\Victor.png" />
+    <Resource Include="Resources\Characters\Zara.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
