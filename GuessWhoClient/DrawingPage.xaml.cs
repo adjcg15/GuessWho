@@ -1,5 +1,4 @@
-﻿using GuessWhoClient.Components;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -13,33 +12,6 @@ using System.Windows.Shapes;
 
 namespace GuessWhoClient
 {
-    public class Character: INotifyPropertyChanged
-    {
-        private BitmapImage avatar;
-        private bool isHidden;
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public BitmapImage Avatar { get { return avatar; } set {  avatar = value; } }
-
-        public bool IsHidden
-        {
-            get { return isHidden; }
-            set
-            {
-                if (isHidden != value)
-                {
-                    isHidden = value;
-                    OnPropertyChanged(nameof(IsHidden));
-                }
-            }
-        }
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
-
     public partial class DrawingPage : Page, INotifyPropertyChanged
     {
         private bool isInteractingWithCanvas;
@@ -95,7 +67,7 @@ namespace GuessWhoClient
             {
                 Character character = new Character
                 {
-                    IsHidden = false,
+                    IsSelected = false,
                     Avatar = new BitmapImage(new Uri(imagePath, UriKind.Relative))
                 };
                 charactersList.Add(character);
@@ -304,12 +276,12 @@ namespace GuessWhoClient
 
         private void ToggleCharacterVisibility(Character character)
         {
-            character.IsHidden = !character.IsHidden;
+            character.IsSelected = !character.IsSelected;
         }
 
         private void GuessCharacter(Character character)
         {
-            if(!character.IsHidden)
+            if(!character.IsSelected)
             {
                 MessageBoxResult confirmSelection = MessageBox.Show(
                     Properties.Resources.msgbConfirmGuessChoiceMessage,

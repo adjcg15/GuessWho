@@ -98,7 +98,7 @@
                                         <Style TargetType="Border">
                                             <Setter Property="Visibility" Value="Hidden" />
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsHidden}" Value="True">
+                                                <DataTrigger Binding="{Binding IsSelected}" Value="True">
                                                     <Setter Property="Visibility" Value="Visible" />
                                                 </DataTrigger>
                                             </Style.Triggers>

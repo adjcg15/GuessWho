@@ -58,6 +58,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ChooseCharacterPage.xaml.cs">
+      <DependentUpon>ChooseCharacterPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Components\ChatMessage.xaml.cs">
       <DependentUpon>ChatMessage.xaml</DependentUpon>
     </Compile>
@@ -87,10 +90,11 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\CharacterCard.cs" />
     <Compile Include="ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ProfileSingleton.cs" />
+    <Compile Include="Model\DataStore.cs" />
     <Compile Include="Properties\Resources.es-MX.Designer.cs">
       <DependentUpon>Resources.es-MX.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -116,6 +120,10 @@
     <Compile Include="Utils\Email.cs" />
     <Compile Include="Utils\ImageTransformator.cs" />
     <Compile Include="Utils\ServerResponse.cs" />
+    <Page Include="ChooseCharacterPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Components\ChatMessage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -400,5 +408,6 @@
   <ItemGroup>
     <Resource Include="Resources\cancel-guess-icon.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
