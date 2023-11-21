@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GuessWhoClient"
         mc:Ignorable="d"
-        Title="Guess Who" ResizeMode="CanMinimize" Source="MainMenuPage.xaml"
+        Title="Guess Who" ResizeMode="CanMinimize" Source="ChooseCharacterPage.xaml"
         SizeToContent="WidthAndHeight" Closed="NavigationWindowClosed">
 
 </NavigationWindow>

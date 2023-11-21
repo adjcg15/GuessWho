@@ -58,6 +58,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ChooseCharacterPage.xaml.cs">
+      <DependentUpon>ChooseCharacterPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Components\ChatMessage.xaml.cs">
       <DependentUpon>ChatMessage.xaml</DependentUpon>
     </Compile>
@@ -72,6 +75,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="DrawingPage.xaml.cs">
+      <DependentUpon>DrawingPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FriendsPage.xaml.cs">
       <DependentUpon>FriendsPage.xaml</DependentUpon>
     </Compile>
@@ -84,10 +90,11 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\CharacterCard.cs" />
     <Compile Include="ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ProfileSingleton.cs" />
+    <Compile Include="Model\DataStore.cs" />
     <Compile Include="Properties\Resources.es-MX.Designer.cs">
       <DependentUpon>Resources.es-MX.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -113,6 +120,10 @@
     <Compile Include="Utils\Email.cs" />
     <Compile Include="Utils\ImageTransformator.cs" />
     <Compile Include="Utils\ServerResponse.cs" />
+    <Page Include="ChooseCharacterPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Components\ChatMessage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -122,6 +133,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ConfirmAccountPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DrawingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -371,5 +386,28 @@
     <Resource Include="Resources\Characters\Victor.png" />
     <Resource Include="Resources\Characters\Zara.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\star-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\logo-background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\seal-check-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\clear-draw-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\eraser-icon.png" />
+    <Resource Include="Resources\pencil-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\tiny-logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\cancel-guess-icon.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
