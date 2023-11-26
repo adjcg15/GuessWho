@@ -155,7 +155,6 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="Avatar" nillable="true" type="xs:base64Binary" />
       <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="IsHost" type="xs:boolean" />
       <xs:element minOccurs="0" name="Nickname" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>

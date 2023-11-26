@@ -2,9 +2,7 @@
 using GuessWhoServices.Utils;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.ServiceModel;
-using System.Text.RegularExpressions;
 
 namespace GuessWhoServices
 {
@@ -65,7 +63,6 @@ namespace GuessWhoServices
                     response.Value.Nickname = "";
                     response.Value.Avatar = null;
                     response.Value.FullName = "";
-                    response.Value.IsHost = true;
 
                     //If HostNickname is empty it is assumed that the host is a guest so it does not have an account
                     if (!string.IsNullOrEmpty(storedMatch.HostNickname))
@@ -89,7 +86,6 @@ namespace GuessWhoServices
                     guest.Nickname = "";
                     guest.Avatar = null;
                     guest.FullName = "";
-                    guest.IsHost = false;
 
                     //If nickname is empty it is assumed that the player is a guest so it does not have an account
                     if (!string.IsNullOrEmpty(nickname))
@@ -145,7 +141,6 @@ namespace GuessWhoServices
                     emptyPlayer.Nickname = "";
                     emptyPlayer.Avatar = null;
                     emptyPlayer.FullName = "";
-                    emptyPlayer.IsHost = false;
 
                     try
                     {
@@ -178,7 +173,6 @@ namespace GuessWhoServices
                     emptyPlayer.Nickname = "";
                     emptyPlayer.Avatar = null;
                     emptyPlayer.FullName = "";
-                    emptyPlayer.IsHost = true;
 
                     if (storedMatch.GuestChannel != null)
                     {
@@ -197,52 +191,5 @@ namespace GuessWhoServices
                 }
             }
         }
-
-        //public Response<bool> SendMessage(string invitationCode, string message)
-        //{
-        //    var response = new Response<bool>
-        //    {
-        //        StatusCode = ResponseStatus.VALIDATION_ERROR,
-        //        Value = false
-        //    };
-
-        //    if (matches.ContainsKey(invitationCode))
-        //    {
-        //        var storedMatch = matches[invitationCode];
-        //        var senderChannel = OperationContext.Current.GetCallbackChannel<IMatchCallback>();
-
-        //        response.StatusCode = ResponseStatus.OK;
-        //        response.Value = true;
-
-        //        try
-        //        {
-        //            bool isHostSendingMessage = senderChannel.GetHashCode() == storedMatch.HostChannel.GetHashCode();  
-        //            if (isHostSendingMessage)
-        //            {
-        //                if(storedMatch.GuestChannel != null)
-        //                {
-        //                    storedMatch.GuestChannel.NotifyNewMessage(message, storedMatch.HostNickname);
-        //                }
-        //                else
-        //                {
-        //                    response.Value = false;
-        //                }
-        //            }
-        //            else
-        //            {
-        //                storedMatch.HostChannel.NotifyNewMessage(message, storedMatch.GuestNickname);
-        //            }
-        //        }
-        //        catch (CommunicationObjectAbortedException)
-        //        {
-        //            response.StatusCode = ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR;
-        //            response.Value = false;
-
-        //            matches.Remove(invitationCode);
-        //        }
-        //    }
-
-        //    return response;
-        //}
     }
 }

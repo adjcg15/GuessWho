@@ -21,21 +21,33 @@ namespace GuessWhoClient
         public LobbyPage()
         {
             InitializeComponent();
+
             gameManager.IsCurrentMatchHost = true;
             gameManager.SubscribePage(this);
-            
-            BtnCancelGame.Visibility = Visibility.Visible;
-            BtnStartGame.Visibility = Visibility.Visible;
+
+            ShowCancelGameButton();
         }
 
         public LobbyPage(string invitationCode)
         {
             InitializeComponent();
+
             gameManager.IsCurrentMatchHost = false;
             gameManager.CurrentMatchCode = invitationCode;
             gameManager.SubscribePage(this);
 
+            ShowExitGameButton();
+            HideInvitationOptions();
+        }
+
+        private void ShowExitGameButton()
+        {
             BtnExitGame.Visibility = Visibility.Visible;
+        }
+
+        private void ShowCancelGameButton()
+        {
+            BtnCancelGame.Visibility = Visibility.Visible;
         }
 
         private void PageLoaded(object sender, RoutedEventArgs e)
@@ -48,15 +60,15 @@ namespace GuessWhoClient
                 SubscribeToActiveUsersList();
                 if (gameManager.IsCurrentMatchHost)
                 {
+                    LoadActiveUsers();
                     CreateNewGame(userNickname);
-                    ShowActiveUsers(userNickname);
                     ShowActiveUsersList();
                 }
                 else
                 {
                     JoinGame(userNickname);
-                    ShowActiveUsers(userNickname);
                     ShowGameFullMessage();
+                    EnableSendMessageButton();
                 }
             }
             catch (EndpointNotFoundException)
@@ -152,7 +164,18 @@ namespace GuessWhoClient
 
         private void ShowGameFullMessage()
         {
-            LbUsersListMessage.Content = Properties.Resources.lbAllPlayersReady;
+            string fullGameMessage;
+
+            if(gameManager.IsCurrentMatchHost)
+            {
+                fullGameMessage = Properties.Resources.lbAllPlayersReady;
+            }
+            else
+            {
+                fullGameMessage = Properties.Resources.lbWaitGameToStart;
+            }
+
+            LbUsersListMessage.Content = fullGameMessage;
             LbUsersListMessage.Visibility = Visibility.Visible;
 
             ListBoxActiveUsers.Visibility = Visibility.Hidden;
@@ -167,12 +190,12 @@ namespace GuessWhoClient
             NavigationService.Navigate(menuPage);
         }
 
-        private void ShowActiveUsers(string userNickname)
+        private void LoadActiveUsers()
         {
             activeUsers = new ObservableCollection<ActiveUser>(DataStore.UsersClient.GetActiveUsers().ToList());
             if (DataStore.Profile != null)
             {
-                activeUsers.Remove(activeUsers.FirstOrDefault(u => u.Nickname == userNickname));
+                activeUsers.Remove(activeUsers.FirstOrDefault(u => u.Nickname == DataStore.Profile.NickName));
             }
 
             ListBoxActiveUsers.ItemsSource = activeUsers;
@@ -200,11 +223,13 @@ namespace GuessWhoClient
 
         public void PlayerStatusInMatchChanged(PlayerInMatch user, bool isJoiningMatch)
         {
-            if(user.IsHost)
+            bool isAdversaryCurrentMatchHost = !gameManager.IsCurrentMatchHost;
+
+            if(isAdversaryCurrentMatchHost)
             {
                 if(!isJoiningMatch)
                 {
-                    FinishGameForGuest();
+                    NotifyGameHasBeenCanceled();
                 }
             }
             else
@@ -213,16 +238,32 @@ namespace GuessWhoClient
                 {
                     ShowGuestInformation(user);
                     ShowGameFullMessage();
+                    HideInvitationOptions();
+                    ShowStartGameButton();
+                    EnableSendMessageButton();
                 }
                 else
                 {
                     HideGuestInformation();
                     ShowActiveUsersList();
+                    ShowInvitationOptions();
+                    HideStartGameButton();
+                    DisableSendMessageButton();
                 }
             }
         }
 
-        private void FinishGameForGuest()
+        private void ShowStartGameButton()
+        {
+            BtnStartGame.Visibility = Visibility.Visible;
+        }
+
+        private void HideStartGameButton()
+        {
+            BtnStartGame.Visibility = Visibility.Hidden;
+        }
+
+        private void NotifyGameHasBeenCanceled()
         {
             gameManager.RestartRawValues();
             MainMenuPage mainMenu = new MainMenuPage();
@@ -278,6 +319,30 @@ namespace GuessWhoClient
             ImgChatProfilePicture.ImageSource = defaultImage;
         }
 
+        private void ShowInvitationOptions()
+        {
+            BtnInvitationCode.Visibility = Visibility.Visible;
+            LbInvitePlayer.Visibility = Visibility.Visible;
+        }
+
+        private void HideInvitationOptions()
+        {
+            BtnInvitationCode.Visibility = Visibility.Hidden;
+            LbInvitePlayer.Visibility = Visibility.Hidden;
+        }
+
+        private void EnableSendMessageButton()
+        {
+            BtnSendMessage.Opacity = 1;
+            BtnSendMessage.IsEnabled = true;
+        }
+
+        private void DisableSendMessageButton()
+        {
+            BtnSendMessage.Opacity = 0.5;
+            BtnSendMessage.IsEnabled = false;
+        }
+
         private void BtnSendMessageClick(object sender, RoutedEventArgs e)
         {
             try
@@ -297,52 +362,7 @@ namespace GuessWhoClient
 
             if (!string.IsNullOrEmpty(message))
             {
-                //var response = gameManager.Client.SendMessage(gameManager.CurrentMatchCode, message);
-
-                //switch (response.StatusCode)
-                //{
-                //    case ResponseStatus.OK:
-                //        if (response.Value)
-                //        {
-                //            ShowOwnMessageInChat(message);
-                //        }
-                //        break;
-                //    case ResponseStatus.VALIDATION_ERROR:
-                //        MessageBox.Show(
-                //            Properties.Resources.msgbSendMessageMatchFinishedMessage,
-                //            Properties.Resources.msgbInvalidMatchCodeTitle,
-                //            MessageBoxButton.OK,
-                //            MessageBoxImage.Warning
-                //        );
-                //        RedirectPermanentlyToMainMenu();
-                //        break;
-                //    case ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR:
-                //        MessageBox.Show(
-                //            Properties.Resources.msgbMesageNotSentMessage,
-                //            Properties.Resources.msgbMessageNotSentTitle,
-                //            MessageBoxButton.OK,
-                //            MessageBoxImage.Warning
-                //        );
-                //        if(!DataStore.IsCurrentMatchHost)
-                //        {
-                //            RedirectPermanentlyToMainMenu();
-                //        }
-                //        else
-                //        {
-                //            ShowDefaultUserInfoInChat();
-                //            ShowDefaultUserInfoInBanner();
-                //        }
-                //        break;
-                //    default:
-                //        MessageBox.Show(
-                //            ServerResponse.GetMessageFromStatusCode(response.StatusCode),
-                //            Properties.Resources.msgbInvalidMatchCodeTitle,
-                //            MessageBoxButton.OK,
-                //            MessageBoxImage.Warning
-                //        );
-                //        RedirectPermanentlyToMainMenu();
-                //        break;
-                //}
+                
             }
         }
 
@@ -422,6 +442,12 @@ namespace GuessWhoClient
             gameManager.Client.FinishGame(gameManager.CurrentMatchCode);
             gameManager.RestartRawValues();
             RedirectPermanentlyToMainMenu();
+        }
+
+        private void BtnStartGameClick(object sender, RoutedEventArgs e)
+        {
+            ChooseCharacterPage characterPage = new ChooseCharacterPage();
+            NavigationService.Navigate(characterPage);
         }
 
         private void BtnInviteToGameClick(object sender, RoutedEventArgs e)
