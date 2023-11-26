@@ -12,15 +12,17 @@ using System.Windows.Media.Imaging;
 
 namespace GuessWhoClient
 {
-    public partial class LobbyPage : Page, IUserServiceCallback, IMatchServiceCallback
+    public partial class LobbyPage : Page, IUserServiceCallback, IGamePage
     {
         private const string DEFAULT_PROFILE_PICTURE_ROUTE = "pack://application:,,,/Resources/user-icon.png";
+        private GameManager gameManager = GameManager.Instance;
         public ObservableCollection<ActiveUser> activeUsers { get; set; } = new ObservableCollection<ActiveUser>();
 
         public LobbyPage()
         {
             InitializeComponent();
-            DataStore.IsCurrentMatchHost = true;
+            gameManager.IsCurrentMatchHost = true;
+            gameManager.SubscribePage(this);
             
             BtnCancelGame.Visibility = Visibility.Visible;
             BtnStartGame.Visibility = Visibility.Visible;
@@ -29,22 +31,22 @@ namespace GuessWhoClient
         public LobbyPage(string invitationCode)
         {
             InitializeComponent();
-            DataStore.IsCurrentMatchHost = false;
-            DataStore.CurrentMatchCode = invitationCode;
+            gameManager.IsCurrentMatchHost = false;
+            gameManager.CurrentMatchCode = invitationCode;
+            gameManager.SubscribePage(this);
 
             BtnExitGame.Visibility = Visibility.Visible;
         }
 
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
-            DataStore.MatchesClient = new MatchServiceClient(new InstanceContext(this));
             string userNickname = DataStore.Profile != null ? DataStore.Profile.NickName : "";
             DataStore.UsersClient = new UserServiceClient(new InstanceContext(this));
 
             try
             {
                 SubscribeToActiveUsersList();
-                if (DataStore.IsCurrentMatchHost)
+                if (gameManager.IsCurrentMatchHost)
                 {
                     CreateNewGame(userNickname);
                     ShowActiveUsers(userNickname);
@@ -61,7 +63,7 @@ namespace GuessWhoClient
             {
                 ServerResponse.ShowServerDownMessage();
                 DataStore.UsersClient = null;
-                DataStore.RestartMatchValues();
+                gameManager.RestartRawValues();
                 RedirectPermanentlyToMainMenu();
             }
         }
@@ -73,8 +75,8 @@ namespace GuessWhoClient
 
         private void CreateNewGame(string userNickname)
         {
-            var createMatchResponse = DataStore.MatchesClient.CreateMatch(userNickname);
-            DataStore.CurrentMatchCode = createMatchResponse.Value;
+            var createMatchResponse = gameManager.Client.CreateMatch(userNickname);
+            gameManager.CurrentMatchCode = createMatchResponse.Value;
         }
 
         private void ShowActiveUsersList()
@@ -95,7 +97,7 @@ namespace GuessWhoClient
 
         private void JoinGame(string userNickname)
         {
-            var joinGameResponse = DataStore.MatchesClient.JoinGame(DataStore.CurrentMatchCode, userNickname);
+            var joinGameResponse = gameManager.Client.JoinGame(gameManager.CurrentMatchCode, userNickname);
             switch (joinGameResponse.StatusCode)
             {
                 case ResponseStatus.OK:
@@ -222,7 +224,7 @@ namespace GuessWhoClient
 
         private void FinishGameForGuest()
         {
-            DataStore.RestartMatchValues();
+            gameManager.RestartRawValues();
             MainMenuPage mainMenu = new MainMenuPage();
             mainMenu.ShowCanceledMatchMessage();
             this.NavigationService.Navigate(mainMenu);
@@ -295,52 +297,52 @@ namespace GuessWhoClient
 
             if (!string.IsNullOrEmpty(message))
             {
-                var response = DataStore.MatchesClient.SendMessage(DataStore.CurrentMatchCode, message);
+                //var response = gameManager.Client.SendMessage(gameManager.CurrentMatchCode, message);
 
-                switch (response.StatusCode)
-                {
-                    case ResponseStatus.OK:
-                        if (response.Value)
-                        {
-                            ShowOwnMessageInChat(message);
-                        }
-                        break;
-                    case ResponseStatus.VALIDATION_ERROR:
-                        MessageBox.Show(
-                            Properties.Resources.msgbSendMessageMatchFinishedMessage,
-                            Properties.Resources.msgbInvalidMatchCodeTitle,
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Warning
-                        );
-                        RedirectPermanentlyToMainMenu();
-                        break;
-                    case ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR:
-                        MessageBox.Show(
-                            Properties.Resources.msgbMesageNotSentMessage,
-                            Properties.Resources.msgbMessageNotSentTitle,
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Warning
-                        );
-                        if(!DataStore.IsCurrentMatchHost)
-                        {
-                            RedirectPermanentlyToMainMenu();
-                        }
-                        else
-                        {
-                            ShowDefaultUserInfoInChat();
-                            ShowDefaultUserInfoInBanner();
-                        }
-                        break;
-                    default:
-                        MessageBox.Show(
-                            ServerResponse.GetMessageFromStatusCode(response.StatusCode),
-                            Properties.Resources.msgbInvalidMatchCodeTitle,
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Warning
-                        );
-                        RedirectPermanentlyToMainMenu();
-                        break;
-                }
+                //switch (response.StatusCode)
+                //{
+                //    case ResponseStatus.OK:
+                //        if (response.Value)
+                //        {
+                //            ShowOwnMessageInChat(message);
+                //        }
+                //        break;
+                //    case ResponseStatus.VALIDATION_ERROR:
+                //        MessageBox.Show(
+                //            Properties.Resources.msgbSendMessageMatchFinishedMessage,
+                //            Properties.Resources.msgbInvalidMatchCodeTitle,
+                //            MessageBoxButton.OK,
+                //            MessageBoxImage.Warning
+                //        );
+                //        RedirectPermanentlyToMainMenu();
+                //        break;
+                //    case ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR:
+                //        MessageBox.Show(
+                //            Properties.Resources.msgbMesageNotSentMessage,
+                //            Properties.Resources.msgbMessageNotSentTitle,
+                //            MessageBoxButton.OK,
+                //            MessageBoxImage.Warning
+                //        );
+                //        if(!DataStore.IsCurrentMatchHost)
+                //        {
+                //            RedirectPermanentlyToMainMenu();
+                //        }
+                //        else
+                //        {
+                //            ShowDefaultUserInfoInChat();
+                //            ShowDefaultUserInfoInBanner();
+                //        }
+                //        break;
+                //    default:
+                //        MessageBox.Show(
+                //            ServerResponse.GetMessageFromStatusCode(response.StatusCode),
+                //            Properties.Resources.msgbInvalidMatchCodeTitle,
+                //            MessageBoxButton.OK,
+                //            MessageBoxImage.Warning
+                //        );
+                //        RedirectPermanentlyToMainMenu();
+                //        break;
+                //}
             }
         }
 
@@ -355,7 +357,7 @@ namespace GuessWhoClient
 
         public void NotifyNewMessage(string message, string senderNickname)
         {
-            string defaultAdversaryNickname = DataStore.IsCurrentMatchHost ? Properties.Resources.txtGuest : Properties.Resources.txtHost;
+            string defaultAdversaryNickname = gameManager.IsCurrentMatchHost ? Properties.Resources.txtGuest : Properties.Resources.txtHost;
             ShowPlayerMessageInChat(message, senderNickname == "" ? defaultAdversaryNickname : senderNickname);
         }
 
@@ -371,7 +373,7 @@ namespace GuessWhoClient
 
         private void BtnCopyInvitationCodeClick(object sender, RoutedEventArgs e)
         {
-            Clipboard.SetText(DataStore.CurrentMatchCode);
+            Clipboard.SetText(gameManager.CurrentMatchCode);
         }
 
         private void BtnExitGameClick(object sender, RoutedEventArgs e)
@@ -396,8 +398,8 @@ namespace GuessWhoClient
 
         private void ExitGame()
         {
-            DataStore.MatchesClient.ExitGame(DataStore.CurrentMatchCode);
-            DataStore.RestartMatchValues();
+            gameManager.Client.ExitGame(gameManager.CurrentMatchCode);
+            gameManager.RestartRawValues();
             RedirectPermanentlyToMainMenu();
         }
 
@@ -417,8 +419,8 @@ namespace GuessWhoClient
 
         private void FinishGame()
         {
-            DataStore.MatchesClient.FinishGame(DataStore.CurrentMatchCode);
-            DataStore.RestartMatchValues();
+            gameManager.Client.FinishGame(gameManager.CurrentMatchCode);
+            gameManager.RestartRawValues();
             RedirectPermanentlyToMainMenu();
         }
 
@@ -489,7 +491,7 @@ namespace GuessWhoClient
             bool successSent = Email.SendMail(
                 email,
                 Properties.Resources.txtInviteToGameSubject,
-                Properties.Resources.txtInviteToGameBody + DataStore.CurrentMatchCode
+                Properties.Resources.txtInviteToGameBody + gameManager.CurrentMatchCode
             );
 
             if (!successSent)

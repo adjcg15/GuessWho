@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace GuessWhoServices
 {
-    public partial class GuessWhoService : IMatchService
+    public partial class GuessWhoService : IGameService
     {
         private static Dictionary<string, MatchInformation> matches = new Dictionary<string, MatchInformation>();
 
@@ -29,7 +29,7 @@ namespace GuessWhoServices
 
             var match = new MatchInformation();
             match.HostNickname = hostNickname;
-            match.HostChannel = OperationContext.Current.GetCallbackChannel<IMatchCallback>();
+            match.HostChannel = OperationContext.Current.GetCallbackChannel<IGameCallback>();
 
             matches[invitationCode] = match;
 
@@ -56,7 +56,7 @@ namespace GuessWhoServices
                 {
                     response.StatusCode = ResponseStatus.OK;
 
-                    storedMatch.GuestChannel = OperationContext.Current.GetCallbackChannel<IMatchCallback>();
+                    storedMatch.GuestChannel = OperationContext.Current.GetCallbackChannel<IGameCallback>();
                     storedMatch.GuestNickname = nickname;
 
                     Console.WriteLine("Suscribiendo a partida " + invitationCode + " al jugador " + storedMatch.GuestChannel.GetHashCode());
@@ -126,26 +126,17 @@ namespace GuessWhoServices
             return response;
         }
 
-        public Response<bool> ExitGame(string invitationCode)
+        public void ExitGame(string invitationCode)
         {
-            var response = new Response<bool>
-            {
-                StatusCode = ResponseStatus.VALIDATION_ERROR,
-                Value = false
-            };
-
             if (matches.ContainsKey(invitationCode))
             {
                 var storedMatch = matches[invitationCode];
                 var storedGuestChannel = storedMatch.GuestChannel;
-                var clientChannel = OperationContext.Current.GetCallbackChannel<IMatchCallback>();
+                var clientChannel = OperationContext.Current.GetCallbackChannel<IGameCallback>();
 
                 bool isTheSameClientStoredInMatch = storedGuestChannel != null && (clientChannel.GetHashCode() == storedGuestChannel.GetHashCode());
                 if (isTheSameClientStoredInMatch)
                 {
-                    response.StatusCode = ResponseStatus.OK;
-                    response.Value = true;
-
                     Console.WriteLine("Saliendo de partida " + invitationCode + " el suscriptor " + storedMatch.GuestChannel.GetHashCode());
                     storedMatch.GuestNickname = null;
                     storedMatch.GuestChannel = null;
@@ -163,36 +154,25 @@ namespace GuessWhoServices
                     catch (CommunicationObjectAbortedException)
                     {
                         Console.WriteLine("Avisando a suscriptor " + storedMatch.HostChannel.GetHashCode() + " de salida de partida " + invitationCode);
-                        response.StatusCode = ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR;
-
+                        
                         matches.Remove(invitationCode);
                     }
                 }
             }
-
-            return response;
         }
 
-        public Response<bool> FinishGame(string invitationCode)
+        public void FinishGame(string invitationCode)
         {
-            var response = new Response<bool>
-            {
-                StatusCode = ResponseStatus.VALIDATION_ERROR,
-                Value = false
-            };
-
             if (matches.ContainsKey(invitationCode))
             {
                 var storedMatch = matches[invitationCode];
                 var storedHostChannel = storedMatch.HostChannel;
-                var clientChannel = OperationContext.Current.GetCallbackChannel<IMatchCallback>();
+                var clientChannel = OperationContext.Current.GetCallbackChannel<IGameCallback>();
 
                 bool isClientAllowedToFinishGame = clientChannel.GetHashCode() == storedHostChannel.GetHashCode();
                 if (isClientAllowedToFinishGame)
                 {
                     Console.WriteLine("Suscriptor " + storedMatch.HostChannel.GetHashCode() + " cancelando partida " + invitationCode);
-                    response.StatusCode = ResponseStatus.OK;
-                    response.Value = true;
 
                     PlayerInMatch emptyPlayer = new PlayerInMatch();
                     emptyPlayer.Nickname = "";
@@ -209,62 +189,60 @@ namespace GuessWhoServices
                         }
                         catch (CommunicationObjectAbortedException)
                         {
-                            response.StatusCode = ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR;
+                            //TO-DO: log exception
                         }
                     }
 
                     matches.Remove(invitationCode);
                 }
             }
-
-            return response;
         }
 
-        public Response<bool> SendMessage(string invitationCode, string message)
-        {
-            var response = new Response<bool>
-            {
-                StatusCode = ResponseStatus.VALIDATION_ERROR,
-                Value = false
-            };
+        //public Response<bool> SendMessage(string invitationCode, string message)
+        //{
+        //    var response = new Response<bool>
+        //    {
+        //        StatusCode = ResponseStatus.VALIDATION_ERROR,
+        //        Value = false
+        //    };
 
-            if (matches.ContainsKey(invitationCode))
-            {
-                var storedMatch = matches[invitationCode];
-                var senderChannel = OperationContext.Current.GetCallbackChannel<IMatchCallback>();
+        //    if (matches.ContainsKey(invitationCode))
+        //    {
+        //        var storedMatch = matches[invitationCode];
+        //        var senderChannel = OperationContext.Current.GetCallbackChannel<IMatchCallback>();
 
-                response.StatusCode = ResponseStatus.OK;
-                response.Value = true;
+        //        response.StatusCode = ResponseStatus.OK;
+        //        response.Value = true;
 
-                try
-                {
-                    bool isHostSendingMessage = senderChannel.GetHashCode() == storedMatch.HostChannel.GetHashCode();  
-                    if (isHostSendingMessage)
-                    {
-                        if(storedMatch.GuestChannel != null)
-                        {
-                            storedMatch.GuestChannel.NotifyNewMessage(message, storedMatch.HostNickname);
-                        }
-                        else
-                        {
-                            response.Value = false;
-                        }
-                    }
-                    else
-                    {
-                        storedMatch.HostChannel.NotifyNewMessage(message, storedMatch.GuestNickname);
-                    }
-                }
-                catch (CommunicationObjectAbortedException)
-                {
-                    response.StatusCode = ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR;
-                    response.Value = false;
+        //        try
+        //        {
+        //            bool isHostSendingMessage = senderChannel.GetHashCode() == storedMatch.HostChannel.GetHashCode();  
+        //            if (isHostSendingMessage)
+        //            {
+        //                if(storedMatch.GuestChannel != null)
+        //                {
+        //                    storedMatch.GuestChannel.NotifyNewMessage(message, storedMatch.HostNickname);
+        //                }
+        //                else
+        //                {
+        //                    response.Value = false;
+        //                }
+        //            }
+        //            else
+        //            {
+        //                storedMatch.HostChannel.NotifyNewMessage(message, storedMatch.GuestNickname);
+        //            }
+        //        }
+        //        catch (CommunicationObjectAbortedException)
+        //        {
+        //            response.StatusCode = ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR;
+        //            response.Value = false;
 
-                    matches.Remove(invitationCode);
-                }
-            }
+        //            matches.Remove(invitationCode);
+        //        }
+        //    }
 
-            return response;
-        }
+        //    return response;
+        //}
     }
 }
