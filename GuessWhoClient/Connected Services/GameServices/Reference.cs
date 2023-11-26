@@ -787,9 +787,6 @@ namespace GuessWhoClient.GameServices {
         private string FullNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsHostField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NicknameField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -824,19 +821,6 @@ namespace GuessWhoClient.GameServices {
                 if ((object.ReferenceEquals(this.FullNameField, value) != true)) {
                     this.FullNameField = value;
                     this.RaisePropertyChanged("FullName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsHost {
-            get {
-                return this.IsHostField;
-            }
-            set {
-                if ((this.IsHostField.Equals(value) != true)) {
-                    this.IsHostField = value;
-                    this.RaisePropertyChanged("IsHost");
                 }
             }
         }

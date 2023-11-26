@@ -306,6 +306,9 @@
   <data name="lbTitleReportFinished" xml:space="preserve">
     <value>The player has been reported. Would you like to finish the game?</value>
   </data>
+  <data name="lbWaitGameToStart" xml:space="preserve">
+    <value>Wait, the game will start shortly</value>
+  </data>
   <data name="lbWaitingOpponent" xml:space="preserve">
     <value>Waiting for all players…</value>
   </data>
