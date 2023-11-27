@@ -1,0 +1,68 @@
+﻿<Page x:Class="GuessWhoClient.AnswerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:GuessWhoClient"
+      xmlns:p="clr-namespace:GuessWhoClient.Properties"
+      mc:Ignorable="d" 
+      Height="520" Width="900"
+      Title="AnswerPage">
+
+    <Grid Background="#FFC436">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="97*"/>
+            <ColumnDefinition Width="53*"/>
+        </Grid.ColumnDefinitions>
+
+        <Canvas x:Name="CnvsOpponentDraw" Margin="30,18,2,18" Background="White"/>
+
+        <Button x:Name="BtnReportPlayer" Content="{x:Static p:Resources.btnReportPlayer}" Style="{StaticResource PrimaryCancelButtonWithIcon}"  HorizontalAlignment="Left" Margin="45,25,0,0" VerticalAlignment="Top" Height="44" FontWeight="Medium" Click="BtnReportPlayerClick"/>
+        <Border Margin="27,35,27,410" Grid.Column="1" BorderBrush="#E21818" CornerRadius="40" Background="White" BorderThickness="4">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Width="191">
+                <TextBlock TextWrapping="Wrap" Text="{x:Static p:Resources.lbCharacterLooksLikeQuestion}" FontSize="16" FontWeight="Bold" Foreground="#0A6EBD" VerticalAlignment="Center" Width="140"/>
+                <Border
+                    Height="50" Width="50"
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    BorderThickness="4" CornerRadius="8">
+                    <Border.Background>
+                        <ImageBrush x:Name="ImgMyCharacterSelected" Stretch="UniformToFill" ImageSource="/Resources/Characters/Paty.png"/>
+                    </Border.Background>
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="BorderBrush" Value="#E21818" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding DataContext.IsChoosingCharacter, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" Value="True">
+                                    <Setter Property="BorderBrush" Value="#0A6EBD" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                </Border>
+            </StackPanel>
+        </Border>
+
+        <Button Grid.Column="1" HorizontalAlignment="Center" Margin="0,170,0,0" VerticalAlignment="Top" BorderThickness="0" Height="116" Width="264" Click="BtnAnswerYesClick">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="#FF56C568" CornerRadius="20">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+            <Image Source="/Resources/check-icon.png" Height="80" />
+        </Button>
+
+        <Button Grid.Column="1" HorizontalAlignment="Center" Margin="0,355,0,0" VerticalAlignment="Top" BorderThickness="0" Height="116" Width="264" Click="BtnAnswerNoClick">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="#E21818" CornerRadius="20">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+            <Image Source="/Resources/cross-icon.png" Height="80" />
+        </Button>
+    </Grid>
+</Page>
