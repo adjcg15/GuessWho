@@ -787,9 +787,6 @@ namespace GuessWhoClient.GameServices {
         private string FullNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsHostField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NicknameField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -824,19 +821,6 @@ namespace GuessWhoClient.GameServices {
                 if ((object.ReferenceEquals(this.FullNameField, value) != true)) {
                     this.FullNameField = value;
                     this.RaisePropertyChanged("FullName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsHost {
-            get {
-                return this.IsHostField;
-            }
-            set {
-                if ((this.IsHostField.Equals(value) != true)) {
-                    this.IsHostField = value;
-                    this.RaisePropertyChanged("IsHost");
                 }
             }
         }
@@ -1276,75 +1260,66 @@ namespace GuessWhoClient.GameServices {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameServices.IMatchService", CallbackContract=typeof(GuessWhoClient.GameServices.IMatchServiceCallback))]
-    public interface IMatchService {
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameServices.IGameService", CallbackContract=typeof(GuessWhoClient.GameServices.IGameServiceCallback))]
+    public interface IGameService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchService/CreateMatch", ReplyAction="http://tempuri.org/IMatchService/CreateMatchResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameService/CreateMatch", ReplyAction="http://tempuri.org/IGameService/CreateMatchResponse")]
         GuessWhoClient.GameServices.stringResponse CreateMatch(string hostNickname);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchService/CreateMatch", ReplyAction="http://tempuri.org/IMatchService/CreateMatchResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameService/CreateMatch", ReplyAction="http://tempuri.org/IGameService/CreateMatchResponse")]
         System.Threading.Tasks.Task<GuessWhoClient.GameServices.stringResponse> CreateMatchAsync(string hostNickname);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchService/JoinGame", ReplyAction="http://tempuri.org/IMatchService/JoinGameResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameService/JoinGame", ReplyAction="http://tempuri.org/IGameService/JoinGameResponse")]
         GuessWhoClient.GameServices.PlayerInMatchResponse JoinGame(string invitationCode, string nickname);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchService/JoinGame", ReplyAction="http://tempuri.org/IMatchService/JoinGameResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameService/JoinGame", ReplyAction="http://tempuri.org/IGameService/JoinGameResponse")]
         System.Threading.Tasks.Task<GuessWhoClient.GameServices.PlayerInMatchResponse> JoinGameAsync(string invitationCode, string nickname);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchService/ExitGame", ReplyAction="http://tempuri.org/IMatchService/ExitGameResponse")]
-        GuessWhoClient.GameServices.booleanResponse ExitGame(string invitationCode);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGameService/ExitGame")]
+        void ExitGame(string invitationCode);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchService/ExitGame", ReplyAction="http://tempuri.org/IMatchService/ExitGameResponse")]
-        System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> ExitGameAsync(string invitationCode);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGameService/ExitGame")]
+        System.Threading.Tasks.Task ExitGameAsync(string invitationCode);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchService/FinishGame", ReplyAction="http://tempuri.org/IMatchService/FinishGameResponse")]
-        GuessWhoClient.GameServices.booleanResponse FinishGame(string invitationCode);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGameService/FinishGame")]
+        void FinishGame(string invitationCode);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchService/FinishGame", ReplyAction="http://tempuri.org/IMatchService/FinishGameResponse")]
-        System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> FinishGameAsync(string invitationCode);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchService/SendMessage", ReplyAction="http://tempuri.org/IMatchService/SendMessageResponse")]
-        GuessWhoClient.GameServices.booleanResponse SendMessage(string invitationCode, string message);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchService/SendMessage", ReplyAction="http://tempuri.org/IMatchService/SendMessageResponse")]
-        System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> SendMessageAsync(string invitationCode, string message);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGameService/FinishGame")]
+        System.Threading.Tasks.Task FinishGameAsync(string invitationCode);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IMatchServiceCallback {
+    public interface IGameServiceCallback {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchService/PlayerStatusInMatchChanged", ReplyAction="http://tempuri.org/IMatchService/PlayerStatusInMatchChangedResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameService/PlayerStatusInMatchChanged", ReplyAction="http://tempuri.org/IGameService/PlayerStatusInMatchChangedResponse")]
         void PlayerStatusInMatchChanged(GuessWhoClient.GameServices.PlayerInMatch player, bool isInMatch);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchService/NotifyNewMessage", ReplyAction="http://tempuri.org/IMatchService/NotifyNewMessageResponse")]
-        void NotifyNewMessage(string message, string senderNickname);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IMatchServiceChannel : GuessWhoClient.GameServices.IMatchService, System.ServiceModel.IClientChannel {
+    public interface IGameServiceChannel : GuessWhoClient.GameServices.IGameService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class MatchServiceClient : System.ServiceModel.DuplexClientBase<GuessWhoClient.GameServices.IMatchService>, GuessWhoClient.GameServices.IMatchService {
+    public partial class GameServiceClient : System.ServiceModel.DuplexClientBase<GuessWhoClient.GameServices.IGameService>, GuessWhoClient.GameServices.IGameService {
         
-        public MatchServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
+        public GameServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
                 base(callbackInstance) {
         }
         
-        public MatchServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+        public GameServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
                 base(callbackInstance, endpointConfigurationName) {
         }
         
-        public MatchServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+        public GameServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
                 base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public MatchServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public GameServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public MatchServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public GameServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(callbackInstance, binding, remoteAddress) {
         }
         
@@ -1364,28 +1339,20 @@ namespace GuessWhoClient.GameServices {
             return base.Channel.JoinGameAsync(invitationCode, nickname);
         }
         
-        public GuessWhoClient.GameServices.booleanResponse ExitGame(string invitationCode) {
-            return base.Channel.ExitGame(invitationCode);
+        public void ExitGame(string invitationCode) {
+            base.Channel.ExitGame(invitationCode);
         }
         
-        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> ExitGameAsync(string invitationCode) {
+        public System.Threading.Tasks.Task ExitGameAsync(string invitationCode) {
             return base.Channel.ExitGameAsync(invitationCode);
         }
         
-        public GuessWhoClient.GameServices.booleanResponse FinishGame(string invitationCode) {
-            return base.Channel.FinishGame(invitationCode);
+        public void FinishGame(string invitationCode) {
+            base.Channel.FinishGame(invitationCode);
         }
         
-        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> FinishGameAsync(string invitationCode) {
+        public System.Threading.Tasks.Task FinishGameAsync(string invitationCode) {
             return base.Channel.FinishGameAsync(invitationCode);
-        }
-        
-        public GuessWhoClient.GameServices.booleanResponse SendMessage(string invitationCode, string message) {
-            return base.Channel.SendMessage(invitationCode, message);
-        }
-        
-        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> SendMessageAsync(string invitationCode, string message) {
-            return base.Channel.SendMessageAsync(invitationCode, message);
         }
     }
 }

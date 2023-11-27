@@ -32,17 +32,20 @@ namespace GuessWhoClient
 
         private void LeaveCurrentGame()
         {
-            if (!string.IsNullOrEmpty(DataStore.CurrentMatchCode))
+            GameManager gameManager = GameManager.Instance;
+
+            if (!string.IsNullOrEmpty(gameManager.CurrentMatchCode))
             {
-                if (DataStore.IsCurrentMatchHost)
+                if (gameManager.IsCurrentMatchHost)
                 {
-                    DataStore.MatchesClient.FinishGame(DataStore.CurrentMatchCode);
+                    gameManager.Client.FinishGame(gameManager.CurrentMatchCode);
                 }
                 else
                 {
-                    DataStore.MatchesClient.ExitGame(DataStore.CurrentMatchCode);
+                    gameManager.Client.ExitGame(gameManager.CurrentMatchCode);
                 }
-                DataStore.RestartMatchValues();
+
+                gameManager.RestartRawValues();
             }
         }
 

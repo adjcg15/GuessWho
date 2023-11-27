@@ -628,6 +628,15 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Espere, en breve comenzará la partida.
+        /// </summary>
+        public static string lbWaitGameToStart {
+            get {
+                return ResourceManager.GetString("lbWaitGameToStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Esperando oponente….
         /// </summary>
         public static string lbWaitingOpponent {

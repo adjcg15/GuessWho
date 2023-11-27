@@ -54,8 +54,8 @@
     <Compile Include="FriendsService\FriendsService.cs" />
     <Compile Include="FriendsService\IFriendsService.cs" />
     <Compile Include="MatchInformation.cs" />
-    <Compile Include="MatchService\IMatchService.cs" />
-    <Compile Include="MatchService\MatchService.cs" />
+    <Compile Include="GameService\IGameService.cs" />
+    <Compile Include="GameService\GameService.cs" />
     <Compile Include="PlayerService\IPlayerService.cs" />
     <Compile Include="PlayerService\PlayerService.cs" />
     <Compile Include="ProfileService\IProfileService.cs" />

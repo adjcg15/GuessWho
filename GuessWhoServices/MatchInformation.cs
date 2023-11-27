@@ -4,12 +4,12 @@
     {
         private string hostNickname;
         private string guestNickname;
-        private IMatchCallback hostChannel;
-        private IMatchCallback guestChannel;
+        private IGameCallback hostChannel;
+        private IGameCallback guestChannel;
 
         public string HostNickname { get { return hostNickname; } set { hostNickname = value; } }
         public string GuestNickname { get { return guestNickname; } set { guestNickname = value; } }
-        public IMatchCallback HostChannel { get { return hostChannel; } set { hostChannel = value; } }
-        public IMatchCallback GuestChannel { get { return guestChannel; } set { guestChannel = value; } }
+        public IGameCallback HostChannel { get { return hostChannel; } set { hostChannel = value; } }
+        public IGameCallback GuestChannel { get { return guestChannel; } set { guestChannel = value; } }
     }
 }

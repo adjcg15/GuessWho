@@ -72,6 +72,7 @@
     <Compile Include="ChooseCharacterPage.xaml.cs">
       <DependentUpon>ChooseCharacterPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Communication\GameManager.cs" />
     <Compile Include="Components\ChatMessage.xaml.cs">
       <DependentUpon>ChatMessage.xaml</DependentUpon>
     </Compile>
@@ -102,6 +103,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\CharacterCard.cs" />
+    <Compile Include="Model\Interfaces\IGamePage.cs" />
     <Compile Include="ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
