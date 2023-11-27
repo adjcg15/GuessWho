@@ -12,6 +12,11 @@ namespace GuessWhoServices
     {
         private static Dictionary<string, MatchInformation> matches = new Dictionary<string, MatchInformation>();
 
+        public Dictionary<string, MatchInformation> GetMatches()
+        {
+            return matches;
+        }
+
         public Response<string> CreateMatch(string hostNickname)
         {
             var response = new Response<string>
@@ -265,6 +270,31 @@ namespace GuessWhoServices
             }
 
             return response;
+        }
+
+        public void StartCharacterSelection()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SelectCharacter(string characterName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StartGame(string characterName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Response<bool> GuessCharacter(string characterName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SendClue(bool looksLikeMyCharacter)
+        {
+            throw new NotImplementedException();
         }
     }
 }

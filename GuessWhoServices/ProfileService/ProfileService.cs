@@ -9,6 +9,8 @@ namespace GuessWhoServices
 {
     public partial class GuessWhoService : IProfileService
     {
+        private const int MINIMAL_DAYS_FOR_CHANGE = 90;
+
         public Response<bool> UpdateUserProfileImage(byte[] newImage, int idUser) 
         {
             return UserDAO.UpdateUserProfileImage(newImage, idUser);
@@ -38,7 +40,7 @@ namespace GuessWhoServices
             }
             else
             {
-                if ((currentDate - lastTimeNicknameChangedResponse.Value).TotalDays >= 90)
+                if ((currentDate - lastTimeNicknameChangedResponse.Value).TotalDays >= MINIMAL_DAYS_FOR_CHANGE)
                 {
                     response = UserDAO.UpdateUserNickname(newNickname, idUser);
                 }
