@@ -73,6 +73,7 @@
       <DependentUpon>ChooseCharacterPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Communication\GameManager.cs" />
+    <Compile Include="Communication\MatchStatusManager.cs" />
     <Compile Include="Components\ChatMessage.xaml.cs">
       <DependentUpon>ChatMessage.xaml</DependentUpon>
     </Compile>
@@ -104,6 +105,7 @@
     </Compile>
     <Compile Include="Model\CharacterCard.cs" />
     <Compile Include="Model\Interfaces\IGamePage.cs" />
+    <Compile Include="Model\Interfaces\IMatchStatusListener.cs" />
     <Compile Include="ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
@@ -337,24 +339,6 @@
     <Resource Include="Resources\send-gray-icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\GameServices\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\GameServices\item.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\GameServices\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\GameServices\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\GameServices\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Characters\Adela.png" />
     <Resource Include="Resources\Characters\Aisha.png" />
     <Resource Include="Resources\Characters\Alex.png" />
@@ -426,6 +410,23 @@
   <ItemGroup>
     <Resource Include="Resources\cancel-guess-icon.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\GameServices\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\GameServices\item.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\GameServices\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\GameServices\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\GameServices\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -29,7 +29,8 @@ namespace GuessWhoClient
 
         public GameServiceClient Client 
         { 
-            get { 
+            get 
+            { 
                 if (client == null)
                 {
                     client = new GameServiceClient(new InstanceContext(this));

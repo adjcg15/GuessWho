@@ -1,4 +1,7 @@
-﻿using System;
+﻿using GuessWhoClient.Communication;
+using GuessWhoClient.GameServices;
+using GuessWhoClient.Model.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
@@ -9,9 +12,11 @@ using System.Windows.Media.Imaging;
 
 namespace GuessWhoClient
 {
-    public partial class ChooseCharacterPage : Page
+    public partial class ChooseCharacterPage : Page, IGamePage, IMatchStatusListener
     {
         private Character selectedCharacter;
+        private GameManager gameManager = GameManager.Instance;
+        private MatchStatusManager matchStatusManager = MatchStatusManager.Instance;
 
         public ChooseCharacterPage()
         {
@@ -111,6 +116,16 @@ namespace GuessWhoClient
         {
             LbCharacter.Content = selectedCharacter?.Name;
             LbCharacter.Foreground = (SolidColorBrush)FindResource("BlueBrush");
+        }
+
+        public void PlayerStatusInMatchChanged(PlayerInMatch player, bool isInMatch)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void MatchStatusChanged(MatchStatus matchStatusCode)
+        {
+            throw new NotImplementedException();
         }
     }
 }

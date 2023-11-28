@@ -848,6 +848,32 @@ namespace GuessWhoClient.GameServices {
         }
     }
     
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MatchStatus", Namespace="http://schemas.datacontract.org/2004/07/GuessWhoServices")]
+    public enum MatchStatus : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        CharacterSelection = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        PlayerReady = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        StartGame = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        GameLost = 3,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        GameWon = 4,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        LooksLike = 5,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        DoesNotLookLike = 6,
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameServices.IUserService", CallbackContract=typeof(GuessWhoClient.GameServices.IUserServiceCallback))]
     public interface IUserService {
@@ -1353,6 +1379,145 @@ namespace GuessWhoClient.GameServices {
         
         public System.Threading.Tasks.Task FinishGameAsync(string invitationCode) {
             return base.Channel.FinishGameAsync(invitationCode);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameServices.IMatchStatusService", CallbackContract=typeof(GuessWhoClient.GameServices.IMatchStatusServiceCallback))]
+    public interface IMatchStatusService {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/ListenMatchStatus", ReplyAction="http://tempuri.org/IMatchStatusService/ListenMatchStatusResponse")]
+        void ListenMatchStatus(string matchCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/ListenMatchStatus", ReplyAction="http://tempuri.org/IMatchStatusService/ListenMatchStatusResponse")]
+        System.Threading.Tasks.Task ListenMatchStatusAsync(string matchCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/StartCharacterSelection", ReplyAction="http://tempuri.org/IMatchStatusService/StartCharacterSelectionResponse")]
+        void StartCharacterSelection(string matchCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/StartCharacterSelection", ReplyAction="http://tempuri.org/IMatchStatusService/StartCharacterSelectionResponse")]
+        System.Threading.Tasks.Task StartCharacterSelectionAsync(string matchCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/SelectCharacter", ReplyAction="http://tempuri.org/IMatchStatusService/SelectCharacterResponse")]
+        void SelectCharacter(string characterName, string matchCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/SelectCharacter", ReplyAction="http://tempuri.org/IMatchStatusService/SelectCharacterResponse")]
+        System.Threading.Tasks.Task SelectCharacterAsync(string characterName, string matchCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/StartGame", ReplyAction="http://tempuri.org/IMatchStatusService/StartGameResponse")]
+        void StartGame(string characterName, string matchCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/StartGame", ReplyAction="http://tempuri.org/IMatchStatusService/StartGameResponse")]
+        System.Threading.Tasks.Task StartGameAsync(string characterName, string matchCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/GuessCharacter", ReplyAction="http://tempuri.org/IMatchStatusService/GuessCharacterResponse")]
+        GuessWhoClient.GameServices.booleanResponse GuessCharacter(string characterName, string matchCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/GuessCharacter", ReplyAction="http://tempuri.org/IMatchStatusService/GuessCharacterResponse")]
+        System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> GuessCharacterAsync(string characterName, string matchCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/SendAnswer", ReplyAction="http://tempuri.org/IMatchStatusService/SendAnswerResponse")]
+        void SendAnswer(bool looksLikeMyCharacter, string matchCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/SendAnswer", ReplyAction="http://tempuri.org/IMatchStatusService/SendAnswerResponse")]
+        System.Threading.Tasks.Task SendAnswerAsync(bool looksLikeMyCharacter, string matchCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/StopListeningMatchStatus", ReplyAction="http://tempuri.org/IMatchStatusService/StopListeningMatchStatusResponse")]
+        void StopListeningMatchStatus(string matchCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/StopListeningMatchStatus", ReplyAction="http://tempuri.org/IMatchStatusService/StopListeningMatchStatusResponse")]
+        System.Threading.Tasks.Task StopListeningMatchStatusAsync(string matchCode);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IMatchStatusServiceCallback {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/MatchStatusChanged", ReplyAction="http://tempuri.org/IMatchStatusService/MatchStatusChangedResponse")]
+        void MatchStatusChanged(GuessWhoClient.GameServices.MatchStatus matchStatusCode);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IMatchStatusServiceChannel : GuessWhoClient.GameServices.IMatchStatusService, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class MatchStatusServiceClient : System.ServiceModel.DuplexClientBase<GuessWhoClient.GameServices.IMatchStatusService>, GuessWhoClient.GameServices.IMatchStatusService {
+        
+        public MatchStatusServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
+        }
+        
+        public MatchStatusServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
+        }
+        
+        public MatchStatusServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public MatchStatusServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public MatchStatusServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
+        }
+        
+        public void ListenMatchStatus(string matchCode) {
+            base.Channel.ListenMatchStatus(matchCode);
+        }
+        
+        public System.Threading.Tasks.Task ListenMatchStatusAsync(string matchCode) {
+            return base.Channel.ListenMatchStatusAsync(matchCode);
+        }
+        
+        public void StartCharacterSelection(string matchCode) {
+            base.Channel.StartCharacterSelection(matchCode);
+        }
+        
+        public System.Threading.Tasks.Task StartCharacterSelectionAsync(string matchCode) {
+            return base.Channel.StartCharacterSelectionAsync(matchCode);
+        }
+        
+        public void SelectCharacter(string characterName, string matchCode) {
+            base.Channel.SelectCharacter(characterName, matchCode);
+        }
+        
+        public System.Threading.Tasks.Task SelectCharacterAsync(string characterName, string matchCode) {
+            return base.Channel.SelectCharacterAsync(characterName, matchCode);
+        }
+        
+        public void StartGame(string characterName, string matchCode) {
+            base.Channel.StartGame(characterName, matchCode);
+        }
+        
+        public System.Threading.Tasks.Task StartGameAsync(string characterName, string matchCode) {
+            return base.Channel.StartGameAsync(characterName, matchCode);
+        }
+        
+        public GuessWhoClient.GameServices.booleanResponse GuessCharacter(string characterName, string matchCode) {
+            return base.Channel.GuessCharacter(characterName, matchCode);
+        }
+        
+        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> GuessCharacterAsync(string characterName, string matchCode) {
+            return base.Channel.GuessCharacterAsync(characterName, matchCode);
+        }
+        
+        public void SendAnswer(bool looksLikeMyCharacter, string matchCode) {
+            base.Channel.SendAnswer(looksLikeMyCharacter, matchCode);
+        }
+        
+        public System.Threading.Tasks.Task SendAnswerAsync(bool looksLikeMyCharacter, string matchCode) {
+            return base.Channel.SendAnswerAsync(looksLikeMyCharacter, matchCode);
+        }
+        
+        public void StopListeningMatchStatus(string matchCode) {
+            base.Channel.StopListeningMatchStatus(matchCode);
+        }
+        
+        public System.Threading.Tasks.Task StopListeningMatchStatusAsync(string matchCode) {
+            return base.Channel.StopListeningMatchStatusAsync(matchCode);
         }
     }
 }

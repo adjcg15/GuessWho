@@ -4,25 +4,6 @@ using System.ServiceModel;
 
 namespace GuessWhoServices
 {
-    [DataContract]
-    public enum MatchStatus
-    {
-        [EnumMember]
-        CharacterSelection = 0,
-        [EnumMember]
-        PlayerReady = 1,
-        [EnumMember]
-        StartGame = 2,
-        [EnumMember]
-        GameLost = 3,
-        [EnumMember]
-        GameWon = 4,
-        [EnumMember]
-        LooksLike = 5,
-        [EnumMember]
-        DoesNotLookLike = 6
-    }
-
     [ServiceContract(CallbackContract = typeof(IMatchStatusCallback))]
     public interface IMatchStatusService
     {
@@ -53,5 +34,24 @@ namespace GuessWhoServices
     {
         [OperationContract]
         void MatchStatusChanged(MatchStatus matchStatusCode);
+    }
+
+    [DataContract]
+    public enum MatchStatus
+    {
+        [EnumMember]
+        CharacterSelection = 0,
+        [EnumMember]
+        PlayerReady = 1,
+        [EnumMember]
+        StartGame = 2,
+        [EnumMember]
+        GameLost = 3,
+        [EnumMember]
+        GameWon = 4,
+        [EnumMember]
+        LooksLike = 5,
+        [EnumMember]
+        DoesNotLookLike = 6
     }
 }
