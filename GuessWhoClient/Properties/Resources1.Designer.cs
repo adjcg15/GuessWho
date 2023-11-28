@@ -115,6 +115,15 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Confirmar Selección.
+        /// </summary>
+        public static string btnConfirmCharacterSelection {
+            get {
+                return ResourceManager.GetString("btnConfirmCharacterSelection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Confirmar.
         /// </summary>
         public static string btnConfirmCode {

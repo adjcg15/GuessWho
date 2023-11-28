@@ -13,7 +13,7 @@ namespace GuessWhoClient.Communication
     {
         private static MatchStatusManager instance;
         private MatchStatusServiceClient client;
-        private List<IMatchStatusListener> subscribedPages = new List<IMatchStatusListener>();
+        private List<IMatchStatusPage> subscribedPages = new List<IMatchStatusPage>();
         private string currentMatchCode;
 
         private MatchStatusManager() { }
@@ -43,30 +43,34 @@ namespace GuessWhoClient.Communication
             }
         }
 
-        public void SubscribePage(IMatchStatusListener pageListener)
+        public void SubscribePage(IMatchStatusPage pageListener)
         {
             if (!subscribedPages.Contains(pageListener))
             {
+                Console.WriteLine("Suscribiendo página " + pageListener.GetHashCode());
                 subscribedPages.Add(pageListener);
             }
         }
 
-        public void UnsubscribePage(IMatchStatusListener pageListener)
+        public void UnsubscribePage(IMatchStatusPage pageListener)
         {
+            Console.WriteLine("Desuscribiendo página " + pageListener.GetHashCode());
             subscribedPages.Remove(pageListener);
         }
 
         public void RestartRawValues()
         {
             client = null;
-            subscribedPages = new List<IMatchStatusListener>();
+            subscribedPages = new List<IMatchStatusPage>();
         }
 
         public string CurrentMatchCode { get { return currentMatchCode; } set { currentMatchCode = value; } }
 
         public void MatchStatusChanged(MatchStatus matchStatusCode)
         {
-            foreach(var page in subscribedPages)
+            List<IMatchStatusPage> pagesCopy = new List<IMatchStatusPage>(subscribedPages);
+
+            foreach (var page in pagesCopy)
             {
                 page.MatchStatusChanged(matchStatusCode);
             }

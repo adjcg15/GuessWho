@@ -12,11 +12,12 @@ using System.Windows.Media.Imaging;
 
 namespace GuessWhoClient
 {
-    public partial class ChooseCharacterPage : Page, IGamePage, IMatchStatusListener
+    public partial class ChooseCharacterPage : Page, IGamePage, IMatchStatusPage
     {
         private Character selectedCharacter;
         private GameManager gameManager = GameManager.Instance;
         private MatchStatusManager matchStatusManager = MatchStatusManager.Instance;
+        private bool isGuestReady = false;
 
         public ChooseCharacterPage()
         {
@@ -84,13 +85,24 @@ namespace GuessWhoClient
                 selectedCharacter = null;
 
                 LbCharacter.Foreground = Brushes.Black;
+
+                DisableBtnConfirmCharacterSelection();
             }
+        }
+
+        private void DisableBtnConfirmCharacterSelection()
+        {
+            BtnConfirmCharacterSelection.Opacity = 0.5;
+            BtnConfirmCharacterSelection.IsEnabled = false;
         }
 
         private void UpdateUI(Character character)
         {
             LbCharacter.Content = character.Name;
             LbCharacter.Foreground = (SolidColorBrush)FindResource("BlueBrush");
+
+            BtnConfirmCharacterSelection.Opacity = 1;
+            BtnConfirmCharacterSelection.IsEnabled = true;
         }
 
         private void BorderCharacterMouseEnter(object sender, MouseEventArgs e)
@@ -125,7 +137,54 @@ namespace GuessWhoClient
 
         public void MatchStatusChanged(MatchStatus matchStatusCode)
         {
-            throw new NotImplementedException();
+            if (matchStatusCode == MatchStatus.PlayerReady && gameManager.IsCurrentMatchHost && selectedCharacter != null)
+            {
+                BtnConfirmCharacterSelection.Visibility = Visibility.Collapsed;
+                BtnStartGame.Visibility = Visibility.Visible;
+            }
+            else if (matchStatusCode == MatchStatus.PlayerReady && gameManager.IsCurrentMatchHost && selectedCharacter == null)
+            {
+                isGuestReady = true;
+            }
+            else if (matchStatusCode == MatchStatus.StartGame && !gameManager.IsCurrentMatchHost)
+            {
+                RedirectToDrawingPage();
+            }
+        }
+
+        private void RedirectToDrawingPage()
+        {
+            DrawingPage drawingPage = new DrawingPage();
+            NavigationService.Navigate(drawingPage);
+        }
+
+        private void BtnStartGameClick(object sender, RoutedEventArgs e)
+        {
+            if (selectedCharacter != null && gameManager.IsCurrentMatchHost && isGuestReady)
+            {
+                matchStatusManager.Client.StartGame(selectedCharacter.Name, matchStatusManager.CurrentMatchCode);
+                RedirectToDrawingPage();
+            }
+        }
+
+        private void BtnConfirmCharacterSelectionClick(object sender, RoutedEventArgs e)
+        {
+            IcCharacters.IsEnabled = false;
+            DisableBtnConfirmCharacterSelection();
+
+            if (selectedCharacter != null && !gameManager.IsCurrentMatchHost)
+            {
+                matchStatusManager.Client.SelectCharacter(selectedCharacter.Name, gameManager.CurrentMatchCode);
+                BtnConfirmCharacterSelection.Content = Properties.Resources.lbWaitingOpponent;
+            }
+            else if (selectedCharacter != null && gameManager.IsCurrentMatchHost && isGuestReady)
+            {
+                BtnConfirmCharacterSelection.Visibility = Visibility.Collapsed;
+            }
+            else if (selectedCharacter != null && gameManager.IsCurrentMatchHost && !isGuestReady)
+            {
+                BtnConfirmCharacterSelection.Content = Properties.Resources.lbWaitingOpponent;
+            }
         }
     }
 }

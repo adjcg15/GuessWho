@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GuessWhoClient.Model.Interfaces
 {
-    public interface IMatchStatusListener
+    public interface IMatchStatusPage
     {
         void MatchStatusChanged(MatchStatus matchStatusCode);
     }

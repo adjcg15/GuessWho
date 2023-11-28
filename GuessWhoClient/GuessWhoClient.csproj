@@ -105,7 +105,7 @@
     </Compile>
     <Compile Include="Model\CharacterCard.cs" />
     <Compile Include="Model\Interfaces\IGamePage.cs" />
-    <Compile Include="Model\Interfaces\IMatchStatusListener.cs" />
+    <Compile Include="Model\Interfaces\IMatchStatusPage.cs" />
     <Compile Include="ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>

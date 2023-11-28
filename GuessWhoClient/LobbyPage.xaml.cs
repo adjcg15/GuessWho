@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 
 namespace GuessWhoClient
 {
-    public partial class LobbyPage : Page, IUserServiceCallback, IGamePage, IMatchStatusListener
+    public partial class LobbyPage : Page, IUserServiceCallback, IGamePage, IMatchStatusPage
     {
         private const string DEFAULT_PROFILE_PICTURE_ROUTE = "pack://application:,,,/Resources/user-icon.png";
         private GameManager gameManager = GameManager.Instance;
@@ -269,7 +269,7 @@ namespace GuessWhoClient
         {
             if (matchStatusCode == MatchStatus.CharacterSelection)
             {
-                Application.Current.Dispatcher.Invoke(() => RedirectToChooseCharacterPage());
+                RedirectToChooseCharacterPage();
             }
         }
 
@@ -473,13 +473,17 @@ namespace GuessWhoClient
         {
             matchStatusManager.Client.StartCharacterSelection(matchStatusManager.CurrentMatchCode);
 
-            Application.Current.Dispatcher.Invoke(() => RedirectToChooseCharacterPage());
+            RedirectToChooseCharacterPage();
         }
 
         private void RedirectToChooseCharacterPage()
         {
+            matchStatusManager.UnsubscribePage(this);
+
             ChooseCharacterPage characterPage = new ChooseCharacterPage();
             NavigationService.Navigate(characterPage);
+            gameManager.SubscribePage(characterPage);
+            matchStatusManager.SubscribePage(characterPage);
         }
 
         private void BtnInviteToGameClick(object sender, RoutedEventArgs e)

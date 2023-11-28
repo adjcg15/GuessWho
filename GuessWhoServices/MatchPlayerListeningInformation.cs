@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GuessWhoServices
 {
-    public class MatchPlayerListeningInformation
+    public class MatchPlayerInformation
     {
         private string hostSelectedCharacterName;
         private string guestSelectedCharacterName;

@@ -10,7 +10,7 @@ namespace GuessWhoServices
 {
     public partial class GuessWhoService : IMatchStatusService
     {
-        private static Dictionary<string, MatchPlayerListeningInformation> matchPlayersListening = new Dictionary<string, MatchPlayerListeningInformation>();
+        private static Dictionary<string, MatchPlayerInformation> matchPlayersListening = new Dictionary<string, MatchPlayerInformation>();
 
         public Response<bool> GuessCharacter(string characterName, string matchCode)
         {
@@ -49,7 +49,7 @@ namespace GuessWhoServices
 
             if (!matchPlayersListening.ContainsKey(matchCode))
             {
-                matchPlayersListening[matchCode] = new MatchPlayerListeningInformation();
+                matchPlayersListening[matchCode] = new MatchPlayerInformation();
                 matchPlayersListening[matchCode].HostChannel = channel;
             }
             else

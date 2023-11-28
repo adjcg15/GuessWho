@@ -65,13 +65,18 @@
                 </ItemsControl>
             </ScrollViewer>
         </Grid>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,463,0,0">
 
-        <Button Name ="BtnQuickMatch" Margin="352,463,352,0" VerticalAlignment="Top" Style="{StaticResource PrimaryButtonWithIcon}">
-            <StackPanel Orientation="Horizontal" Cursor="Hand">
-                <Image Source="/Resources/play-icon.png" Width="24" Height="19"/>
-                <TextBlock Text="{x:Static p:Resources.btnStartGame}" Name="TbBtnQuickMatch" VerticalAlignment="Center" FontWeight="SemiBold" Margin="12,0,0,0"/>
-            </StackPanel>
-        </Button>
+            <Button x:Name ="BtnStartGame" Style="{StaticResource PrimaryButtonWithIcon}" Visibility="Collapsed">
+                <StackPanel Orientation="Horizontal" Cursor="Hand">
+                    <Image Source="/Resources/play-icon.png" Width="24" Height="19"/>
+                    <TextBlock Text="{x:Static Properties:Resources.btnStartGame}" VerticalAlignment="Center" FontWeight="SemiBold" Margin="12,0,0,0"/>
+                </StackPanel>
+            </Button>
+
+            <Button x:Name ="BtnConfirmCharacterSelection" Style="{StaticResource PrimaryButtonWithIcon}"  FontWeight="SemiBold" Opacity="0.5"
+                Content="{x:Static p:Resources.btnConfirmCharacterSelection}" IsEnabled="False"/>
+        </StackPanel>
 
         <Label x:Name="LbCharacter"
             HorizontalAlignment="Left" Margin="690,234,0,0"
