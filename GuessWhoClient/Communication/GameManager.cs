@@ -5,13 +5,15 @@ using System.ServiceModel;
 
 namespace GuessWhoClient
 {
-    public class GameManager: IGameServiceCallback
+    public class GameManager : IGameServiceCallback
     {
         private static GameManager instance;
         private GameServiceClient client;
         private List<IGamePage> subscribedPages = new List<IGamePage>();
         private string currentMatchCode;
         private bool isCurrentMatchHost;
+        private string adversaryNickname;
+        private byte[] adversaryAvatar;
 
         private GameManager() { }
 
@@ -42,6 +44,10 @@ namespace GuessWhoClient
 
         public bool IsCurrentMatchHost { get { return isCurrentMatchHost; } set { isCurrentMatchHost = value; } }
 
+        public string AdversaryNickname { get { return adversaryNickname; } set { adversaryNickname = value; } }
+
+        public byte[] AdversaryAvatar { get { return adversaryAvatar; } set { adversaryAvatar = value; } }
+
         public void SubscribePage(IGamePage page)
         {
             if (!subscribedPages.Contains(page))
@@ -59,6 +65,8 @@ namespace GuessWhoClient
         {
             isCurrentMatchHost = false;
             currentMatchCode = "";
+            adversaryAvatar = null;
+            adversaryNickname = "";
             client = null;
             subscribedPages = new List<IGamePage>();
         }

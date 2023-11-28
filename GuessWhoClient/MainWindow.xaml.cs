@@ -16,6 +16,7 @@ namespace GuessWhoClient
         {
             try
             {
+                LeaveChatRoom();
                 LeaveCurrentGame();
                 UnsubscribeActiveUsersList();
                 Logout();
@@ -53,6 +54,14 @@ namespace GuessWhoClient
         {
             DataStore.UsersClient?.Unsubscribe();
             DataStore.UsersClient = null;
+        }
+
+        private void LeaveChatRoom()
+        {
+            GameManager gameManager = GameManager.Instance;
+
+            DataStore.ChatsClient?.LeaveChatRoom(gameManager.CurrentMatchCode);
+            DataStore.ChatsClient = null;
         }
 
         private void Logout()
