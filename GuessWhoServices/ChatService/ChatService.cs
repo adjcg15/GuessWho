@@ -8,33 +8,73 @@ namespace GuessWhoServices
     {
         private readonly static Dictionary<string, ChatRoom> chatRooms = new Dictionary<string, ChatRoom>();
 
-        public void RegisterChatRoom(string chatRoomCode)
+        public void EnterToChatRoom(string chatRoomCode)
         {
-            var newChatRoom = new ChatRoom();
-            newChatRoom.HostChannel = OperationContext.Current.GetCallbackChannel<IChatCallback>();
+            bool isChatRoomAlreadyRegistered = chatRooms.ContainsKey(chatRoomCode);
 
-            if(chatRooms.ContainsKey(chatRoomCode))
+            if (isChatRoomAlreadyRegistered)
             {
-                chatRooms.Remove(chatRoomCode);
+                JoinChatRoom(chatRoomCode);
             }
+            else
+            {
+                RegisterChatRoom(chatRoomCode);
+            }
+        }
+
+        private void JoinChatRoom(string chatRoomCode)
+        {
+            IChatCallback userChannel = OperationContext.Current.GetCallbackChannel<IChatCallback>();
+            ChatRoom chatRoom = chatRooms[chatRoomCode];
+
+            chatRoom.SecondUserInChatRoomChannel = userChannel;
+        }
+
+        private void RegisterChatRoom(string chatRoomCode)
+        {
+            IChatCallback userChannel = OperationContext.Current.GetCallbackChannel<IChatCallback>();
+            ChatRoom newChatRoom = new ChatRoom();
+            newChatRoom.FirstUserInChatRoomChannel = userChannel;
 
             chatRooms.Add(chatRoomCode, newChatRoom);
         }
 
-        public void DeleteChatRoom(string chatRoomCode)
+        public void LeaveChatRoom(string chatRoomCode)
         {
-            if (chatRooms.ContainsKey(chatRoomCode))
+            ChatRoom chatRoom = chatRooms[chatRoomCode];
+
+            if(chatRoom != null)
             {
-                chatRooms.Remove(chatRoomCode);
+                bool isLastUserLeavingChatRoom = chatRoom.FirstUserInChatRoomChannel == null || chatRoom.SecondUserInChatRoomChannel == null;
+                
+                if (isLastUserLeavingChatRoom)
+                {
+                    DeleteChatRoom(chatRoomCode);
+                }
+                else
+                {
+                    RemoveUserFromChatRoom(chatRoomCode);
+                }
             }
         }
 
-        public void JoinChatRoom(string chatRoomCode)
+        public void DeleteChatRoom(string chatRoomCode)
         {
-            if (chatRooms.ContainsKey(chatRoomCode))
+            chatRooms.Remove(chatRoomCode);
+        }
+
+        public void RemoveUserFromChatRoom(string chatRoomCode)
+        {
+            ChatRoom chatRoom = chatRooms[chatRoomCode];
+            IChatCallback userChannel = OperationContext.Current.GetCallbackChannel<IChatCallback>();
+
+            if(userChannel.GetHashCode() == chatRoom.FirstUserInChatRoomChannel.GetHashCode())
             {
-                IChatCallback guestChannel = OperationContext.Current.GetCallbackChannel<IChatCallback>();
-                chatRooms[chatRoomCode].GuestChannel = guestChannel;
+                chatRoom.FirstUserInChatRoomChannel = null;
+            }
+            else
+            {
+                chatRoom.SecondUserInChatRoomChannel = null;
             }
         }
 
@@ -48,19 +88,19 @@ namespace GuessWhoServices
 
             if (chatRooms.ContainsKey(chatRoomCode))
             {
-                var storedChatRoom = chatRooms[chatRoomCode];
-                var senderChannel = OperationContext.Current.GetCallbackChannel<IChatCallback>();
+                ChatRoom storedChatRoom = chatRooms[chatRoomCode];
+                IChatCallback userChannel = OperationContext.Current.GetCallbackChannel<IChatCallback>();
 
                 response.StatusCode = ResponseStatus.OK;
                 response.Value = true;
                 try
                 {
-                    bool isHostSendingMessage = senderChannel.GetHashCode() == storedChatRoom.HostChannel.GetHashCode();
-                    if (isHostSendingMessage)
+                    bool isFirstPlayerToJoinSendingMessage = userChannel.GetHashCode() == storedChatRoom.FirstUserInChatRoomChannel.GetHashCode();
+                    if (isFirstPlayerToJoinSendingMessage)
                     {
-                        if (storedChatRoom.GuestChannel != null)
+                        if (storedChatRoom.SecondUserInChatRoomChannel != null)
                         {
-                            storedChatRoom.GuestChannel.NewMessageReceived(message);
+                            storedChatRoom.SecondUserInChatRoomChannel.NewMessageReceived(message);
                         }
                         else
                         {
@@ -69,7 +109,7 @@ namespace GuessWhoServices
                     }
                     else
                     {
-                        storedChatRoom.HostChannel.NewMessageReceived(message);
+                        storedChatRoom.FirstUserInChatRoomChannel.NewMessageReceived(message);
                     }
                 }
                 catch (CommunicationObjectAbortedException)

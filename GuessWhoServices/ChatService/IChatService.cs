@@ -7,13 +7,10 @@ namespace GuessWhoServices
     public interface IChatService
     {
         [OperationContract(IsOneWay = true)]
-        void RegisterChatRoom(string ChatRoomCode);
+        void EnterToChatRoom(string chatRoomCode);
 
         [OperationContract(IsOneWay = true)]
-        void JoinChatRoom(string chatRoomCode);
-
-        [OperationContract(IsOneWay = true)]
-        void DeleteChatRoom(string chatRoomCode);
+        void LeaveChatRoom(string chatRoomCode);
 
         [OperationContract]
         Response<bool> SendMessage(string chatRoomCode, string message);
