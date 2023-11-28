@@ -6,7 +6,7 @@ using System.ServiceModel;
 
 namespace GuessWhoServices
 {
-    public partial class GuessWhoService : IGameService
+    public partial class GuessWhoService : IGameService 
     {
         private static Dictionary<string, MatchInformation> matches = new Dictionary<string, MatchInformation>();
 
@@ -195,31 +195,6 @@ namespace GuessWhoServices
                     matches.Remove(invitationCode);
                 }
             }
-        }
-
-        public void StartCharacterSelection()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SelectCharacter(string characterName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void StartGame(string characterName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Response<bool> GuessCharacter(string characterName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SendClue(bool looksLikeMyCharacter)
-        {
-            throw new NotImplementedException();
         }
     }
 }
