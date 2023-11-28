@@ -87,6 +87,7 @@ namespace GuessWhoClient
                 TbInvitationCode.Visibility = Visibility.Visible;
                 ImgSendInvitationCode.Visibility = Visibility.Visible;
                 TbCodePlaceholder.Visibility = Visibility.Visible;
+                TbInvitationCode.Focus();
             }
             else
             {
@@ -177,19 +178,16 @@ namespace GuessWhoClient
 
             if (code != previousCode)
             {
-                previousCode = code;
+                int cursorPosition = TbInvitationCode.CaretIndex;
 
                 if (code.Length > INVITATION_CODE_LENGTH)
                 {
-                    TbInvitationCode.Text = code.Substring(0, INVITATION_CODE_LENGTH);
-                    code = TbInvitationCode.Text;
+                    code = previousCode; 
+                    TbInvitationCode.Text = code;
+                    TbInvitationCode.CaretIndex = cursorPosition;
                 }
 
-                if (!Regex.IsMatch(code, @"^[a-zA-Z0-9]*$"))
-                {
-                    TbInvitationCode.Text = new string(code.Where(char.IsLetterOrDigit).ToArray());
-                    code = TbInvitationCode.Text;
-                }
+                code = new string(code.Where(char.IsLetterOrDigit).ToArray());
 
                 if (code.Length == INVITATION_CODE_LENGTH)
                 {
@@ -201,8 +199,11 @@ namespace GuessWhoClient
                     ImgSendInvitationCode.IsEnabled = false;
                     ImgSendInvitationCode.Opacity = 0.5;
                 }
+
+                previousCode = code;
             }
         }
+
 
         private void ImgSendInvitationCodeClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
