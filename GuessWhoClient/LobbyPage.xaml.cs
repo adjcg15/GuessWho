@@ -267,10 +267,9 @@ namespace GuessWhoClient
 
         public void MatchStatusChanged(MatchStatus matchStatusCode)
         {
-            if(matchStatusCode == MatchStatus.CharacterSelection)
+            if (matchStatusCode == MatchStatus.CharacterSelection)
             {
-                ChooseCharacterPage characterPage = new ChooseCharacterPage();
-                NavigationService.Navigate(characterPage);
+                Application.Current.Dispatcher.Invoke(() => RedirectToChooseCharacterPage());
             }
         }
 
@@ -474,6 +473,11 @@ namespace GuessWhoClient
         {
             matchStatusManager.Client.StartCharacterSelection(matchStatusManager.CurrentMatchCode);
 
+            Application.Current.Dispatcher.Invoke(() => RedirectToChooseCharacterPage());
+        }
+
+        private void RedirectToChooseCharacterPage()
+        {
             ChooseCharacterPage characterPage = new ChooseCharacterPage();
             NavigationService.Navigate(characterPage);
         }

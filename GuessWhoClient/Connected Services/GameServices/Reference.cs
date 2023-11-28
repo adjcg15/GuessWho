@@ -1386,28 +1386,28 @@ namespace GuessWhoClient.GameServices {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameServices.IMatchStatusService", CallbackContract=typeof(GuessWhoClient.GameServices.IMatchStatusServiceCallback))]
     public interface IMatchStatusService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/ListenMatchStatus", ReplyAction="http://tempuri.org/IMatchStatusService/ListenMatchStatusResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchStatusService/ListenMatchStatus")]
         void ListenMatchStatus(string matchCode);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/ListenMatchStatus", ReplyAction="http://tempuri.org/IMatchStatusService/ListenMatchStatusResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchStatusService/ListenMatchStatus")]
         System.Threading.Tasks.Task ListenMatchStatusAsync(string matchCode);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/StartCharacterSelection", ReplyAction="http://tempuri.org/IMatchStatusService/StartCharacterSelectionResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchStatusService/StartCharacterSelection")]
         void StartCharacterSelection(string matchCode);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/StartCharacterSelection", ReplyAction="http://tempuri.org/IMatchStatusService/StartCharacterSelectionResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchStatusService/StartCharacterSelection")]
         System.Threading.Tasks.Task StartCharacterSelectionAsync(string matchCode);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/SelectCharacter", ReplyAction="http://tempuri.org/IMatchStatusService/SelectCharacterResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchStatusService/SelectCharacter")]
         void SelectCharacter(string characterName, string matchCode);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/SelectCharacter", ReplyAction="http://tempuri.org/IMatchStatusService/SelectCharacterResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchStatusService/SelectCharacter")]
         System.Threading.Tasks.Task SelectCharacterAsync(string characterName, string matchCode);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/StartGame", ReplyAction="http://tempuri.org/IMatchStatusService/StartGameResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchStatusService/StartGame")]
         void StartGame(string characterName, string matchCode);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/StartGame", ReplyAction="http://tempuri.org/IMatchStatusService/StartGameResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchStatusService/StartGame")]
         System.Threading.Tasks.Task StartGameAsync(string characterName, string matchCode);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/GuessCharacter", ReplyAction="http://tempuri.org/IMatchStatusService/GuessCharacterResponse")]
@@ -1416,16 +1416,16 @@ namespace GuessWhoClient.GameServices {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/GuessCharacter", ReplyAction="http://tempuri.org/IMatchStatusService/GuessCharacterResponse")]
         System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> GuessCharacterAsync(string characterName, string matchCode);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/SendAnswer", ReplyAction="http://tempuri.org/IMatchStatusService/SendAnswerResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchStatusService/SendAnswer")]
         void SendAnswer(bool looksLikeMyCharacter, string matchCode);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/SendAnswer", ReplyAction="http://tempuri.org/IMatchStatusService/SendAnswerResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchStatusService/SendAnswer")]
         System.Threading.Tasks.Task SendAnswerAsync(bool looksLikeMyCharacter, string matchCode);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/StopListeningMatchStatus", ReplyAction="http://tempuri.org/IMatchStatusService/StopListeningMatchStatusResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchStatusService/StopListeningMatchStatus")]
         void StopListeningMatchStatus(string matchCode);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMatchStatusService/StopListeningMatchStatus", ReplyAction="http://tempuri.org/IMatchStatusService/StopListeningMatchStatusResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchStatusService/StopListeningMatchStatus")]
         System.Threading.Tasks.Task StopListeningMatchStatusAsync(string matchCode);
     }
     

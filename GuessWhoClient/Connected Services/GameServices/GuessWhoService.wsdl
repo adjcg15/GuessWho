@@ -346,26 +346,14 @@
   <wsdl:message name="IMatchStatusService_ListenMatchStatus_InputMessage">
     <wsdl:part name="parameters" element="tns:ListenMatchStatus" />
   </wsdl:message>
-  <wsdl:message name="IMatchStatusService_ListenMatchStatus_OutputMessage">
-    <wsdl:part name="parameters" element="tns:ListenMatchStatusResponse" />
-  </wsdl:message>
   <wsdl:message name="IMatchStatusService_StartCharacterSelection_InputMessage">
     <wsdl:part name="parameters" element="tns:StartCharacterSelection" />
-  </wsdl:message>
-  <wsdl:message name="IMatchStatusService_StartCharacterSelection_OutputMessage">
-    <wsdl:part name="parameters" element="tns:StartCharacterSelectionResponse" />
   </wsdl:message>
   <wsdl:message name="IMatchStatusService_SelectCharacter_InputMessage">
     <wsdl:part name="parameters" element="tns:SelectCharacter" />
   </wsdl:message>
-  <wsdl:message name="IMatchStatusService_SelectCharacter_OutputMessage">
-    <wsdl:part name="parameters" element="tns:SelectCharacterResponse" />
-  </wsdl:message>
   <wsdl:message name="IMatchStatusService_StartGame_InputMessage">
     <wsdl:part name="parameters" element="tns:StartGame" />
-  </wsdl:message>
-  <wsdl:message name="IMatchStatusService_StartGame_OutputMessage">
-    <wsdl:part name="parameters" element="tns:StartGameResponse" />
   </wsdl:message>
   <wsdl:message name="IMatchStatusService_GuessCharacter_InputMessage">
     <wsdl:part name="parameters" element="tns:GuessCharacter" />
@@ -376,14 +364,8 @@
   <wsdl:message name="IMatchStatusService_SendAnswer_InputMessage">
     <wsdl:part name="parameters" element="tns:SendAnswer" />
   </wsdl:message>
-  <wsdl:message name="IMatchStatusService_SendAnswer_OutputMessage">
-    <wsdl:part name="parameters" element="tns:SendAnswerResponse" />
-  </wsdl:message>
   <wsdl:message name="IMatchStatusService_StopListeningMatchStatus_InputMessage">
     <wsdl:part name="parameters" element="tns:StopListeningMatchStatus" />
-  </wsdl:message>
-  <wsdl:message name="IMatchStatusService_StopListeningMatchStatus_OutputMessage">
-    <wsdl:part name="parameters" element="tns:StopListeningMatchStatusResponse" />
   </wsdl:message>
   <wsdl:message name="IMatchStatusService_MatchStatusChanged_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:MatchStatusChanged" />
@@ -496,19 +478,15 @@
   <wsdl:portType name="IMatchStatusService">
     <wsdl:operation name="ListenMatchStatus">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchStatusService/ListenMatchStatus" message="tns:IMatchStatusService_ListenMatchStatus_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IMatchStatusService/ListenMatchStatusResponse" message="tns:IMatchStatusService_ListenMatchStatus_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="StartCharacterSelection">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchStatusService/StartCharacterSelection" message="tns:IMatchStatusService_StartCharacterSelection_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IMatchStatusService/StartCharacterSelectionResponse" message="tns:IMatchStatusService_StartCharacterSelection_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="SelectCharacter">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchStatusService/SelectCharacter" message="tns:IMatchStatusService_SelectCharacter_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IMatchStatusService/SelectCharacterResponse" message="tns:IMatchStatusService_SelectCharacter_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="StartGame">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchStatusService/StartGame" message="tns:IMatchStatusService_StartGame_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IMatchStatusService/StartGameResponse" message="tns:IMatchStatusService_StartGame_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GuessCharacter">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchStatusService/GuessCharacter" message="tns:IMatchStatusService_GuessCharacter_InputMessage" />
@@ -516,11 +494,9 @@
     </wsdl:operation>
     <wsdl:operation name="SendAnswer">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchStatusService/SendAnswer" message="tns:IMatchStatusService_SendAnswer_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IMatchStatusService/SendAnswerResponse" message="tns:IMatchStatusService_SendAnswer_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="StopListeningMatchStatus">
       <wsdl:input wsaw:Action="http://tempuri.org/IMatchStatusService/StopListeningMatchStatus" message="tns:IMatchStatusService_StopListeningMatchStatus_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IMatchStatusService/StopListeningMatchStatusResponse" message="tns:IMatchStatusService_StopListeningMatchStatus_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="MatchStatusChanged">
       <wsdl:output wsaw:Action="http://tempuri.org/IMatchStatusService/MatchStatusChanged" message="tns:IMatchStatusService_MatchStatusChanged_OutputCallbackMessage" />
@@ -760,36 +736,24 @@
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="StartCharacterSelection">
       <soap12:operation soapAction="http://tempuri.org/IMatchStatusService/StartCharacterSelection" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="SelectCharacter">
       <soap12:operation soapAction="http://tempuri.org/IMatchStatusService/SelectCharacter" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="StartGame">
       <soap12:operation soapAction="http://tempuri.org/IMatchStatusService/StartGame" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GuessCharacter">
       <soap12:operation soapAction="http://tempuri.org/IMatchStatusService/GuessCharacter" style="document" />
@@ -805,18 +769,12 @@
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="StopListeningMatchStatus">
       <soap12:operation soapAction="http://tempuri.org/IMatchStatusService/StopListeningMatchStatus" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="MatchStatusChanged">
       <soap12:operation soapAction="http://tempuri.org/IMatchStatusService/MatchStatusChanged" style="document" />

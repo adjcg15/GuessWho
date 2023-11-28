@@ -7,25 +7,25 @@ namespace GuessWhoServices
     [ServiceContract(CallbackContract = typeof(IMatchStatusCallback))]
     public interface IMatchStatusService
     {
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void ListenMatchStatus(string matchCode);
 
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void StartCharacterSelection(string matchCode);
 
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void SelectCharacter(string characterName, string matchCode);
 
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void StartGame(string characterName, string matchCode);
 
         [OperationContract]
         Response<bool> GuessCharacter(string characterName, string matchCode);
 
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void SendAnswer(bool looksLikeMyCharacter, string matchCode);
 
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void StopListeningMatchStatus(string matchCode);
     }
 

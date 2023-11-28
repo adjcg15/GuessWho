@@ -312,21 +312,11 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="ListenMatchStatusResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="StartCharacterSelection">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="matchCode" nillable="true" type="xs:string" />
       </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="StartCharacterSelectionResponse">
-    <xs:complexType>
-      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="SelectCharacter">
@@ -337,22 +327,12 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="SelectCharacterResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="StartGame">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="characterName" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="matchCode" nillable="true" type="xs:string" />
       </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="StartGameResponse">
-    <xs:complexType>
-      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="GuessCharacter">
@@ -378,21 +358,11 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="SendAnswerResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="StopListeningMatchStatus">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="matchCode" nillable="true" type="xs:string" />
       </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="StopListeningMatchStatusResponse">
-    <xs:complexType>
-      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="MatchStatusChanged">
