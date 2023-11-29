@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GuessWhoServices;
+using System;
 using System.ServiceModel;
 
 namespace GuessWhoHost
@@ -7,7 +8,7 @@ namespace GuessWhoHost
     {
         static void Main(string[] args)
         {
-            using (ServiceHost host = new ServiceHost(typeof(GuessWhoServices.GuessWhoService)))
+            using (ServiceHost host = new ServiceHost(typeof(GuessWhoService)))
             {
                 host.Open();
                 Console.WriteLine("Server is running");

@@ -29,4 +29,16 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Friend" nillable="true" type="tns:Friend" />
+  <xs:simpleType name="MatchStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CharacterSelection" />
+      <xs:enumeration value="PlayerReady" />
+      <xs:enumeration value="StartGame" />
+      <xs:enumeration value="GameLost" />
+      <xs:enumeration value="GameWon" />
+      <xs:enumeration value="LooksLike" />
+      <xs:enumeration value="DoesNotLookLike" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="MatchStatus" nillable="true" type="tns:MatchStatus" />
 </xs:schema>

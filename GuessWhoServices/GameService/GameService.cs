@@ -6,9 +6,14 @@ using System.ServiceModel;
 
 namespace GuessWhoServices
 {
-    public partial class GuessWhoService : IGameService
+    public partial class GuessWhoService : IGameService 
     {
         private static Dictionary<string, MatchInformation> matches = new Dictionary<string, MatchInformation>();
+
+        public Dictionary<string, MatchInformation> GetMatches()
+        {
+            return matches;
+        }
 
         public Response<string> CreateMatch(string hostNickname)
         {

@@ -305,4 +305,117 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="ListenMatchStatus">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="matchCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StartCharacterSelection">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="matchCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SelectCharacter">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="characterName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="matchCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StartGame">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="characterName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="matchCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GuessCharacter">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="characterName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="matchCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GuessCharacterResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="GuessCharacterResult" nillable="true" type="q20:booleanResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendAnswer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="looksLikeMyCharacter" type="xs:boolean" />
+        <xs:element minOccurs="0" name="matchCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StopListeningMatchStatus">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="matchCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MatchStatusChanged">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/GuessWhoServices" minOccurs="0" name="matchStatusCode" type="q21:MatchStatus" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MatchStatusChangedResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EnterToChatRoom">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="chatRoomCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LeaveChatRoom">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="chatRoomCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendMessage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="chatRoomCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SendMessageResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="SendMessageResult" nillable="true" type="q22:booleanResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NewMessageReceived">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="message" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NewMessageReceivedResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

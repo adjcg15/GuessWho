@@ -135,6 +135,9 @@
   <data name="btnChangePassword" xml:space="preserve">
     <value>Cambiar contraseña</value>
   </data>
+  <data name="btnConfirmCharacterSelection" xml:space="preserve">
+    <value>Confirmar Selección</value>
+  </data>
   <data name="btnConfirmCode" xml:space="preserve">
     <value>Confirmar</value>
   </data>

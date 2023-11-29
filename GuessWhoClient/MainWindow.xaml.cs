@@ -1,4 +1,5 @@
-﻿using GuessWhoClient.GameServices;
+﻿using GuessWhoClient.Communication;
+using GuessWhoClient.GameServices;
 using System;
 using System.ServiceModel;
 using System.Windows.Navigation;
@@ -16,6 +17,7 @@ namespace GuessWhoClient
         {
             try
             {
+                LeaveChatRoom();
                 LeaveCurrentGame();
                 UnsubscribeActiveUsersList();
                 Logout();
@@ -33,6 +35,7 @@ namespace GuessWhoClient
         private void LeaveCurrentGame()
         {
             GameManager gameManager = GameManager.Instance;
+            MatchStatusManager matchStatusManager = MatchStatusManager.Instance;
 
             if (!string.IsNullOrEmpty(gameManager.CurrentMatchCode))
             {
@@ -47,12 +50,26 @@ namespace GuessWhoClient
 
                 gameManager.RestartRawValues();
             }
+
+            if(!string.IsNullOrEmpty(matchStatusManager.CurrentMatchCode))
+            {
+                matchStatusManager.Client.StopListeningMatchStatus(matchStatusManager.CurrentMatchCode);
+                matchStatusManager.RestartRawValues();
+            }
         }
 
         private void UnsubscribeActiveUsersList()
         {
             DataStore.UsersClient?.Unsubscribe();
             DataStore.UsersClient = null;
+        }
+
+        private void LeaveChatRoom()
+        {
+            GameManager gameManager = GameManager.Instance;
+
+            DataStore.ChatsClient?.LeaveChatRoom(gameManager.CurrentMatchCode);
+            DataStore.ChatsClient = null;
         }
 
         private void Logout()
