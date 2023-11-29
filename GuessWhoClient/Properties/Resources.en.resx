@@ -366,12 +366,6 @@
   <data name="msgbGameFinishedByHostTitle" xml:space="preserve">
     <value>Game over</value>
   </data>
-  <data name="msgbHostInformationMissingMessage" xml:space="preserve">
-    <value>An error occurred while retrieving host information, but you can continue playing without any problems</value>
-  </data>
-  <data name="msgbHostInformationMissingTitle" xml:space="preserve">
-    <value>Could not retrieve host information</value>
-  </data>
   <data name="msgbHostLeftMatchMessage" xml:space="preserve">
     <value>The match has been ended by the host, so it is not possible to join</value>
   </data>

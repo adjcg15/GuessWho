@@ -808,24 +808,6 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Ocurrió un error a la hora de recuperar la información del anfitrión, pero puede continuar jugando sin ningún problema.
-        /// </summary>
-        public static string msgbHostInformationMissingMessage {
-            get {
-                return ResourceManager.GetString("msgbHostInformationMissingMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a No se pudo recuperar la información del anfitrión.
-        /// </summary>
-        public static string msgbHostInformationMissingTitle {
-            get {
-                return ResourceManager.GetString("msgbHostInformationMissingTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Busca una cadena traducida similar a La partida ha sido finalizada por el anfitrión, por lo que no es posible unirse.
         /// </summary>
         public static string msgbHostLeftMatchMessage {

@@ -366,12 +366,6 @@
   <data name="msgbGameFinishedByHostTitle" xml:space="preserve">
     <value>Partida finalizada</value>
   </data>
-  <data name="msgbHostInformationMissingMessage" xml:space="preserve">
-    <value>Ocurrió un error a la hora de recuperar la información del anfitrión, pero puede continuar jugando sin ningún problema</value>
-  </data>
-  <data name="msgbHostInformationMissingTitle" xml:space="preserve">
-    <value>No se pudo recuperar la información del anfitrión</value>
-  </data>
   <data name="msgbHostLeftMatchMessage" xml:space="preserve">
     <value>La partida ha sido finalizada por el anfitrión, por lo que no es posible unirse</value>
   </data>
