@@ -38,8 +38,8 @@ namespace GuessWhoClient
         {
             List<Character> imageList = new List<Character>();
 
-            string PROJECT_DIRECTORY = System.IO.Path.Combine(AppContext.BaseDirectory, "..\\..\\");
-            string CHARACTERS_FOLDER = System.IO.Path.Combine(PROJECT_DIRECTORY, "Resources\\Characters");
+            string PROJECT_DIRECTORY = Path.Combine(AppContext.BaseDirectory, "..\\..\\");
+            string CHARACTERS_FOLDER = Path.Combine(PROJECT_DIRECTORY, "Resources\\Characters");
             string[] imageFiles = Directory.GetFiles(CHARACTERS_FOLDER, "*.png");
 
             foreach (string imagePath in imageFiles)
@@ -47,7 +47,7 @@ namespace GuessWhoClient
                 Character character = new Character
                 {
                     Avatar = new BitmapImage(new Uri(imagePath, UriKind.Relative)),
-                    Name = System.IO.Path.GetFileNameWithoutExtension(imagePath),
+                    Name = Path.GetFileNameWithoutExtension(imagePath),
                 };
                 imageList.Add(character);
             }

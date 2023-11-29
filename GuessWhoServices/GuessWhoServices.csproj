@@ -49,8 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DrawService\DrawService.cs" />
-    <Compile Include="DrawService\IDrawService.cs" />
+    <Compile Include="ChatRoom.cs" />
+    <Compile Include="ChatService\ChatService.cs" />
+    <Compile Include="ChatService\IChatService.cs" />
     <Compile Include="FriendsService\FriendsService.cs" />
     <Compile Include="FriendsService\IFriendsService.cs" />
     <Compile Include="MatchInformation.cs" />

@@ -1520,4 +1520,87 @@ namespace GuessWhoClient.GameServices {
             return base.Channel.StopListeningMatchStatusAsync(matchCode);
         }
     }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameServices.IChatService", CallbackContract=typeof(GuessWhoClient.GameServices.IChatServiceCallback))]
+    public interface IChatService {
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IChatService/EnterToChatRoom")]
+        void EnterToChatRoom(string chatRoomCode);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IChatService/EnterToChatRoom")]
+        System.Threading.Tasks.Task EnterToChatRoomAsync(string chatRoomCode);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IChatService/LeaveChatRoom")]
+        void LeaveChatRoom(string chatRoomCode);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IChatService/LeaveChatRoom")]
+        System.Threading.Tasks.Task LeaveChatRoomAsync(string chatRoomCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/SendMessage", ReplyAction="http://tempuri.org/IChatService/SendMessageResponse")]
+        GuessWhoClient.GameServices.booleanResponse SendMessage(string chatRoomCode, string message);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/SendMessage", ReplyAction="http://tempuri.org/IChatService/SendMessageResponse")]
+        System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> SendMessageAsync(string chatRoomCode, string message);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IChatServiceCallback {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IChatService/NewMessageReceived", ReplyAction="http://tempuri.org/IChatService/NewMessageReceivedResponse")]
+        void NewMessageReceived(string message);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IChatServiceChannel : GuessWhoClient.GameServices.IChatService, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class ChatServiceClient : System.ServiceModel.DuplexClientBase<GuessWhoClient.GameServices.IChatService>, GuessWhoClient.GameServices.IChatService {
+        
+        public ChatServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
+        }
+        
+        public ChatServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
+        }
+        
+        public ChatServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public ChatServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public ChatServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
+        }
+        
+        public void EnterToChatRoom(string chatRoomCode) {
+            base.Channel.EnterToChatRoom(chatRoomCode);
+        }
+        
+        public System.Threading.Tasks.Task EnterToChatRoomAsync(string chatRoomCode) {
+            return base.Channel.EnterToChatRoomAsync(chatRoomCode);
+        }
+        
+        public void LeaveChatRoom(string chatRoomCode) {
+            base.Channel.LeaveChatRoom(chatRoomCode);
+        }
+        
+        public System.Threading.Tasks.Task LeaveChatRoomAsync(string chatRoomCode) {
+            return base.Channel.LeaveChatRoomAsync(chatRoomCode);
+        }
+        
+        public GuessWhoClient.GameServices.booleanResponse SendMessage(string chatRoomCode, string message) {
+            return base.Channel.SendMessage(chatRoomCode, message);
+        }
+        
+        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> SendMessageAsync(string chatRoomCode, string message) {
+            return base.Channel.SendMessageAsync(chatRoomCode, message);
+        }
+    }
 }
