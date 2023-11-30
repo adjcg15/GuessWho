@@ -1,9 +1,11 @@
 ﻿using GuessWhoClient.Communication;
 using GuessWhoClient.GameServices;
 using GuessWhoClient.Model.Interfaces;
+using GuessWhoClient.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -132,15 +134,38 @@ namespace GuessWhoClient
 
         public void PlayerStatusInMatchChanged(PlayerInMatch player, bool isInMatch)
         {
-            throw new NotImplementedException();
+            NotifyGameHasBeenCanceled();
+        }
+
+        private void NotifyGameHasBeenCanceled()
+        {
+            ClearCommunicationChannels();
+            RedirectPermanentlyToMainMenu();
+        }
+
+        private void ClearCommunicationChannels()
+        {
+            gameManager.RestartRawValues();
+            matchStatusManager.RestartRawValues();
+        }
+
+        private void RedirectPermanentlyToMainMenu()
+        {
+            MainMenuPage mainMenu = new MainMenuPage();
+            mainMenu.ShowCanceledMatchMessage();
+            this.NavigationService.Navigate(mainMenu);
         }
 
         public void MatchStatusChanged(MatchStatus matchStatusCode)
         {
+            Console.WriteLine(matchStatusCode + " " + gameManager.IsCurrentMatchHost + " " + selectedCharacter == null);
+
             if (matchStatusCode == MatchStatus.PlayerReady && gameManager.IsCurrentMatchHost && selectedCharacter != null)
             {
                 BtnConfirmCharacterSelection.Visibility = Visibility.Collapsed;
                 BtnStartGame.Visibility = Visibility.Visible;
+
+                isGuestReady = true;
             }
             else if (matchStatusCode == MatchStatus.PlayerReady && gameManager.IsCurrentMatchHost && selectedCharacter == null)
             {
@@ -160,10 +185,19 @@ namespace GuessWhoClient
 
         private void BtnStartGameClick(object sender, RoutedEventArgs e)
         {
-            if (selectedCharacter != null && gameManager.IsCurrentMatchHost && isGuestReady)
+            Console.WriteLine(selectedCharacter);
+            try
             {
-                matchStatusManager.Client.StartGame(selectedCharacter.Name, matchStatusManager.CurrentMatchCode);
-                RedirectToDrawingPage();
+                if (selectedCharacter != null && gameManager.IsCurrentMatchHost && isGuestReady)
+                {
+                    matchStatusManager.Client.StartGame(selectedCharacter.Name, matchStatusManager.CurrentMatchCode);
+                    RedirectToDrawingPage();
+                }
+            }
+            catch (EndpointNotFoundException ex)
+            {
+                Utils.ServerResponse.ShowServerDownMessage();
+                //TO-DO Ex log
             }
         }
 
@@ -172,7 +206,20 @@ namespace GuessWhoClient
             IcCharacters.IsEnabled = false;
             DisableBtnConfirmCharacterSelection();
 
-            if (selectedCharacter != null && !gameManager.IsCurrentMatchHost)
+            try
+            {
+                ConfirmSelectedCharacter();
+            }
+            catch (EndpointNotFoundException ex)
+            {
+                ServerResponse.ShowServerDownMessage();
+                //TO-DO Ex log
+            } 
+        }
+
+        private void ConfirmSelectedCharacter()
+        {
+            if (selectedCharacter != null && !gameManager.IsCurrentMatchHost) 
             {
                 matchStatusManager.Client.SelectCharacter(selectedCharacter.Name, gameManager.CurrentMatchCode);
                 BtnConfirmCharacterSelection.Content = Properties.Resources.lbWaitingOpponent;
@@ -180,9 +227,11 @@ namespace GuessWhoClient
             else if (selectedCharacter != null && gameManager.IsCurrentMatchHost && isGuestReady)
             {
                 BtnConfirmCharacterSelection.Visibility = Visibility.Collapsed;
+                BtnStartGame.Visibility = Visibility.Visible;
             }
-            else if (selectedCharacter != null && gameManager.IsCurrentMatchHost && !isGuestReady)
+            else if (selectedCharacter != null && gameManager.IsCurrentMatchHost && !isGuestReady) 
             {
+                DisableBtnConfirmCharacterSelection();
                 BtnConfirmCharacterSelection.Content = Properties.Resources.lbWaitingOpponent;
             }
         }

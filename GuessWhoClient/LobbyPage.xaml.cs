@@ -308,9 +308,8 @@ namespace GuessWhoClient
         {
             ClearCommunicationChannels();
             MainMenuPage mainMenu = new MainMenuPage();
-            mainMenu.ShowCanceledMatchMessage();
+            mainMenu.ShowHostCanceledMatchMessage();
             NavigationService.Navigate(mainMenu);
-
         }
 
         private void ShowAdversaryInformation()
@@ -350,7 +349,7 @@ namespace GuessWhoClient
         private void ShowDefaultUserInfoInBanner()
         {
             BorderOponent.Background = new SolidColorBrush(Color.FromRgb(226, 226, 226));
-            TbOponent.Text = Properties.Resources.lbWaitingPlayer;
+            TbOponent.Text = Properties.Resources.lbWaitingOpponent;
             Uri uri = new Uri(DEFAULT_PROFILE_PICTURE_ROUTE);
             BitmapImage defaultImage = new BitmapImage(uri);
             ImgProfilePicture.ImageSource = defaultImage;
@@ -358,7 +357,7 @@ namespace GuessWhoClient
 
         private void ShowDefaultUserInfoInChat()
         {
-            TbOponentChat.Text = Properties.Resources.lbWaitingPlayer;
+            TbOponentChat.Text = Properties.Resources.lbWaitingOpponent;
             Uri uri = new Uri(DEFAULT_PROFILE_PICTURE_ROUTE);
             BitmapImage defaultImage = new BitmapImage(uri);
             ImgChatProfilePicture.ImageSource = defaultImage;

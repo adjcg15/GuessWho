@@ -1,4 +1,7 @@
-﻿using System;
+﻿using GuessWhoClient.Communication;
+using GuessWhoClient.GameServices;
+using GuessWhoClient.Model.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -12,7 +15,7 @@ using System.Windows.Shapes;
 
 namespace GuessWhoClient
 {
-    public partial class DrawingPage : Page, INotifyPropertyChanged
+    public partial class DrawingPage : Page, INotifyPropertyChanged, IGamePage, IMatchStatusPage
     {
         private bool isInteractingWithCanvas;
         private bool isDrawingMode = true;
@@ -21,6 +24,8 @@ namespace GuessWhoClient
         private string selectedColor = "#000000";
         private const int PEN_THICKNESS = 4;
         public event PropertyChangedEventHandler PropertyChanged;
+        private GameManager gameManager = GameManager.Instance;
+        private MatchStatusManager matchStatusManager = MatchStatusManager.Instance;
 
         public DrawingPage()
         {
@@ -237,7 +242,35 @@ namespace GuessWhoClient
 
         private void BtnExitClick(object sender, RoutedEventArgs e)
         {
-            
+            ShowExitConfirmationMessage();
+        }
+
+        private void ShowExitConfirmationMessage()
+        {
+            MessageBoxResult confirmSelection = MessageBox.Show(
+                    Properties.Resources.msgbConfirmLeaveGameMessage,
+                    Properties.Resources.msgbConfirmLeaveGameTitle,
+                    MessageBoxButton.YesNo
+                );
+
+            if (confirmSelection == MessageBoxResult.Yes)
+            {
+                LeaveGame();
+            }
+        }
+
+        private void LeaveGame()
+        {
+            gameManager.Client.ExitGame(gameManager.CurrentMatchCode);
+            matchStatusManager.Client.StopListeningMatchStatus(matchStatusManager.CurrentMatchCode);
+
+            ClearCommunicationChannels();
+            RedirectToMainMenu();
+        }
+
+        private void RedirectToMainMenu()
+        {
+            RedirectToMainMenuFromCanceledMatch();
         }
 
         private void BtnCancelGuessClick(object sender, RoutedEventArgs e)
@@ -294,6 +327,35 @@ namespace GuessWhoClient
                     
                 }
             }
+        }
+
+        public void MatchStatusChanged(MatchStatus matchStatusCode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PlayerStatusInMatchChanged(PlayerInMatch player, bool isInMatch)
+        {
+            NotifyGameHasBeenCanceled();
+        }
+
+        private void NotifyGameHasBeenCanceled()
+        {
+            ClearCommunicationChannels();
+            RedirectToMainMenuFromCanceledMatch();
+        }
+
+        private void RedirectToMainMenuFromCanceledMatch()
+        {
+            MainMenuPage mainMenu = new MainMenuPage();
+            mainMenu.ShowCanceledMatchMessage();
+            NavigationService.Navigate(mainMenu);
+        }
+
+        private void ClearCommunicationChannels()
+        {
+            gameManager.RestartRawValues();
+            matchStatusManager.RestartRawValues();
         }
     }
 }

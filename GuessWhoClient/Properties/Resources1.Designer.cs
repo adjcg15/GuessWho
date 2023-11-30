@@ -655,11 +655,11 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Esperando jugador….
+        ///   Busca una cadena traducida similar a El otro jugador ha abandonado la partida, la partida ha sido cancelada.
         /// </summary>
-        public static string lbWaitingPlayer {
+        public static string msgbCanceledMatchMessage {
             get {
-                return ResourceManager.GetString("lbWaitingPlayer", resourceCulture);
+                return ResourceManager.GetString("msgbCanceledMatchMessage", resourceCulture);
             }
         }
         
@@ -705,6 +705,24 @@ namespace GuessWhoClient.Properties {
         public static string msgbConfirmGuessChoiceTitle {
             get {
                 return ResourceManager.GetString("msgbConfirmGuessChoiceTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ¿Estás seguro de que deseas salir de la partida?.
+        /// </summary>
+        public static string msgbConfirmLeaveGameMessage {
+            get {
+                return ResourceManager.GetString("msgbConfirmLeaveGameMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Abandonar Partida.
+        /// </summary>
+        public static string msgbConfirmLeaveGameTitle {
+            get {
+                return ResourceManager.GetString("msgbConfirmLeaveGameTitle", resourceCulture);
             }
         }
         

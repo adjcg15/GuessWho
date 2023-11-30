@@ -16,8 +16,8 @@
                     Click="BtnExitClick"
                     HorizontalAlignment="Left" 
                     Margin="10,0,0,0" VerticalAlignment="Center" 
-                    Style="{StaticResource PrimaryCancelButtonWithIcon}" IsCancel="True" Width="103">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    Style="{StaticResource PrimaryCancelButtonWithIcon}" IsCancel="True" >
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0">
                         <Image Source="/Resources/exit-icon.png" Height="19" Width="19"/>
                         <TextBlock Margin="5, 3, 0, 3" Text="{x:Static p:Resources.btnLeaveGame}" VerticalAlignment="Center" FontWeight="SemiBold"/>
                     </StackPanel>

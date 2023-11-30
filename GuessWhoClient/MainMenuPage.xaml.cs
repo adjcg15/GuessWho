@@ -22,14 +22,39 @@ namespace GuessWhoClient
             InitializeComponent();
         }
 
-        public void ShowCanceledMatchMessage()
+        public void ShowHostCanceledMatchMessage()
+        {
+            UpdateUIMessage();
+        }
+
+        private void UpdateUIMessage()
         {
             BorderCanceledMatch.Visibility = Visibility.Visible;
             BorderOpacityCanceledMatch.Visibility = Visibility.Visible;
+        }
 
-            if(DataStore.Profile != null)
+        public void ShowCanceledMatchMessage()
+        {
+            UpdateUIMessage();
+
+            LbMessageBoxMessage.Content = Properties.Resources.msgbCanceledMatchMessage;
+            UpdateLanguageButton();
+        }
+
+        private void UpdateLanguageButton()
+        {
+            string currentLanguage = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToUpper();
+
+            if(currentLanguage == "ES-ES" || currentLanguage == "ES-MX")
             {
-                LoginProfile();
+                TbBtnLanguage.Text = "ESPAÑOL";
+                ImgBtnLanguage.Source = new BitmapImage(new Uri("/Resources/mx-flag-image.png", UriKind.Relative));
+            }
+            else
+            {
+                TbBtnLanguage.Text = "ENGLISH";
+                ImgBtnLanguage.Source = new BitmapImage(new Uri("/Resources/us-flag-image.png", UriKind.Relative));
+
             }
         }
 
@@ -239,6 +264,8 @@ namespace GuessWhoClient
             {
                 LoginProfile();
             }
+
+            UpdateLanguageButton();
         }
     }
 }

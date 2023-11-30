@@ -68,8 +68,11 @@ namespace GuessWhoClient
         {
             GameManager gameManager = GameManager.Instance;
 
-            DataStore.ChatsClient?.LeaveChatRoom(gameManager.CurrentMatchCode);
-            DataStore.ChatsClient = null;
+            if (gameManager.CurrentMatchCode != "")
+            {
+                DataStore.ChatsClient?.LeaveChatRoom(gameManager.CurrentMatchCode);
+                DataStore.ChatsClient = null;
+            }
         }
 
         private void Logout()

@@ -24,7 +24,7 @@
                         <ImageBrush x:Name="ImgChatProfilePicture" ImageSource="/Resources/user-icon.png"/>
                     </Ellipse.Fill>
                 </Ellipse>
-                <TextBlock x:Name="TbOponentChat" Text="{x:Static p:Resources.lbWaitingPlayer}" FontSize="16" FontWeight="Medium" Margin="93,23,207,23"/>
+                <TextBlock x:Name="TbOponentChat" Text="{x:Static p:Resources.lbWaitingOpponent}" FontSize="16" FontWeight="Medium" Margin="93,23,24,23"/>
             </Grid>
         </Border>
         <Border Background ="White" BorderThickness="2,0,0,0" BorderBrush="#E2E2E2" Grid.Column="1" HorizontalAlignment="Center" Height="522" VerticalAlignment="Center" Width="450">
@@ -38,7 +38,7 @@
                                         <ImageBrush x:Name="ImgProfilePicture" ImageSource="/Resources/user-icon.png"/>
                                     </Ellipse.Fill>
                                 </Ellipse>
-                                <TextBlock x:Name="TbOponent" Text="{x:Static p:Resources.lbWaitingPlayer}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="16" FontWeight="Medium" Opacity="0.5"/>
+                                <TextBlock x:Name="TbOponent" Text="{x:Static p:Resources.lbWaitingOpponent}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="16" FontWeight="Medium" Opacity="0.5"/>
                             </StackPanel>
                         </Grid>
                     </Border>

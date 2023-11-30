@@ -313,10 +313,10 @@
     <value>Wait, the game will start shortly</value>
   </data>
   <data name="lbWaitingOpponent" xml:space="preserve">
-    <value>Waiting for all players…</value>
+    <value>Waiting for opponent…</value>
   </data>
-  <data name="lbWaitingPlayer" xml:space="preserve">
-    <value>Waiting for all players…</value>
+  <data name="msgbCanceledMatchMessage" xml:space="preserve">
+    <value>Adversary has quit the game, the game has been canceled</value>
   </data>
   <data name="msgbConectionLost" xml:space="preserve">
     <value>Currently, there is no connection, please try again later.</value>
@@ -332,6 +332,12 @@
   </data>
   <data name="msgbConfirmGuessChoiceTitle" xml:space="preserve">
     <value>Confirm your choice</value>
+  </data>
+  <data name="msgbConfirmLeaveGameMessage" xml:space="preserve">
+    <value>Are you sure you want to leave the match?</value>
+  </data>
+  <data name="msgbConfirmLeaveGameTitle" xml:space="preserve">
+    <value>Quit Match</value>
   </data>
   <data name="msgbEmptyField" xml:space="preserve">
     <value>Email and password are required</value>
