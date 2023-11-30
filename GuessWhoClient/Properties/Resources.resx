@@ -333,8 +333,11 @@
   <data name="msgbConfirmGuessChoiceTitle" xml:space="preserve">
     <value>Confirme su elección</value>
   </data>
-  <data name="msgbEmptyField" xml:space="preserve">
+  <data name="msgbEmptyFieldMessage" xml:space="preserve">
     <value>El correo electrónico y la contraseña son requeridos</value>
+  </data>
+  <data name="msgbEmptyFieldTitle" xml:space="preserve">
+    <value>Campos faltantes</value>
   </data>
   <data name="msgbErrorConexionServidorMessage" xml:space="preserve">
     <value>No fue posible establecer una conexión con el servidor, intente en otro momento</value>
@@ -372,11 +375,23 @@
   <data name="msgbHostLeftMatchTitle" xml:space="preserve">
     <value>Partida finalizada por el anfitrión</value>
   </data>
+  <data name="msgbInvalidCredentialsMessage" xml:space="preserve">
+    <value>El correo y/o contraseña son incorrectas, por favor verifique la información</value>
+  </data>
+  <data name="msgbInvalidCredentialsTitle" xml:space="preserve">
+    <value>Credenciales inválidas</value>
+  </data>
   <data name="msgbInvalidMatchCodeMessage" xml:space="preserve">
     <value>La partida a la que intenta acceder no pudo ser encontrada, o es posible que ya se encuentre llena</value>
   </data>
   <data name="msgbInvalidMatchCodeTitle" xml:space="preserve">
     <value>Partida inválida</value>
+  </data>
+  <data name="msgbInvalidSessionMessage" xml:space="preserve">
+    <value>Ya existe una sesión activa para la cuenta con la que intenta ingresar</value>
+  </data>
+  <data name="msgbInvalidSessionTitle" xml:space="preserve">
+    <value>Sesión inválida</value>
   </data>
   <data name="msgbInvitationSentMessage" xml:space="preserve">
     <value>El jugador ha sido invitado a la partida exitosamente</value>
@@ -446,9 +461,6 @@
   </data>
   <data name="msgbSendMessageMatchFinishedMessage" xml:space="preserve">
     <value>La partida a la que intenta enviar el mensaje ya no existe</value>
-  </data>
-  <data name="msgbUserNotFound" xml:space="preserve">
-    <value>El correo y/o contraseña son incorrectas, por favor verifique la información</value>
   </data>
   <data name="msgbWelcome1" xml:space="preserve">
     <value>Bienvenido/a </value>

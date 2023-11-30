@@ -1,8 +1,5 @@
 ﻿using GuessWhoClient.GameServices;
-using GuessWhoClient.Properties;
 using GuessWhoClient.Utils;
-using System;
-using System.Resources;
 using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,23 +15,17 @@ namespace GuessWhoClient
 
         private void BtnLoginClick(object sender, RoutedEventArgs e)
         {
-            ValidateFields();
-        }
-
-        private void BtnSignUpClick(object sender, RoutedEventArgs e)
-        {
-            RegisterPage registerPage = new RegisterPage();
-            this.NavigationService.Navigate(registerPage);
-        }
-
-        private void ValidateFields()
-        {
             string email = tbEmail.Text.Trim();
             string password = Authentication.HashPassword(pbPassword.Password.Trim());
 
-            if(string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
-                MessageBox.Show(Properties.Resources.msgbEmptyField);
+                MessageBox.Show(
+                    Properties.Resources.msgbEmptyFieldMessage,
+                    Properties.Resources.msgbEmptyFieldTitle,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
             }
             else
             {
@@ -59,19 +50,22 @@ namespace GuessWhoClient
                             DataStore.Profile = profile;
                             RedirectToMainMenu();
                         }
-                        else
-                        {
-                            MessageBox.Show(Properties.Resources.msgbUserNotFound);
-                        }
-                        break;
-                    case ResponseStatus.UPDATE_ERROR:
-                        MessageBox.Show(Properties.Resources.txtUpdateErrorMessage);
                         break;
                     case ResponseStatus.VALIDATION_ERROR:
-                        MessageBox.Show(Properties.Resources.txtValidationErrorMessage, Properties.Resources.txtValidationErrorTitle);
+                        MessageBox.Show(
+                            Properties.Resources.msgbInvalidCredentialsMessage,
+                            Properties.Resources.msgbInvalidCredentialsTitle,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
+                        );
                         break;
-                    case ResponseStatus.SQL_ERROR:
-                        MessageBox.Show(Properties.Resources.txtSQLErrorMessage, Properties.Resources.txtSQLErrorTitle);
+                    case ResponseStatus.NOT_ALLOWED:
+                        MessageBox.Show(
+                            Properties.Resources.msgbInvalidSessionMessage,
+                            Properties.Resources.msgbInvalidSessionTitle,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
+                        );
                         break;
                     default:
                         MessageBox.Show(
@@ -87,12 +81,18 @@ namespace GuessWhoClient
             catch (EndpointNotFoundException)
             {
                 ServerResponse.ShowServerDownMessage();
+                RedirectToMainMenu();
             }
+        }
+
+        private void BtnSignUpClick(object sender, RoutedEventArgs e)
+        {
+            RegisterPage registerPage = new RegisterPage();
+            NavigationService.Navigate(registerPage);
         }
 
         private void RedirectToMainMenu()
         {
-            ShowsNavigationUI = true;
             MainMenuPage mainMenuPage = new MainMenuPage();
             this.NavigationService.Navigate(mainMenuPage);
         }

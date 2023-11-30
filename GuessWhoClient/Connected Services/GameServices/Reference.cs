@@ -213,6 +213,9 @@ namespace GuessWhoClient.GameServices {
         CLIENT_CHANNEL_CONNECTION_ERROR = 401,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
+        NOT_ALLOWED = 402,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
         UPDATE_ERROR = 500,
         
         [System.Runtime.Serialization.EnumMemberAttribute()]

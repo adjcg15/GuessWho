@@ -711,9 +711,18 @@ namespace GuessWhoClient.Properties {
         /// <summary>
         ///   Busca una cadena traducida similar a El correo electrónico y la contraseña son requeridos.
         /// </summary>
-        public static string msgbEmptyField {
+        public static string msgbEmptyFieldMessage {
             get {
-                return ResourceManager.GetString("msgbEmptyField", resourceCulture);
+                return ResourceManager.GetString("msgbEmptyFieldMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Campos faltantes.
+        /// </summary>
+        public static string msgbEmptyFieldTitle {
+            get {
+                return ResourceManager.GetString("msgbEmptyFieldTitle", resourceCulture);
             }
         }
         
@@ -826,6 +835,24 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a El correo y/o contraseña son incorrectas, por favor verifique la información.
+        /// </summary>
+        public static string msgbInvalidCredentialsMessage {
+            get {
+                return ResourceManager.GetString("msgbInvalidCredentialsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Credenciales inválidas.
+        /// </summary>
+        public static string msgbInvalidCredentialsTitle {
+            get {
+                return ResourceManager.GetString("msgbInvalidCredentialsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a La partida a la que intenta acceder no pudo ser encontrada, o es posible que ya se encuentre llena.
         /// </summary>
         public static string msgbInvalidMatchCodeMessage {
@@ -840,6 +867,24 @@ namespace GuessWhoClient.Properties {
         public static string msgbInvalidMatchCodeTitle {
             get {
                 return ResourceManager.GetString("msgbInvalidMatchCodeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ya existe una sesión activa para la cuenta con la que intenta ingresar.
+        /// </summary>
+        public static string msgbInvalidSessionMessage {
+            get {
+                return ResourceManager.GetString("msgbInvalidSessionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sesión inválida.
+        /// </summary>
+        public static string msgbInvalidSessionTitle {
+            get {
+                return ResourceManager.GetString("msgbInvalidSessionTitle", resourceCulture);
             }
         }
         
@@ -1047,15 +1092,6 @@ namespace GuessWhoClient.Properties {
         public static string msgbSendMessageMatchFinishedMessage {
             get {
                 return ResourceManager.GetString("msgbSendMessageMatchFinishedMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a El correo y/o contraseña son incorrectas, por favor verifique la información.
-        /// </summary>
-        public static string msgbUserNotFound {
-            get {
-                return ResourceManager.GetString("msgbUserNotFound", resourceCulture);
             }
         }
         
