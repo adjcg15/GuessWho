@@ -59,7 +59,6 @@ namespace GuessWhoServices
             }
 
             var activeUsers = GetActiveUsers();
-
             var friends = friendsResponse.Value.Select(user =>
             {
                 var friend = new Friend
@@ -70,7 +69,7 @@ namespace GuessWhoServices
                     Status = "Offline"
                 };
 
-                if (activeUsers.Any(activeUser => activeUser.Nickname == user.nickname))
+                if (activeUsers.Any(userNickname => userNickname == user.nickname))
                 {
                     friend.Status = "Online";
                 }

@@ -4,9 +4,11 @@ using GuessWhoClient.GameServices;
 using GuessWhoClient.Model.Interfaces;
 using GuessWhoClient.Utils;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -19,7 +21,7 @@ namespace GuessWhoClient
         private const string DEFAULT_PROFILE_PICTURE_ROUTE = "pack://application:,,,/Resources/user-icon.png";
         private GameManager gameManager = GameManager.Instance;
         private MatchStatusManager matchStatusManager = MatchStatusManager.Instance;
-        public ObservableCollection<ActiveUser> activeUsers { get; set; } = new ObservableCollection<ActiveUser>();
+        public ObservableCollection<UserCard> activeUsers { get; set; } = new ObservableCollection<UserCard>();
 
         public LobbyPage()
         {
@@ -108,13 +110,61 @@ namespace GuessWhoClient
 
         private void LoadActiveUsers()
         {
-            activeUsers = new ObservableCollection<ActiveUser>(DataStore.UsersClient.GetActiveUsers().ToList());
+            List<string> activeUsersNicknames = DataStore.UsersClient.GetActiveUsers().ToList();
+
+            Uri uri = new Uri(DEFAULT_PROFILE_PICTURE_ROUTE);
+            BitmapImage defaultImage = new BitmapImage(uri);
+
+            List<UserCard> usersWithFormat = new List<UserCard>();
+            foreach (string nickname in activeUsersNicknames)
+            {
+                usersWithFormat.Add(new UserCard
+                {
+                    Avatar = defaultImage,
+                    Nickname = nickname
+                });
+            }
+
+            activeUsers = new ObservableCollection<UserCard>(usersWithFormat);
             if (DataStore.Profile != null)
             {
-                activeUsers.Remove(activeUsers.FirstOrDefault(u => u.Nickname == DataStore.Profile.NickName));
+                activeUsers.Remove(activeUsers.FirstOrDefault((user) => user.Nickname == DataStore.Profile.NickName));
             }
 
             ListBoxActiveUsers.ItemsSource = activeUsers;
+            LoadActiveUsersAvatars();
+        }
+
+        private void LoadActiveUsersAvatars()
+        {
+            foreach(UserCard activeUser in activeUsers)
+            {
+                Task.Run(() => LoadUserAvatar(activeUser));
+            }
+        }
+
+        private async void LoadUserAvatar(UserCard activeUser)
+        {
+            if (activeUser != null)
+            {
+                try
+                {
+                    var loadResponse = await ImageTransformator.LoadUserAvatarLazily(activeUser.Nickname);
+                    if (loadResponse.Value != null)
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            activeUser.Avatar = ImageTransformator.GetBitmapImageFromByteArray(loadResponse.Value);
+                        });
+                    }
+                }
+                catch (EndpointNotFoundException)
+                {
+                    ServerResponse.ShowServerDownMessage();
+                    ClearCommunicationChannels();
+                    RedirectPermanentlyToMainMenu();
+                }
+            }
         }
 
         private void ShowActiveUsersList()
@@ -173,22 +223,28 @@ namespace GuessWhoClient
             ShowAdversaryInformation();
         }
 
-        public void UserStatusChanged(ActiveUser user, bool isActive)
+        public void UserStatusChanged(string userNickname, bool isActive)
         {
+            Uri uri = new Uri(DEFAULT_PROFILE_PICTURE_ROUTE);
+            BitmapImage defaultImage = new BitmapImage(uri);
+
             if (isActive)
             {
-                Application.Current.Dispatcher.Invoke(() => activeUsers.Add(user));
+                UserCard newUser = new UserCard
+                {
+                    Nickname = userNickname,
+                    Avatar = defaultImage
+                };
+                activeUsers.Add(newUser);
+                Task.Run(() => LoadUserAvatar(newUser));
             }
             else
             {
-                Application.Current.Dispatcher.Invoke(() =>
+                var userToRemove = activeUsers.FirstOrDefault(user => user.Nickname == userNickname);
+                if (userToRemove != null)
                 {
-                    var userToRemove = activeUsers.FirstOrDefault(u => u.Nickname == user.Nickname);
-                    if (userToRemove != null)
-                    {
-                        activeUsers.Remove(userToRemove);
-                    }
-                });
+                    activeUsers.Remove(userToRemove);
+                }
             }
             ShowActiveUsersList();
         }
@@ -559,9 +615,9 @@ namespace GuessWhoClient
         private void BtnInviteToGameClick(object sender, RoutedEventArgs e)
         {
             Button invitationButton = e.Source as Button;
-            ActiveUser activeUser = (ActiveUser)invitationButton.DataContext;
+            string activeUserNickname = (string)invitationButton.DataContext;
 
-            string nickname = activeUser.Nickname;
+            string nickname = activeUserNickname;
             try
             {
                 bool playerInvitedSuccessfully = SendInvitationToUser(nickname);

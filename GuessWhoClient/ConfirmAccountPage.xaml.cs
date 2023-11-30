@@ -40,7 +40,6 @@ namespace GuessWhoClient
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
             generatedConfirmationCode = GenerateConfirmationCode(10);
-            Console.WriteLine(generatedConfirmationCode);
 
             bool confirmationSent = SendConfirmationEmail(email, generatedConfirmationCode);
             if (!confirmationSent)

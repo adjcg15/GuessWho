@@ -26,13 +26,7 @@ namespace GuessWhoServices
                 return response;
             }
 
-            ActiveUser activeUser = new ActiveUser
-            {
-                Nickname = user.nickname,
-                Avatar = user.avatar,
-            };
-            GuessWhoService.UpdateUserStatus(activeUser, true);
-
+            UpdateUserStatus(user.nickname, true);
             response.Value = new Profile
             {
                 Email = account.email,
@@ -76,11 +70,12 @@ namespace GuessWhoServices
 
         public void Logout(string nickname)
         {
-            ActiveUser activeUser = new ActiveUser
-            {
-                Nickname = nickname
-            };
-            GuessWhoService.UpdateUserStatus(activeUser, false);
+            GuessWhoService.UpdateUserStatus(nickname, false);
+        }
+
+        public Response<byte[]> GetAvatar(string userNickname)
+        {
+            return UserDAO.GetUserAvatarByNickname(userNickname);
         }
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:6969/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:import schemaLocation="http://localhost:6969/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GuessWhoServices" />
+  <xs:import schemaLocation="http://localhost:6969/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GuessWhoServices" />
   <xs:complexType name="Profile">
     <xs:sequence>
       <xs:element minOccurs="0" name="Avatar" nillable="true" type="xs:base64Binary" />
@@ -81,6 +81,20 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ProfileResponse" nillable="true" type="tns:ProfileResponse" />
+  <xs:complexType name="base64BinaryResponse">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="{0}Response" Namespace="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="base64Binary" Namespace="http://www.w3.org/2001/XMLSchema" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="StatusCode" type="tns:ResponseStatus" />
+      <xs:element minOccurs="0" name="Value" nillable="true" type="xs:base64Binary" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="base64BinaryResponse" nillable="true" type="tns:base64BinaryResponse" />
   <xs:complexType name="ArrayOfTopPlayerResponse">
     <xs:annotation>
       <xs:appinfo>

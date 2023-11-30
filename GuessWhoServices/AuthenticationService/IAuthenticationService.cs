@@ -18,7 +18,10 @@ namespace GuessWhoServices
         [OperationContract]
         Response<Profile> VerifyUserRegisteredByNickName(string nickname);
 
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void Logout(string nickname);
+
+        [OperationContract]
+        Response<byte[]> GetAvatar(string userNickname);
     }
 }

@@ -236,21 +236,16 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:6969/?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:6969/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:6969/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GuessWhoServices" />
+      <xsd:import schemaLocation="http://localhost:6969/?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
       <xsd:import schemaLocation="http://localhost:6969/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" />
+      <xsd:import schemaLocation="http://localhost:6969/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GuessWhoServices" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IUserService_Subscribe_InputMessage">
     <wsdl:part name="parameters" element="tns:Subscribe" />
   </wsdl:message>
-  <wsdl:message name="IUserService_Subscribe_OutputMessage">
-    <wsdl:part name="parameters" element="tns:SubscribeResponse" />
-  </wsdl:message>
   <wsdl:message name="IUserService_Unsubscribe_InputMessage">
     <wsdl:part name="parameters" element="tns:Unsubscribe" />
-  </wsdl:message>
-  <wsdl:message name="IUserService_Unsubscribe_OutputMessage">
-    <wsdl:part name="parameters" element="tns:UnsubscribeResponse" />
   </wsdl:message>
   <wsdl:message name="IUserService_GetActiveUsers_InputMessage">
     <wsdl:part name="parameters" element="tns:GetActiveUsers" />
@@ -291,8 +286,11 @@
   <wsdl:message name="IAuthenticationService_Logout_InputMessage">
     <wsdl:part name="parameters" element="tns:Logout" />
   </wsdl:message>
-  <wsdl:message name="IAuthenticationService_Logout_OutputMessage">
-    <wsdl:part name="parameters" element="tns:LogoutResponse" />
+  <wsdl:message name="IAuthenticationService_GetAvatar_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAvatar" />
+  </wsdl:message>
+  <wsdl:message name="IAuthenticationService_GetAvatar_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAvatarResponse" />
   </wsdl:message>
   <wsdl:message name="IPlayerService_GetBestPlayers_InputMessage">
     <wsdl:part name="parameters" element="tns:GetBestPlayers" />
@@ -423,11 +421,9 @@
   <wsdl:portType name="IUserService">
     <wsdl:operation name="Subscribe">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/Subscribe" message="tns:IUserService_Subscribe_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/SubscribeResponse" message="tns:IUserService_Subscribe_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="Unsubscribe">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/Unsubscribe" message="tns:IUserService_Unsubscribe_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/UnsubscribeResponse" message="tns:IUserService_Unsubscribe_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetActiveUsers">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetActiveUsers" message="tns:IUserService_GetActiveUsers_InputMessage" />
@@ -457,7 +453,10 @@
     </wsdl:operation>
     <wsdl:operation name="Logout">
       <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/Logout" message="tns:IAuthenticationService_Logout_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/LogoutResponse" message="tns:IAuthenticationService_Logout_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAvatar">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuthenticationService/GetAvatar" message="tns:IAuthenticationService_GetAvatar_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuthenticationService/GetAvatarResponse" message="tns:IAuthenticationService_GetAvatar_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IPlayerService">
@@ -574,18 +573,12 @@
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="Unsubscribe">
       <soap12:operation soapAction="http://tempuri.org/IUserService/Unsubscribe" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetActiveUsers">
       <soap12:operation soapAction="http://tempuri.org/IUserService/GetActiveUsers" style="document" />
@@ -647,6 +640,12 @@
     </wsdl:operation>
     <wsdl:operation name="Logout">
       <soap12:operation soapAction="http://tempuri.org/IAuthenticationService/Logout" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="GetAvatar">
+      <soap12:operation soapAction="http://tempuri.org/IAuthenticationService/GetAvatar" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -889,7 +888,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LAPTOP-EGH\kikga</Upn>
+          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -898,7 +897,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LAPTOP-EGH\kikga</Upn>
+          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -907,7 +906,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LAPTOP-EGH\kikga</Upn>
+          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -916,7 +915,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LAPTOP-EGH\kikga</Upn>
+          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -925,7 +924,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LAPTOP-EGH\kikga</Upn>
+          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -934,7 +933,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LAPTOP-EGH\kikga</Upn>
+          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -943,7 +942,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LAPTOP-EGH\kikga</Upn>
+          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -952,7 +951,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LAPTOP-EGH\kikga</Upn>
+          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
