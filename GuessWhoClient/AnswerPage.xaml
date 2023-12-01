@@ -7,7 +7,7 @@
       xmlns:p="clr-namespace:GuessWhoClient.Properties"
       mc:Ignorable="d" 
       Height="520" Width="900"
-      Title="AnswerPage">
+      Title="AnswerPage" Loaded="PageLoaded">
 
     <Grid Background="#FFC436">
         <Grid.ColumnDefinitions>

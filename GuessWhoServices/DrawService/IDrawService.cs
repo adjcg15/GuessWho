@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Shapes;
 
 namespace GuessWhoServices
@@ -11,12 +13,33 @@ namespace GuessWhoServices
     [ServiceContract (CallbackContract = typeof(IDrawServiceCallback))]
     interface IDrawService
     {
-        [OperationContract]
-        void SendDraw(List<Line> localDrawMap);
+        [OperationContract(IsOneWay = true)]
+        void SubscribeToDrawService(string matchCode);
+
+        [OperationContract(IsOneWay = true)]
+        void UnsubscribeFromDrawService(string matchCode);
+
+        [OperationContract(IsOneWay = true)]
+        void SendDraw(List<SerializedLine> localDrawMap, string matchCode);
     }
 
+    [ServiceContract]
     public interface IDrawServiceCallback
     {
-        void DrawReceived(List<Line> adversaryDrawMap);
+        [OperationContract]
+        void DrawReceived(List<SerializedLine> adversaryDrawMap);
+    }
+
+    [DataContract]
+    public class SerializedLine
+    {
+        [DataMember]
+        public string Color { get; set; }
+
+        [DataMember]
+        public Point StartPoint { get; set; }
+
+        [DataMember]
+        public Point EndPoint { get; set; }
     }
 }

@@ -366,6 +366,12 @@
   <data name="msgbErrorSendingGameInvitationTitle" xml:space="preserve">
     <value>Error sending invitation</value>
   </data>
+  <data name="msgbFinishDrawMessage" xml:space="preserve">
+    <value>Are you sure you want to finish your attempt? You won't be able to guess or draw anymore.</value>
+  </data>
+  <data name="msgbFinishDrawTitle" xml:space="preserve">
+    <value>Finish Attempt</value>
+  </data>
   <data name="msgbGameFinishedByHostMessage" xml:space="preserve">
     <value>The host has ended the game</value>
   </data>

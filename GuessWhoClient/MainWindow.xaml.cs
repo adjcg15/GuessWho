@@ -30,6 +30,10 @@ namespace GuessWhoClient
             {
 
             }
+            catch (CommunicationException)
+            {
+
+            }
         }
 
         private void LeaveCurrentGame()
@@ -41,10 +45,12 @@ namespace GuessWhoClient
             {
                 if (gameManager.IsCurrentMatchHost)
                 {
+                    Console.WriteLine("FinishingGame");
                     gameManager.Client.FinishGame(gameManager.CurrentMatchCode);
                 }
                 else
                 {
+                    Console.WriteLine("Exit Game");
                     gameManager.Client.ExitGame(gameManager.CurrentMatchCode);
                 }
 

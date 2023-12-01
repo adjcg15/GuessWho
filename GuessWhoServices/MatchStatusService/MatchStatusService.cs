@@ -49,8 +49,10 @@ namespace GuessWhoServices
 
             if (!matchPlayersListening.ContainsKey(matchCode))
             {
-                matchPlayersListening[matchCode] = new MatchPlayerInformation();
-                matchPlayersListening[matchCode].HostChannel = channel;
+                matchPlayersListening[matchCode] = new MatchPlayerInformation
+                {
+                    HostChannel = channel
+                };
             }
             else
             {

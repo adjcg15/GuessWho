@@ -116,13 +116,13 @@
             <Grid Background="#FFC436" Margin="0,0,0,453">
                 <TextBlock 
                     x:Name="TbTimer"
-                    Margin="10,0,0,0" Text="1:00" 
+                    Margin="10,0,0,0" 
                     VerticalAlignment="Center" FontWeight="SemiBold"
                     FontSize="35"
                     HorizontalAlignment="Left"
-                />
+                ><Run Language="es-es" Text="3"/><Run Text="0"/></TextBlock>
 
-                <Button 
+                <Button x:Name="BtnFinishDraw" 
                     Click="BtnFinishDrawClick"
                     HorizontalAlignment="Left" 
                     Margin="275,0,0,0" VerticalAlignment="Center" 
@@ -134,7 +134,7 @@
                 </Button>
             </Grid>
 
-            <Grid Margin="0,67,0,0">
+            <Grid Margin="0,67,0,0" x:Name="GridDrawControls">
                 <Grid Background="LightGray" Margin="0,0,0,414">
                     <Grid Margin="0,0,225,0">
                         <Button 

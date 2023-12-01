@@ -808,6 +808,24 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a ¿Estas seguro que deseas terminar tu intento? No podrás adivinar o dibujar más..
+        /// </summary>
+        public static string msgbFinishDrawMessage {
+            get {
+                return ResourceManager.GetString("msgbFinishDrawMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Terminar intento.
+        /// </summary>
+        public static string msgbFinishDrawTitle {
+            get {
+                return ResourceManager.GetString("msgbFinishDrawTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El anfitrión ha finalizado la partida.
         /// </summary>
         public static string msgbGameFinishedByHostMessage {

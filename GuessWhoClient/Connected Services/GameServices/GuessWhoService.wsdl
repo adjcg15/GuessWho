@@ -232,12 +232,42 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="NetTcpBinding_IDrawService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:6969/?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:6969/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:6969/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GuessWhoServices" />
       <xsd:import schemaLocation="http://localhost:6969/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" />
+      <xsd:import schemaLocation="http://localhost:6969/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System.Windows" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IUserService_Subscribe_InputMessage">
@@ -420,6 +450,21 @@
   <wsdl:message name="IChatService_NewMessageReceived_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:NewMessageReceivedResponse" />
   </wsdl:message>
+  <wsdl:message name="IDrawService_SubscribeToDrawService_InputMessage">
+    <wsdl:part name="parameters" element="tns:SubscribeToDrawService" />
+  </wsdl:message>
+  <wsdl:message name="IDrawService_UnsubscribeFromDrawService_InputMessage">
+    <wsdl:part name="parameters" element="tns:UnsubscribeFromDrawService" />
+  </wsdl:message>
+  <wsdl:message name="IDrawService_SendDraw_InputMessage">
+    <wsdl:part name="parameters" element="tns:SendDraw" />
+  </wsdl:message>
+  <wsdl:message name="IDrawService_DrawReceived_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:DrawReceived" />
+  </wsdl:message>
+  <wsdl:message name="IDrawService_DrawReceived_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:DrawReceivedResponse" />
+  </wsdl:message>
   <wsdl:portType name="IUserService">
     <wsdl:operation name="Subscribe">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/Subscribe" message="tns:IUserService_Subscribe_InputMessage" />
@@ -564,6 +609,21 @@
     <wsdl:operation name="NewMessageReceived">
       <wsdl:output wsaw:Action="http://tempuri.org/IChatService/NewMessageReceived" message="tns:IChatService_NewMessageReceived_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IChatService/NewMessageReceivedResponse" message="tns:IChatService_NewMessageReceived_InputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IDrawService">
+    <wsdl:operation name="SubscribeToDrawService">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDrawService/SubscribeToDrawService" message="tns:IDrawService_SubscribeToDrawService_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UnsubscribeFromDrawService">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDrawService/UnsubscribeFromDrawService" message="tns:IDrawService_UnsubscribeFromDrawService_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SendDraw">
+      <wsdl:input wsaw:Action="http://tempuri.org/IDrawService/SendDraw" message="tns:IDrawService_SendDraw_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DrawReceived">
+      <wsdl:output wsaw:Action="http://tempuri.org/IDrawService/DrawReceived" message="tns:IDrawService_DrawReceived_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IDrawService/DrawReceivedResponse" message="tns:IDrawService_DrawReceived_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IUserService" type="tns:IUserService">
@@ -883,6 +943,37 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
+  <wsdl:binding name="NetTcpBinding_IDrawService" type="tns:IDrawService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IDrawService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="SubscribeToDrawService">
+      <soap12:operation soapAction="http://tempuri.org/IDrawService/SubscribeToDrawService" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="UnsubscribeFromDrawService">
+      <soap12:operation soapAction="http://tempuri.org/IDrawService/UnsubscribeFromDrawService" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="SendDraw">
+      <soap12:operation soapAction="http://tempuri.org/IDrawService/SendDraw" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="DrawReceived">
+      <soap12:operation soapAction="http://tempuri.org/IDrawService/DrawReceived" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
   <wsdl:service name="GuessWhoService">
     <wsdl:port name="NetTcpBinding_IUserService" binding="tns:NetTcpBinding_IUserService">
       <soap12:address location="net.tcp://localhost:6970/GuessWhoService" />
@@ -948,6 +1039,15 @@
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IChatService" binding="tns:NetTcpBinding_IChatService">
+      <soap12:address location="net.tcp://localhost:6970/GuessWhoService" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>LAPTOP-EGH\kikga</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="NetTcpBinding_IDrawService" binding="tns:NetTcpBinding_IDrawService">
       <soap12:address location="net.tcp://localhost:6970/GuessWhoService" />
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>

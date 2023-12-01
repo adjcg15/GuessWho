@@ -6,16 +6,18 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace GuessWhoClient
 {
-    public partial class DrawingPage : Page, INotifyPropertyChanged, IGamePage, IMatchStatusPage
+    public partial class DrawingPage : Page, INotifyPropertyChanged, IGamePage, IMatchStatusPage, IDrawServiceCallback
     {
         private bool isInteractingWithCanvas;
         private bool isDrawingMode = true;
@@ -26,10 +28,17 @@ namespace GuessWhoClient
         public event PropertyChangedEventHandler PropertyChanged;
         private GameManager gameManager = GameManager.Instance;
         private MatchStatusManager matchStatusManager = MatchStatusManager.Instance;
+        private DrawServiceClient drawServiceClient;
+        private DispatcherTimer timer;
+        private int secondsRemaining = 30;
+        private bool isActualPlayerReady = false;
+        private bool isOpponentReady = false;
+        private List<Line> opponentDraw;
 
         public DrawingPage()
         {
             InitializeComponent();
+            InitializeTimer();
         }
 
         public bool IsChoosingCharacter
@@ -53,6 +62,62 @@ namespace GuessWhoClient
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
             ShowCharacters();
+            StartTimer();
+
+            drawServiceClient = new DrawServiceClient(new InstanceContext(this));
+            drawServiceClient.SubscribeToDrawService(gameManager.CurrentMatchCode);
+        }
+
+        private void InitializeTimer()
+        {
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += TimerTick;
+        }
+
+        private void StartTimer()
+        {
+            timer.Start();
+        }
+
+        private void StopTimer()
+        {
+            timer.Stop();
+        }
+
+        private void TimerTick(object sender, EventArgs e)
+        {
+            secondsRemaining--;
+
+            if (secondsRemaining <= 0)
+            {
+                AttemptTimeOver();
+            }
+
+            TbTimer.Text = secondsRemaining.ToString();
+        }
+
+        private void AttemptTimeOver()
+        {
+            StopTimer();
+            this.IsEnabled = false;
+            isActualPlayerReady = true;
+
+            drawServiceClient.SendDraw(GetSerializedDraw(), gameManager.CurrentMatchCode);
+        }
+
+        private void RedirectToAnswerPage(List<Line> opponentDraw)
+        {
+            gameManager.UnsubscribePage(this);
+            matchStatusManager.UnsubscribePage(this);
+            drawServiceClient.UnsubscribeFromDrawService(gameManager.CurrentMatchCode);
+
+            AnswerPage answerPage = new AnswerPage();
+            answerPage.PaintOpponentDraw(opponentDraw);
+            this.NavigationService.Navigate(answerPage);
+
+            gameManager.SubscribePage(answerPage);
+            matchStatusManager.SubscribePage(answerPage);
         }
 
         private void ShowCharacters()
@@ -255,22 +320,36 @@ namespace GuessWhoClient
 
             if (confirmSelection == MessageBoxResult.Yes)
             {
-                LeaveGame();
+                LeaveCurrentGame();
+                RedirectToMainMenu();
             }
         }
 
-        private void LeaveGame()
+        private void LeaveCurrentGame()
         {
-            gameManager.Client.ExitGame(gameManager.CurrentMatchCode);
-            matchStatusManager.Client.StopListeningMatchStatus(matchStatusManager.CurrentMatchCode);
+            if (gameManager.IsCurrentMatchHost)
+            {
+                gameManager.Client.FinishGame(gameManager.CurrentMatchCode);
+            }
+            else
+            {
+                gameManager.Client.ExitGame(gameManager.CurrentMatchCode);
+            }
 
-            ClearCommunicationChannels();
-            RedirectToMainMenu();
+            gameManager.RestartRawValues();
+
+            matchStatusManager.Client.StopListeningMatchStatus(matchStatusManager.CurrentMatchCode);
+            matchStatusManager.RestartRawValues();
         }
 
         private void RedirectToMainMenu()
         {
-            RedirectToMainMenuFromCanceledMatch();
+            gameManager.UnsubscribePage(this);
+            matchStatusManager.UnsubscribePage(this);
+            drawServiceClient.UnsubscribeFromDrawService(gameManager.CurrentMatchCode);
+
+            MainMenuPage mainMenu = new MainMenuPage();
+            this.NavigationService.Navigate(mainMenu);
         }
 
         private void BtnCancelGuessClick(object sender, RoutedEventArgs e)
@@ -287,9 +366,62 @@ namespace GuessWhoClient
             BtnGuess.Visibility = Visibility.Hidden;
         }
 
+
         private void BtnFinishDrawClick(object sender, RoutedEventArgs e)
         {
+            MessageBoxResult confirmSelection = MessageBox.Show(
+                Properties.Resources.msgbFinishDrawMessage,
+                Properties.Resources.msgbFinishDrawTitle,
+                MessageBoxButton.YesNo
+            );
 
+            if (confirmSelection == MessageBoxResult.Yes)
+            {
+                isActualPlayerReady = true;
+                drawServiceClient.SendDraw(GetSerializedDraw(), gameManager.CurrentMatchCode);
+                DisableUI();
+
+                CheckBothPlayersReady();
+            }
+        }
+
+        private void DisableUI()
+        {
+            BtnFinishDraw.Opacity = 0.5;
+            BtnFinishDraw.IsEnabled = false;
+
+            BtnGuess.Opacity = 0.5;
+            BtnGuess.IsEnabled = false;
+
+            CnvsDrawing.IsEnabled = false;
+            GridDrawControls.IsEnabled = false;
+
+            BtnFinishDraw.Content = Properties.Resources.lbWaitingOpponent;
+        }
+
+        private SerializedLine[] GetSerializedDraw()
+        {
+            List<SerializedLine> serializedLines = SerializeDraw(CnvsDrawing.Children.OfType<Line>());
+            return serializedLines.ToArray();
+        }
+
+        private List<SerializedLine> SerializeDraw(IEnumerable<Line> lines)
+        {
+            List<SerializedLine> serializedLines = new List<SerializedLine>();
+
+            foreach (var line in lines)
+            {
+                SerializedLine serializedLine = new SerializedLine
+                {
+                    Color = ((SolidColorBrush)line.Stroke).Color.ToString(),
+                    StartPoint = new Point(line.X1, line.Y1),
+                    EndPoint = new Point(line.X2, line.Y2)
+                };
+
+                serializedLines.Add(serializedLine);
+            }
+
+            return serializedLines;
         }
 
         private void GridSelectCharacterClick(object sender, MouseButtonEventArgs e)
@@ -329,7 +461,7 @@ namespace GuessWhoClient
             }
         }
 
-        public void MatchStatusChanged(MatchStatus matchStatusCode)
+        public void MatchStatusChanged(MatchStatus matchStatusCode) //Only Game Won / Game Lost
         {
             throw new NotImplementedException();
         }
@@ -349,13 +481,55 @@ namespace GuessWhoClient
         {
             MainMenuPage mainMenu = new MainMenuPage();
             mainMenu.ShowCanceledMatchMessage();
-            NavigationService.Navigate(mainMenu);
+            this.NavigationService.Navigate(mainMenu);
         }
 
         private void ClearCommunicationChannels()
         {
             gameManager.RestartRawValues();
             matchStatusManager.RestartRawValues();
+        }
+
+        public void DrawReceived(SerializedLine[] adversaryDrawMap)
+        {
+            opponentDraw = UnserializeDraw(adversaryDrawMap);
+
+            isOpponentReady = true;
+            CheckBothPlayersReady();
+        }
+
+        private void CheckBothPlayersReady()
+        {
+            Console.WriteLine(isActualPlayerReady + " " + isOpponentReady);
+
+            if (isActualPlayerReady && isOpponentReady)
+            {
+                RedirectToAnswerPage(opponentDraw);
+            }
+        }
+
+        private List<Line> UnserializeDraw(SerializedLine[] adversaryDrawMap)
+        {
+            List<Line> drawReceived = new List<Line>();
+
+            foreach (var serializedLine in adversaryDrawMap)
+            {
+                var line = new Line
+                {
+                    X1 = serializedLine.StartPoint.X,
+                    Y1 = serializedLine.StartPoint.Y,
+                    X2 = serializedLine.EndPoint.X,
+                    Y2 = serializedLine.EndPoint.Y,
+                    Stroke = new SolidColorBrush((Color)ColorConverter.ConvertFromString(serializedLine.Color)),
+                    StrokeEndLineCap = PenLineCap.Round,
+                    StrokeStartLineCap = PenLineCap.Round,
+                    StrokeThickness = PEN_THICKNESS
+                };
+
+                drawReceived.Add(line);
+            }
+
+            return drawReceived;
         }
     }
 }

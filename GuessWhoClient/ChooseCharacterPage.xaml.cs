@@ -179,8 +179,13 @@ namespace GuessWhoClient
 
         private void RedirectToDrawingPage()
         {
+            gameManager.UnsubscribePage(this);
+            matchStatusManager.UnsubscribePage(this);
+
             DrawingPage drawingPage = new DrawingPage();
             NavigationService.Navigate(drawingPage);
+            gameManager.SubscribePage(drawingPage);
+            matchStatusManager.SubscribePage(drawingPage);
         }
 
         private void BtnStartGameClick(object sender, RoutedEventArgs e)

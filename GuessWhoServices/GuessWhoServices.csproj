@@ -47,17 +47,21 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChatRoom.cs" />
     <Compile Include="ChatService\ChatService.cs" />
     <Compile Include="ChatService\IChatService.cs" />
+    <Compile Include="DrawInformation.cs" />
+    <Compile Include="DrawService\DrawService.cs" />
+    <Compile Include="DrawService\IDrawService.cs" />
     <Compile Include="FriendsService\FriendsService.cs" />
     <Compile Include="FriendsService\IFriendsService.cs" />
     <Compile Include="MatchInformation.cs" />
     <Compile Include="GameService\IGameService.cs" />
     <Compile Include="GameService\GameService.cs" />
-    <Compile Include="MatchPlayerListeningInformation.cs" />
+    <Compile Include="MatchPlayerInformation.cs" />
     <Compile Include="MatchStatusService\IMatchStatusService.cs" />
     <Compile Include="MatchStatusService\MatchStatusService.cs" />
     <Compile Include="PlayerService\IPlayerService.cs" />
