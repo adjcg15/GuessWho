@@ -1724,7 +1724,7 @@ namespace GuessWhoClient.GameServices {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IDrawServiceCallback {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IDrawService/DrawReceived", ReplyAction="http://tempuri.org/IDrawService/DrawReceivedResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IDrawService/DrawReceived")]
         void DrawReceived(GuessWhoClient.GameServices.SerializedLine[] adversaryDrawMap);
     }
     

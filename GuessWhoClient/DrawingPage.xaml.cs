@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.ServiceModel;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -30,7 +31,7 @@ namespace GuessWhoClient
         private readonly GameManager gameManager = GameManager.Instance;
         private readonly MatchStatusManager matchStatusManager = MatchStatusManager.Instance;
         private DrawServiceClient drawServiceClient;
-        private DispatcherTimer timer;
+        private Timer timer;
         private int secondsRemaining = 15;
         private bool isActualPlayerReady = false;
         private bool isOpponentReady = false;
@@ -62,15 +63,27 @@ namespace GuessWhoClient
 
         private void InitializeTimer()
         {
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += TimerTick;
+            timer = new Timer(TimerTick, null, 0, 1000);
+        }
+
+        private void TimerTick(object state)
+        {   
+            secondsRemaining--;
+
+            if (secondsRemaining <= 0)
+            {
+                Console.WriteLine("TIMEOUT!");
+                Dispatcher.Invoke(AttemptTimeOver);
+            }
+
+            Dispatcher.Invoke(() => {
+                TbTimer.Text = secondsRemaining.ToString();
+            });
         }
 
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
             ShowCharacters();
-            StartTimer();
 
             try
             {
@@ -98,26 +111,13 @@ namespace GuessWhoClient
             matchStatusManager.RestartRawValues();
         }
 
-        private void StartTimer()
-        {
-            timer.Start();
-        }
-
         private void StopTimer()
         {
-            timer.Stop();
-        }
-
-        private void TimerTick(object sender, EventArgs e)
-        {
-            secondsRemaining--;
-
-            if (secondsRemaining <= 0)
+            if (timer != null)
             {
-                AttemptTimeOver();
+                timer.Dispose();
+                timer = null;
             }
-
-            TbTimer.Text = secondsRemaining.ToString();
         }
 
         private void AttemptTimeOver()
@@ -126,31 +126,41 @@ namespace GuessWhoClient
             IsEnabled = false;
             isActualPlayerReady = true;
 
+            Console.WriteLine("Enviando dibujo al contrincante...");
             drawServiceClient.SendDraw(GetSerializedDraw(), gameManager.CurrentMatchCode);
+            Console.WriteLine("Dibujo enviado correctamente");
             CheckBothPlayersReady();
         }
 
         private void CheckBothPlayersReady()
         {
+            Console.WriteLine("YO " + (isActualPlayerReady ? "estoy listo" : "NO estoy listo"));
+            Console.WriteLine("EL OTRO " + (isOpponentReady ? "está listo" : "NO está listo"));
             if (isActualPlayerReady && isOpponentReady)
             {
+                Console.WriteLine("Ambos jugadores están listos");
                 RedirectToAnswerPage();
             }
         }
 
         private void RedirectToAnswerPage()
         {
+            Console.WriteLine("Limpiando otros canales");
             gameManager.UnsubscribePage(this);
             matchStatusManager.UnsubscribePage(this);
 
+            Console.WriteLine("Creando página de pista");
             AnswerPage answerPage = new AnswerPage(opponentDraw);
 
             gameManager.SubscribePage(answerPage);
             matchStatusManager.SubscribePage(answerPage);
 
+            Console.WriteLine("Navegando a página de pista");
             NavigationService.Navigate(answerPage);
 
+            Console.WriteLine("Quitando suscripción a canal de dibujo");
             drawServiceClient.UnsubscribeFromDrawService(gameManager.CurrentMatchCode);
+            Console.WriteLine("Suscripción anulada correctamente");
         }
 
         private void ShowCharacters()
@@ -433,6 +443,7 @@ namespace GuessWhoClient
 
         private List<SerializedLine> SerializeDraw(IEnumerable<Line> lines)
         {
+            Console.WriteLine("Enviando un total de " + lines.Count() + " líneas");
             List<SerializedLine> serializedLines = new List<SerializedLine>();
 
             foreach (var line in lines)
@@ -512,6 +523,7 @@ namespace GuessWhoClient
 
         public void DrawReceived(SerializedLine[] adversaryDrawMap)
         {
+            Console.WriteLine("Dibujo del contrincante recibido");
             opponentDraw = adversaryDrawMap;
             isOpponentReady = true;
 

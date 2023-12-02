@@ -21,7 +21,7 @@ namespace GuessWhoServices
     [ServiceContract]
     public interface IDrawServiceCallback
     {
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void DrawReceived(List<SerializedLine> adversaryDrawMap);
     }
 
