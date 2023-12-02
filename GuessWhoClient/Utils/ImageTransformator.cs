@@ -1,5 +1,9 @@
-﻿using System.IO;
+﻿using GuessWhoClient.GameServices;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using System.Windows.Resources;
 
 namespace GuessWhoClient.Utils
 {
@@ -16,7 +20,7 @@ namespace GuessWhoClient.Utils
             {
                 return File.ReadAllBytes(imagePath);
             } 
-            catch(IOException ex)
+            catch(IOException)
             {
                 return null;
             }
@@ -40,6 +44,12 @@ namespace GuessWhoClient.Utils
             }
 
             return bitmapImage;
+        }
+
+        public static async Task<base64BinaryResponse> LoadUserAvatarLazily(string userNickname)
+        {
+            AuthenticationServiceClient authenticationServiceClient = new AuthenticationServiceClient();
+            return await authenticationServiceClient.GetAvatarAsync(userNickname);
         }
     }
 }

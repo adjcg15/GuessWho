@@ -315,8 +315,8 @@
   <data name="lbWaitingOpponent" xml:space="preserve">
     <value>Esperando oponente…</value>
   </data>
-  <data name="lbWaitingPlayer" xml:space="preserve">
-    <value>Esperando jugador…</value>
+  <data name="msgbCanceledMatchMessage" xml:space="preserve">
+    <value>El otro jugador ha abandonado la partida, la partida ha sido cancelada</value>
   </data>
   <data name="msgbConectionLost" xml:space="preserve">
     <value>Por el momento no hay conexión, por favor intentélo más tarde</value>
@@ -333,8 +333,17 @@
   <data name="msgbConfirmGuessChoiceTitle" xml:space="preserve">
     <value>Confirme su elección</value>
   </data>
-  <data name="msgbEmptyField" xml:space="preserve">
+  <data name="msgbConfirmLeaveGameMessage" xml:space="preserve">
+    <value>¿Estás seguro de que deseas salir de la partida?</value>
+  </data>
+  <data name="msgbConfirmLeaveGameTitle" xml:space="preserve">
+    <value>Abandonar Partida</value>
+  </data>
+  <data name="msgbEmptyFieldMessage" xml:space="preserve">
     <value>El correo electrónico y la contraseña son requeridos</value>
+  </data>
+  <data name="msgbEmptyFieldTitle" xml:space="preserve">
+    <value>Campos faltantes</value>
   </data>
   <data name="msgbErrorConexionServidorMessage" xml:space="preserve">
     <value>No fue posible establecer una conexión con el servidor, intente en otro momento</value>
@@ -360,17 +369,17 @@
   <data name="msgbErrorSendingGameInvitationTitle" xml:space="preserve">
     <value>Error al enviar la invitación</value>
   </data>
+  <data name="msgbFinishDrawMessage" xml:space="preserve">
+    <value>¿Estas seguro que deseas terminar tu intento? No podrás adivinar o dibujar más.</value>
+  </data>
+  <data name="msgbFinishDrawTitle" xml:space="preserve">
+    <value>Terminar intento</value>
+  </data>
   <data name="msgbGameFinishedByHostMessage" xml:space="preserve">
     <value>El anfitrión ha finalizado la partida</value>
   </data>
   <data name="msgbGameFinishedByHostTitle" xml:space="preserve">
     <value>Partida finalizada</value>
-  </data>
-  <data name="msgbHostInformationMissingMessage" xml:space="preserve">
-    <value>Ocurrió un error a la hora de recuperar la información del anfitrión, pero puede continuar jugando sin ningún problema</value>
-  </data>
-  <data name="msgbHostInformationMissingTitle" xml:space="preserve">
-    <value>No se pudo recuperar la información del anfitrión</value>
   </data>
   <data name="msgbHostLeftMatchMessage" xml:space="preserve">
     <value>La partida ha sido finalizada por el anfitrión, por lo que no es posible unirse</value>
@@ -378,11 +387,23 @@
   <data name="msgbHostLeftMatchTitle" xml:space="preserve">
     <value>Partida finalizada por el anfitrión</value>
   </data>
+  <data name="msgbInvalidCredentialsMessage" xml:space="preserve">
+    <value>El correo y/o contraseña son incorrectas, por favor verifique la información</value>
+  </data>
+  <data name="msgbInvalidCredentialsTitle" xml:space="preserve">
+    <value>Credenciales inválidas</value>
+  </data>
   <data name="msgbInvalidMatchCodeMessage" xml:space="preserve">
     <value>La partida a la que intenta acceder no pudo ser encontrada, o es posible que ya se encuentre llena</value>
   </data>
   <data name="msgbInvalidMatchCodeTitle" xml:space="preserve">
     <value>Partida inválida</value>
+  </data>
+  <data name="msgbInvalidSessionMessage" xml:space="preserve">
+    <value>Ya existe una sesión activa para la cuenta con la que intenta ingresar</value>
+  </data>
+  <data name="msgbInvalidSessionTitle" xml:space="preserve">
+    <value>Sesión inválida</value>
   </data>
   <data name="msgbInvitationSentMessage" xml:space="preserve">
     <value>El jugador ha sido invitado a la partida exitosamente</value>
@@ -452,9 +473,6 @@
   </data>
   <data name="msgbSendMessageMatchFinishedMessage" xml:space="preserve">
     <value>La partida a la que intenta enviar el mensaje ya no existe</value>
-  </data>
-  <data name="msgbUserNotFound" xml:space="preserve">
-    <value>El correo y/o contraseña son incorrectas, por favor verifique la información</value>
   </data>
   <data name="msgbWelcome1" xml:space="preserve">
     <value>Bienvenido/a </value>

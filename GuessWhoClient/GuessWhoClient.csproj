@@ -106,6 +106,7 @@
     <Compile Include="Model\CharacterCard.cs" />
     <Compile Include="Model\Interfaces\IGamePage.cs" />
     <Compile Include="Model\Interfaces\IMatchStatusPage.cs" />
+    <Compile Include="Model\UserCard.cs" />
     <Compile Include="ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
@@ -222,13 +223,13 @@
       <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ActiveUser.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ArrayOfFriendResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ArrayOfTopPlayerResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.base64BinaryResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.booleanResponse.datasource">
@@ -254,6 +255,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\GameServices\item3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GameServices\item4.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />

@@ -67,7 +67,7 @@
         </Grid>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,463,0,0">
 
-            <Button x:Name ="BtnStartGame" Style="{StaticResource PrimaryButtonWithIcon}" Visibility="Collapsed">
+            <Button x:Name ="BtnStartGame" Style="{StaticResource PrimaryButtonWithIcon}" Click="BtnStartGameClick" Visibility="Collapsed">
                 <StackPanel Orientation="Horizontal" Cursor="Hand">
                     <Image Source="/Resources/play-icon.png" Width="24" Height="19"/>
                     <TextBlock Text="{x:Static Properties:Resources.btnStartGame}" VerticalAlignment="Center" FontWeight="SemiBold" Margin="12,0,0,0"/>
@@ -75,7 +75,7 @@
             </Button>
 
             <Button x:Name ="BtnConfirmCharacterSelection" Style="{StaticResource PrimaryButtonWithIcon}"  FontWeight="SemiBold" Opacity="0.5"
-                Content="{x:Static p:Resources.btnConfirmCharacterSelection}" IsEnabled="False"/>
+                Content="{x:Static p:Resources.btnConfirmCharacterSelection}" Click="BtnConfirmCharacterSelectionClick" IsEnabled="False"/>
         </StackPanel>
 
         <Label x:Name="LbCharacter"

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GuessWhoDataAccess;
+using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 
@@ -6,16 +7,16 @@ namespace GuessWhoServices
 {
     public partial class GuessWhoService : IUserService
     {
-        private static List<IUsersCallback> subscribers = new List<IUsersCallback>();
-        private static List<ActiveUser> activeUsers = new List<ActiveUser>();
+        private readonly static List<IUsersCallback> clientChannels = new List<IUsersCallback>();
+        private readonly static List<string> activeUsers = new List<string>();
 
         public void Subscribe()
         {
             var channel = OperationContext.Current.GetCallbackChannel<IUsersCallback>();
             Console.WriteLine("Suscribiendo a lista usuarios activos " + channel.GetHashCode());
-            if (!subscribers.Contains(channel))
+            if (!clientChannels.Contains(channel))
             {
-                subscribers.Add(channel);
+                clientChannels.Add(channel);
             }
         }
 
@@ -23,47 +24,49 @@ namespace GuessWhoServices
         {
             var channel = OperationContext.Current.GetCallbackChannel<IUsersCallback>();
             Console.WriteLine("Quitando suscripción a lista usuarios activos " + channel.GetHashCode());
-            if (subscribers.Contains(channel))
+            if (clientChannels.Contains(channel))
             {
-                subscribers.Remove(channel);
+                clientChannels.Remove(channel);
             }
         }
 
-        public List<ActiveUser> GetActiveUsers()
+        public List<string> GetActiveUsers()
         {
             return activeUsers;
         }
 
-        public static void UpdateUserStatus(ActiveUser user, bool isActive)
+        public static void UpdateUserStatus(string userNickname, bool isOnline)
         {
-            if (isActive)
+            string userNicknameStored = activeUsers.Find(n => n == userNickname);
+
+            if (isOnline)
             {
-                if (activeUsers.Find(u => u.Nickname == user.Nickname) == null)
+                if (string.IsNullOrEmpty(userNicknameStored))
                 {
-                    activeUsers.Add(user);
+                    activeUsers.Add(userNickname);
                 }
             }
             else
             {
-                activeUsers.Remove(activeUsers.Find(u => u.Nickname == user.Nickname));
+                activeUsers.Remove(userNicknameStored);
             }
 
-            foreach (var subscriber in subscribers)
+            foreach (var subscriber in clientChannels)
             {
                 Console.WriteLine(
                     "Avisando a suscriptor de lista de usuarios activos " + subscriber.GetHashCode() + 
-                    " que usuario " + user.Nickname + 
-                    (isActive ? " inicia sesión" : " cierra sesión")
+                    " que usuario " + userNickname + 
+                    (isOnline ? " inicia sesión" : " cierra sesión")
                 );
                 try
                 {
-                    subscriber.UserStatusChanged(user, isActive);
+                    subscriber.UserStatusChanged(userNickname, isOnline);
                 }
                 catch (CommunicationObjectAbortedException)
                 {
-                    subscribers.Remove(subscriber);
+                    clientChannels.Remove(subscriber);
                 }
             }
-        }
+        } 
     }
 }

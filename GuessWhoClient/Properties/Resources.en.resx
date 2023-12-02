@@ -313,10 +313,10 @@
     <value>Wait, the game will start shortly</value>
   </data>
   <data name="lbWaitingOpponent" xml:space="preserve">
-    <value>Waiting for all players…</value>
+    <value>Waiting for opponent…</value>
   </data>
-  <data name="lbWaitingPlayer" xml:space="preserve">
-    <value>Waiting for all players…</value>
+  <data name="msgbCanceledMatchMessage" xml:space="preserve">
+    <value>Adversary has quit the game, the game has been canceled</value>
   </data>
   <data name="msgbConectionLost" xml:space="preserve">
     <value>Currently, there is no connection, please try again later.</value>
@@ -333,8 +333,17 @@
   <data name="msgbConfirmGuessChoiceTitle" xml:space="preserve">
     <value>Confirm your choice</value>
   </data>
-  <data name="msgbEmptyField" xml:space="preserve">
+  <data name="msgbConfirmLeaveGameMessage" xml:space="preserve">
+    <value>Are you sure you want to leave the match?</value>
+  </data>
+  <data name="msgbConfirmLeaveGameTitle" xml:space="preserve">
+    <value>Quit Match</value>
+  </data>
+  <data name="msgbEmptyFieldMessage" xml:space="preserve">
     <value>Email and password are required</value>
+  </data>
+  <data name="msgbEmptyFieldTitle" xml:space="preserve">
+    <value>Missing fields</value>
   </data>
   <data name="msgbErrorConexionServidorMessage" xml:space="preserve">
     <value>Could not establish a connection to the server, try another time</value>
@@ -360,17 +369,17 @@
   <data name="msgbErrorSendingGameInvitationTitle" xml:space="preserve">
     <value>Error sending invitation</value>
   </data>
+  <data name="msgbFinishDrawMessage" xml:space="preserve">
+    <value>Are you sure you want to finish your attempt? You won't be able to guess or draw anymore.</value>
+  </data>
+  <data name="msgbFinishDrawTitle" xml:space="preserve">
+    <value>Finish Attempt</value>
+  </data>
   <data name="msgbGameFinishedByHostMessage" xml:space="preserve">
     <value>The host has ended the game</value>
   </data>
   <data name="msgbGameFinishedByHostTitle" xml:space="preserve">
     <value>Game over</value>
-  </data>
-  <data name="msgbHostInformationMissingMessage" xml:space="preserve">
-    <value>An error occurred while retrieving host information, but you can continue playing without any problems</value>
-  </data>
-  <data name="msgbHostInformationMissingTitle" xml:space="preserve">
-    <value>Could not retrieve host information</value>
   </data>
   <data name="msgbHostLeftMatchMessage" xml:space="preserve">
     <value>The match has been ended by the host, so it is not possible to join</value>
@@ -378,11 +387,23 @@
   <data name="msgbHostLeftMatchTitle" xml:space="preserve">
     <value>Match ended by the host</value>
   </data>
+  <data name="msgbInvalidCredentialsMessage" xml:space="preserve">
+    <value>Email and/or password are incorrect, please verify the information.</value>
+  </data>
+  <data name="msgbInvalidCredentialsTitle" xml:space="preserve">
+    <value>Invalid credentials</value>
+  </data>
   <data name="msgbInvalidMatchCodeMessage" xml:space="preserve">
     <value>The match you are trying to access could not be found, or it may already be full</value>
   </data>
   <data name="msgbInvalidMatchCodeTitle" xml:space="preserve">
     <value>Invalid match</value>
+  </data>
+  <data name="msgbInvalidSessionMessage" xml:space="preserve">
+    <value>An active session already exists for the account you are trying to log in with</value>
+  </data>
+  <data name="msgbInvalidSessionTitle" xml:space="preserve">
+    <value>Invalid session</value>
   </data>
   <data name="msgbInvitationSentMessage" xml:space="preserve">
     <value>The player has been invited to the game successfully</value>
@@ -452,9 +473,6 @@
   </data>
   <data name="msgbSendMessageMatchFinishedMessage" xml:space="preserve">
     <value>The game you are trying to send the message to no longer exists</value>
-  </data>
-  <data name="msgbUserNotFound" xml:space="preserve">
-    <value>Email and/or password are incorrect, please verify the information.</value>
   </data>
   <data name="msgbWelcome1" xml:space="preserve">
     <value>Welcome </value>

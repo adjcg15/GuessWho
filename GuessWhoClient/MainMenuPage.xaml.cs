@@ -3,11 +3,8 @@ using GuessWhoClient.Utils;
 using System;
 using System.Linq;
 using System.ServiceModel;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace GuessWhoClient
@@ -22,14 +19,39 @@ namespace GuessWhoClient
             InitializeComponent();
         }
 
-        public void ShowCanceledMatchMessage()
+        public void ShowHostCanceledMatchMessage()
+        {
+            UpdateUIMessage();
+        }
+
+        private void UpdateUIMessage()
         {
             BorderCanceledMatch.Visibility = Visibility.Visible;
             BorderOpacityCanceledMatch.Visibility = Visibility.Visible;
+        }
 
-            if(DataStore.Profile != null)
+        public void ShowCanceledMatchMessage()
+        {
+            UpdateUIMessage();
+
+            LbMessageBoxMessage.Content = Properties.Resources.msgbCanceledMatchMessage;
+            UpdateLanguageButton();
+        }
+
+        private void UpdateLanguageButton()
+        {
+            string currentLanguage = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToUpper();
+
+            if(currentLanguage == "ES-ES" || currentLanguage == "ES-MX")
             {
-                LoginProfile();
+                TbBtnLanguage.Text = "ESPAÑOL";
+                ImgBtnLanguage.Source = new BitmapImage(new Uri("/Resources/mx-flag-image.png", UriKind.Relative));
+            }
+            else
+            {
+                TbBtnLanguage.Text = "ENGLISH";
+                ImgBtnLanguage.Source = new BitmapImage(new Uri("/Resources/us-flag-image.png", UriKind.Relative));
+
             }
         }
 
@@ -54,7 +76,6 @@ namespace GuessWhoClient
             BorderProfile.Visibility = Visibility.Collapsed;
             BtnFriends.Visibility = Visibility.Collapsed;
 
-
             try
             {
                 AuthenticationServiceClient authenticationServiceClient = new AuthenticationServiceClient();
@@ -70,8 +91,24 @@ namespace GuessWhoClient
 
         private void BtnQuickMatchClick(object sender, RoutedEventArgs e)
         {
-            LobbyPage lobbyPage = new LobbyPage();
-            this.NavigationService.Navigate(lobbyPage); 
+            string userNickname = DataStore.Profile != null ? DataStore.Profile.NickName : "";
+            GameManager gameManager = GameManager.Instance;
+
+            try
+            {
+                var createMatchResponse = gameManager.Client.CreateMatch(userNickname);
+
+                gameManager.IsCurrentMatchHost = true;
+                gameManager.CurrentMatchCode = createMatchResponse.Value;
+
+                LobbyPage lobbyPage = new LobbyPage();
+                NavigationService.Navigate(lobbyPage); 
+            }
+            catch (EndpointNotFoundException)
+            {
+                gameManager.RestartRawValues();
+                ServerResponse.ShowServerDownMessage();
+            }
         }
 
         private void BtnLeaderboardClick(object sender, RoutedEventArgs e)
@@ -204,11 +241,65 @@ namespace GuessWhoClient
             }
         }
 
-
         private void ImgSendInvitationCodeClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            LobbyPage lobby = new LobbyPage(TbInvitationCode.Text);
-            this.NavigationService.Navigate(lobby);
+            GameManager gameManager = GameManager.Instance;
+            string userNickname = DataStore.Profile != null ? DataStore.Profile.NickName : "";
+            string invitationCode = TbInvitationCode.Text;
+
+            try
+            {
+                var joinGameResponse = gameManager.Client.JoinGame(invitationCode, userNickname);
+                switch (joinGameResponse.StatusCode)
+                {
+                    case ResponseStatus.OK:
+                        gameManager.CurrentMatchCode = invitationCode;
+                        gameManager.IsCurrentMatchHost = false;
+
+                        PlayerInMatch host = joinGameResponse.Value;
+                        if (host != null)
+                        {
+                            gameManager.AdversaryNickname = host.Nickname;
+                            gameManager.AdversaryAvatar = host.Avatar;
+                        }
+
+                        LobbyPage lobby = new LobbyPage();
+                        NavigationService.Navigate(lobby);
+                        break;
+                    case ResponseStatus.VALIDATION_ERROR:
+                        MessageBox.Show(
+                            Properties.Resources.msgbInvalidMatchCodeMessage,
+                            Properties.Resources.msgbInvalidMatchCodeTitle,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
+                        );
+                        gameManager.RestartRawValues();
+                        break;
+                    case ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR:
+                        MessageBox.Show(
+                            Properties.Resources.msgbHostLeftMatchMessage,
+                            Properties.Resources.msgbHostLeftMatchTitle,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
+                        );
+                        gameManager.RestartRawValues();
+                        break;
+                    default:
+                        MessageBox.Show(
+                            ServerResponse.GetMessageFromStatusCode(joinGameResponse.StatusCode),
+                            Properties.Resources.msgbErrorJoiningMatchTitle,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
+                        );
+                        gameManager.RestartRawValues();
+                        break;
+                }
+            }
+            catch (EndpointNotFoundException)
+            {
+                gameManager.RestartRawValues();
+                ServerResponse.ShowServerDownMessage();
+            }
         }
 
         private void TbInvitationCodeGotFocus(object sender, RoutedEventArgs e)
@@ -239,6 +330,8 @@ namespace GuessWhoClient
             {
                 LoginProfile();
             }
+
+            UpdateLanguageButton();
         }
     }
 }

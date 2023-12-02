@@ -361,5 +361,36 @@ namespace GuessWhoDataAccess
 
             return response;
         }
+
+        public static Response<byte[]> GetUserAvatarByNickname(string userNickname)
+        {
+            Response<byte[]> response = new Response<byte[]>
+            {
+                StatusCode = ResponseStatus.VALIDATION_ERROR,
+                Value = null
+            };
+
+            if(!string.IsNullOrEmpty(userNickname))
+            {
+                try
+                {
+                    using (var context = new GuessWhoContext())
+                    {
+                        var user = context.Users.FirstOrDefault(u => u.nickname == userNickname);
+                        if (user != null)
+                        {
+                            response.Value = user.avatar;
+                            response.StatusCode = ResponseStatus.OK;
+                        }
+                    }
+                }
+                catch (SqlException)
+                {
+                    response.StatusCode = ResponseStatus.SQL_ERROR;
+                }
+            }
+
+            return response;
+        }
     }
 }

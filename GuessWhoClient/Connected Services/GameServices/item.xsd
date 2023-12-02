@@ -1,44 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GuessWhoServices" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GuessWhoServices" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:complexType name="ArrayOfActiveUser">
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/System.Windows" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/System.Windows" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:6969/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="Point">
+    <xs:annotation>
+      <xs:appinfo>
+        <IsValueType xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsValueType>
+      </xs:appinfo>
+    </xs:annotation>
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="ActiveUser" nillable="true" type="tns:ActiveUser" />
+      <xs:element name="_x" type="xs:double" />
+      <xs:element name="_y" type="xs:double" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfActiveUser" nillable="true" type="tns:ArrayOfActiveUser" />
-  <xs:complexType name="ActiveUser">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Avatar" nillable="true" type="xs:base64Binary" />
-      <xs:element minOccurs="0" name="Nickname" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ActiveUser" nillable="true" type="tns:ActiveUser" />
-  <xs:complexType name="ArrayOfFriend">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Friend" nillable="true" type="tns:Friend" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfFriend" nillable="true" type="tns:ArrayOfFriend" />
-  <xs:complexType name="Friend">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Avatar" nillable="true" type="xs:base64Binary" />
-      <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="IdFriendship" type="xs:int" />
-      <xs:element minOccurs="0" name="Nickname" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="Friend" nillable="true" type="tns:Friend" />
-  <xs:simpleType name="MatchStatus">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="CharacterSelection" />
-      <xs:enumeration value="PlayerReady" />
-      <xs:enumeration value="StartGame" />
-      <xs:enumeration value="GameLost" />
-      <xs:enumeration value="GameWon" />
-      <xs:enumeration value="LooksLike" />
-      <xs:enumeration value="DoesNotLookLike" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="MatchStatus" nillable="true" type="tns:MatchStatus" />
+  <xs:element name="Point" nillable="true" type="tns:Point" />
 </xs:schema>

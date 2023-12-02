@@ -21,24 +21,24 @@
             <Grid>
                 <Ellipse Margin="28,9,370,9">
                     <Ellipse.Fill>
-                        <ImageBrush x:Name="ImgChatProfilePicture" ImageSource="/Resources/user-icon.png"/>
+                        <ImageBrush x:Name="ImgAdversaryAvatarInChat" ImageSource="/Resources/user-icon.png"/>
                     </Ellipse.Fill>
                 </Ellipse>
-                <TextBlock x:Name="TbOponentChat" Text="{x:Static p:Resources.lbWaitingPlayer}" FontSize="16" FontWeight="Medium" Margin="93,23,207,23"/>
+                <TextBlock x:Name="TbAdversaryNicknameInChat" Text="{x:Static p:Resources.lbWaitingOpponent}" FontSize="16" FontWeight="Medium" Margin="93,23,24,23"/>
             </Grid>
         </Border>
         <Border Background ="White" BorderThickness="2,0,0,0" BorderBrush="#E2E2E2" Grid.Column="1" HorizontalAlignment="Center" Height="522" VerticalAlignment="Center" Width="450">
             <Grid>
                 <Grid>
-                    <Border x:Name="BorderOponent" Background="#E2E2E2" CornerRadius="30" Width="430" Height="60" Margin="8,84,10,378">
+                    <Border x:Name="BorderAdversaryBanner" Background="#E2E2E2" CornerRadius="30" Width="430" Height="60" Margin="8,84,10,378">
                         <Grid>
                             <StackPanel Orientation="Horizontal">
                                 <Ellipse Width="50" Height="50" Margin="6,5,5,5">
                                     <Ellipse.Fill>
-                                        <ImageBrush x:Name="ImgProfilePicture" ImageSource="/Resources/user-icon.png"/>
+                                        <ImageBrush x:Name="ImgAdversaryAvatarInBanner" ImageSource="/Resources/user-icon.png"/>
                                     </Ellipse.Fill>
                                 </Ellipse>
-                                <TextBlock x:Name="TbOponent" Text="{x:Static p:Resources.lbWaitingPlayer}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="16" FontWeight="Medium" Opacity="0.5"/>
+                                <TextBlock x:Name="TbAdversaryNicknameInBanner" Text="{x:Static p:Resources.lbWaitingOpponent}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" FontSize="16" FontWeight="Medium" Opacity="0.5"/>
                             </StackPanel>
                         </Grid>
                     </Border>
