@@ -20,6 +20,7 @@ namespace GuessWhoDataAccess
         OK = 200,
         VALIDATION_ERROR = 400,
         CLIENT_CHANNEL_CONNECTION_ERROR = 401,
+        NOT_ALLOWED = 402,
         UPDATE_ERROR = 500,
         SQL_ERROR = 501
     }

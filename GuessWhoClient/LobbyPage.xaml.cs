@@ -4,9 +4,11 @@ using GuessWhoClient.GameServices;
 using GuessWhoClient.Model.Interfaces;
 using GuessWhoClient.Utils;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -19,31 +21,24 @@ namespace GuessWhoClient
         private const string DEFAULT_PROFILE_PICTURE_ROUTE = "pack://application:,,,/Resources/user-icon.png";
         private GameManager gameManager = GameManager.Instance;
         private MatchStatusManager matchStatusManager = MatchStatusManager.Instance;
-        public ObservableCollection<ActiveUser> activeUsers { get; set; } = new ObservableCollection<ActiveUser>();
+        public ObservableCollection<UserCard> activeUsers { get; set; } = new ObservableCollection<UserCard>();
 
         public LobbyPage()
         {
             InitializeComponent();
 
-            gameManager.IsCurrentMatchHost = true;
             gameManager.SubscribePage(this);
             matchStatusManager.SubscribePage(this);
 
-            ShowCancelGameButton();
-        }
-
-        public LobbyPage(string invitationCode)
-        {
-            InitializeComponent();
-
-            gameManager.IsCurrentMatchHost = false;
-            gameManager.CurrentMatchCode = invitationCode;
-            matchStatusManager.CurrentMatchCode = invitationCode;
-            gameManager.SubscribePage(this);
-            matchStatusManager.SubscribePage(this);
-
-            ShowExitGameButton();
-            HideInvitationOptions();
+            if(gameManager.IsCurrentMatchHost)
+            {
+                ShowCancelGameButton();
+            }
+            else
+            {
+                ShowExitGameButton();
+                HideInvitationOptions();
+            }
         }
 
         private void ShowExitGameButton()
@@ -58,7 +53,6 @@ namespace GuessWhoClient
 
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
-            string userNickname = DataStore.Profile != null ? DataStore.Profile.NickName : "";
             DataStore.UsersClient = new UserServiceClient(new InstanceContext(this));
             DataStore.ChatsClient = new ChatServiceClient(new InstanceContext(this));
 
@@ -67,14 +61,15 @@ namespace GuessWhoClient
                 SubscribeToActiveUsersList();
                 if (gameManager.IsCurrentMatchHost)
                 {
-                    LoadActiveUsers();
-                    CreateNewGame(userNickname);
+                    StartListeningMatchStatus();
                     EnterToChatRoom();
+                    LoadActiveUsers();
                     ShowActiveUsersList();
                 }
                 else
                 {
-                    JoinGame(userNickname);
+                    ShowHostInformation();
+                    StartListeningMatchStatus();
                     EnterToChatRoom();
                     ShowGameFullMessage();
                     EnableSendMessageButton();
@@ -88,6 +83,23 @@ namespace GuessWhoClient
             }
         }
 
+        public void EnterToChatRoom()
+        {
+            DataStore.ChatsClient.EnterToChatRoom(gameManager.CurrentMatchCode);
+        }
+
+        private void SubscribeToActiveUsersList()
+        {
+            DataStore.UsersClient.Subscribe();
+        }
+
+        private void RedirectPermanentlyToMainMenu()
+        {
+            ShowsNavigationUI = true;
+            MainMenuPage menuPage = new MainMenuPage();
+            NavigationService.Navigate(menuPage);
+        }
+
         private void ClearCommunicationChannels()
         {
             DataStore.UsersClient = null;
@@ -96,19 +108,63 @@ namespace GuessWhoClient
             matchStatusManager.RestartRawValues();
         }
 
-        private void SubscribeToActiveUsersList()
+        private void LoadActiveUsers()
         {
-            DataStore.UsersClient.Subscribe();
+            List<string> activeUsersNicknames = DataStore.UsersClient.GetActiveUsers().ToList();
+
+            Uri uri = new Uri(DEFAULT_PROFILE_PICTURE_ROUTE);
+            BitmapImage defaultImage = new BitmapImage(uri);
+
+            List<UserCard> usersWithFormat = new List<UserCard>();
+            foreach (string nickname in activeUsersNicknames)
+            {
+                usersWithFormat.Add(new UserCard
+                {
+                    Avatar = defaultImage,
+                    Nickname = nickname
+                });
+            }
+
+            activeUsers = new ObservableCollection<UserCard>(usersWithFormat);
+            if (DataStore.Profile != null)
+            {
+                activeUsers.Remove(activeUsers.FirstOrDefault((user) => user.Nickname == DataStore.Profile.NickName));
+            }
+
+            ListBoxActiveUsers.ItemsSource = activeUsers;
+            LoadActiveUsersAvatars();
         }
 
-        private void CreateNewGame(string userNickname)
+        private void LoadActiveUsersAvatars()
         {
-            var createMatchResponse = gameManager.Client.CreateMatch(userNickname);
+            foreach(UserCard activeUser in activeUsers)
+            {
+                Task.Run(() => LoadUserAvatar(activeUser));
+            }
+        }
 
-            gameManager.CurrentMatchCode = createMatchResponse.Value;
-            matchStatusManager.CurrentMatchCode = createMatchResponse.Value;
-
-            matchStatusManager.Client.ListenMatchStatus(matchStatusManager.CurrentMatchCode);
+        private async void LoadUserAvatar(UserCard activeUser)
+        {
+            if (activeUser != null)
+            {
+                try
+                {
+                    var loadResponse = await ImageTransformator.LoadUserAvatarLazily(activeUser.Nickname);
+                    if (loadResponse.Value != null)
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            activeUser.Avatar = ImageTransformator.GetBitmapImageFromByteArray(loadResponse.Value);
+                        });
+                    }
+                }
+                catch (EndpointNotFoundException)
+                {
+                    ServerResponse.ShowServerDownMessage();
+                    ClearCommunicationChannels();
+                    RedirectPermanentlyToMainMenu();
+                }
+            }
         }
 
         private void ShowActiveUsersList()
@@ -127,74 +183,11 @@ namespace GuessWhoClient
             }
         }
 
-        private void JoinGame(string userNickname)
-        {
-            var joinGameResponse = gameManager.Client.JoinGame(gameManager.CurrentMatchCode, userNickname);
-            switch (joinGameResponse.StatusCode)
-            {
-                case ResponseStatus.OK:
-                    PlayerInMatch host = joinGameResponse.Value;
-                    gameManager.AdversaryNickname = host.Nickname;
-                    gameManager.AdversaryAvatar = host.Avatar;
-
-                    if (host != null)
-                    {
-                        ShowAdversaryInfoInBanner();
-                        ShowAdversaryInfoInChat();
-                    }
-                    else
-                    {
-                        MessageBox.Show(
-                            Properties.Resources.msgbHostInformationMissingMessage,
-                            Properties.Resources.msgbHostInformationMissingTitle,
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Warning
-                        );
-
-                        gameManager.AdversaryNickname = Properties.Resources.txtHost;
-                        gameManager.AdversaryAvatar = null;
-                        ShowAdversaryInformation();
-                    }
-                    matchStatusManager.Client.ListenMatchStatus(matchStatusManager.CurrentMatchCode);
-                    break;
-                case ResponseStatus.VALIDATION_ERROR:
-                    MessageBox.Show(
-                        Properties.Resources.msgbInvalidMatchCodeMessage,
-                        Properties.Resources.msgbInvalidMatchCodeTitle,
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Warning
-                    );
-                    ClearCommunicationChannels();
-                    RedirectPermanentlyToMainMenu();
-                    break;
-                case ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR:
-                    MessageBox.Show(
-                        Properties.Resources.msgbHostLeftMatchMessage,
-                        Properties.Resources.msgbHostLeftMatchTitle,
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Warning
-                    );
-                    ClearCommunicationChannels();
-                    RedirectPermanentlyToMainMenu();
-                    break;
-                default:
-                    MessageBox.Show(
-                        ServerResponse.GetMessageFromStatusCode(joinGameResponse.StatusCode),
-                        Properties.Resources.msgbErrorJoiningMatchTitle,
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Warning
-                    );
-                    ClearCommunicationChannels();
-                    RedirectPermanentlyToMainMenu();
-                    break;
-            }
-        }
-
         private void ShowGameFullMessage()
         {
             string fullGameMessage;
 
-            if(gameManager.IsCurrentMatchHost)
+            if (gameManager.IsCurrentMatchHost)
             {
                 fullGameMessage = Properties.Resources.lbAllPlayersReady;
             }
@@ -209,47 +202,51 @@ namespace GuessWhoClient
             ListBoxActiveUsers.Visibility = Visibility.Hidden;
         }
 
-        private void RedirectPermanentlyToMainMenu()
+        private void StartListeningMatchStatus()
         {
-            ShowsNavigationUI = true;
-            MainMenuPage menuPage = new MainMenuPage();
-            NavigationService.Navigate(menuPage);
+            matchStatusManager.CurrentMatchCode = gameManager.CurrentMatchCode;
+            matchStatusManager.Client.ListenMatchStatus(matchStatusManager.CurrentMatchCode);
         }
 
-        private void LoadActiveUsers()
+        private void ShowHostInformation()
         {
-            activeUsers = new ObservableCollection<ActiveUser>(DataStore.UsersClient.GetActiveUsers().ToList());
-            if (DataStore.Profile != null)
+            if (!string.IsNullOrEmpty(gameManager.AdversaryNickname))
             {
-                activeUsers.Remove(activeUsers.FirstOrDefault(u => u.Nickname == DataStore.Profile.NickName));
-            }
-
-            ListBoxActiveUsers.ItemsSource = activeUsers;
-        }
-
-        public void UserStatusChanged(ActiveUser user, bool isActive)
-        {
-            if (isActive)
-            {
-                Application.Current.Dispatcher.Invoke(() => activeUsers.Add(user));
+                ShowAdversaryInfoInBanner();
             }
             else
             {
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    var userToRemove = activeUsers.FirstOrDefault(u => u.Nickname == user.Nickname);
-                    if (userToRemove != null)
-                    {
-                        activeUsers.Remove(userToRemove);
-                    }
-                });
+                gameManager.AdversaryNickname = Properties.Resources.txtHost;
+                gameManager.AdversaryAvatar = null;
             }
-            ShowActiveUsersList();
+
+            ShowAdversaryInformation();
         }
 
-        public void EnterToChatRoom()
+        public void UserStatusChanged(string userNickname, bool isActive)
         {
-            DataStore.ChatsClient.EnterToChatRoom(gameManager.CurrentMatchCode);
+            Uri uri = new Uri(DEFAULT_PROFILE_PICTURE_ROUTE);
+            BitmapImage defaultImage = new BitmapImage(uri);
+
+            if (isActive)
+            {
+                UserCard newUser = new UserCard
+                {
+                    Nickname = userNickname,
+                    Avatar = defaultImage
+                };
+                activeUsers.Add(newUser);
+                Task.Run(() => LoadUserAvatar(newUser));
+            }
+            else
+            {
+                var userToRemove = activeUsers.FirstOrDefault(user => user.Nickname == userNickname);
+                if (userToRemove != null)
+                {
+                    activeUsers.Remove(userToRemove);
+                }
+            }
+            ShowActiveUsersList();
         }
 
         public void PlayerStatusInMatchChanged(PlayerInMatch user, bool isJoiningMatch)
@@ -262,7 +259,19 @@ namespace GuessWhoClient
             {
                 if(!isJoiningMatch)
                 {
-                    NotifyGameHasBeenCanceled();
+                    try
+                    {
+                        UnsubscribeToActiveUsersList();
+                        ExitChatRoom();
+                        matchStatusManager.Client.StopListeningMatchStatus(matchStatusManager.CurrentMatchCode);
+                    }
+                    catch(EndpointNotFoundException)
+                    {
+                        //TO-DO: log exception
+                    }
+
+                    ClearCommunicationChannels();
+                    RedirectToMainMenuGameCanceled();
                 }
             }
             else
@@ -304,9 +313,8 @@ namespace GuessWhoClient
             BtnStartGame.Visibility = Visibility.Hidden;
         }
 
-        private void NotifyGameHasBeenCanceled()
+        private void RedirectToMainMenuGameCanceled()
         {
-            ClearCommunicationChannels();
             MainMenuPage mainMenu = new MainMenuPage();
             mainMenu.ShowHostCanceledMatchMessage();
             NavigationService.Navigate(mainMenu);
@@ -320,23 +328,27 @@ namespace GuessWhoClient
 
         private void ShowAdversaryInfoInBanner()
         {
-            BorderOponent.Background = new SolidColorBrush(Color.FromRgb(182, 216, 242));
+            BorderAdversaryBanner.Background = new SolidColorBrush(Color.FromRgb(182, 216, 242));
 
             string defaultAdversaryNickname = gameManager.IsCurrentMatchHost ? Properties.Resources.txtGuest : Properties.Resources.txtHost;
-            TbOponent.Text = !string.IsNullOrEmpty(gameManager.AdversaryNickname) ? gameManager.AdversaryNickname : defaultAdversaryNickname;
+            string adversaryNickname = !string.IsNullOrEmpty(gameManager.AdversaryNickname) ? gameManager.AdversaryNickname : defaultAdversaryNickname;
+            TbAdversaryNicknameInBanner.Text = adversaryNickname;
+
             if (gameManager.AdversaryAvatar != null)
             {
-                ImgProfilePicture.ImageSource = ImageTransformator.GetBitmapImageFromByteArray(gameManager.AdversaryAvatar);
+                ImgAdversaryAvatarInBanner.ImageSource = ImageTransformator.GetBitmapImageFromByteArray(gameManager.AdversaryAvatar);
             }
         }
 
         private void ShowAdversaryInfoInChat()
         {
             string defaultAdversaryNickname = gameManager.IsCurrentMatchHost ? Properties.Resources.txtGuest : Properties.Resources.txtHost;
-            TbOponentChat.Text = !string.IsNullOrEmpty(gameManager.AdversaryNickname) ? gameManager.AdversaryNickname : defaultAdversaryNickname;
+            string adversaryNickname = !string.IsNullOrEmpty(gameManager.AdversaryNickname) ? gameManager.AdversaryNickname : defaultAdversaryNickname;
+            TbAdversaryNicknameInChat.Text = adversaryNickname;
+
             if (gameManager.AdversaryAvatar != null)
             {
-                ImgChatProfilePicture.ImageSource = ImageTransformator.GetBitmapImageFromByteArray(gameManager.AdversaryAvatar);
+                ImgAdversaryAvatarInChat.ImageSource = ImageTransformator.GetBitmapImageFromByteArray(gameManager.AdversaryAvatar);
             }
         }
 
@@ -348,19 +360,20 @@ namespace GuessWhoClient
 
         private void ShowDefaultUserInfoInBanner()
         {
-            BorderOponent.Background = new SolidColorBrush(Color.FromRgb(226, 226, 226));
-            TbOponent.Text = Properties.Resources.lbWaitingOpponent;
+            BorderAdversaryBanner.Background = new SolidColorBrush(Color.FromRgb(226, 226, 226));
+            TbAdversaryNicknameInBanner.Text = Properties.Resources.lbWaitingOpponent;
+
             Uri uri = new Uri(DEFAULT_PROFILE_PICTURE_ROUTE);
             BitmapImage defaultImage = new BitmapImage(uri);
-            ImgProfilePicture.ImageSource = defaultImage;
+            ImgAdversaryAvatarInBanner.ImageSource = defaultImage;
         }
 
         private void ShowDefaultUserInfoInChat()
         {
-            TbOponentChat.Text = Properties.Resources.lbWaitingOpponent;
+            TbAdversaryNicknameInChat.Text = Properties.Resources.lbWaitingOpponent;
             Uri uri = new Uri(DEFAULT_PROFILE_PICTURE_ROUTE);
             BitmapImage defaultImage = new BitmapImage(uri);
-            ImgChatProfilePicture.ImageSource = defaultImage;
+            ImgAdversaryAvatarInChat.ImageSource = defaultImage;
         }
 
         private void ShowInvitationOptions()
@@ -408,54 +421,61 @@ namespace GuessWhoClient
             if (!string.IsNullOrEmpty(message))
             {
                 var response = DataStore.ChatsClient.SendMessage(gameManager.CurrentMatchCode, message);
-                switch (response.StatusCode)
+                if(response.StatusCode == ResponseStatus.OK)
                 {
-                    case ResponseStatus.OK:
-                        if (response.Value)
-                        {
-                            ShowOwnMessageInChat(message);
-                        }
-                        break;
-                    case ResponseStatus.VALIDATION_ERROR:
-                        MessageBox.Show(
-                            Properties.Resources.msgbSendMessageMatchFinishedMessage,
-                            Properties.Resources.msgbInvalidMatchCodeTitle,
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Warning
-                        );
-                        ClearCommunicationChannels();
-                        RedirectPermanentlyToMainMenu();
-                        break;
-                    case ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR:
-                        MessageBox.Show(
-                            Properties.Resources.msgbMesageNotSentMessage,
-                            Properties.Resources.msgbMessageNotSentTitle,
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Warning
-                        );
-                        if (!gameManager.IsCurrentMatchHost)
-                        {
-                            ClearCommunicationChannels();
-                            RedirectPermanentlyToMainMenu();
-                        }
-                        else
-                        {
-                            DisableSendMessageButton();
-                            ShowDefaultUserInfoInChat();
-                            ShowDefaultUserInfoInBanner();
-                        }
-                        break;
-                    default:
-                        MessageBox.Show(
-                            ServerResponse.GetMessageFromStatusCode(response.StatusCode),
-                            Properties.Resources.msgbInvalidMatchCodeTitle,
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Warning
-                        );
-                        ClearCommunicationChannels();
-                        RedirectPermanentlyToMainMenu();
-                        break;
+                    if (response.Value)
+                    {
+                        ShowOwnMessageInChat(message);
+                    }
                 }
+                else
+                {
+                    ShowErrorSendingMessage(response.StatusCode);
+
+                    if (gameManager.IsCurrentMatchHost)
+                    {
+                        FinishGame();
+                    }
+                    else
+                    {
+                        ExitGame();
+                    }
+                    UnsubscribeToActiveUsersList();
+                    ExitChatRoom();
+                    ClearCommunicationChannels();
+                    RedirectPermanentlyToMainMenu();
+                }
+            }
+        }
+
+        private void ShowErrorSendingMessage(ResponseStatus errorStatus)
+        {
+            switch (errorStatus)
+            {
+                case ResponseStatus.VALIDATION_ERROR:
+                    MessageBox.Show(
+                        Properties.Resources.msgbSendMessageMatchFinishedMessage,
+                        Properties.Resources.msgbInvalidMatchCodeTitle,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning
+                    );
+                    break;
+                case ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR:
+                    MessageBox.Show(
+                        Properties.Resources.msgbMesageNotSentMessage,
+                        Properties.Resources.msgbMessageNotSentTitle,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning
+                    );
+                    break;
+                default:
+                    MessageBox.Show(
+                        ServerResponse.GetMessageFromStatusCode(errorStatus),
+                        Properties.Resources.msgbInvalidMatchCodeTitle,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning
+                    );
+                    break;
             }
         }
 
@@ -463,15 +483,19 @@ namespace GuessWhoClient
         {
             OwnChatMessage messageElement = new OwnChatMessage();
             messageElement.TbMessage.Text = message;
+
             SpChatMessages.Children.Add(messageElement);
             SvChatMessages.ScrollToBottom();
+
             TbMessage.Text = "";
         }
 
         public void NewMessageReceived(string message)
         {
             string defaultAdversaryNickname = gameManager.IsCurrentMatchHost ? Properties.Resources.txtGuest : Properties.Resources.txtHost;
-            ShowAdversaryMessageInChat(message, string.IsNullOrEmpty(gameManager.AdversaryNickname) ? defaultAdversaryNickname : gameManager.AdversaryNickname);
+            string adversaryNickname = string.IsNullOrEmpty(gameManager.AdversaryNickname) ? defaultAdversaryNickname : gameManager.AdversaryNickname;
+
+            ShowAdversaryMessageInChat(message, adversaryNickname);
         }
 
         private void ShowAdversaryMessageInChat(string message, string adversaryNickname)
@@ -479,8 +503,10 @@ namespace GuessWhoClient
             ChatMessage messageElement = new ChatMessage();
             messageElement.TbMessage.Text = message;
             messageElement.TbNickname.Text = adversaryNickname;
+
             SpChatMessages.Children.Add(messageElement);
             SvChatMessages.ScrollToBottom();
+
             TbMessage.Text = "";
         }
 
@@ -501,8 +527,9 @@ namespace GuessWhoClient
             {
                 ServerResponse.ShowServerDownMessage();
                 ClearCommunicationChannels();
-                RedirectPermanentlyToMainMenu();
             }
+
+            RedirectPermanentlyToMainMenu();
         }
 
         private void UnsubscribeToActiveUsersList()
@@ -521,9 +548,9 @@ namespace GuessWhoClient
         {
             gameManager.Client.ExitGame(gameManager.CurrentMatchCode);
             gameManager.RestartRawValues();
+
             matchStatusManager.Client.StopListeningMatchStatus(matchStatusManager.CurrentMatchCode);
             matchStatusManager.RestartRawValues();
-            RedirectPermanentlyToMainMenu();
         }
 
         private void BtnFinishGameClick(object sender, RoutedEventArgs e)
@@ -538,17 +565,18 @@ namespace GuessWhoClient
             {
                 ServerResponse.ShowServerDownMessage();
                 ClearCommunicationChannels();
-                RedirectPermanentlyToMainMenu();
             }
+
+            RedirectPermanentlyToMainMenu();
         }
 
         private void FinishGame()
         {
             gameManager.Client.FinishGame(gameManager.CurrentMatchCode);
             gameManager.RestartRawValues();
+
             matchStatusManager.Client.StopListeningMatchStatus(matchStatusManager.CurrentMatchCode);
             matchStatusManager.RestartRawValues();
-            RedirectPermanentlyToMainMenu();
         }
 
         private void BtnStartGameClick(object sender, RoutedEventArgs e)
@@ -587,9 +615,9 @@ namespace GuessWhoClient
         private void BtnInviteToGameClick(object sender, RoutedEventArgs e)
         {
             Button invitationButton = e.Source as Button;
-            ActiveUser activeUser = (ActiveUser)invitationButton.DataContext;
+            string activeUserNickname = (string)invitationButton.DataContext;
 
-            string nickname = activeUser.Nickname;
+            string nickname = activeUserNickname;
             try
             {
                 bool playerInvitedSuccessfully = SendInvitationToUser(nickname);
@@ -608,6 +636,8 @@ namespace GuessWhoClient
             catch (EndpointNotFoundException)
             {
                 ServerResponse.ShowServerDownMessage();
+                ClearCommunicationChannels();
+                RedirectPermanentlyToMainMenu();
             }
         }
 

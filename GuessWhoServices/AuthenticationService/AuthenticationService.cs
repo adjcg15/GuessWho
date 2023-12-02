@@ -1,4 +1,5 @@
 ﻿using GuessWhoDataAccess;
+using System.Linq;
 
 namespace GuessWhoServices
 {
@@ -8,40 +9,39 @@ namespace GuessWhoServices
         {
             Response<Profile> response = new Response<Profile>()
             {
-                StatusCode = ResponseStatus.OK,
+                StatusCode = ResponseStatus.VALIDATION_ERROR,
                 Value = null
             };
 
             Account account = UserDAO.VerifyUserSession(email, password);
-            if (account == null)
+            if (account != null)
             {
-                response.StatusCode = ResponseStatus.VALIDATION_ERROR;
-                return response;
+                User user = UserDAO.GetUserByIdAccount(account.idAccount);
+                if (user != null)
+                {
+                    var nicknameInActiveUsers = activeUsers.FirstOrDefault((u) => u == user.nickname);
+                    if (string.IsNullOrEmpty(nicknameInActiveUsers))
+                    {
+                        UpdateUserStatus(user.nickname, true);
+
+                        response.StatusCode = ResponseStatus.OK;
+                        response.Value = new Profile
+                        {
+                            Email = account.email,
+                            Password = account.password,
+                            NickName = user.nickname,
+                            FullName = user.fullName,
+                            Avatar = user.avatar,
+                            IdUser = user.idUser
+                        };
+                    }
+                    else
+                    {
+                        response.StatusCode = ResponseStatus.NOT_ALLOWED;
+                    }
+                }
             }
-
-            User user = UserDAO.GetUserByIdAccount(account.idAccount);
-            if (user == null)
-            {
-                response.StatusCode = ResponseStatus.VALIDATION_ERROR;
-                return response;
-            }
-
-            ActiveUser activeUser = new ActiveUser
-            {
-                Nickname = user.nickname,
-                Avatar = user.avatar,
-            };
-            GuessWhoService.UpdateUserStatus(activeUser, true);
-
-            response.Value = new Profile
-            {
-                Email = account.email,
-                Password = account.password,
-                NickName = user.nickname,
-                FullName = user.fullName,
-                Avatar = user.avatar,
-                IdUser = user.idUser
-            };
+            
             return response;
         }
 
@@ -76,11 +76,12 @@ namespace GuessWhoServices
 
         public void Logout(string nickname)
         {
-            ActiveUser activeUser = new ActiveUser
-            {
-                Nickname = nickname
-            };
-            GuessWhoService.UpdateUserStatus(activeUser, false);
+            GuessWhoService.UpdateUserStatus(nickname, false);
+        }
+
+        public Response<byte[]> GetAvatar(string userNickname)
+        {
+            return UserDAO.GetUserAvatarByNickname(userNickname);
         }
     }
 }
