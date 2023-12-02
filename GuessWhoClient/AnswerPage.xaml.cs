@@ -3,40 +3,58 @@ using GuessWhoClient.GameServices;
 using GuessWhoClient.Model.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace GuessWhoClient
 {
-    /// <summary>
-    /// Lógica de interacción para AnswerPage.xaml
-    /// </summary>
     public partial class AnswerPage : Page, IGamePage, IMatchStatusPage
     {
         private GameManager gameManager = GameManager.Instance;
         private MatchStatusManager matchStatusManager = MatchStatusManager.Instance;
+        private const int PEN_THICKNESS = 4;
 
-        public AnswerPage()
+        public AnswerPage(SerializedLine[] draw)
         {
             InitializeComponent();
+            PaintDrawInCanvas(draw);
         }
 
-        public void PaintOpponentDraw(List<Line> opponentDraw)
+        private void PaintDrawInCanvas(SerializedLine[] draw)
         {
-            foreach (var line in opponentDraw)
+            foreach (var line in UnserializeDraw(draw))
             {
-                CnvsOpponentDraw.Children.Add(line);
+                if (!CnvsOpponentDraw.Children.Contains(line))
+                {
+                    CnvsOpponentDraw.Children.Add(line);
+                }
             }
+        }
+
+        private List<Line> UnserializeDraw(SerializedLine[] adversaryDrawMap)
+        {
+            List<Line> drawReceived = new List<Line>();
+
+            foreach (var serializedLine in adversaryDrawMap)
+            {
+                var line = new Line
+                {
+                    X1 = serializedLine.StartPoint.X,
+                    Y1 = serializedLine.StartPoint.Y,
+                    X2 = serializedLine.EndPoint.X,
+                    Y2 = serializedLine.EndPoint.Y,
+                    Stroke = new SolidColorBrush((Color)ColorConverter.ConvertFromString(serializedLine.Color)),
+                    StrokeEndLineCap = PenLineCap.Round,
+                    StrokeStartLineCap = PenLineCap.Round,
+                    StrokeThickness = PEN_THICKNESS
+                };
+
+                drawReceived.Add(line);
+            }
+
+            return drawReceived;
         }
 
         private void BtnReportPlayerClick(object sender, RoutedEventArgs e)

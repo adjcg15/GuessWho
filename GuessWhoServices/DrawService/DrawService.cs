@@ -10,11 +10,12 @@ namespace GuessWhoServices
 {
     public partial class GuessWhoService : IDrawService
     {
-        private static readonly object lockObject = new object();
         private static Dictionary<string, DrawInformation> playersDrawInformation = new Dictionary<string, DrawInformation>();
 
-        public void SendDraw(List<SerializedLine> localDrawMap, string matchCode)
+        public void SendDraw(List<SerializedLine> draw, string matchCode)
         {
+            object lockObject = new object();
+
             lock (lockObject)
             {
                 if (playersDrawInformation.ContainsKey(matchCode))
@@ -22,31 +23,31 @@ namespace GuessWhoServices
                     var currentPlayersDraw = playersDrawInformation[matchCode];
                     var currentChannel = OperationContext.Current.GetCallbackChannel<IDrawServiceCallback>();
 
+                    Console.WriteLine("Jugador " + currentChannel.GetHashCode() + " enviando dibujo en partida " + matchCode);
                     if (currentChannel.GetHashCode() == currentPlayersDraw.PlayerOneChannel.GetHashCode())
                     {
-                        NotifyOtherPlayerDraw(currentPlayersDraw.PlayerTwoChannel, localDrawMap);
+                        SendDrawToAdversary(currentPlayersDraw.PlayerTwoChannel, draw);
                     }
                     else if (currentChannel.GetHashCode() == currentPlayersDraw.PlayerTwoChannel.GetHashCode())
                     {
-                        NotifyOtherPlayerDraw(currentPlayersDraw.PlayerOneChannel, localDrawMap);
+                        SendDrawToAdversary(currentPlayersDraw.PlayerOneChannel, draw);
                     }
-
-                    Console.WriteLine(currentPlayersDraw.PlayerTwoDraw.GetHashCode() + " " + currentPlayersDraw.PlayerOneDraw.GetHashCode())
                 }
-
-                
             }
         }
 
         public void SubscribeToDrawService(string matchCode)
         {
+            object lockObject = new object();
+
             lock (lockObject)
             {
                 var currentChannel = OperationContext.Current.GetCallbackChannel<IDrawServiceCallback>();
-                Console.WriteLine(currentChannel.GetHashCode() + " canal agregado a DrawService");
+                Console.WriteLine("Suscribiendo cliente " + currentChannel.GetHashCode() + " a DrawService en partida " + matchCode);
 
                 if (!playersDrawInformation.ContainsKey(matchCode))
                 {
+                    Console.WriteLine("Registrando partida " + matchCode + " en DrawService");
                     playersDrawInformation[matchCode] = new DrawInformation
                     {
                         PlayerOneChannel = currentChannel
@@ -54,6 +55,7 @@ namespace GuessWhoServices
                 }
                 else
                 {
+                    Console.WriteLine("Uniendo subscriptor a partida " + matchCode + " en DrawService");
                     playersDrawInformation[matchCode].PlayerTwoChannel = currentChannel;
                 }
             }
@@ -61,10 +63,12 @@ namespace GuessWhoServices
 
         public void UnsubscribeFromDrawService(string matchCode)
         {
+            object lockObject = new object();
+
             lock (lockObject)
             {
                 var currentChannel = OperationContext.Current.GetCallbackChannel<IDrawServiceCallback>();
-                Console.WriteLine(currentChannel.GetHashCode() + " canal eliminado de DrawService");
+                Console.WriteLine("Quitando suscripción de " + currentChannel.GetHashCode() + " de DrawService con código de partida " + matchCode);
 
                 if (playersDrawInformation.ContainsKey(matchCode))
                 {
@@ -87,14 +91,19 @@ namespace GuessWhoServices
             }
         }
 
-        private void NotifyOtherPlayerDraw(IDrawServiceCallback otherPlayerChannel, List<SerializedLine> localDrawMap)
+        private void SendDrawToAdversary(IDrawServiceCallback adversaryChannel, List<SerializedLine> draw)
         {
-            lock (lockObject)
+            if (adversaryChannel != null)
             {
-                if (otherPlayerChannel != null)
+                Console.WriteLine("Enviando dibujo a " + adversaryChannel.GetHashCode());
+                try
                 {
-                    otherPlayerChannel.DrawReceived(localDrawMap);
-                } 
+                    adversaryChannel.DrawReceived(draw);
+                }
+                catch (CommunicationObjectAbortedException)
+                {
+                    //TO-DO: log exception
+                }
             }
         }
     }

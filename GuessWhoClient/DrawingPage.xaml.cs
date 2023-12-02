@@ -1,6 +1,7 @@
 ﻿using GuessWhoClient.Communication;
 using GuessWhoClient.GameServices;
 using GuessWhoClient.Model.Interfaces;
+using GuessWhoClient.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,20 +27,14 @@ namespace GuessWhoClient
         private string selectedColor = "#000000";
         private const int PEN_THICKNESS = 4;
         public event PropertyChangedEventHandler PropertyChanged;
-        private GameManager gameManager = GameManager.Instance;
-        private MatchStatusManager matchStatusManager = MatchStatusManager.Instance;
+        private readonly GameManager gameManager = GameManager.Instance;
+        private readonly MatchStatusManager matchStatusManager = MatchStatusManager.Instance;
         private DrawServiceClient drawServiceClient;
         private DispatcherTimer timer;
-        private int secondsRemaining = 30;
+        private int secondsRemaining = 15;
         private bool isActualPlayerReady = false;
         private bool isOpponentReady = false;
-        private List<Line> opponentDraw;
-
-        public DrawingPage()
-        {
-            InitializeComponent();
-            InitializeTimer();
-        }
+        private SerializedLine[] opponentDraw;
 
         public bool IsChoosingCharacter
         {
@@ -59,13 +54,10 @@ namespace GuessWhoClient
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void PageLoaded(object sender, RoutedEventArgs e)
+        public DrawingPage()
         {
-            ShowCharacters();
-            StartTimer();
-
-            drawServiceClient = new DrawServiceClient(new InstanceContext(this));
-            drawServiceClient.SubscribeToDrawService(gameManager.CurrentMatchCode);
+            InitializeComponent();
+            InitializeTimer();
         }
 
         private void InitializeTimer()
@@ -73,6 +65,37 @@ namespace GuessWhoClient
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += TimerTick;
+        }
+
+        private void PageLoaded(object sender, RoutedEventArgs e)
+        {
+            ShowCharacters();
+            StartTimer();
+
+            try
+            {
+                drawServiceClient = new DrawServiceClient(new InstanceContext(this));
+                drawServiceClient.SubscribeToDrawService(gameManager.CurrentMatchCode);
+            }
+            catch (EndpointNotFoundException)
+            {
+                StopTimer();
+                ServerResponse.ShowServerDownMessage();
+                ClearCommunicationChannels();
+                RedirectToMainMenu();
+            }
+        }
+
+        private void RedirectToMainMenu()
+        {
+            MainMenuPage mainMenu = new MainMenuPage();
+            NavigationService.Navigate(mainMenu);
+        }
+
+        private void ClearCommunicationChannels()
+        {
+            gameManager.RestartRawValues();
+            matchStatusManager.RestartRawValues();
         }
 
         private void StartTimer()
@@ -100,24 +123,34 @@ namespace GuessWhoClient
         private void AttemptTimeOver()
         {
             StopTimer();
-            this.IsEnabled = false;
+            IsEnabled = false;
             isActualPlayerReady = true;
 
             drawServiceClient.SendDraw(GetSerializedDraw(), gameManager.CurrentMatchCode);
+            CheckBothPlayersReady();
         }
 
-        private void RedirectToAnswerPage(List<Line> opponentDraw)
+        private void CheckBothPlayersReady()
+        {
+            if (isActualPlayerReady && isOpponentReady)
+            {
+                RedirectToAnswerPage();
+            }
+        }
+
+        private void RedirectToAnswerPage()
         {
             gameManager.UnsubscribePage(this);
             matchStatusManager.UnsubscribePage(this);
-            drawServiceClient.UnsubscribeFromDrawService(gameManager.CurrentMatchCode);
 
-            AnswerPage answerPage = new AnswerPage();
-            answerPage.PaintOpponentDraw(opponentDraw);
-            this.NavigationService.Navigate(answerPage);
+            AnswerPage answerPage = new AnswerPage(opponentDraw);
 
             gameManager.SubscribePage(answerPage);
             matchStatusManager.SubscribePage(answerPage);
+
+            NavigationService.Navigate(answerPage);
+
+            drawServiceClient.UnsubscribeFromDrawService(gameManager.CurrentMatchCode);
         }
 
         private void ShowCharacters()
@@ -321,6 +354,9 @@ namespace GuessWhoClient
             if (confirmSelection == MessageBoxResult.Yes)
             {
                 LeaveCurrentGame();
+
+                drawServiceClient.UnsubscribeFromDrawService(gameManager.CurrentMatchCode);
+                ClearCommunicationChannels();
                 RedirectToMainMenu();
             }
         }
@@ -342,16 +378,6 @@ namespace GuessWhoClient
             matchStatusManager.RestartRawValues();
         }
 
-        private void RedirectToMainMenu()
-        {
-            gameManager.UnsubscribePage(this);
-            matchStatusManager.UnsubscribePage(this);
-            drawServiceClient.UnsubscribeFromDrawService(gameManager.CurrentMatchCode);
-
-            MainMenuPage mainMenu = new MainMenuPage();
-            this.NavigationService.Navigate(mainMenu);
-        }
-
         private void BtnCancelGuessClick(object sender, RoutedEventArgs e)
         {
             IsChoosingCharacter = false;
@@ -366,7 +392,6 @@ namespace GuessWhoClient
             BtnGuess.Visibility = Visibility.Hidden;
         }
 
-
         private void BtnFinishDrawClick(object sender, RoutedEventArgs e)
         {
             MessageBoxResult confirmSelection = MessageBox.Show(
@@ -377,6 +402,7 @@ namespace GuessWhoClient
 
             if (confirmSelection == MessageBoxResult.Yes)
             {
+                StopTimer();
                 isActualPlayerReady = true;
                 drawServiceClient.SendDraw(GetSerializedDraw(), gameManager.CurrentMatchCode);
                 DisableUI();
@@ -481,55 +507,15 @@ namespace GuessWhoClient
         {
             MainMenuPage mainMenu = new MainMenuPage();
             mainMenu.ShowCanceledMatchMessage();
-            this.NavigationService.Navigate(mainMenu);
-        }
-
-        private void ClearCommunicationChannels()
-        {
-            gameManager.RestartRawValues();
-            matchStatusManager.RestartRawValues();
+            NavigationService.Navigate(mainMenu);
         }
 
         public void DrawReceived(SerializedLine[] adversaryDrawMap)
         {
-            opponentDraw = UnserializeDraw(adversaryDrawMap);
-
+            opponentDraw = adversaryDrawMap;
             isOpponentReady = true;
+
             CheckBothPlayersReady();
-        }
-
-        private void CheckBothPlayersReady()
-        {
-            Console.WriteLine(isActualPlayerReady + " " + isOpponentReady);
-
-            if (isActualPlayerReady && isOpponentReady)
-            {
-                RedirectToAnswerPage(opponentDraw);
-            }
-        }
-
-        private List<Line> UnserializeDraw(SerializedLine[] adversaryDrawMap)
-        {
-            List<Line> drawReceived = new List<Line>();
-
-            foreach (var serializedLine in adversaryDrawMap)
-            {
-                var line = new Line
-                {
-                    X1 = serializedLine.StartPoint.X,
-                    Y1 = serializedLine.StartPoint.Y,
-                    X2 = serializedLine.EndPoint.X,
-                    Y2 = serializedLine.EndPoint.Y,
-                    Stroke = new SolidColorBrush((Color)ColorConverter.ConvertFromString(serializedLine.Color)),
-                    StrokeEndLineCap = PenLineCap.Round,
-                    StrokeStartLineCap = PenLineCap.Round,
-                    StrokeThickness = PEN_THICKNESS
-                };
-
-                drawReceived.Add(line);
-            }
-
-            return drawReceived;
         }
     }
 }

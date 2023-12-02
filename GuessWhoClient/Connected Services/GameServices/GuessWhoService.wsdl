@@ -980,7 +980,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LAPTOP-EGH\kikga</Upn>
+          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -989,7 +989,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LAPTOP-EGH\kikga</Upn>
+          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -998,7 +998,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LAPTOP-EGH\kikga</Upn>
+          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -1007,7 +1007,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LAPTOP-EGH\kikga</Upn>
+          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -1016,7 +1016,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LAPTOP-EGH\kikga</Upn>
+          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -1025,7 +1025,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LAPTOP-EGH\kikga</Upn>
+          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -1034,7 +1034,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LAPTOP-EGH\kikga</Upn>
+          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -1043,7 +1043,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LAPTOP-EGH\kikga</Upn>
+          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -1052,7 +1052,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>LAPTOP-EGH\kikga</Upn>
+          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
