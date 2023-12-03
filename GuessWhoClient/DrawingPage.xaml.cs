@@ -31,11 +31,10 @@ namespace GuessWhoClient
         private readonly MatchStatusManager matchStatusManager = MatchStatusManager.Instance;
         private DrawServiceClient drawServiceClient;
         private Timer timer;
-        private int secondsRemaining = 15;
+        private int secondsRemaining = 30;
         private bool isActualPlayerReady = false;
         private bool isOpponentReady = false;
         private SerializedLine[] opponentDraw;
-
         private const double MIN_DISTANCE = 1.5;
         private readonly List<Point> drawingPoints = new List<Point>();
         private Polyline lastLineDrawed;
@@ -61,7 +60,7 @@ namespace GuessWhoClient
         public DrawingPage()
         {
             InitializeComponent();
-            //InitializeTimer();
+            InitializeTimer();
         }
 
         private void InitializeTimer()
@@ -90,8 +89,8 @@ namespace GuessWhoClient
 
             try
             {
-                //drawServiceClient = new DrawServiceClient(new InstanceContext(this));
-                //drawServiceClient.SubscribeToDrawService(gameManager.CurrentMatchCode);
+                drawServiceClient = new DrawServiceClient(new InstanceContext(this));
+                drawServiceClient.SubscribeToDrawService(gameManager.CurrentMatchCode);
             }
             catch (EndpointNotFoundException)
             {
@@ -528,22 +527,21 @@ namespace GuessWhoClient
 
         private void BtnFinishDrawClick(object sender, RoutedEventArgs e)
         {
-            //MessageBoxResult confirmSelection = MessageBox.Show(
-            //    Properties.Resources.msgbFinishDrawMessage,
-            //    Properties.Resources.msgbFinishDrawTitle,
-            //    MessageBoxButton.YesNo
-            //);
+            MessageBoxResult confirmSelection = MessageBox.Show(
+                Properties.Resources.msgbFinishDrawMessage,
+                Properties.Resources.msgbFinishDrawTitle,
+                MessageBoxButton.YesNo
+            );
 
-            //if (confirmSelection == MessageBoxResult.Yes)
-            //{
-                //StopTimer();
-                //isActualPlayerReady = true;
-                //drawServiceClient.SendDraw(GetSerializedDraw(), gameManager.CurrentMatchCode);
-                //DisableUI();
+            if (confirmSelection == MessageBoxResult.Yes)
+            {
+                StopTimer();
+                isActualPlayerReady = true;
+                drawServiceClient.SendDraw(GetSerializedDraw(), gameManager.CurrentMatchCode);
+                DisableUI();
 
-                //CheckBothPlayersReady();
-            //}
-            GetSerializedDraw();
+                CheckBothPlayersReady();
+            }
         }
 
         private void DisableUI()
@@ -562,26 +560,38 @@ namespace GuessWhoClient
 
         private SerializedLine[] GetSerializedDraw()
         {
-            List<SerializedLine> serializedLines = SerializeDraw(CnvsDrawing.Children.OfType<Line>());
+            List<SerializedLine> serializedLines = SerializeDraw(CnvsDrawing.Children.OfType<Polyline>().ToList());
             return serializedLines.ToArray();
         }
 
-        private List<SerializedLine> SerializeDraw(IEnumerable<Line> lines)
+        private List<SerializedLine> SerializeDraw(List<Polyline> polylines)
         {
-            Console.WriteLine("Enviando un total de " + lines.Count() + " líneas");
             List<SerializedLine> serializedLines = new List<SerializedLine>();
 
-            foreach (var line in lines)
+            Console.WriteLine("Enviando " + polylines.Count + " líneas");
+            int totalPoints = 0;
+            foreach (var line in polylines)
             {
+                List<SerializedPoint> serializedPointsOfLine= new List<SerializedPoint>();
+                totalPoints += line.Points.Count;
+                foreach(Point point in  line.Points)
+                {
+                    serializedPointsOfLine.Add(new SerializedPoint
+                    {
+                        X = point.X,
+                        Y = point.Y
+                    });
+                }
+
                 SerializedLine serializedLine = new SerializedLine
                 {
                     Color = ((SolidColorBrush)line.Stroke).Color.ToString(),
-                    StartPoint = new Point(line.X1, line.Y1),
-                    EndPoint = new Point(line.X2, line.Y2)
+                    Points = serializedPointsOfLine.ToArray()
                 };
 
                 serializedLines.Add(serializedLine);
             }
+            Console.WriteLine("Teniendo un total de " + totalPoints + " puntos");
 
             return serializedLines;
         }

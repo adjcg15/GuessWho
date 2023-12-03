@@ -32,9 +32,16 @@ namespace GuessWhoServices
         public string Color { get; set; }
 
         [DataMember]
-        public Point StartPoint { get; set; }
+        public List<SerializedPoint> Points { get; set; }
+    }
+
+    [DataContract]
+    public class SerializedPoint
+    {
+        [DataMember]
+        public double X { get; set; }
 
         [DataMember]
-        public Point EndPoint { get; set; }
+        public double Y { get; set; }
     }
 }

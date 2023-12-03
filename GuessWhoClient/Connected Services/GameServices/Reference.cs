@@ -890,10 +890,7 @@ namespace GuessWhoClient.GameServices {
         private string ColorField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Windows.Point EndPointField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Windows.Point StartPointField;
+        private GuessWhoClient.GameServices.SerializedPoint[] PointsField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -919,27 +916,75 @@ namespace GuessWhoClient.GameServices {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Windows.Point EndPoint {
+        public GuessWhoClient.GameServices.SerializedPoint[] Points {
             get {
-                return this.EndPointField;
+                return this.PointsField;
             }
             set {
-                if ((this.EndPointField.Equals(value) != true)) {
-                    this.EndPointField = value;
-                    this.RaisePropertyChanged("EndPoint");
+                if ((object.ReferenceEquals(this.PointsField, value) != true)) {
+                    this.PointsField = value;
+                    this.RaisePropertyChanged("Points");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SerializedPoint", Namespace="http://schemas.datacontract.org/2004/07/GuessWhoServices")]
+    [System.SerializableAttribute()]
+    public partial class SerializedPoint : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double XField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double YField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double X {
+            get {
+                return this.XField;
+            }
+            set {
+                if ((this.XField.Equals(value) != true)) {
+                    this.XField = value;
+                    this.RaisePropertyChanged("X");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Windows.Point StartPoint {
+        public double Y {
             get {
-                return this.StartPointField;
+                return this.YField;
             }
             set {
-                if ((this.StartPointField.Equals(value) != true)) {
-                    this.StartPointField = value;
-                    this.RaisePropertyChanged("StartPoint");
+                if ((this.YField.Equals(value) != true)) {
+                    this.YField = value;
+                    this.RaisePropertyChanged("Y");
                 }
             }
         }
