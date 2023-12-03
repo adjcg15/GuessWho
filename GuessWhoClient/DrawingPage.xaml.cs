@@ -74,7 +74,6 @@ namespace GuessWhoClient
 
             if (secondsRemaining <= 0)
             {
-                Console.WriteLine("TIMEOUT!");
                 Dispatcher.Invoke(AttemptTimeOver);
             }
 
@@ -128,41 +127,31 @@ namespace GuessWhoClient
             IsEnabled = false;
             isActualPlayerReady = true;
 
-            Console.WriteLine("Enviando dibujo al contrincante...");
             drawServiceClient.SendDraw(GetSerializedDraw(), gameManager.CurrentMatchCode);
-            Console.WriteLine("Dibujo enviado correctamente");
             CheckBothPlayersReady();
         }
 
         private void CheckBothPlayersReady()
         {
-            Console.WriteLine("YO " + (isActualPlayerReady ? "estoy listo" : "NO estoy listo"));
-            Console.WriteLine("EL OTRO " + (isOpponentReady ? "está listo" : "NO está listo"));
             if (isActualPlayerReady && isOpponentReady)
             {
-                Console.WriteLine("Ambos jugadores están listos");
                 RedirectToAnswerPage();
             }
         }
 
         private void RedirectToAnswerPage()
         {
-            Console.WriteLine("Limpiando otros canales");
             gameManager.UnsubscribePage(this);
             matchStatusManager.UnsubscribePage(this);
 
-            Console.WriteLine("Creando página de pista");
             AnswerPage answerPage = new AnswerPage(opponentDraw);
 
             gameManager.SubscribePage(answerPage);
             matchStatusManager.SubscribePage(answerPage);
 
-            Console.WriteLine("Navegando a página de pista");
             NavigationService.Navigate(answerPage);
 
-            Console.WriteLine("Quitando suscripción a canal de dibujo");
             drawServiceClient.UnsubscribeFromDrawService(gameManager.CurrentMatchCode);
-            Console.WriteLine("Suscripción anulada correctamente");
         }
 
         private void ShowCharacters()
@@ -568,7 +557,6 @@ namespace GuessWhoClient
         {
             List<SerializedLine> serializedLines = new List<SerializedLine>();
 
-            Console.WriteLine("Enviando " + polylines.Count + " líneas");
             int totalPoints = 0;
             foreach (var line in polylines)
             {
@@ -591,7 +579,6 @@ namespace GuessWhoClient
 
                 serializedLines.Add(serializedLine);
             }
-            Console.WriteLine("Teniendo un total de " + totalPoints + " puntos");
 
             return serializedLines;
         }
@@ -633,7 +620,7 @@ namespace GuessWhoClient
             }
         }
 
-        public void MatchStatusChanged(MatchStatus matchStatusCode) //Only Game Won / Game Lost
+        public void MatchStatusChanged(MatchStatus matchStatusCode)
         {
             throw new NotImplementedException();
         }
@@ -658,7 +645,6 @@ namespace GuessWhoClient
 
         public void DrawReceived(SerializedLine[] adversaryDrawMap)
         {
-            Console.WriteLine("Dibujo del contrincante recibido");
             opponentDraw = adversaryDrawMap;
             isOpponentReady = true;
 
