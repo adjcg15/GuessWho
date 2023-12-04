@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.ServiceModel;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -23,18 +24,20 @@ namespace GuessWhoClient
         private bool isInteractingWithCanvas;
         private bool isDrawingMode = true;
         private bool isChoosingCharacter;
-        private Point drawStartPoint;
         private string selectedColor = "#000000";
         private const int PEN_THICKNESS = 4;
         public event PropertyChangedEventHandler PropertyChanged;
         private readonly GameManager gameManager = GameManager.Instance;
         private readonly MatchStatusManager matchStatusManager = MatchStatusManager.Instance;
         private DrawServiceClient drawServiceClient;
-        private DispatcherTimer timer;
-        private int secondsRemaining = 15;
+        private Timer timer;
+        private int secondsRemaining = 30;
         private bool isActualPlayerReady = false;
         private bool isOpponentReady = false;
         private SerializedLine[] opponentDraw;
+        private const double MIN_DISTANCE = 1.5;
+        private readonly List<Point> drawingPoints = new List<Point>();
+        private Polyline lastLineDrawed;
 
         public bool IsChoosingCharacter
         {
@@ -62,15 +65,26 @@ namespace GuessWhoClient
 
         private void InitializeTimer()
         {
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += TimerTick;
+            timer = new Timer(TimerTick, null, 0, 1000);
+        }
+
+        private void TimerTick(object state)
+        {   
+            secondsRemaining--;
+
+            if (secondsRemaining <= 0)
+            {
+                Dispatcher.Invoke(AttemptTimeOver);
+            }
+
+            Dispatcher.Invoke(() => {
+                TbTimer.Text = secondsRemaining.ToString();
+            });
         }
 
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
             ShowCharacters();
-            StartTimer();
 
             try
             {
@@ -98,26 +112,13 @@ namespace GuessWhoClient
             matchStatusManager.RestartRawValues();
         }
 
-        private void StartTimer()
-        {
-            timer.Start();
-        }
-
         private void StopTimer()
         {
-            timer.Stop();
-        }
-
-        private void TimerTick(object sender, EventArgs e)
-        {
-            secondsRemaining--;
-
-            if (secondsRemaining <= 0)
+            if (timer != null)
             {
-                AttemptTimeOver();
+                timer.Dispose();
+                timer = null;
             }
-
-            TbTimer.Text = secondsRemaining.ToString();
         }
 
         private void AttemptTimeOver()
@@ -182,76 +183,202 @@ namespace GuessWhoClient
         private void CnvsStartDrawing(object sender, MouseButtonEventArgs e)
         {
             isInteractingWithCanvas = true;
-            drawStartPoint = e.GetPosition(CnvsDrawing);
 
-            var brush = new SolidColorBrush((Color)ColorConverter.ConvertFromString(selectedColor));
-            var line = new Line
+            if(isDrawingMode)
             {
-                X1 = drawStartPoint.X,
-                Y1 = drawStartPoint.Y,
-                X2 = drawStartPoint.X + 1,
-                Y2 = drawStartPoint.Y + 1,
-                Stroke = brush,
-                StrokeEndLineCap = PenLineCap.Round,
-                StrokeStartLineCap = PenLineCap.Round,
-                StrokeThickness = PEN_THICKNESS
-            };
+                Point currentPoint = e.GetPosition(CnvsDrawing);
+                drawingPoints.Add(currentPoint);
+            }
 
-            CnvsDrawing.Children.Add(line);
+            CnvsDrawing.CaptureMouse();
         }
 
         private void CnvsOnDrawing(object sender, MouseEventArgs e)
         {
-            var currentPoint = e.GetPosition(CnvsDrawing);
-            if(isInteractingWithCanvas)
+            Point currentPoint = e.GetPosition(CnvsDrawing);
+            if(IsPointInsideCanvas(currentPoint))
             {
-                if (isDrawingMode)
+                if (isInteractingWithCanvas)
                 {
-                    DrawInCanvas(currentPoint);
+                    if (isDrawingMode)
+                    {
+                        drawingPoints.Add(currentPoint);
+                        DrawSmoothLine();
+                    }
+                    else
+                    {
+                        EraseDrawInCanvas(currentPoint);
+                    }
                 }
-                else
+            }
+            else
+            {
+                if (isInteractingWithCanvas)
                 {
-                    EraseDrawInCanvas(currentPoint);
+                    isInteractingWithCanvas = false;
+                    DrawSmoothLine();
+                    drawingPoints.Clear();
+                    lastLineDrawed = null;
                 }
             }
         }
 
-        private void DrawInCanvas(Point point)
+        private bool IsPointInsideCanvas(Point currentPoint)
         {
-            var line = new Line
+            return currentPoint.X >= 0 && currentPoint.X <= CnvsDrawing.ActualWidth &&
+                   currentPoint.Y >= 0 && currentPoint.Y <= CnvsDrawing.ActualHeight;
+        }
+
+        private void CnvsEndDrawing(object sender, MouseButtonEventArgs e)
+        {
+            isInteractingWithCanvas = false;
+
+            Point currentPoint = e.GetPosition(CnvsDrawing);
+            if(IsPointInsideCanvas(currentPoint) && isDrawingMode)
             {
-                X1 = drawStartPoint.X,
-                Y1 = drawStartPoint.Y,
-                X2 = point.X,
-                Y2 = point.Y,
+                drawingPoints.Add(currentPoint);
+                DrawSmoothLine();
+            }
+
+            drawingPoints.Clear();
+            lastLineDrawed = null;
+
+            CnvsDrawing.ReleaseMouseCapture();
+        }
+
+        private void DrawSmoothLine()
+        {
+            var reducedPoints = DouglasPeuckerReduction(drawingPoints, MIN_DISTANCE);
+            var line = new Polyline
+            {
                 Stroke = new SolidColorBrush((Color)ColorConverter.ConvertFromString(selectedColor)),
                 StrokeEndLineCap = PenLineCap.Round,
                 StrokeStartLineCap = PenLineCap.Round,
                 StrokeThickness = PEN_THICKNESS
             };
 
+            foreach (var point in reducedPoints)
+            {
+                line.Points.Add(point);
+            }
+
+            CnvsDrawing.Children.Remove(lastLineDrawed);
             CnvsDrawing.Children.Add(line);
-            drawStartPoint = point;
+            lastLineDrawed = line;
         }
 
-        private void EraseDrawInCanvas(Point point)
+        private List<Point> DouglasPeuckerReduction(List<Point> points, double errorTolerance)
         {
-            List<Line> linesToRemove = new List<Line>();
-            const int ERASER_SIZE = 15;
+            List<Point> pointsUnderTolerance = points;
 
-            foreach (var line in CnvsDrawing.Children.OfType<Line>())
+            if(points.Count > 3)
             {
-                double distanceToLine = DistancePointToLine(point, line);
-                if (distanceToLine < ERASER_SIZE)
+                double distanceToFurtherPoint = 0;
+                int furthestPointIndex = 0;
+                Line lineBetweenEndpoints = new Line
                 {
-                    linesToRemove.Add(line);
+                    X1 = points[0].X,
+                    X2 = points[points.Count - 1].X,
+                    Y1 = points[0].Y,
+                    Y2 = points[points.Count - 1].Y
+                };
+
+                for(int i = 1; i < points.Count - 1; i ++)
+                {
+                    double distanceToPoint = DistancePointToLine(points[i], lineBetweenEndpoints);
+
+                    if(distanceToPoint > distanceToFurtherPoint)
+                    {
+                        distanceToFurtherPoint = distanceToPoint;
+                        furthestPointIndex = i;
+                    }
+                }
+
+                if(distanceToFurtherPoint >  errorTolerance)
+                {
+                    List<Point> leftReduction = DouglasPeuckerReduction(points.GetRange(0, furthestPointIndex + 1), MIN_DISTANCE);
+                    List<Point> rightReduction = DouglasPeuckerReduction(points.GetRange(furthestPointIndex, points.Count - furthestPointIndex), MIN_DISTANCE);
+                
+                    pointsUnderTolerance = leftReduction.Concat(rightReduction).ToList();
+                }
+                else
+                {
+                    pointsUnderTolerance = new List<Point>{ points[0], points[points.Count - 1] };
                 }
             }
 
-            foreach (var lineToRemove in linesToRemove)
+            return pointsUnderTolerance;
+        }
+
+        private void EraseDrawInCanvas(Point cursorPoint)
+        {
+            const int ERASER_SIZE = 15;
+            var drawPolylines = new List<Polyline>(CnvsDrawing.Children.OfType<Polyline>());
+
+            foreach (var polyline in drawPolylines)
             {
-                CnvsDrawing.Children.Remove(lineToRemove);
+                List<List<Point>> polylineSegments = new List<List<Point>>();
+                List<Point> polylinePoints = polyline.Points.ToList();
+
+                List<Point> currentSegment = new List<Point>();
+                for (int i = 0; i < polylinePoints.Count; i++) 
+                {
+                    Point currentPoint = polylinePoints[i];
+                    if (DistanceBetweenPoints(currentPoint, cursorPoint) > ERASER_SIZE)
+                    {
+                        currentSegment.Add(currentPoint);
+                    }
+                    else
+                    {
+                        if(currentSegment.Count > 0)
+                        {
+                            polylineSegments.Add(currentSegment);
+                            currentSegment = new List<Point>();
+                        }
+                    }
+                }
+
+                if (currentSegment.Count > 0)
+                {
+                    polylineSegments.Add(currentSegment);
+                }
+
+                UpdatePolyline(polyline, polylineSegments);
             }
+        }
+
+        private void UpdatePolyline(Polyline originalPolyline, List<List<Point>> segments)
+        {
+            CnvsDrawing.Children.Remove(originalPolyline);
+
+            foreach (var segment in segments)
+            {
+                if(segment.Count > 2)
+                {
+                    var newPolyline = new Polyline
+                    {
+                        Stroke = originalPolyline.Stroke,
+                        StrokeThickness = originalPolyline.StrokeThickness,
+                        StrokeStartLineCap = originalPolyline.StrokeStartLineCap,
+                        StrokeEndLineCap = originalPolyline.StrokeEndLineCap
+                    };
+
+                    foreach (var point in segment)
+                    {
+                        newPolyline.Points.Add(point);
+                    }
+
+                    CnvsDrawing.Children.Add(newPolyline);
+                }
+            }
+        }
+
+        private double DistanceBetweenPoints(Point pointOne, Point pointTwo)
+        {
+            double dx = pointOne.X - pointTwo.X;
+            double dy = pointOne.Y - pointTwo.Y;
+
+            return Math.Sqrt(dx * dx + dy * dy);
         }
 
         private double DistancePointToLine(Point point, Line line)
@@ -288,11 +415,6 @@ namespace GuessWhoClient
             double dx = point.X - projectedVectorX;
             double dy = point.Y - projectedVectorY;
             return Math.Sqrt(dx * dx + dy * dy);
-        }
-
-        private void CnvsEndDrawing(object sender, MouseButtonEventArgs e)
-        {
-            isInteractingWithCanvas = false;
         }
 
         private void BtnColorClick(object sender, RoutedEventArgs e)
@@ -427,21 +549,32 @@ namespace GuessWhoClient
 
         private SerializedLine[] GetSerializedDraw()
         {
-            List<SerializedLine> serializedLines = SerializeDraw(CnvsDrawing.Children.OfType<Line>());
+            List<SerializedLine> serializedLines = SerializeDraw(CnvsDrawing.Children.OfType<Polyline>().ToList());
             return serializedLines.ToArray();
         }
 
-        private List<SerializedLine> SerializeDraw(IEnumerable<Line> lines)
+        private List<SerializedLine> SerializeDraw(List<Polyline> polylines)
         {
             List<SerializedLine> serializedLines = new List<SerializedLine>();
 
-            foreach (var line in lines)
+            int totalPoints = 0;
+            foreach (var line in polylines)
             {
+                List<SerializedPoint> serializedPointsOfLine= new List<SerializedPoint>();
+                totalPoints += line.Points.Count;
+                foreach(Point point in  line.Points)
+                {
+                    serializedPointsOfLine.Add(new SerializedPoint
+                    {
+                        X = point.X,
+                        Y = point.Y
+                    });
+                }
+
                 SerializedLine serializedLine = new SerializedLine
                 {
                     Color = ((SolidColorBrush)line.Stroke).Color.ToString(),
-                    StartPoint = new Point(line.X1, line.Y1),
-                    EndPoint = new Point(line.X2, line.Y2)
+                    Points = serializedPointsOfLine.ToArray()
                 };
 
                 serializedLines.Add(serializedLine);
@@ -487,7 +620,7 @@ namespace GuessWhoClient
             }
         }
 
-        public void MatchStatusChanged(MatchStatus matchStatusCode) //Only Game Won / Game Lost
+        public void MatchStatusChanged(MatchStatus matchStatusCode)
         {
             throw new NotImplementedException();
         }

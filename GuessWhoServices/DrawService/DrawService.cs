@@ -1,23 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Shapes;
 
 namespace GuessWhoServices
 {
     public partial class GuessWhoService : IDrawService
     {
         private static Dictionary<string, DrawInformation> playersDrawInformation = new Dictionary<string, DrawInformation>();
+        private static readonly object lockObject = new object();
 
         public void SendDraw(List<SerializedLine> draw, string matchCode)
         {
-            object lockObject = new object();
-
             lock (lockObject)
             {
+                Console.WriteLine("Entrando a servicio de encío de dibujo");
                 if (playersDrawInformation.ContainsKey(matchCode))
                 {
                     var currentPlayersDraw = playersDrawInformation[matchCode];
@@ -38,8 +34,6 @@ namespace GuessWhoServices
 
         public void SubscribeToDrawService(string matchCode)
         {
-            object lockObject = new object();
-
             lock (lockObject)
             {
                 var currentChannel = OperationContext.Current.GetCallbackChannel<IDrawServiceCallback>();
@@ -63,8 +57,6 @@ namespace GuessWhoServices
 
         public void UnsubscribeFromDrawService(string matchCode)
         {
-            object lockObject = new object();
-
             lock (lockObject)
             {
                 var currentChannel = OperationContext.Current.GetCallbackChannel<IDrawServiceCallback>();
