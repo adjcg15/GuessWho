@@ -268,15 +268,6 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Reportar jugador.
-        /// </summary>
-        public static string btnReportPlayer {
-            get {
-                return ResourceManager.GetString("btnReportPlayer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Busca una cadena traducida similar a Buscar.
         /// </summary>
         public static string btnSearch {
@@ -745,6 +736,33 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Por favor, explique la situación del reporte.
+        /// </summary>
+        public static string msgbEmptyReportComment {
+            get {
+                return ResourceManager.GetString("msgbEmptyReportComment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Por favor, complete todos los campos correctamente.
+        /// </summary>
+        public static string msgbEmptyReportFields {
+            get {
+                return ResourceManager.GetString("msgbEmptyReportFields", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Por favor, seleccione la razón del reporte.
+        /// </summary>
+        public static string msgbEmptyReportReason {
+            get {
+                return ResourceManager.GetString("msgbEmptyReportReason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a No fue posible establecer una conexión con el servidor, intente en otro momento.
         /// </summary>
         public static string msgbErrorConexionServidorMessage {
@@ -1123,6 +1141,42 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Ocurrió un error al guardar el reporte. Por favor, intentélo de nuevo más tarde.
+        /// </summary>
+        public static string msgbReportErrorUpdateMessage {
+            get {
+                return ResourceManager.GetString("msgbReportErrorUpdateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error al guardar.
+        /// </summary>
+        public static string msgbReportErrorUpdateTitle {
+            get {
+                return ResourceManager.GetString("msgbReportErrorUpdateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ocurrió un Error, no se encontró al usuario oponente, intente de nuevo.
+        /// </summary>
+        public static string msgbReportUserNotFoundMessage {
+            get {
+                return ResourceManager.GetString("msgbReportUserNotFoundMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Oponente no encontrado.
+        /// </summary>
+        public static string msgbReportUserNotFoundTitle {
+            get {
+                return ResourceManager.GetString("msgbReportUserNotFoundTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a La partida a la que intenta enviar el mensaje ya no existe.
         /// </summary>
         public static string msgbSendMessageMatchFinishedMessage {
@@ -1452,6 +1506,15 @@ namespace GuessWhoClient.Properties {
         public static string txtReportGlobal {
             get {
                 return ResourceManager.GetString("txtReportGlobal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Reportar jugador.
+        /// </summary>
+        public static string txtReportPlayer {
+            get {
+                return ResourceManager.GetString("txtReportPlayer", resourceCulture);
             }
         }
         

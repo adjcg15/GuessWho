@@ -1,0 +1,74 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GuessWhoDataAccess
+{
+    public class ReportDAO
+    {
+        public static Response<bool> AddPlayerReport(Report playerReport)
+        {
+            Response<bool> response = new Response<bool>
+            {
+                StatusCode = ResponseStatus.OK,
+                Value = true
+            };
+
+            try
+            {
+                using (var context = new GuessWhoContext())
+                {
+                    context.Reports.Add(playerReport);
+                    context.SaveChanges();
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                response.StatusCode = ResponseStatus.UPDATE_ERROR;
+                response.Value = false;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                response.StatusCode = ResponseStatus.VALIDATION_ERROR;
+                response.Value = false;
+            }
+            catch (SqlException ex)
+            {
+                response.StatusCode = ResponseStatus.SQL_ERROR;
+                response.Value = false;
+            }
+
+            return response;
+        }
+
+        public static Response<List<Report>> GetReportsByUserId(int userId)
+        {
+            Response<List<Report>> response = new Response<List<Report>>
+            {
+                StatusCode = ResponseStatus.OK,
+                Value = new List<Report>()
+            };
+
+            try
+            {
+                using (var context = new GuessWhoContext())
+                {
+                    response.Value = context.Reports
+                    .Where(r => r.idReportedUser == userId)
+                    .ToList();
+                }
+            }
+            catch (SqlException ex)
+            {
+                response.StatusCode = ResponseStatus.SQL_ERROR;
+            }
+
+            return response;
+        }
+    }
+}

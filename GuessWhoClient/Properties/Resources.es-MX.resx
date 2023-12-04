@@ -186,9 +186,6 @@
   <data name="btnQuickMatch" xml:space="preserve">
     <value>PARTIDA RÁPIDA</value>
   </data>
-  <data name="btnReportPlayer" xml:space="preserve">
-    <value>Reportar jugador</value>
-  </data>
   <data name="btnSearch" xml:space="preserve">
     <value>Buscar</value>
   </data>
@@ -345,6 +342,15 @@
   <data name="msgbEmptyFieldTitle" xml:space="preserve">
     <value>Campos faltantes</value>
   </data>
+  <data name="msgbEmptyReportComment" xml:space="preserve">
+    <value>Por favor, explique la situación del reporte</value>
+  </data>
+  <data name="msgbEmptyReportFields" xml:space="preserve">
+    <value>Por favor, complete todos los campos correctamente</value>
+  </data>
+  <data name="msgbEmptyReportReason" xml:space="preserve">
+    <value>Por favor, seleccione la razón del reporte</value>
+  </data>
   <data name="msgbErrorConexionServidorMessage" xml:space="preserve">
     <value>No fue posible establecer una conexión con el servidor, intente en otro momento</value>
   </data>
@@ -471,6 +477,18 @@
   <data name="msgbRegisterRegisteredNicknameTitle" xml:space="preserve">
     <value>Nombre de usuario registrado</value>
   </data>
+  <data name="msgbReportErrorUpdateMessage" xml:space="preserve">
+    <value>Ocurrió un error al guardar el reporte. Por favor, intentélo de nuevo más tarde</value>
+  </data>
+  <data name="msgbReportErrorUpdateTitle" xml:space="preserve">
+    <value>Error al guardar</value>
+  </data>
+  <data name="msgbReportUserNotFoundMessage" xml:space="preserve">
+    <value>Ocurrió un Error, no se encontró al usuario oponente, intente de nuevo</value>
+  </data>
+  <data name="msgbReportUserNotFoundTitle" xml:space="preserve">
+    <value>Oponente no encontrado</value>
+  </data>
   <data name="msgbSendMessageMatchFinishedMessage" xml:space="preserve">
     <value>La partida a la que intenta enviar el mensaje ya no existe</value>
   </data>
@@ -581,6 +599,9 @@
   </data>
   <data name="txtReportGlobal" xml:space="preserve">
     <value>Reportar</value>
+  </data>
+  <data name="txtReportPlayer" xml:space="preserve">
+    <value>Reportar jugador</value>
   </data>
   <data name="txtSameFullNameErrorMessage" xml:space="preserve">
     <value>Ya se encuentra registrado con este nombre. Verifique la información e intente de nuevo</value>
