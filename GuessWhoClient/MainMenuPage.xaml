@@ -21,7 +21,11 @@
                 <TextBlock Text="{x:Static p:Resources.btnLogOut}" Name="TbBtnLogOut" VerticalAlignment="Center" FontWeight="SemiBold" Margin="3,0,0,0" />
             </StackPanel>
         </Button>
-        <Image Source="/Resources/logo.ES-MX.png" Margin="187,84,187,194" Width="526"/>
+        <Image Source="/Resources/logo.ES-MX.png" Margin="187,84,187,194" Width="526">
+            <Image.ToolTip>
+                <ToolTip Content="GuessWho"/>
+            </Image.ToolTip>
+        </Image>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,330,0,0" VerticalAlignment="Top">
             <Button Name ="BtnQuickMatch" Click="BtnQuickMatchClick" Margin="0,0,0,0" VerticalAlignment="Top" Style="{StaticResource PrimaryButtonWithIcon}" Width="205">
                 <StackPanel Orientation="Horizontal" Cursor="Hand">

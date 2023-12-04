@@ -197,7 +197,6 @@ namespace GuessWhoClient
         {
             ReportServiceClient reportServiceClient = new ReportServiceClient();
 
-            gameManager.AdversaryNickname = "ElPrecioso";
             PlayerReport playerReport = new PlayerReport
             {
                 IdReportType = CbReportReason.SelectedIndex + 1,
