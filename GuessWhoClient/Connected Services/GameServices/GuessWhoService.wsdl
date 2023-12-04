@@ -297,7 +297,6 @@
       <xsd:import schemaLocation="http://localhost:6969/?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
       <xsd:import schemaLocation="http://localhost:6969/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" />
       <xsd:import schemaLocation="http://localhost:6969/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GuessWhoServices" />
-      <xsd:import schemaLocation="http://localhost:6969/?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/System.Windows" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IUserService_Subscribe_InputMessage">
@@ -489,9 +488,6 @@
   <wsdl:message name="IDrawService_DrawReceived_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:DrawReceived" />
   </wsdl:message>
-  <wsdl:message name="IDrawService_DrawReceived_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:DrawReceivedResponse" />
-  </wsdl:message>
   <wsdl:message name="IReportService_ReportPlayer_InputMessage">
     <wsdl:part name="parameters" element="tns:ReportPlayer" />
   </wsdl:message>
@@ -663,7 +659,6 @@
     </wsdl:operation>
     <wsdl:operation name="DrawReceived">
       <wsdl:output wsaw:Action="http://tempuri.org/IDrawService/DrawReceived" message="tns:IDrawService_DrawReceived_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IDrawService/DrawReceivedResponse" message="tns:IDrawService_DrawReceived_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IReportService">
@@ -1016,9 +1011,6 @@
     </wsdl:operation>
     <wsdl:operation name="DrawReceived">
       <soap12:operation soapAction="http://tempuri.org/IDrawService/DrawReceived" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>

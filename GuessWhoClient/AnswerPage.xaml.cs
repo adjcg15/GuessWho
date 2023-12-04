@@ -42,23 +42,28 @@ namespace GuessWhoClient
             }
         }
 
-        private List<Line> UnserializeDraw(SerializedLine[] adversaryDrawMap)
+        private List<Polyline> UnserializeDraw(SerializedLine[] adversaryDrawMap)
         {
-            List<Line> drawReceived = new List<Line>();
+            List<Polyline> drawReceived = new List<Polyline>();
 
-            foreach (var serializedLine in adversaryDrawMap)
+            foreach (SerializedLine serializedPolyline in adversaryDrawMap)
             {
-                var line = new Line
+                var line = new Polyline
                 {
-                    X1 = serializedLine.StartPoint.X,
-                    Y1 = serializedLine.StartPoint.Y,
-                    X2 = serializedLine.EndPoint.X,
-                    Y2 = serializedLine.EndPoint.Y,
-                    Stroke = new SolidColorBrush((Color)ColorConverter.ConvertFromString(serializedLine.Color)),
+                    Stroke = new SolidColorBrush((Color)ColorConverter.ConvertFromString(serializedPolyline.Color)),
                     StrokeEndLineCap = PenLineCap.Round,
                     StrokeStartLineCap = PenLineCap.Round,
                     StrokeThickness = PEN_THICKNESS
                 };
+
+                foreach (SerializedPoint point in serializedPolyline.Points)
+                {
+                    line.Points.Add(new Point
+                    {
+                        X = point.X,
+                        Y = point.Y
+                    });
+                }
 
                 drawReceived.Add(line);
             }

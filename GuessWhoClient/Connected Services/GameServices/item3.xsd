@@ -447,11 +447,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="DrawReceivedResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
   <xs:element name="ReportPlayer">
     <xs:complexType>
       <xs:sequence>
