@@ -54,4 +54,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="SerializedPoint" nillable="true" type="tns:SerializedPoint" />
+  <xs:complexType name="PlayerReport">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IdReportType" type="xs:int" />
+      <xs:element minOccurs="0" name="NicknameReported" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReportComment" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PlayerReport" nillable="true" type="tns:PlayerReport" />
 </xs:schema>

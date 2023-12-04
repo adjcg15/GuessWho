@@ -15,8 +15,8 @@ namespace GuessWhoClient
 
         private void BtnLoginClick(object sender, RoutedEventArgs e)
         {
-            string email = tbEmail.Text.Trim();
-            string password = Authentication.HashPassword(pbPassword.Password.Trim());
+            string email = TbEmail.Text.Trim();
+            string password = Authentication.HashPassword(PbPassword.Password.Trim());
 
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {

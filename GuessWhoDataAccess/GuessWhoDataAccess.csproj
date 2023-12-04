@@ -87,6 +87,13 @@
     <Compile Include="PlayerInMatch.cs" />
     <Compile Include="Profile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report.cs">
+      <DependentUpon>GuessWhoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReportDAO.cs" />
+    <Compile Include="ReportType.cs">
+      <DependentUpon>GuessWhoModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Response.cs" />
     <Compile Include="User.cs">
       <DependentUpon>GuessWhoModel.tt</DependentUpon>

@@ -261,6 +261,35 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="NetTcpBinding_IReportService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:6969/?xsd=xsd0" namespace="http://tempuri.org/" />
@@ -459,6 +488,18 @@
   <wsdl:message name="IDrawService_DrawReceived_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:DrawReceived" />
   </wsdl:message>
+  <wsdl:message name="IReportService_ReportPlayer_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReportPlayer" />
+  </wsdl:message>
+  <wsdl:message name="IReportService_ReportPlayer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReportPlayerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReportService_GetReportsByUserId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetReportsByUserId" />
+  </wsdl:message>
+  <wsdl:message name="IReportService_GetReportsByUserId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetReportsByUserIdResponse" />
+  </wsdl:message>
   <wsdl:portType name="IUserService">
     <wsdl:operation name="Subscribe">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/Subscribe" message="tns:IUserService_Subscribe_InputMessage" />
@@ -618,6 +659,16 @@
     </wsdl:operation>
     <wsdl:operation name="DrawReceived">
       <wsdl:output wsaw:Action="http://tempuri.org/IDrawService/DrawReceived" message="tns:IDrawService_DrawReceived_OutputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IReportService">
+    <wsdl:operation name="ReportPlayer">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReportService/ReportPlayer" message="tns:IReportService_ReportPlayer_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReportService/ReportPlayerResponse" message="tns:IReportService_ReportPlayer_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetReportsByUserId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReportService/GetReportsByUserId" message="tns:IReportService_GetReportsByUserId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReportService/GetReportsByUserIdResponse" message="tns:IReportService_GetReportsByUserId_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IUserService" type="tns:IUserService">
@@ -965,13 +1016,35 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
+  <wsdl:binding name="NetTcpBinding_IReportService" type="tns:IReportService">
+    <wsp:PolicyReference URI="#NetTcpBinding_IReportService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="ReportPlayer">
+      <soap12:operation soapAction="http://tempuri.org/IReportService/ReportPlayer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetReportsByUserId">
+      <soap12:operation soapAction="http://tempuri.org/IReportService/GetReportsByUserId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
   <wsdl:service name="GuessWhoService">
     <wsdl:port name="NetTcpBinding_IUserService" binding="tns:NetTcpBinding_IUserService">
       <soap12:address location="net.tcp://localhost:6970/GuessWhoService" />
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
+          <Upn>LAPTOP-EGH\kikga</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -980,7 +1053,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
+          <Upn>LAPTOP-EGH\kikga</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -989,7 +1062,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
+          <Upn>LAPTOP-EGH\kikga</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -998,7 +1071,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
+          <Upn>LAPTOP-EGH\kikga</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -1007,7 +1080,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
+          <Upn>LAPTOP-EGH\kikga</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -1016,7 +1089,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
+          <Upn>LAPTOP-EGH\kikga</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -1025,7 +1098,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
+          <Upn>LAPTOP-EGH\kikga</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -1034,7 +1107,7 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
+          <Upn>LAPTOP-EGH\kikga</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
@@ -1043,7 +1116,16 @@
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>DESKTOP-UV09E3E\ANGEL</Upn>
+          <Upn>LAPTOP-EGH\kikga</Upn>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="NetTcpBinding_IReportService" binding="tns:NetTcpBinding_IReportService">
+      <soap12:address location="net.tcp://localhost:6970/GuessWhoService" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:6970/GuessWhoService</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Upn>LAPTOP-EGH\kikga</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>

@@ -29,5 +29,7 @@ namespace GuessWhoDataAccess
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Friendship> Friendships { get; set; }
         public virtual DbSet<Match> Matches { get; set; }
+        public virtual DbSet<Report> Reports { get; set; }
+        public virtual DbSet<ReportType> ReportTypes { get; set; }
     }
 }

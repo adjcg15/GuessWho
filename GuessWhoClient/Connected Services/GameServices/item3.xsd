@@ -447,4 +447,32 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="ReportPlayer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/GuessWhoServices" minOccurs="0" name="playerReport" nillable="true" type="q25:PlayerReport" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReportPlayerResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="ReportPlayerResult" nillable="true" type="q26:booleanResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetReportsByUserId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idUser" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetReportsByUserIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" minOccurs="0" name="GetReportsByUserIdResult" nillable="true" type="q27:ArrayOfReportResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

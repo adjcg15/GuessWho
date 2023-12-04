@@ -20,6 +20,7 @@ namespace GuessWhoDataAccess
             this.Friendships = new HashSet<Friendship>();
             this.Friendships1 = new HashSet<Friendship>();
             this.Matches = new HashSet<Match>();
+            this.Reports = new HashSet<Report>();
         }
     
         public int idUser { get; set; }
@@ -36,5 +37,7 @@ namespace GuessWhoDataAccess
         public virtual ICollection<Friendship> Friendships1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Match> Matches { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Report> Reports { get; set; }
     }
 }

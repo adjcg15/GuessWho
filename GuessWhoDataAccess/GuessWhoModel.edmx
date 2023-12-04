@@ -32,6 +32,23 @@
           <Property Name="score" Type="int" />
           <Property Name="idWinner" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Reports">
+          <Key>
+            <PropertyRef Name="idReport" />
+          </Key>
+          <Property Name="idReport" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="comment" Type="nvarchar" MaxLength="255" />
+          <Property Name="idReportedUser" Type="int" />
+          <Property Name="idReportType" Type="int" />
+          <Property Name="timestamp" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ReportTypes">
+          <Key>
+            <PropertyRef Name="idReportType" />
+          </Key>
+          <Property Name="idReportType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="idUser" />
@@ -43,6 +60,30 @@
           <Property Name="idAccount" Type="int" Nullable="false" />
           <Property Name="lastTimeNicknameChanged" Type="date" />
         </EntityType>
+        <Association Name="FK__Reports__idRepor__5165187F">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="Reports">
+              <PropertyRef Name="idReportedUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Reports__idRepor__52593CB8">
+          <End Role="ReportTypes" Type="Self.ReportTypes" Multiplicity="0..1" />
+          <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReportTypes">
+              <PropertyRef Name="idReportType" />
+            </Principal>
+            <Dependent Role="Reports">
+              <PropertyRef Name="idReportType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_friendships_users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Friendships" Type="Self.Friendships" Multiplicity="*" />
@@ -97,7 +138,17 @@
           <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Friendships" EntityType="Self.Friendships" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Matches" EntityType="Self.Matches" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reports" EntityType="Self.Reports" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReportTypes" EntityType="Self.ReportTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Reports__idRepor__5165187F" Association="Self.FK__Reports__idRepor__5165187F">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Reports" EntitySet="Reports" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Reports__idRepor__52593CB8" Association="Self.FK__Reports__idRepor__52593CB8">
+            <End Role="ReportTypes" EntitySet="ReportTypes" />
+            <End Role="Reports" EntitySet="Reports" />
+          </AssociationSet>
           <AssociationSet Name="FK_friendships_users" Association="Self.FK_friendships_users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Friendships" EntitySet="Friendships" />
@@ -142,6 +193,7 @@
           <NavigationProperty Name="Friendships1" Relationship="GuessWhoModel.FK_friendships_users1" FromRole="User" ToRole="Friendship" />
           <NavigationProperty Name="Matches" Relationship="GuessWhoModel.FK_matches_users" FromRole="User" ToRole="Match" />
           <Property Name="lastTimeNicknameChanged" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Reports" Relationship="GuessWhoModel.FK__Reports__idRepor__5165187F" FromRole="User" ToRole="Report" />
         </EntityType>
         <Association Name="FK_users_accounts">
           <End Role="Accounts" Type="Self.Account" Multiplicity="1">
@@ -177,6 +229,16 @@
           <AssociationSet Name="FK_matches_users" Association="GuessWhoModel.FK_matches_users">
             <End Role="User" EntitySet="Users" />
             <End Role="Match" EntitySet="Matches" />
+          </AssociationSet>
+          <EntitySet Name="Reports" EntityType="GuessWhoModel.Report" />
+          <EntitySet Name="ReportTypes" EntityType="GuessWhoModel.ReportType" />
+          <AssociationSet Name="FK__Reports__idRepor__5165187F" Association="GuessWhoModel.FK__Reports__idRepor__5165187F">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Report" EntitySet="Reports" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Reports__idRepor__52593CB8" Association="GuessWhoModel.FK__Reports__idRepor__52593CB8">
+            <End Role="ReportType" EntitySet="ReportTypes" />
+            <End Role="Report" EntitySet="Reports" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Friendship">
@@ -237,6 +299,50 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Report">
+          <Key>
+            <PropertyRef Name="idReport" />
+          </Key>
+          <Property Name="idReport" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="idReportedUser" Type="Int32" />
+          <Property Name="idReportType" Type="Int32" />
+          <Property Name="timestamp" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="User" Relationship="GuessWhoModel.FK__Reports__idRepor__5165187F" FromRole="Report" ToRole="User" />
+          <NavigationProperty Name="ReportType" Relationship="GuessWhoModel.FK__Reports__idRepor__52593CB8" FromRole="Report" ToRole="ReportType" />
+        </EntityType>
+        <EntityType Name="ReportType">
+          <Key>
+            <PropertyRef Name="idReportType" />
+          </Key>
+          <Property Name="idReportType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Reports" Relationship="GuessWhoModel.FK__Reports__idRepor__52593CB8" FromRole="ReportType" ToRole="Report" />
+        </EntityType>
+        <Association Name="FK__Reports__idRepor__5165187F">
+          <End Type="GuessWhoModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="GuessWhoModel.Report" Role="Report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="idUser" />
+            </Principal>
+            <Dependent Role="Report">
+              <PropertyRef Name="idReportedUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Reports__idRepor__52593CB8">
+          <End Type="GuessWhoModel.ReportType" Role="ReportType" Multiplicity="0..1" />
+          <End Type="GuessWhoModel.Report" Role="Report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReportType">
+              <PropertyRef Name="idReportType" />
+            </Principal>
+            <Dependent Role="Report">
+              <PropertyRef Name="idReportType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -282,6 +388,25 @@
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="invitationCode" ColumnName="invitationCode" />
                 <ScalarProperty Name="idMatch" ColumnName="idMatch" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reports">
+            <EntityTypeMapping TypeName="GuessWhoModel.Report">
+              <MappingFragment StoreEntitySet="Reports">
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="idReportType" ColumnName="idReportType" />
+                <ScalarProperty Name="idReportedUser" ColumnName="idReportedUser" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="idReport" ColumnName="idReport" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReportTypes">
+            <EntityTypeMapping TypeName="GuessWhoModel.ReportType">
+              <MappingFragment StoreEntitySet="ReportTypes">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="idReportType" ColumnName="idReportType" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

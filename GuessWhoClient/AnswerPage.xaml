@@ -12,13 +12,12 @@
     <Grid Background="#FFC436">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="97*"/>
-            <ColumnDefinition Width="53*"/>
         </Grid.ColumnDefinitions>
 
-        <Canvas x:Name="CnvsOpponentDraw" Margin="30,18,2,18" Background="White"/>
+        <Canvas x:Name="CnvsOpponentDraw" Margin="30,18,320,18" Background="White"/>
 
-        <Button x:Name="BtnReportPlayer" Content="{x:Static p:Resources.btnReportPlayer}" Style="{StaticResource PrimaryCancelButtonWithIcon}"  HorizontalAlignment="Left" Margin="45,25,0,0" VerticalAlignment="Top" Height="44" FontWeight="Medium" Click="BtnReportPlayerClick"/>
-        <Border Margin="27,35,27,410" Grid.Column="1" BorderBrush="#E21818" CornerRadius="40" Background="White" BorderThickness="4">
+        <Button x:Name="BtnReportPlayer" Content="{x:Static p:Resources.txtReportPlayer}" Style="{StaticResource PrimaryCancelButtonWithIcon}"  HorizontalAlignment="Left" Margin="45,25,0,0" VerticalAlignment="Top" Height="44" FontWeight="Medium" Click="BtnReportPlayerClick"/>
+        <Border Margin="609,35,27,410" BorderBrush="#E21818" CornerRadius="40" Background="White" BorderThickness="4">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Width="191">
                 <TextBlock TextWrapping="Wrap" Text="{x:Static p:Resources.lbCharacterLooksLikeQuestion}" FontSize="16" FontWeight="Bold" Foreground="#0A6EBD" VerticalAlignment="Center" Width="140"/>
                 <Border
@@ -43,7 +42,7 @@
             </StackPanel>
         </Border>
 
-        <Button Grid.Column="1" HorizontalAlignment="Center" Margin="0,170,0,0" VerticalAlignment="Top" BorderThickness="0" Height="116" Width="264" Click="BtnAnswerYesClick">
+        <Button HorizontalAlignment="Left" Margin="609,170,0,0" VerticalAlignment="Top" BorderThickness="0" Height="116" Width="264" Click="BtnAnswerYesClick">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Border Background="#FF56C568" CornerRadius="20">
@@ -54,7 +53,7 @@
             <Image Source="/Resources/check-icon.png" Height="80" />
         </Button>
 
-        <Button Grid.Column="1" HorizontalAlignment="Center" Margin="0,355,0,0" VerticalAlignment="Top" BorderThickness="0" Height="116" Width="264" Click="BtnAnswerNoClick">
+        <Button HorizontalAlignment="Left" Margin="609,355,0,0" VerticalAlignment="Top" BorderThickness="0" Height="116" Width="264" Click="BtnAnswerNoClick">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Border Background="#E21818" CornerRadius="20">
@@ -64,5 +63,34 @@
             </Button.Template>
             <Image Source="/Resources/cross-icon.png" Height="80" />
         </Button>
+        <Border x:Name="BorderOpacityReport" Opacity="0.6" Visibility="Collapsed" HorizontalAlignment="Center" Height="520" VerticalAlignment="Center" Width="900" Background="Black"/>
+        <Border x:Name="BorderReport" BorderThickness="8,8,8,8" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" Background="White" CornerRadius="16,16,16,16" BorderBrush="#FFFFC436">
+            <StackPanel>
+                <Label x:Name="LbMessageBoxTitle" Content="{x:Static p:Resources.txtReportPlayer}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,10,20,0"/>
+                <Label x:Name="LbReportReason_MessageBoxMessage" Content="{x:Static p:Resources.lbReportReason}" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,10,20,0" />
+                <Grid Name = "GridReportReason" Margin="20,0,20,0">
+                    <Border x:Name="CbReportReasonBorder" BorderThickness="1,1,1,1" BorderBrush="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <ComboBox x:Name="CbReportReason" Text="{x:Static p:Resources.cbReportReasonPlaceholder}" 
+                          Background="{x:Null}" IsEditable="True" IsReadOnly="True" 
+                          Width="256" SelectionChanged="CbReportReasonSelectionChanged">
+                            <ComboBoxItem Content="{x:Static p:Resources.cbReportReasonOptionOne}"/>
+                            <ComboBoxItem Content="{x:Static p:Resources.cbReportReasonOptionTwo}"/>
+                            <ComboBoxItem Content="{x:Static p:Resources.cbReportReasonOptionThree}"/>
+                        </ComboBox>
+                    </Border>
+                </Grid>
+                <Label x:Name="LbReportComment" Content="{x:Static p:Resources.lbReportComment}" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,10,0,0" />
+                <Grid Margin="20,0,20,0" Name="GridReportComment" Height="150">
+                    <Border x:Name="TbReportCommentBorder" BorderThickness="3" BorderBrush="#BCBCBC" CornerRadius="16" Margin="5">
+                        <TextBox x:Name="TbReportComment" Text="{x:Static p:Resources.tbReportCommentPlaceholder}" Style="{StaticResource Input}" Width="250" TextWrapping="Wrap" FontSize="12" 
+                         GotFocus="TbReportCommentGotFocus" Foreground="#95000000" TextChanged="TbReportCommentTextChanged" Margin="-2,-2,-2,-2"/>
+                    </Border>
+                </Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,10,20,10">
+                    <Button x:Name="BtnReport_Exit" Content="{x:Static p:Resources.txtReportGlobal}" Style="{StaticResource SecondaryButton}" FontSize="12" BorderBrush="#FFB6D8F2" Background="#FF0A6EBD" Foreground="White" Click="BtnReport_ExitClick"/>
+                    <Button x:Name="BtnCancelReport_Continue" Content="{x:Static p:Resources.btnCancelReport}" Style="{StaticResource SecondaryButton}" FontSize="12" Margin="10,0,0,0" Click="BtnCancelReport_ContinueClick" />
+                </StackPanel>
+            </StackPanel>
+        </Border>
     </Grid>
 </Page>

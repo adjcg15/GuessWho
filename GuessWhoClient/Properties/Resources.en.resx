@@ -186,9 +186,6 @@
   <data name="btnQuickMatch" xml:space="preserve">
     <value>QUICK MATCH</value>
   </data>
-  <data name="btnReportPlayer" xml:space="preserve">
-    <value>Report player</value>
-  </data>
   <data name="btnSearch" xml:space="preserve">
     <value>Search</value>
   </data>
@@ -345,6 +342,15 @@
   <data name="msgbEmptyFieldTitle" xml:space="preserve">
     <value>Missing fields</value>
   </data>
+  <data name="msgbEmptyReportComment" xml:space="preserve">
+    <value>Please explain the situation of the report.</value>
+  </data>
+  <data name="msgbEmptyReportFields" xml:space="preserve">
+    <value>Please fill in all fields correctly.</value>
+  </data>
+  <data name="msgbEmptyReportReason" xml:space="preserve">
+    <value>Please select the reason for the report.</value>
+  </data>
   <data name="msgbErrorConexionServidorMessage" xml:space="preserve">
     <value>Could not establish a connection to the server, try another time</value>
   </data>
@@ -471,6 +477,18 @@
   <data name="msgbRegisterRegisteredNicknameTitle" xml:space="preserve">
     <value>Nickname already registered</value>
   </data>
+  <data name="msgbReportErrorUpdateMessage" xml:space="preserve">
+    <value>An error occurred while saving the report. Please try again later.</value>
+  </data>
+  <data name="msgbReportErrorUpdateTitle" xml:space="preserve">
+    <value>Error while saving.</value>
+  </data>
+  <data name="msgbReportUserNotFoundMessage" xml:space="preserve">
+    <value>An error occurred, opponent user not found, please try again.</value>
+  </data>
+  <data name="msgbReportUserNotFoundTitle" xml:space="preserve">
+    <value>Opponent not found.</value>
+  </data>
   <data name="msgbSendMessageMatchFinishedMessage" xml:space="preserve">
     <value>The game you are trying to send the message to no longer exists</value>
   </data>
@@ -581,6 +599,9 @@
   </data>
   <data name="txtReportGlobal" xml:space="preserve">
     <value>Report</value>
+  </data>
+  <data name="txtReportPlayer" xml:space="preserve">
+    <value>Report player</value>
   </data>
   <data name="txtSameFullNameErrorMessage" xml:space="preserve">
     <value>You are already registered with this name. Please verify the information and try again.</value>

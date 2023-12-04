@@ -13,6 +13,10 @@
         <AssociationConnector Association="GuessWhoModel.FK_friendships_users" />
         <AssociationConnector Association="GuessWhoModel.FK_friendships_users1" />
         <AssociationConnector Association="GuessWhoModel.FK_matches_users" />
+        <EntityTypeShape EntityType="GuessWhoModel.Report" Width="1.5" PointX="6.125" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GuessWhoModel.ReportType" Width="1.5" PointX="3.875" PointY="8" />
+        <AssociationConnector Association="GuessWhoModel.FK__Reports__idRepor__5165187F" />
+        <AssociationConnector Association="GuessWhoModel.FK__Reports__idRepor__52593CB8" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -213,6 +213,7 @@
     <EmbeddedResource Include="Properties\Resources.es-MX.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.es-MX.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -224,6 +225,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ArrayOfFriendResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ArrayOfReportResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\GameServices\GuessWhoClient.GameServices.ArrayOfTopPlayerResponse.datasource">
