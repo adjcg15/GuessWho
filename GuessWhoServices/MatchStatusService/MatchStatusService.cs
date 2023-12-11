@@ -7,7 +7,7 @@ namespace GuessWhoServices
 {
     public partial class GuessWhoService : IMatchStatusService
     {
-        private static Dictionary<string, MatchPlayerInformation> matchPlayersListening = new Dictionary<string, MatchPlayerInformation>();
+        private static readonly Dictionary<string, MatchPlayerInformation> matchPlayersListening = new Dictionary<string, MatchPlayerInformation>();
 
         public Response<bool> GuessCharacter(string characterName, string matchCode)
         {
@@ -25,13 +25,9 @@ namespace GuessWhoServices
                 var currentMatchInfo = matchPlayersListening[matchCode];
                 var currentChannel = OperationContext.Current.GetCallbackChannel<IMatchStatusCallback>();
 
-                Console.WriteLine(characterName + " guestNicknameCharacter: " + currentMatchInfo.GuestSelectedCharacterName + " hostNicknameCharacter: " + currentMatchInfo.HostSelectedCharacterName + ".");
-                Console.WriteLine("hostnickname = " + currentMatchInfo.HostNickname + " guestNickname = " + currentMatchInfo.GuestNickname + ".");
-
                 if (currentChannel.GetHashCode() == currentMatchInfo.HostChannel.GetHashCode())
                 {
                     response.Value = string.Equals(characterName.Trim(), currentMatchInfo.GuestSelectedCharacterName.Trim(), StringComparison.OrdinalIgnoreCase);
-                    Console.WriteLine("El intento de adivinar lo hizo el host y es " + response.Value);
                     response.StatusCode = ResponseStatus.OK;
 
                     NotifyOtherPlayer(currentMatchInfo.GuestChannel, response.Value ? MatchStatus.GameLost : MatchStatus.GameWon);
@@ -44,7 +40,6 @@ namespace GuessWhoServices
                 else if (currentChannel.GetHashCode() == currentMatchInfo.GuestChannel.GetHashCode())
                 {
                     response.Value = string.Equals(characterName.Trim(), currentMatchInfo.GuestSelectedCharacterName.Trim(), StringComparison.OrdinalIgnoreCase);
-                    Console.WriteLine("El intento de adivinar lo hizo el invitado y es " + response.Value);
                     response.StatusCode = ResponseStatus.OK;
 
                     NotifyOtherPlayer(currentMatchInfo.HostChannel, response.Value ? MatchStatus.GameLost : MatchStatus.GameWon);
@@ -78,14 +73,11 @@ namespace GuessWhoServices
                     HostNickname = nickname,
                     IsTournamentMatch = matches[matchCode].IsTournamentMatch
                 };
-                Console.WriteLine(nickname + " asignado como host");
             }
             else
             {
                 matchPlayersListening[matchCode].GuestChannel = channel;
                 matchPlayersListening[matchCode].GuestNickname = nickname;
-
-                Console.WriteLine(nickname + " asignado como guest");
             }
         }
 

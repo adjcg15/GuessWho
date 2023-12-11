@@ -47,14 +47,12 @@ namespace GuessWhoClient.Communication
         {
             if (!subscribedPages.Contains(pageListener))
             {
-                Console.WriteLine("Suscribiendo página " + pageListener.GetHashCode());
                 subscribedPages.Add(pageListener);
             }
         }
 
         public void UnsubscribePage(IMatchStatusPage pageListener)
         {
-            Console.WriteLine("Desuscribiendo página " + pageListener.GetHashCode());
             subscribedPages.Remove(pageListener);
         }
 

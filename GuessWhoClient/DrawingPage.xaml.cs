@@ -592,7 +592,6 @@ namespace GuessWhoClient
 
                 if (confirmSelection == MessageBoxResult.Yes)
                 {
-                    Console.WriteLine("Seleccionó " + character.Name);
                     var isWinner = matchStatusManager.Client.GuessCharacter(character.Name, matchStatusManager.CurrentMatchCode);
                     if (isWinner.StatusCode == ResponseStatus.OK)
                     {
@@ -606,8 +605,6 @@ namespace GuessWhoClient
         {
             gameManager.UnsubscribePage(this);
             matchStatusManager.UnsubscribePage(this);
-
-            Console.WriteLine(gameManager.AdversaryNickname);
 
             WinnerPage winnerPage = new WinnerPage();
             if(DataStore.Profile != null)
