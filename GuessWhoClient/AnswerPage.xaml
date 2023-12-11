@@ -17,12 +17,11 @@
         <Canvas x:Name="CnvsOpponentDraw" Margin="30,18,320,18" Background="White"/>
 
         <Button x:Name="BtnReportPlayer" Content="{x:Static p:Resources.txtReportPlayer}" Style="{StaticResource PrimaryCancelButtonWithIcon}"  HorizontalAlignment="Left" Margin="45,25,0,0" VerticalAlignment="Top" Height="44" FontWeight="Medium" Click="BtnReportPlayerClick"/>
-        <Border Margin="609,35,27,410" BorderBrush="#E21818" CornerRadius="40" Background="White" BorderThickness="4">
+        <Border Margin="609,35,27,381" BorderBrush="#E21818" CornerRadius="50" Background="White" BorderThickness="4">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Width="191">
-                <TextBlock TextWrapping="Wrap" Text="{x:Static p:Resources.lbCharacterLooksLikeQuestion}" FontSize="16" FontWeight="Bold" Foreground="#0A6EBD" VerticalAlignment="Center" Width="140"/>
+                <TextBlock Margin="0, 0, 10, 0" TextWrapping="Wrap" Text="{x:Static p:Resources.lbCharacterLooksLikeQuestion}" FontSize="16" FontWeight="Bold" Foreground="#0A6EBD" VerticalAlignment="Center" Width="101"/>
                 <Border
-                    Height="50" Width="50"
-                    HorizontalAlignment="Center" 
+                    Height="80" Width="80" 
                     VerticalAlignment="Center" 
                     BorderThickness="4" CornerRadius="8">
                     <Border.Background>
@@ -42,23 +41,33 @@
             </StackPanel>
         </Border>
 
-        <Button HorizontalAlignment="Left" Margin="609,170,0,0" VerticalAlignment="Top" BorderThickness="0" Height="116" Width="264" Click="BtnAnswerYesClick">
+        <Button x:Name="BtnAnswerYes" Cursor="Hand" HorizontalAlignment="Left" Margin="609,168,0,0" VerticalAlignment="Top" BorderThickness="0" Height="116" Width="264" Click="BtnAnswerYesClick">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
-                    <Border Background="#FF56C568" CornerRadius="20">
+                    <Border x:Name="BorderAnswerYes" Background="#FF56C568" CornerRadius="20">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="BorderAnswerYes" Property="Background" Value="Gray" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Button.Template>
             <Image Source="/Resources/check-icon.png" Height="80" />
         </Button>
 
-        <Button HorizontalAlignment="Left" Margin="609,355,0,0" VerticalAlignment="Top" BorderThickness="0" Height="116" Width="264" Click="BtnAnswerNoClick">
+        <Button x:Name="BtnAnswerNo" Cursor="Hand" HorizontalAlignment="Left" Margin="609,308,0,0" VerticalAlignment="Top" BorderThickness="0" Height="116" Width="264" Click="BtnAnswerNoClick">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
-                    <Border Background="#E21818" CornerRadius="20">
+                    <Border x:Name="BorderAnswerNo" Background="#E21818" CornerRadius="20">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="BorderAnswerNo" Property="Background" Value="Gray" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Button.Template>
             <Image Source="/Resources/cross-icon.png" Height="80" />
@@ -92,5 +101,11 @@
                 </StackPanel>
             </StackPanel>
         </Border>
+
+        <TextBlock Visibility="Hidden" x:Name="TbWaitingAnswer" 
+            Text="{x:Static p:Resources.lbWaitingOpponentAnswer}" 
+            HorizontalAlignment="Center" Margin="590,445,0,0" 
+            Width="200" TextWrapping="Wrap" TextAlignment="Center"
+            VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
     </Grid>
 </Page>

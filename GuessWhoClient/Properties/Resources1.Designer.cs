@@ -646,6 +646,15 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Esperando respuesta del contrincante.
+        /// </summary>
+        public static string lbWaitingOpponentAnswer {
+            get {
+                return ResourceManager.GetString("lbWaitingOpponentAnswer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El otro jugador ha abandonado la partida, la partida ha sido cancelada.
         /// </summary>
         public static string msgbCanceledMatchMessage {

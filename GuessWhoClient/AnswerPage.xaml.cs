@@ -79,17 +79,73 @@ namespace GuessWhoClient
 
         private void BtnAnswerNoClick(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                SendClueToOpponent(false);
+                DisableAnswerButtons();
+                ShowWaitingAnswerMessage();
+            }
+            catch(EndpointNotFoundException)
+            {
+                ServerResponse.ShowServerDownMessage();
 
+                gameManager.UnsubscribePage(this);
+                matchStatusManager.UnsubscribePage(this);
+                gameManager.RestartRawValues();
+                matchStatusManager.RestartRawValues();
+
+                RedirectToMainMenuFromCanceledMatch();
+            }
         }
 
         private void BtnAnswerYesClick(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                SendClueToOpponent(true);
+                DisableAnswerButtons();
+                ShowWaitingAnswerMessage();
+            }
+            catch(EndpointNotFoundException)
+            {
+                ServerResponse.ShowServerDownMessage();
 
+                gameManager.UnsubscribePage(this);
+                matchStatusManager.UnsubscribePage(this);
+                gameManager.RestartRawValues();
+                matchStatusManager.RestartRawValues();
+
+                RedirectToMainMenuFromCanceledMatch();
+            }
         }
 
-        public void MatchStatusChanged(MatchStatus matchStatusCode) //LooksLike / DoesNotLookLike
+        private void SendClueToOpponent(bool looksLike)
         {
-            throw new NotImplementedException();
+            matchStatusManager.Client.SendAnswer(looksLike, gameManager.CurrentMatchCode);
+        }
+
+        private void DisableAnswerButtons()
+        {
+            BtnAnswerNo.IsEnabled = false;
+            BtnAnswerYes.IsEnabled = false;
+        }
+
+        private void ShowWaitingAnswerMessage()
+        {
+            TbWaitingAnswer.Visibility = Visibility.Visible;
+        }
+
+        public void MatchStatusChanged(MatchStatus matchStatusCode)
+        {
+            switch(matchStatusCode)
+            {
+                case MatchStatus.LooksLike:
+
+                    break;
+                case MatchStatus.DoesNotLookLike:
+                    
+                    break;
+            }
         }
 
         public void PlayerStatusInMatchChanged(PlayerInMatch player, bool isInMatch)
@@ -222,7 +278,7 @@ namespace GuessWhoClient
                     ShowErrorSendingReport(response.StatusCode);
                 }
             }
-            catch (EndpointNotFoundException ex)
+            catch (EndpointNotFoundException)
             {
                 ServerResponse.ShowServerDownMessage();
             }

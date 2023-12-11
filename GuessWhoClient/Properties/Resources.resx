@@ -312,6 +312,9 @@
   <data name="lbWaitingOpponent" xml:space="preserve">
     <value>Esperando oponente…</value>
   </data>
+  <data name="lbWaitingOpponentAnswer" xml:space="preserve">
+    <value>Esperando respuesta del contrincante</value>
+  </data>
   <data name="msgbCanceledMatchMessage" xml:space="preserve">
     <value>El otro jugador ha abandonado la partida, la partida ha sido cancelada</value>
   </data>
