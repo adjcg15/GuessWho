@@ -263,7 +263,7 @@ namespace GuessWhoClient
                     {
                         UnsubscribeToActiveUsersList();
                         ExitChatRoom();
-                        matchStatusManager.Client.StopListeningMatchStatus(matchStatusManager.CurrentMatchCode);
+                        StopListeningMatchStatus();
                     }
                     catch(EndpointNotFoundException)
                     {
@@ -295,12 +295,42 @@ namespace GuessWhoClient
             }
         }
 
+        public void StopListeningMatchStatus()
+        {
+            matchStatusManager.Client.StopListeningMatchStatus(matchStatusManager.CurrentMatchCode);
+            matchStatusManager.RestartRawValues();
+        }
+
         public void MatchStatusChanged(MatchStatus matchStatusCode)
         {
-            if (matchStatusCode == MatchStatus.CharacterSelection)
+            try
             {
-                NavigateToChooseCharacterPage();
+                UnsubscribeToActiveUsersList();
+                ExitChatRoom();
+
+                if (matchStatusCode == MatchStatus.CharacterSelection)
+                {
+                    NavigateToChooseCharacterPage();
+                }
             }
+            catch(EndpointNotFoundException)
+            {
+                ServerResponse.ShowServerDownMessage();
+                ClearCommunicationChannels();
+                RedirectPermanentlyToMainMenu();
+            }
+        }
+
+        private void NavigateToChooseCharacterPage()
+        {
+            gameManager.UnsubscribePage(this);
+            matchStatusManager.UnsubscribePage(this);
+
+            ChooseCharacterPage characterPage = new ChooseCharacterPage();
+            gameManager.SubscribePage(characterPage);
+            matchStatusManager.SubscribePage(characterPage);
+
+            NavigationService.Navigate(characterPage);
         }
 
         private void ShowStartGameButton()
@@ -550,8 +580,7 @@ namespace GuessWhoClient
             gameManager.Client.ExitGame(gameManager.CurrentMatchCode);
             gameManager.RestartRawValues();
 
-            matchStatusManager.Client.StopListeningMatchStatus(matchStatusManager.CurrentMatchCode);
-            matchStatusManager.RestartRawValues();
+            StopListeningMatchStatus();
         }
 
         private void BtnFinishGameClick(object sender, RoutedEventArgs e)
@@ -576,8 +605,7 @@ namespace GuessWhoClient
             gameManager.Client.FinishGame(gameManager.CurrentMatchCode);
             gameManager.RestartRawValues();
 
-            matchStatusManager.Client.StopListeningMatchStatus(matchStatusManager.CurrentMatchCode);
-            matchStatusManager.RestartRawValues();
+            StopListeningMatchStatus();
         }
 
         private void BtnStartGameClick(object sender, RoutedEventArgs e)
@@ -600,17 +628,6 @@ namespace GuessWhoClient
         private void StartCharacterSelection()
         {
             matchStatusManager.Client.StartCharacterSelection(matchStatusManager.CurrentMatchCode);
-        }
-
-        private void NavigateToChooseCharacterPage()
-        {
-            gameManager.UnsubscribePage(this);
-            matchStatusManager.UnsubscribePage(this);
-
-            ChooseCharacterPage characterPage = new ChooseCharacterPage();
-            NavigationService.Navigate(characterPage);
-            gameManager.SubscribePage(characterPage);
-            matchStatusManager.SubscribePage(characterPage);
         }
 
         private void BtnInviteToGameClick(object sender, RoutedEventArgs e)
