@@ -2,7 +2,6 @@
 using GuessWhoClient.GameServices;
 using GuessWhoClient.Model.Interfaces;
 using GuessWhoClient.Utils;
-using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.Windows;
@@ -31,6 +30,28 @@ namespace GuessWhoClient
         {
             InitializeComponent();
             PaintDrawInCanvas(draw);
+        }
+
+        private void PageLoaded(object sender, RoutedEventArgs e)
+        {
+            ShowCharacterSelected();
+
+            if (gameManager.AdversaryNickname == string.Empty || DataStore.Profile == null)
+            {
+                BtnReportPlayer.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void ShowCharacterSelected()
+        {
+            if(gameManager.SelectedCharacter != null && gameManager.SelectedCharacter.Avatar != null)
+            {
+                ImgCharacterSelected.ImageSource = gameManager.SelectedCharacter.Avatar;
+            }
+            else
+            {
+                BorderCharacterSelected.Visibility = Visibility.Hidden;
+            }
         }
 
         private void PaintDrawInCanvas(SerializedLine[] draw)
@@ -128,13 +149,12 @@ namespace GuessWhoClient
 
             if (opponentAnswerReceived)
             {
-                if(opponentDrawingLooksLikeAnswer)
+                if (opponentDrawingLooksLikeAnswer)
                 {
                     RedirectToGamePageFromSimilarDrawingClue();
                 }
                 else
                 {
-
                     RedirectToGamePageFromNotSimilarDrawingClue();
                 }
             }
@@ -178,20 +198,35 @@ namespace GuessWhoClient
 
         private void RedirectToGamePageFromSimilarDrawingClue()
         {
+            gameManager.UnsubscribePage(this);
+            matchStatusManager.UnsubscribePage(this);
+
             DrawingPage gamePage = new DrawingPage();
+            gameManager.SubscribePage(gamePage);
+            matchStatusManager.SubscribePage(gamePage);
+
             gamePage.ShowClueSimilarDrawing();
             NavigationService.Navigate(gamePage);
         }
 
         private void RedirectToGamePageFromNotSimilarDrawingClue()
         {
+            gameManager.UnsubscribePage(this);
+            matchStatusManager.UnsubscribePage(this);
+
             DrawingPage gamePage = new DrawingPage();
+            gameManager.SubscribePage(gamePage);
+            matchStatusManager.SubscribePage(gamePage);
+
             gamePage.ShowClueNotSimilarDrawing();
             NavigationService.Navigate(gamePage);
         }
 
         public void PlayerStatusInMatchChanged(PlayerInMatch player, bool isInMatch)
         {
+            gameManager.UnsubscribePage(this);
+            matchStatusManager.UnsubscribePage(this);
+
             ClearCommunicationChannels();
             RedirectToMainMenuFromCanceledMatch();
         }
@@ -220,14 +255,6 @@ namespace GuessWhoClient
             MainMenuPage mainMenu = new MainMenuPage();
             mainMenu.ShowCanceledMatchMessage();
             NavigationService.Navigate(mainMenu);
-        }
-
-        private void PageLoaded(object sender, RoutedEventArgs e)
-        {
-            if(gameManager.AdversaryNickname == string.Empty || DataStore.Profile == null)
-            {
-                BtnReportPlayer.Visibility = Visibility.Collapsed;
-            }
         }
 
         private void TbReportCommentGotFocus(object sender, RoutedEventArgs e)
@@ -266,7 +293,6 @@ namespace GuessWhoClient
             TbReportCommentBorder.BorderBrush = (Brush)new BrushConverter().ConvertFrom("#FFABADB3");
             CbReportReasonBorder.BorderBrush = (Brush)new BrushConverter().ConvertFrom("#FFABADB3");
 
-            Console.WriteLine(CbReportReason.SelectedIndex + " " + TbReportComment.Text);
             if(CbReportReason.SelectedIndex == -1 && (TbReportComment.Text == string.Empty || TbReportComment.Text == Properties.Resources.tbReportCommentPlaceholder)) 
             {
                 TbReportCommentBorder.BorderBrush = Brushes.Red;

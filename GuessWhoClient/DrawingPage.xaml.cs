@@ -5,7 +5,6 @@ using GuessWhoClient.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.Threading;
@@ -13,7 +12,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
@@ -156,28 +154,7 @@ namespace GuessWhoClient
 
         private void ShowCharacters()
         {
-            IcCharacters.ItemsSource = RecoverChatacters();
-        }
-
-        private List<Character> RecoverChatacters()
-        {
-            List<Character> charactersList = new List<Character>();
-
-            string PROJECT_DIRECTORY = System.IO.Path.Combine(AppContext.BaseDirectory, "..\\..\\");
-            string CHARACTERS_FOLDER = System.IO.Path.Combine(PROJECT_DIRECTORY, "Resources\\Characters");
-            string[] imageFiles = Directory.GetFiles(CHARACTERS_FOLDER, "*.png");
-
-            foreach (string imagePath in imageFiles)
-            {
-                Character character = new Character
-                {
-                    IsSelected = false,
-                    Avatar = new BitmapImage(new Uri(imagePath, UriKind.Relative))
-                };
-                charactersList.Add(character);
-            }
-
-            return charactersList;
+            IcCharacters.ItemsSource = gameManager.CharactersInGame;
         }
 
         private void CnvsStartDrawing(object sender, MouseButtonEventArgs e)

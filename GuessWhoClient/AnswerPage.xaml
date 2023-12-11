@@ -23,9 +23,11 @@
                 <Border
                     Height="80" Width="80" 
                     VerticalAlignment="Center" 
-                    BorderThickness="4" CornerRadius="8">
+                    BorderThickness="4" CornerRadius="8"
+                    x:Name="BorderCharacterSelected"
+                    >
                     <Border.Background>
-                        <ImageBrush x:Name="ImgMyCharacterSelected" Stretch="UniformToFill" ImageSource="/Resources/Characters/Paty.png"/>
+                        <ImageBrush x:Name="ImgCharacterSelected" Stretch="UniformToFill" ImageSource="/Resources/Characters/Paty.png"/>
                     </Border.Background>
                     <Border.Style>
                         <Style TargetType="Border">
