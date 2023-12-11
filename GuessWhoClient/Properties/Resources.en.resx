@@ -121,7 +121,7 @@
     <value>Add Friend</value>
   </data>
   <data name="btnBackToMenu" xml:space="preserve">
-    <value>Go back to menu...</value>
+    <value>GO BACK TO MENU</value>
   </data>
   <data name="btnCancelGame" xml:space="preserve">
     <value>Cancel match</value>
@@ -222,6 +222,9 @@
   <data name="lbAllPlayersReady" xml:space="preserve">
     <value>The game is full and ready to start!</value>
   </data>
+  <data name="lbAuch" xml:space="preserve">
+    <value>Ouch!</value>
+  </data>
   <data name="lbChangePassword" xml:space="preserve">
     <value>Password change</value>
   </data>
@@ -230,6 +233,12 @@
   </data>
   <data name="lbChooseCharacter" xml:space="preserve">
     <value>Choose your character!</value>
+  </data>
+  <data name="lbClueCorrectDraw" xml:space="preserve">
+    <value>Your drawing looks like your opponent's drawing</value>
+  </data>
+  <data name="lbClueWrongDraw" xml:space="preserve">
+    <value>Your drawing does NOT look like your opponent's</value>
   </data>
   <data name="lbConfirmAccountDescription" xml:space="preserve">
     <value>We have sent a verification code to the email you have provided, please place it below to conclude with the creation of your account.</value>
@@ -312,6 +321,12 @@
   <data name="lbWaitingOpponent" xml:space="preserve">
     <value>Waiting for opponent…</value>
   </data>
+  <data name="lbWaitingOpponentAnswer" xml:space="preserve">
+    <value>Waiting opponent answer</value>
+  </data>
+  <data name="lbWellDone" xml:space="preserve">
+    <value>Well done!</value>
+  </data>
   <data name="msgbCanceledMatchMessage" xml:space="preserve">
     <value>Adversary has quit the game, the game has been canceled</value>
   </data>
@@ -362,6 +377,12 @@
   </data>
   <data name="msgbErrorLeavingMatchTitle" xml:space="preserve">
     <value>Error leaving game, try again</value>
+  </data>
+  <data name="msgbErrorNotAllowedToJoinMatchMessage" xml:space="preserve">
+    <value>This game is a Championship match. To join matches like this, you need to log in.</value>
+  </data>
+  <data name="msgbErrorNotAllowedToJoinMatchTitle" xml:space="preserve">
+    <value>You Cannot join the match</value>
   </data>
   <data name="msgbErrorRetrievingPlayerEmailMessage" xml:space="preserve">
     <value>An error occurred while trying to retrieve the player's email, so the invitation could not be sent</value>

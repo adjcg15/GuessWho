@@ -205,7 +205,7 @@ namespace GuessWhoClient
         private void StartListeningMatchStatus()
         {
             matchStatusManager.CurrentMatchCode = gameManager.CurrentMatchCode;
-            matchStatusManager.Client.ListenMatchStatus(matchStatusManager.CurrentMatchCode);
+            matchStatusManager.Client.ListenMatchStatus(matchStatusManager.CurrentMatchCode, DataStore.Profile?.NickName);
         }
 
         private void ShowHostInformation()
@@ -333,6 +333,7 @@ namespace GuessWhoClient
             string defaultAdversaryNickname = gameManager.IsCurrentMatchHost ? Properties.Resources.txtGuest : Properties.Resources.txtHost;
             string adversaryNickname = !string.IsNullOrEmpty(gameManager.AdversaryNickname) ? gameManager.AdversaryNickname : defaultAdversaryNickname;
             TbAdversaryNicknameInBanner.Text = adversaryNickname;
+            gameManager.AdversaryNickname = adversaryNickname;
 
             if (gameManager.AdversaryAvatar != null)
             {

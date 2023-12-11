@@ -15,7 +15,7 @@ namespace GuessWhoServices
             return matches;
         }
 
-        public Response<string> CreateMatch(string hostNickname)
+        public Response<string> CreateMatch(string hostNickname, bool isTournamentMatch)
         {
             var response = new Response<string>
             {
@@ -33,6 +33,7 @@ namespace GuessWhoServices
             var match = new MatchInformation();
             match.HostNickname = hostNickname;
             match.HostChannel = OperationContext.Current.GetCallbackChannel<IGameCallback>();
+            match.IsTournamentMatch = isTournamentMatch;
 
             matches[invitationCode] = match;
 
@@ -53,9 +54,12 @@ namespace GuessWhoServices
             if (matches.ContainsKey(invitationCode))
             {
                 var storedMatch = matches[invitationCode];
-
-                //If guest channel stored in match is null it means than no player is in match with the host
-                if(storedMatch.GuestChannel == null)
+                
+                if(storedMatch.IsTournamentMatch && string.IsNullOrEmpty(nickname))
+                {
+                    response.StatusCode = ResponseStatus.NOT_ALLOWED;
+                }
+                else if(storedMatch.GuestChannel == null)
                 {
                     response.StatusCode = ResponseStatus.OK;
 

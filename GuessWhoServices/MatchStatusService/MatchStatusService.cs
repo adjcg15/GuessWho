@@ -1,19 +1,17 @@
 ﻿using GuessWhoDataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GuessWhoServices
 {
     public partial class GuessWhoService : IMatchStatusService
     {
-        private static Dictionary<string, MatchPlayerInformation> matchPlayersListening = new Dictionary<string, MatchPlayerInformation>();
+        private static readonly Dictionary<string, MatchPlayerInformation> matchPlayersListening = new Dictionary<string, MatchPlayerInformation>();
 
         public Response<bool> GuessCharacter(string characterName, string matchCode)
         {
+            Console.WriteLine("Entrando a GuessCharacter: " + characterName);
             var response = new Response<bool>
             {
                 StatusCode = ResponseStatus.VALIDATION_ERROR,
@@ -22,27 +20,47 @@ namespace GuessWhoServices
 
             if (matchPlayersListening.ContainsKey(matchCode))
             {
+                Console.WriteLine("Se encontró la partida con código " + matchCode);
+
                 var currentMatchInfo = matchPlayersListening[matchCode];
                 var currentChannel = OperationContext.Current.GetCallbackChannel<IMatchStatusCallback>();
 
-                if(currentChannel.GetHashCode() == currentMatchInfo.HostChannel.GetHashCode())
+                if (currentChannel.GetHashCode() == currentMatchInfo.HostChannel.GetHashCode())
                 {
-                    response.Value = string.Equals(characterName, currentMatchInfo.GuestSelectedCharacterName, StringComparison.OrdinalIgnoreCase);
+                    response.Value = string.Equals(characterName.Trim(), currentMatchInfo.GuestSelectedCharacterName.Trim(), StringComparison.OrdinalIgnoreCase);
+                    response.StatusCode = ResponseStatus.OK;
 
                     NotifyOtherPlayer(currentMatchInfo.GuestChannel, response.Value ? MatchStatus.GameLost : MatchStatus.GameWon);
+
+                    if (currentMatchInfo.IsTournamentMatch)
+                    {
+                        AddScorePoints(response.Value ? currentMatchInfo.HostNickname : currentMatchInfo.GuestNickname);
+                    }
                 }
-                else if(currentChannel.GetHashCode() == currentMatchInfo.GuestChannel.GetHashCode())
+                else if (currentChannel.GetHashCode() == currentMatchInfo.GuestChannel.GetHashCode())
                 {
-                    response.Value = string.Equals(characterName, currentMatchInfo.HostSelectedCharacterName, StringComparison.OrdinalIgnoreCase);
+                    response.Value = string.Equals(characterName.Trim(), currentMatchInfo.GuestSelectedCharacterName.Trim(), StringComparison.OrdinalIgnoreCase);
+                    response.StatusCode = ResponseStatus.OK;
 
                     NotifyOtherPlayer(currentMatchInfo.HostChannel, response.Value ? MatchStatus.GameLost : MatchStatus.GameWon);
+
+                    if (currentMatchInfo.IsTournamentMatch)
+                    {
+                        AddScorePoints(response.Value ? currentMatchInfo.GuestNickname : currentMatchInfo.HostNickname);
+                    }
                 }
             }
 
             return response;
         }
 
-        public void ListenMatchStatus(string matchCode)
+
+        private void AddScorePoints(string playerNickname)
+        {
+            MatchDAO.AddScorePoints(playerNickname);
+        }
+
+        public void ListenMatchStatus(string matchCode, string nickname)
         {
             var channel = OperationContext.Current.GetCallbackChannel<IMatchStatusCallback>();
             Console.WriteLine(channel.GetHashCode() + " escuchando estado de partida " + matchCode);
@@ -51,12 +69,15 @@ namespace GuessWhoServices
             {
                 matchPlayersListening[matchCode] = new MatchPlayerInformation
                 {
-                    HostChannel = channel
+                    HostChannel = channel,
+                    HostNickname = nickname,
+                    IsTournamentMatch = matches[matchCode].IsTournamentMatch
                 };
             }
             else
             {
                 matchPlayersListening[matchCode].GuestChannel = channel;
+                matchPlayersListening[matchCode].GuestNickname = nickname;
             }
         }
 

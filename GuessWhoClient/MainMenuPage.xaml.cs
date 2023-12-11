@@ -96,7 +96,7 @@ namespace GuessWhoClient
 
             try
             {
-                var createMatchResponse = gameManager.Client.CreateMatch(userNickname);
+                var createMatchResponse = gameManager.Client.CreateMatch(userNickname, false);
 
                 gameManager.IsCurrentMatchHost = true;
                 gameManager.CurrentMatchCode = createMatchResponse.Value;
@@ -142,7 +142,24 @@ namespace GuessWhoClient
 
         private void BtnTournamentMatchClick(object sender, RoutedEventArgs e)
         {
+            string userNickname = DataStore.Profile != null ? DataStore.Profile.NickName : "";
+            GameManager gameManager = GameManager.Instance;
 
+            try
+            {
+                var createMatchResponse = gameManager.Client.CreateMatch(userNickname, true);
+
+                gameManager.IsCurrentMatchHost = true;
+                gameManager.CurrentMatchCode = createMatchResponse.Value;
+
+                LobbyPage lobbyPage = new LobbyPage();
+                NavigationService.Navigate(lobbyPage);
+            }
+            catch (EndpointNotFoundException)
+            {
+                gameManager.RestartRawValues();
+                ServerResponse.ShowServerDownMessage();
+            }
         }
 
         private void BtnFriendsClick(object sender, RoutedEventArgs e)
@@ -282,6 +299,14 @@ namespace GuessWhoClient
                             MessageBoxButton.OK,
                             MessageBoxImage.Warning
                         );
+                        gameManager.RestartRawValues();
+                        break;
+                    case ResponseStatus.NOT_ALLOWED:
+                        MessageBox.Show(
+                            Properties.Resources.msgbErrorNotAllowedToJoinMatchMessage,
+                            Properties.Resources.msgbErrorNotAllowedToJoinMatchTitle,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning);
                         gameManager.RestartRawValues();
                         break;
                     default:

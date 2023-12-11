@@ -121,7 +121,7 @@
     <value>Agregar Amigo</value>
   </data>
   <data name="btnBackToMenu" xml:space="preserve">
-    <value>Volver al menú</value>
+    <value>VOLVER AL MENÚ</value>
   </data>
   <data name="btnCancelGame" xml:space="preserve">
     <value>Cancelar partida</value>
@@ -222,6 +222,9 @@
   <data name="lbAllPlayersReady" xml:space="preserve">
     <value>¡La partida está llena y lista para comenzar!</value>
   </data>
+  <data name="lbAuch" xml:space="preserve">
+    <value>¡Auch!</value>
+  </data>
   <data name="lbChangePassword" xml:space="preserve">
     <value>Cambio de Contraseña</value>
   </data>
@@ -230,6 +233,12 @@
   </data>
   <data name="lbChooseCharacter" xml:space="preserve">
     <value>¡Escoge tu personaje!</value>
+  </data>
+  <data name="lbClueCorrectDraw" xml:space="preserve">
+    <value>Tu dibujo se parece al dibujo de tu oponente</value>
+  </data>
+  <data name="lbClueWrongDraw" xml:space="preserve">
+    <value>Tu dibujo NO se parece al de tu contrincante</value>
   </data>
   <data name="lbConfirmAccountDescription" xml:space="preserve">
     <value>Hemos enviado un código de verificación al correo que nos has proporcionado, por favor colócalo debajo para concluir con la creación de tu cuenta.</value>
@@ -312,6 +321,12 @@
   <data name="lbWaitingOpponent" xml:space="preserve">
     <value>Esperando oponente…</value>
   </data>
+  <data name="lbWaitingOpponentAnswer" xml:space="preserve">
+    <value>Esperando respuesta del contrincante</value>
+  </data>
+  <data name="lbWellDone" xml:space="preserve">
+    <value>¡Bien hecho!</value>
+  </data>
   <data name="msgbCanceledMatchMessage" xml:space="preserve">
     <value>El otro jugador ha abandonado la partida, la partida ha sido cancelada</value>
   </data>
@@ -362,6 +377,12 @@
   </data>
   <data name="msgbErrorLeavingMatchTitle" xml:space="preserve">
     <value>Error al abandonar la partida, intente nuevamente</value>
+  </data>
+  <data name="msgbErrorNotAllowedToJoinMatchMessage" xml:space="preserve">
+    <value>Esta partida es de tipo Campeonato. Para poder unirte a partidas de este tipo debes iniciar sesión.</value>
+  </data>
+  <data name="msgbErrorNotAllowedToJoinMatchTitle" xml:space="preserve">
+    <value>No puedes unirte a la partida</value>
   </data>
   <data name="msgbErrorRetrievingPlayerEmailMessage" xml:space="preserve">
     <value>Ocurrió un error al intentar recuperar el correo electrónico del jugador, por lo que la invitación no pudo ser enviada</value>

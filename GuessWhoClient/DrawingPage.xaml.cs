@@ -5,7 +5,6 @@ using GuessWhoClient.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.Threading;
@@ -13,7 +12,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
@@ -156,28 +154,7 @@ namespace GuessWhoClient
 
         private void ShowCharacters()
         {
-            IcCharacters.ItemsSource = RecoverChatacters();
-        }
-
-        private List<Character> RecoverChatacters()
-        {
-            List<Character> charactersList = new List<Character>();
-
-            string PROJECT_DIRECTORY = System.IO.Path.Combine(AppContext.BaseDirectory, "..\\..\\");
-            string CHARACTERS_FOLDER = System.IO.Path.Combine(PROJECT_DIRECTORY, "Resources\\Characters");
-            string[] imageFiles = Directory.GetFiles(CHARACTERS_FOLDER, "*.png");
-
-            foreach (string imagePath in imageFiles)
-            {
-                Character character = new Character
-                {
-                    IsSelected = false,
-                    Avatar = new BitmapImage(new Uri(imagePath, UriKind.Relative))
-                };
-                charactersList.Add(character);
-            }
-
-            return charactersList;
+            IcCharacters.ItemsSource = gameManager.CharactersInGame;
         }
 
         private void CnvsStartDrawing(object sender, MouseButtonEventArgs e)
@@ -613,16 +590,53 @@ namespace GuessWhoClient
                     MessageBoxButton.YesNo
                 );
 
-                if(confirmSelection == MessageBoxResult.Yes)
+                if (confirmSelection == MessageBoxResult.Yes)
                 {
-                    
+                    var isWinner = matchStatusManager.Client.GuessCharacter(character.Name, matchStatusManager.CurrentMatchCode);
+                    if (isWinner.StatusCode == ResponseStatus.OK)
+                    {
+                        RedirectToWinnerPage(isWinner.Value);
+                    }
                 }
             }
         }
 
+        private void RedirectToWinnerPage(bool isCurrentPlayerWinner)
+        {
+            gameManager.UnsubscribePage(this);
+            matchStatusManager.UnsubscribePage(this);
+
+            WinnerPage winnerPage = new WinnerPage();
+            if(DataStore.Profile != null)
+            {
+                winnerPage.InitializeWinnerTextBlock(isCurrentPlayerWinner ? DataStore.Profile.NickName : gameManager.AdversaryNickname);
+            }
+            else if (gameManager.IsCurrentMatchHost)
+            {
+                winnerPage.InitializeWinnerTextBlock(isCurrentPlayerWinner ? Properties.Resources.txtHost : gameManager.AdversaryNickname);
+            }
+            else
+            {
+                winnerPage.InitializeWinnerTextBlock(isCurrentPlayerWinner ? Properties.Resources.txtGuest : gameManager.AdversaryNickname);
+            }
+
+            NavigationService.Navigate(winnerPage);
+            StopTimer();
+
+            gameManager.RestartRawValues();
+            matchStatusManager.RestartRawValues();
+        }
+
         public void MatchStatusChanged(MatchStatus matchStatusCode)
         {
-            throw new NotImplementedException();
+            if(matchStatusCode == MatchStatus.GameLost) 
+            {
+                RedirectToWinnerPage(false);
+            }
+            else if(matchStatusCode == MatchStatus.GameWon)
+            {
+                RedirectToWinnerPage(true);
+            }
         }
 
         public void PlayerStatusInMatchChanged(PlayerInMatch player, bool isInMatch)
@@ -649,6 +663,27 @@ namespace GuessWhoClient
             isOpponentReady = true;
 
             CheckBothPlayersReady();
+        }
+
+        private void BorderClueReceivedClick(object sender, MouseButtonEventArgs e)
+        {
+            BorderClueMessage.Visibility = Visibility.Hidden;
+        }
+
+        public void ShowClueSimilarDrawing()
+        {
+            LbClueDrawing.Content = Properties.Resources.lbWellDone;
+            LbClueDrawingMessge.Content = Properties.Resources.lbClueCorrectDraw;
+
+            BorderClueMessage.Visibility = Visibility.Visible;
+        }
+
+        public void ShowClueNotSimilarDrawing()
+        {
+            LbClueDrawing.Content = Properties.Resources.lbAuch;
+            LbClueDrawingMessge.Content = Properties.Resources.lbClueWrongDraw;
+
+            BorderClueMessage.Visibility = Visibility.Visible;
         }
     }
 }

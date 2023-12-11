@@ -1797,13 +1797,7 @@ namespace GuessWhoClient.GameServices {
         private int idWinnerField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string invitationCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<int> scoreField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string statusField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -1855,19 +1849,6 @@ namespace GuessWhoClient.GameServices {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string invitationCode {
-            get {
-                return this.invitationCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.invitationCodeField, value) != true)) {
-                    this.invitationCodeField = value;
-                    this.RaisePropertyChanged("invitationCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<int> score {
             get {
                 return this.scoreField;
@@ -1876,19 +1857,6 @@ namespace GuessWhoClient.GameServices {
                 if ((this.scoreField.Equals(value) != true)) {
                     this.scoreField = value;
                     this.RaisePropertyChanged("score");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string status {
-            get {
-                return this.statusField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.statusField, value) != true)) {
-                    this.statusField = value;
-                    this.RaisePropertyChanged("status");
                 }
             }
         }
@@ -2333,10 +2301,10 @@ namespace GuessWhoClient.GameServices {
     public interface IGameService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameService/CreateMatch", ReplyAction="http://tempuri.org/IGameService/CreateMatchResponse")]
-        GuessWhoClient.GameServices.stringResponse CreateMatch(string hostNickname);
+        GuessWhoClient.GameServices.stringResponse CreateMatch(string hostNickname, bool isTournamentMatch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameService/CreateMatch", ReplyAction="http://tempuri.org/IGameService/CreateMatchResponse")]
-        System.Threading.Tasks.Task<GuessWhoClient.GameServices.stringResponse> CreateMatchAsync(string hostNickname);
+        System.Threading.Tasks.Task<GuessWhoClient.GameServices.stringResponse> CreateMatchAsync(string hostNickname, bool isTournamentMatch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameService/JoinGame", ReplyAction="http://tempuri.org/IGameService/JoinGameResponse")]
         GuessWhoClient.GameServices.PlayerInMatchResponse JoinGame(string invitationCode, string nickname);
@@ -2392,12 +2360,12 @@ namespace GuessWhoClient.GameServices {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public GuessWhoClient.GameServices.stringResponse CreateMatch(string hostNickname) {
-            return base.Channel.CreateMatch(hostNickname);
+        public GuessWhoClient.GameServices.stringResponse CreateMatch(string hostNickname, bool isTournamentMatch) {
+            return base.Channel.CreateMatch(hostNickname, isTournamentMatch);
         }
         
-        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.stringResponse> CreateMatchAsync(string hostNickname) {
-            return base.Channel.CreateMatchAsync(hostNickname);
+        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.stringResponse> CreateMatchAsync(string hostNickname, bool isTournamentMatch) {
+            return base.Channel.CreateMatchAsync(hostNickname, isTournamentMatch);
         }
         
         public GuessWhoClient.GameServices.PlayerInMatchResponse JoinGame(string invitationCode, string nickname) {
@@ -2430,10 +2398,10 @@ namespace GuessWhoClient.GameServices {
     public interface IMatchStatusService {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchStatusService/ListenMatchStatus")]
-        void ListenMatchStatus(string matchCode);
+        void ListenMatchStatus(string matchCode, string nickname);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchStatusService/ListenMatchStatus")]
-        System.Threading.Tasks.Task ListenMatchStatusAsync(string matchCode);
+        System.Threading.Tasks.Task ListenMatchStatusAsync(string matchCode, string nickname);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IMatchStatusService/StartCharacterSelection")]
         void StartCharacterSelection(string matchCode);
@@ -2507,12 +2475,12 @@ namespace GuessWhoClient.GameServices {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public void ListenMatchStatus(string matchCode) {
-            base.Channel.ListenMatchStatus(matchCode);
+        public void ListenMatchStatus(string matchCode, string nickname) {
+            base.Channel.ListenMatchStatus(matchCode, nickname);
         }
         
-        public System.Threading.Tasks.Task ListenMatchStatusAsync(string matchCode) {
-            return base.Channel.ListenMatchStatusAsync(matchCode);
+        public System.Threading.Tasks.Task ListenMatchStatusAsync(string matchCode, string nickname) {
+            return base.Channel.ListenMatchStatusAsync(matchCode, nickname);
         }
         
         public void StartCharacterSelection(string matchCode) {

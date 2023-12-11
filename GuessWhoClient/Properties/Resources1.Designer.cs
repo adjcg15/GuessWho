@@ -70,7 +70,7 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Volver al menú.
+        ///   Busca una cadena traducida similar a VOLVER AL MENÚ.
         /// </summary>
         public static string btnBackToMenu {
             get {
@@ -376,6 +376,15 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a ¡Auch!.
+        /// </summary>
+        public static string lbAuch {
+            get {
+                return ResourceManager.GetString("lbAuch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Cambio de Contraseña.
         /// </summary>
         public static string lbChangePassword {
@@ -399,6 +408,24 @@ namespace GuessWhoClient.Properties {
         public static string lbChooseCharacter {
             get {
                 return ResourceManager.GetString("lbChooseCharacter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Tu dibujo se parece al dibujo de tu oponente.
+        /// </summary>
+        public static string lbClueCorrectDraw {
+            get {
+                return ResourceManager.GetString("lbClueCorrectDraw", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Tu dibujo NO se parece al de tu contrincante.
+        /// </summary>
+        public static string lbClueWrongDraw {
+            get {
+                return ResourceManager.GetString("lbClueWrongDraw", resourceCulture);
             }
         }
         
@@ -646,6 +673,24 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Esperando respuesta del contrincante.
+        /// </summary>
+        public static string lbWaitingOpponentAnswer {
+            get {
+                return ResourceManager.GetString("lbWaitingOpponentAnswer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ¡Bien hecho!.
+        /// </summary>
+        public static string lbWellDone {
+            get {
+                return ResourceManager.GetString("lbWellDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El otro jugador ha abandonado la partida, la partida ha sido cancelada.
         /// </summary>
         public static string msgbCanceledMatchMessage {
@@ -795,6 +840,24 @@ namespace GuessWhoClient.Properties {
         public static string msgbErrorLeavingMatchTitle {
             get {
                 return ResourceManager.GetString("msgbErrorLeavingMatchTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Esta partida es de tipo Campeonato. Para poder unirte a partidas de este tipo debes iniciar sesión..
+        /// </summary>
+        public static string msgbErrorNotAllowedToJoinMatchMessage {
+            get {
+                return ResourceManager.GetString("msgbErrorNotAllowedToJoinMatchMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No puedes unirte a la partida.
+        /// </summary>
+        public static string msgbErrorNotAllowedToJoinMatchTitle {
+            get {
+                return ResourceManager.GetString("msgbErrorNotAllowedToJoinMatchTitle", resourceCulture);
             }
         }
         

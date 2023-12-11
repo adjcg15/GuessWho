@@ -27,8 +27,6 @@
             <PropertyRef Name="idMatch" />
           </Key>
           <Property Name="idMatch" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="invitationCode" Type="char" MaxLength="4" />
-          <Property Name="status" Type="nvarchar" MaxLength="45" />
           <Property Name="score" Type="int" />
           <Property Name="idWinner" Type="int" Nullable="false" />
         </EntityType>
@@ -257,8 +255,6 @@
             <PropertyRef Name="idMatch" />
           </Key>
           <Property Name="idMatch" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="invitationCode" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="status" Type="String" MaxLength="45" FixedLength="false" Unicode="true" />
           <Property Name="score" Type="Int32" />
           <Property Name="idWinner" Type="Int32" Nullable="false" />
           <NavigationProperty Name="User" Relationship="GuessWhoModel.FK_matches_users" FromRole="Match" ToRole="User" />
@@ -385,8 +381,6 @@
               <MappingFragment StoreEntitySet="Matches">
                 <ScalarProperty Name="idWinner" ColumnName="idWinner" />
                 <ScalarProperty Name="score" ColumnName="score" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="invitationCode" ColumnName="invitationCode" />
                 <ScalarProperty Name="idMatch" ColumnName="idMatch" />
               </MappingFragment>
             </EntityTypeMapping>

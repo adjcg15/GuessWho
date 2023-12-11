@@ -83,6 +83,7 @@
     <Compile Include="Match.cs">
       <DependentUpon>GuessWhoModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="MatchDAO.cs" />
     <Compile Include="PlayerDAO.cs" />
     <Compile Include="PlayerInMatch.cs" />
     <Compile Include="Profile.cs" />

@@ -1,8 +1,9 @@
 ﻿using GuessWhoClient.GameServices;
-using GuessWhoClient.Model.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.ServiceModel;
+using System.Windows.Media.Imaging;
 
 namespace GuessWhoClient
 {
@@ -15,6 +16,8 @@ namespace GuessWhoClient
         private bool isCurrentMatchHost;
         private string adversaryNickname;
         private byte[] adversaryAvatar;
+        private Character selectedCharacter;
+        private List<Character> charactersInGame;
 
         private GameManager() { }
 
@@ -50,6 +53,44 @@ namespace GuessWhoClient
 
         public byte[] AdversaryAvatar { get { return adversaryAvatar; } set { adversaryAvatar = value; } }
 
+        public Character SelectedCharacter { get { return selectedCharacter; } set { selectedCharacter = value; } }
+
+        public List<Character> CharactersInGame
+        {
+            get
+            {
+                if(charactersInGame == null)
+                {
+                    charactersInGame = InitializeCharacters();
+                }
+
+                return charactersInGame;
+            }
+            set {  charactersInGame = value; }
+        }
+
+        private List<Character> InitializeCharacters()
+        {
+            List<Character> charactersList = new List<Character>();
+
+            string PROJECT_DIRECTORY = Path.Combine(AppContext.BaseDirectory, "..\\..\\");
+            string CHARACTERS_FOLDER = Path.Combine(PROJECT_DIRECTORY, "Resources\\Characters");
+            string[] imageFiles = Directory.GetFiles(CHARACTERS_FOLDER, "*.png");
+
+            foreach (string imagePath in imageFiles)
+            {
+                Character character = new Character
+                {
+                    IsSelected = false,
+                    Avatar = new BitmapImage(new Uri(imagePath, UriKind.Relative)),
+                    Name = Path.GetFileNameWithoutExtension(imagePath)
+                };
+                charactersList.Add(character);
+            }
+
+            return charactersList;
+        }
+
         public void SubscribePage(IGamePage page)
         {
             if (!subscribedPages.Contains(page))
@@ -71,6 +112,7 @@ namespace GuessWhoClient
             adversaryNickname = "";
             client = null;
             subscribedPages = new List<IGamePage>();
+            selectedCharacter = null;
         }
 
         public void PlayerStatusInMatchChanged(PlayerInMatch player, bool isInMatch)

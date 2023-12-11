@@ -15,8 +15,6 @@ namespace GuessWhoDataAccess
     public partial class Match
     {
         public int idMatch { get; set; }
-        public string invitationCode { get; set; }
-        public string status { get; set; }
         public Nullable<int> score { get; set; }
         public int idWinner { get; set; }
     
