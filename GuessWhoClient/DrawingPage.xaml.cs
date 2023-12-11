@@ -36,6 +36,7 @@ namespace GuessWhoClient
         private const double MIN_DISTANCE = 1.5;
         private readonly List<Point> drawingPoints = new List<Point>();
         private Polyline lastLineDrawed;
+        private bool isPageUnloaded;
 
         public bool IsChoosingCharacter
         {
@@ -96,6 +97,11 @@ namespace GuessWhoClient
                 ClearCommunicationChannels();
                 RedirectToMainMenu();
             }
+        }
+
+        private void PageUnloaded(object sender, RoutedEventArgs e)
+        {
+            isPageUnloaded = true;
         }
 
         private void RedirectToMainMenu()
@@ -445,18 +451,21 @@ namespace GuessWhoClient
         private void ShowExitConfirmationMessage()
         {
             MessageBoxResult confirmSelection = MessageBox.Show(
-                    Properties.Resources.msgbConfirmLeaveGameMessage,
-                    Properties.Resources.msgbConfirmLeaveGameTitle,
-                    MessageBoxButton.YesNo
-                );
+                Properties.Resources.msgbConfirmLeaveGameMessage,
+                Properties.Resources.msgbConfirmLeaveGameTitle,
+                MessageBoxButton.YesNo
+            );
 
-            if (confirmSelection == MessageBoxResult.Yes)
+            if (!isPageUnloaded)
             {
-                LeaveCurrentGame();
+                if (confirmSelection == MessageBoxResult.Yes)
+                {
+                    LeaveCurrentGame();
 
-                drawServiceClient.UnsubscribeFromDrawService(gameManager.CurrentMatchCode);
-                ClearCommunicationChannels();
-                RedirectToMainMenu();
+                    drawServiceClient.UnsubscribeFromDrawService(gameManager.CurrentMatchCode);
+                    ClearCommunicationChannels();
+                    RedirectToMainMenu();
+                }
             }
         }
 
@@ -499,14 +508,17 @@ namespace GuessWhoClient
                 MessageBoxButton.YesNo
             );
 
-            if (confirmSelection == MessageBoxResult.Yes)
+            if (!isPageUnloaded)
             {
-                StopTimer();
-                isActualPlayerReady = true;
-                drawServiceClient.SendDraw(GetSerializedDraw(), gameManager.CurrentMatchCode);
-                DisableUI();
+                if (confirmSelection == MessageBoxResult.Yes)
+                {
+                    StopTimer();
+                    isActualPlayerReady = true;
+                    drawServiceClient.SendDraw(GetSerializedDraw(), gameManager.CurrentMatchCode);
+                    DisableUI();
 
-                CheckBothPlayersReady();
+                    CheckBothPlayersReady();
+                }
             }
         }
 
@@ -590,12 +602,15 @@ namespace GuessWhoClient
                     MessageBoxButton.YesNo
                 );
 
-                if (confirmSelection == MessageBoxResult.Yes)
+                if (!isPageUnloaded)
                 {
-                    var isWinner = matchStatusManager.Client.GuessCharacter(character.Name, matchStatusManager.CurrentMatchCode);
-                    if (isWinner.StatusCode == ResponseStatus.OK)
+                    if (confirmSelection == MessageBoxResult.Yes)
                     {
-                        RedirectToWinnerPage(isWinner.Value);
+                        var isWinner = matchStatusManager.Client.GuessCharacter(character.Name, matchStatusManager.CurrentMatchCode);
+                        if (isWinner.StatusCode == ResponseStatus.OK)
+                        {
+                            RedirectToWinnerPage(isWinner.Value);
+                        }
                     }
                 }
             }
