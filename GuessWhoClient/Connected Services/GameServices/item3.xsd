@@ -253,6 +253,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="hostNickname" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="isTournamentMatch" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -309,6 +310,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="matchCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="nickname" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

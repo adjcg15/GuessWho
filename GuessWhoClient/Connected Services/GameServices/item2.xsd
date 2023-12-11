@@ -279,9 +279,7 @@
       <xs:element minOccurs="0" name="User" nillable="true" type="tns:User" />
       <xs:element minOccurs="0" name="idMatch" type="xs:int" />
       <xs:element minOccurs="0" name="idWinner" type="xs:int" />
-      <xs:element minOccurs="0" name="invitationCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="score" nillable="true" type="xs:int" />
-      <xs:element minOccurs="0" name="status" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Match" nillable="true" type="tns:Match" />

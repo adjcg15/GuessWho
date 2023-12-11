@@ -29,10 +29,8 @@ namespace GuessWhoDataAccess
                                 UserId = user.idUser,
                                 UserNickname = user.nickname,
                                 MatchScore = match.score,
-                                MatchStatus = match.status
                             }
                         )
-                        .Where(m => m.MatchStatus == "finished")
                         .Where(u => u.UserNickname.Contains(query))
                         .GroupBy(m => m.UserId)
                         .Select(g => new

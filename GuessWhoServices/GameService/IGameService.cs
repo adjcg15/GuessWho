@@ -7,7 +7,7 @@ namespace GuessWhoServices
     public interface IGameService
     {
         [OperationContract]
-        Response<string> CreateMatch(string hostNickname);
+        Response<string> CreateMatch(string hostNickname, bool isTournamentMatch);
 
         [OperationContract]
         Response<PlayerInMatch> JoinGame(string invitationCode, string nickname);

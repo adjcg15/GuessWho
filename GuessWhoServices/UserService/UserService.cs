@@ -66,6 +66,10 @@ namespace GuessWhoServices
                 {
                     clientChannels.Remove(subscriber);
                 }
+                catch (TimeoutException)
+                {
+
+                }
             }
         } 
     }

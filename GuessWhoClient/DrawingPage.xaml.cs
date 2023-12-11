@@ -156,10 +156,10 @@ namespace GuessWhoClient
 
         private void ShowCharacters()
         {
-            IcCharacters.ItemsSource = RecoverChatacters();
+            IcCharacters.ItemsSource = RecoverCharacters();
         }
 
-        private List<Character> RecoverChatacters()
+        private List<Character> RecoverCharacters()
         {
             List<Character> charactersList = new List<Character>();
 
@@ -172,7 +172,8 @@ namespace GuessWhoClient
                 Character character = new Character
                 {
                     IsSelected = false,
-                    Avatar = new BitmapImage(new Uri(imagePath, UriKind.Relative))
+                    Avatar = new BitmapImage(new Uri(imagePath, UriKind.Relative)),
+                    Name = System.IO.Path.GetFileNameWithoutExtension(imagePath)
                 };
                 charactersList.Add(character);
             }
@@ -613,16 +614,56 @@ namespace GuessWhoClient
                     MessageBoxButton.YesNo
                 );
 
-                if(confirmSelection == MessageBoxResult.Yes)
+                if (confirmSelection == MessageBoxResult.Yes)
                 {
-                    
+                    Console.WriteLine("Seleccionó " + character.Name);
+                    var isWinner = matchStatusManager.Client.GuessCharacter(character.Name, matchStatusManager.CurrentMatchCode);
+                    if (isWinner.StatusCode == ResponseStatus.OK)
+                    {
+                        RedirectToWinnerPage(isWinner.Value);
+                    }
                 }
             }
         }
 
+        private void RedirectToWinnerPage(bool isCurrentPlayerWinner)
+        {
+            gameManager.UnsubscribePage(this);
+            matchStatusManager.UnsubscribePage(this);
+
+            Console.WriteLine(gameManager.AdversaryNickname);
+
+            WinnerPage winnerPage = new WinnerPage();
+            if(DataStore.Profile != null)
+            {
+                winnerPage.InitializeWinnerTextBlock(isCurrentPlayerWinner ? DataStore.Profile.NickName : gameManager.AdversaryNickname);
+            }
+            else if (gameManager.IsCurrentMatchHost)
+            {
+                winnerPage.InitializeWinnerTextBlock(isCurrentPlayerWinner ? Properties.Resources.txtHost : gameManager.AdversaryNickname);
+            }
+            else
+            {
+                winnerPage.InitializeWinnerTextBlock(isCurrentPlayerWinner ? Properties.Resources.txtGuest : gameManager.AdversaryNickname);
+            }
+
+            NavigationService.Navigate(winnerPage);
+            StopTimer();
+
+            gameManager.RestartRawValues();
+            matchStatusManager.RestartRawValues();
+        }
+
         public void MatchStatusChanged(MatchStatus matchStatusCode)
         {
-            throw new NotImplementedException();
+            if(matchStatusCode == MatchStatus.GameLost) 
+            {
+                RedirectToWinnerPage(false);
+            }
+            else if(matchStatusCode == MatchStatus.GameWon)
+            {
+                RedirectToWinnerPage(true);
+            }
         }
 
         public void PlayerStatusInMatchChanged(PlayerInMatch player, bool isInMatch)

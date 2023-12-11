@@ -121,7 +121,7 @@
     <value>Agregar Amigo</value>
   </data>
   <data name="btnBackToMenu" xml:space="preserve">
-    <value>Volver al menú</value>
+    <value>VOLVER AL MENÚ</value>
   </data>
   <data name="btnCancelGame" xml:space="preserve">
     <value>Cancelar partida</value>
@@ -362,6 +362,12 @@
   </data>
   <data name="msgbErrorLeavingMatchTitle" xml:space="preserve">
     <value>Error al abandonar la partida, intente nuevamente</value>
+  </data>
+  <data name="msgbErrorNotAllowedToJoinMatchMessage" xml:space="preserve">
+    <value>Esta partida es de tipo Campeonato. Para poder unirte a partidas de este tipo debes iniciar sesión.</value>
+  </data>
+  <data name="msgbErrorNotAllowedToJoinMatchTitle" xml:space="preserve">
+    <value>No puedes unirte a la partida</value>
   </data>
   <data name="msgbErrorRetrievingPlayerEmailMessage" xml:space="preserve">
     <value>Ocurrió un error al intentar recuperar el correo electrónico del jugador, por lo que la invitación no pudo ser enviada</value>

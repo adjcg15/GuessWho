@@ -8,7 +8,7 @@ namespace GuessWhoServices
     public interface IMatchStatusService
     {
         [OperationContract(IsOneWay = true)]
-        void ListenMatchStatus(string matchCode);
+        void ListenMatchStatus(string matchCode, string nickname);
 
         [OperationContract(IsOneWay = true)]
         void StartCharacterSelection(string matchCode);

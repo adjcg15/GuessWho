@@ -121,7 +121,7 @@
     <value>Add Friend</value>
   </data>
   <data name="btnBackToMenu" xml:space="preserve">
-    <value>Go back to menu...</value>
+    <value>GO BACK TO MENU</value>
   </data>
   <data name="btnCancelGame" xml:space="preserve">
     <value>Cancel match</value>
@@ -362,6 +362,12 @@
   </data>
   <data name="msgbErrorLeavingMatchTitle" xml:space="preserve">
     <value>Error leaving game, try again</value>
+  </data>
+  <data name="msgbErrorNotAllowedToJoinMatchMessage" xml:space="preserve">
+    <value>This game is a Championship match. To join matches like this, you need to log in.</value>
+  </data>
+  <data name="msgbErrorNotAllowedToJoinMatchTitle" xml:space="preserve">
+    <value>You Cannot join the match</value>
   </data>
   <data name="msgbErrorRetrievingPlayerEmailMessage" xml:space="preserve">
     <value>An error occurred while trying to retrieve the player's email, so the invitation could not be sent</value>

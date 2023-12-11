@@ -1,0 +1,45 @@
+﻿<Page x:Class="GuessWhoClient.WinnerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:GuessWhoClient"
+      xmlns:p="clr-namespace:GuessWhoClient.Properties"
+      mc:Ignorable="d" 
+      Height="520" Width="900"
+      Title="WinnerPage">
+
+    <Grid>
+        <Image 
+            Source="/Resources/background.png" 
+            Stretch="UniformToFill" 
+            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <Image Source="/Resources/winner-banner.png" HorizontalAlignment="Center" VerticalAlignment="Top" Stretch="UniformToFill" Height="250" Width="690" Margin="0,50,0,0" >
+            <Image.ToolTip>
+                <ToolTip Content="The Winner is..."/>
+            </Image.ToolTip>
+        </Image>
+        <Border Margin="292,328,292,116" BorderBrush="#E21818" CornerRadius="40" Background="White" BorderThickness="4">
+            <TextBlock Name="TbWinner" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontWeight="Bold" Foreground="#0A6EBD"/>
+        </Border>
+        <Image HorizontalAlignment="Left" Margin="579,301,0,0" VerticalAlignment="Top" Source="/Resources/crown-icon.png" Stretch="UniformToFill" Height="57" Width="57"/>
+        <Image HorizontalAlignment="Left" Margin="262,300,0,0" VerticalAlignment="Top" Source="/Resources/crown-icon.png" Stretch="UniformToFill" Height="57" Width="58" RenderTransformOrigin="0.5,0.5">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+        
+        <Button x:Name ="BtnMainMenu" Click="BtnMainMenuClick" Style="{StaticResource PrimaryButtonWithIcon}" Margin="340,447,340,25" Width="220" Height="47">
+            <StackPanel Orientation="Horizontal" Cursor="Hand">
+                <Image Source="/Resources/play-icon.png" Width="24" Height="19"/>
+                <TextBlock Text="{x:Static p:Resources.btnBackToMenu}" VerticalAlignment="Center" FontWeight="SemiBold" Margin="12,0,0,0"/>
+            </StackPanel>
+        </Button>
+
+    </Grid>
+</Page>

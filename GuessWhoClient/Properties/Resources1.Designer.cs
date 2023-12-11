@@ -70,7 +70,7 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Volver al menú.
+        ///   Busca una cadena traducida similar a VOLVER AL MENÚ.
         /// </summary>
         public static string btnBackToMenu {
             get {
@@ -795,6 +795,24 @@ namespace GuessWhoClient.Properties {
         public static string msgbErrorLeavingMatchTitle {
             get {
                 return ResourceManager.GetString("msgbErrorLeavingMatchTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Esta partida es de tipo Campeonato. Para poder unirte a partidas de este tipo debes iniciar sesión..
+        /// </summary>
+        public static string msgbErrorNotAllowedToJoinMatchMessage {
+            get {
+                return ResourceManager.GetString("msgbErrorNotAllowedToJoinMatchMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No puedes unirte a la partida.
+        /// </summary>
+        public static string msgbErrorNotAllowedToJoinMatchTitle {
+            get {
+                return ResourceManager.GetString("msgbErrorNotAllowedToJoinMatchTitle", resourceCulture);
             }
         }
         
