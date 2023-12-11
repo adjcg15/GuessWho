@@ -376,6 +376,15 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a ¡Auch!.
+        /// </summary>
+        public static string lbAuch {
+            get {
+                return ResourceManager.GetString("lbAuch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Cambio de Contraseña.
         /// </summary>
         public static string lbChangePassword {
@@ -399,6 +408,24 @@ namespace GuessWhoClient.Properties {
         public static string lbChooseCharacter {
             get {
                 return ResourceManager.GetString("lbChooseCharacter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Tu dibujo se parece al dibujo de tu oponente.
+        /// </summary>
+        public static string lbClueCorrectDraw {
+            get {
+                return ResourceManager.GetString("lbClueCorrectDraw", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Tu dibujo NO se parece al de tu contrincante.
+        /// </summary>
+        public static string lbClueWrongDraw {
+            get {
+                return ResourceManager.GetString("lbClueWrongDraw", resourceCulture);
             }
         }
         
@@ -651,6 +678,15 @@ namespace GuessWhoClient.Properties {
         public static string lbWaitingOpponentAnswer {
             get {
                 return ResourceManager.GetString("lbWaitingOpponentAnswer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ¡Bien hecho!.
+        /// </summary>
+        public static string lbWellDone {
+            get {
+                return ResourceManager.GetString("lbWellDone", resourceCulture);
             }
         }
         

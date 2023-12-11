@@ -222,6 +222,9 @@
   <data name="lbAllPlayersReady" xml:space="preserve">
     <value>¡La partida está llena y lista para comenzar!</value>
   </data>
+  <data name="lbAuch" xml:space="preserve">
+    <value>¡Auch!</value>
+  </data>
   <data name="lbChangePassword" xml:space="preserve">
     <value>Cambio de Contraseña</value>
   </data>
@@ -230,6 +233,12 @@
   </data>
   <data name="lbChooseCharacter" xml:space="preserve">
     <value>¡Escoge tu personaje!</value>
+  </data>
+  <data name="lbClueCorrectDraw" xml:space="preserve">
+    <value>Tu dibujo se parece al dibujo de tu oponente</value>
+  </data>
+  <data name="lbClueWrongDraw" xml:space="preserve">
+    <value>Tu dibujo NO se parece al de tu contrincante</value>
   </data>
   <data name="lbConfirmAccountDescription" xml:space="preserve">
     <value>Hemos enviado un código de verificación al correo que nos has proporcionado, por favor colócalo debajo para concluir con la creación de tu cuenta.</value>
@@ -314,6 +323,9 @@
   </data>
   <data name="lbWaitingOpponentAnswer" xml:space="preserve">
     <value>Esperando respuesta del contrincante</value>
+  </data>
+  <data name="lbWellDone" xml:space="preserve">
+    <value>¡Bien hecho!</value>
   </data>
   <data name="msgbCanceledMatchMessage" xml:space="preserve">
     <value>El otro jugador ha abandonado la partida, la partida ha sido cancelada</value>

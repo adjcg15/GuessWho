@@ -18,7 +18,9 @@ namespace GuessWhoClient
         private MatchStatusManager matchStatusManager = MatchStatusManager.Instance;
         private const int PEN_THICKNESS = 4;
         private bool reportFinished;
-
+        private bool ownAnswerSent;
+        private bool opponentAnswerReceived;
+        private bool opponentDrawingLooksLikeAnswer;
 
         public AnswerPage()
         {
@@ -122,6 +124,20 @@ namespace GuessWhoClient
         private void SendClueToOpponent(bool looksLike)
         {
             matchStatusManager.Client.SendAnswer(looksLike, gameManager.CurrentMatchCode);
+            ownAnswerSent = true;
+
+            if (opponentAnswerReceived)
+            {
+                if(opponentDrawingLooksLikeAnswer)
+                {
+                    RedirectToGamePageFromSimilarDrawingClue();
+                }
+                else
+                {
+
+                    RedirectToGamePageFromNotSimilarDrawingClue();
+                }
+            }
         }
 
         private void DisableAnswerButtons()
@@ -137,15 +153,41 @@ namespace GuessWhoClient
 
         public void MatchStatusChanged(MatchStatus matchStatusCode)
         {
-            switch(matchStatusCode)
+            switch (matchStatusCode)
             {
                 case MatchStatus.LooksLike:
+                    opponentAnswerReceived = true;
+                    opponentDrawingLooksLikeAnswer = true;
 
+                    if (ownAnswerSent)
+                    {
+                        RedirectToGamePageFromSimilarDrawingClue();
+                    }
                     break;
                 case MatchStatus.DoesNotLookLike:
-                    
+                    opponentAnswerReceived = true;
+                    opponentDrawingLooksLikeAnswer = false;
+
+                    if (ownAnswerSent)
+                    {
+                        RedirectToGamePageFromNotSimilarDrawingClue();
+                    }
                     break;
             }
+        }
+
+        private void RedirectToGamePageFromSimilarDrawingClue()
+        {
+            DrawingPage gamePage = new DrawingPage();
+            gamePage.ShowClueSimilarDrawing();
+            NavigationService.Navigate(gamePage);
+        }
+
+        private void RedirectToGamePageFromNotSimilarDrawingClue()
+        {
+            DrawingPage gamePage = new DrawingPage();
+            gamePage.ShowClueNotSimilarDrawing();
+            NavigationService.Navigate(gamePage);
         }
 
         public void PlayerStatusInMatchChanged(PlayerInMatch player, bool isInMatch)
@@ -247,7 +289,6 @@ namespace GuessWhoClient
 
             return isValid;
         }
-
 
         private void SendReport()
         {

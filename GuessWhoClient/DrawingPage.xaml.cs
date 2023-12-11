@@ -650,5 +650,26 @@ namespace GuessWhoClient
 
             CheckBothPlayersReady();
         }
+
+        private void BorderClueReceivedClick(object sender, MouseButtonEventArgs e)
+        {
+            BorderClueMessage.Visibility = Visibility.Hidden;
+        }
+
+        public void ShowClueSimilarDrawing()
+        {
+            LbClueDrawing.Content = Properties.Resources.lbWellDone;
+            LbClueDrawingMessge.Content = Properties.Resources.lbClueCorrectDraw;
+
+            BorderClueMessage.Visibility = Visibility.Visible;
+        }
+
+        public void ShowClueNotSimilarDrawing()
+        {
+            LbClueDrawing.Content = Properties.Resources.lbAuch;
+            LbClueDrawingMessge.Content = Properties.Resources.lbClueWrongDraw;
+
+            BorderClueMessage.Visibility = Visibility.Visible;
+        }
     }
 }
