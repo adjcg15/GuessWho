@@ -158,8 +158,6 @@ namespace GuessWhoClient
 
         public void MatchStatusChanged(MatchStatus matchStatusCode)
         {
-            Console.WriteLine(matchStatusCode + " " + gameManager.IsCurrentMatchHost + " " + selectedCharacter == null);
-
             if (matchStatusCode == MatchStatus.PlayerReady && gameManager.IsCurrentMatchHost && selectedCharacter != null)
             {
                 BtnConfirmCharacterSelection.Visibility = Visibility.Collapsed;
@@ -190,18 +188,18 @@ namespace GuessWhoClient
 
         private void BtnStartGameClick(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine(selectedCharacter);
             try
             {
                 if (selectedCharacter != null && gameManager.IsCurrentMatchHost && isGuestReady)
                 {
                     matchStatusManager.Client.StartGame(selectedCharacter.Name, matchStatusManager.CurrentMatchCode);
+                    gameManager.SelectedCharacter = selectedCharacter;
                     RedirectToDrawingPage();
                 }
             }
             catch (EndpointNotFoundException ex)
             {
-                Utils.ServerResponse.ShowServerDownMessage();
+                ServerResponse.ShowServerDownMessage();
                 //TO-DO Ex log
             }
         }
@@ -239,6 +237,8 @@ namespace GuessWhoClient
                 DisableBtnConfirmCharacterSelection();
                 BtnConfirmCharacterSelection.Content = Properties.Resources.lbWaitingOpponent;
             }
+
+            gameManager.SelectedCharacter = selectedCharacter;
         }
     }
 }

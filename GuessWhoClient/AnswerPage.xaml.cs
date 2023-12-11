@@ -2,7 +2,6 @@
 using GuessWhoClient.GameServices;
 using GuessWhoClient.Model.Interfaces;
 using GuessWhoClient.Utils;
-using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.Windows;
@@ -18,7 +17,9 @@ namespace GuessWhoClient
         private MatchStatusManager matchStatusManager = MatchStatusManager.Instance;
         private const int PEN_THICKNESS = 4;
         private bool reportFinished;
-
+        private bool ownAnswerSent;
+        private bool opponentAnswerReceived;
+        private bool opponentDrawingLooksLikeAnswer;
 
         public AnswerPage()
         {
@@ -29,6 +30,28 @@ namespace GuessWhoClient
         {
             InitializeComponent();
             PaintDrawInCanvas(draw);
+        }
+
+        private void PageLoaded(object sender, RoutedEventArgs e)
+        {
+            ShowCharacterSelected();
+
+            if (gameManager.AdversaryNickname == string.Empty || DataStore.Profile == null)
+            {
+                BtnReportPlayer.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void ShowCharacterSelected()
+        {
+            if(gameManager.SelectedCharacter != null && gameManager.SelectedCharacter.Avatar != null)
+            {
+                ImgCharacterSelected.ImageSource = gameManager.SelectedCharacter.Avatar;
+            }
+            else
+            {
+                BorderCharacterSelected.Visibility = Visibility.Hidden;
+            }
         }
 
         private void PaintDrawInCanvas(SerializedLine[] draw)
@@ -79,21 +102,131 @@ namespace GuessWhoClient
 
         private void BtnAnswerNoClick(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                SendClueToOpponent(false);
+                DisableAnswerButtons();
+                ShowWaitingAnswerMessage();
+            }
+            catch(EndpointNotFoundException)
+            {
+                ServerResponse.ShowServerDownMessage();
 
+                gameManager.UnsubscribePage(this);
+                matchStatusManager.UnsubscribePage(this);
+                gameManager.RestartRawValues();
+                matchStatusManager.RestartRawValues();
+
+                RedirectToMainMenuFromCanceledMatch();
+            }
         }
 
         private void BtnAnswerYesClick(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                SendClueToOpponent(true);
+                DisableAnswerButtons();
+                ShowWaitingAnswerMessage();
+            }
+            catch(EndpointNotFoundException)
+            {
+                ServerResponse.ShowServerDownMessage();
 
+                gameManager.UnsubscribePage(this);
+                matchStatusManager.UnsubscribePage(this);
+                gameManager.RestartRawValues();
+                matchStatusManager.RestartRawValues();
+
+                RedirectToMainMenuFromCanceledMatch();
+            }
         }
 
-        public void MatchStatusChanged(MatchStatus matchStatusCode) //LooksLike / DoesNotLookLike
+        private void SendClueToOpponent(bool looksLike)
         {
-            throw new NotImplementedException();
+            matchStatusManager.Client.SendAnswer(looksLike, gameManager.CurrentMatchCode);
+            ownAnswerSent = true;
+
+            if (opponentAnswerReceived)
+            {
+                if (opponentDrawingLooksLikeAnswer)
+                {
+                    RedirectToGamePageFromSimilarDrawingClue();
+                }
+                else
+                {
+                    RedirectToGamePageFromNotSimilarDrawingClue();
+                }
+            }
+        }
+
+        private void DisableAnswerButtons()
+        {
+            BtnAnswerNo.IsEnabled = false;
+            BtnAnswerYes.IsEnabled = false;
+        }
+
+        private void ShowWaitingAnswerMessage()
+        {
+            TbWaitingAnswer.Visibility = Visibility.Visible;
+        }
+
+        public void MatchStatusChanged(MatchStatus matchStatusCode)
+        {
+            switch (matchStatusCode)
+            {
+                case MatchStatus.LooksLike:
+                    opponentAnswerReceived = true;
+                    opponentDrawingLooksLikeAnswer = true;
+
+                    if (ownAnswerSent)
+                    {
+                        RedirectToGamePageFromSimilarDrawingClue();
+                    }
+                    break;
+                case MatchStatus.DoesNotLookLike:
+                    opponentAnswerReceived = true;
+                    opponentDrawingLooksLikeAnswer = false;
+
+                    if (ownAnswerSent)
+                    {
+                        RedirectToGamePageFromNotSimilarDrawingClue();
+                    }
+                    break;
+            }
+        }
+
+        private void RedirectToGamePageFromSimilarDrawingClue()
+        {
+            gameManager.UnsubscribePage(this);
+            matchStatusManager.UnsubscribePage(this);
+
+            DrawingPage gamePage = new DrawingPage();
+            gameManager.SubscribePage(gamePage);
+            matchStatusManager.SubscribePage(gamePage);
+
+            gamePage.ShowClueSimilarDrawing();
+            NavigationService.Navigate(gamePage);
+        }
+
+        private void RedirectToGamePageFromNotSimilarDrawingClue()
+        {
+            gameManager.UnsubscribePage(this);
+            matchStatusManager.UnsubscribePage(this);
+
+            DrawingPage gamePage = new DrawingPage();
+            gameManager.SubscribePage(gamePage);
+            matchStatusManager.SubscribePage(gamePage);
+
+            gamePage.ShowClueNotSimilarDrawing();
+            NavigationService.Navigate(gamePage);
         }
 
         public void PlayerStatusInMatchChanged(PlayerInMatch player, bool isInMatch)
         {
+            gameManager.UnsubscribePage(this);
+            matchStatusManager.UnsubscribePage(this);
+
             ClearCommunicationChannels();
             RedirectToMainMenuFromCanceledMatch();
         }
@@ -122,14 +255,6 @@ namespace GuessWhoClient
             MainMenuPage mainMenu = new MainMenuPage();
             mainMenu.ShowCanceledMatchMessage();
             NavigationService.Navigate(mainMenu);
-        }
-
-        private void PageLoaded(object sender, RoutedEventArgs e)
-        {
-            if(gameManager.AdversaryNickname == string.Empty || DataStore.Profile == null)
-            {
-                BtnReportPlayer.Visibility = Visibility.Collapsed;
-            }
         }
 
         private void TbReportCommentGotFocus(object sender, RoutedEventArgs e)
@@ -168,7 +293,6 @@ namespace GuessWhoClient
             TbReportCommentBorder.BorderBrush = (Brush)new BrushConverter().ConvertFrom("#FFABADB3");
             CbReportReasonBorder.BorderBrush = (Brush)new BrushConverter().ConvertFrom("#FFABADB3");
 
-            Console.WriteLine(CbReportReason.SelectedIndex + " " + TbReportComment.Text);
             if(CbReportReason.SelectedIndex == -1 && (TbReportComment.Text == string.Empty || TbReportComment.Text == Properties.Resources.tbReportCommentPlaceholder)) 
             {
                 TbReportCommentBorder.BorderBrush = Brushes.Red;
@@ -191,7 +315,6 @@ namespace GuessWhoClient
 
             return isValid;
         }
-
 
         private void SendReport()
         {
@@ -222,7 +345,7 @@ namespace GuessWhoClient
                     ShowErrorSendingReport(response.StatusCode);
                 }
             }
-            catch (EndpointNotFoundException ex)
+            catch (EndpointNotFoundException)
             {
                 ServerResponse.ShowServerDownMessage();
             }

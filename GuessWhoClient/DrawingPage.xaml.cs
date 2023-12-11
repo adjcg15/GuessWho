@@ -5,7 +5,6 @@ using GuessWhoClient.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.Threading;
@@ -13,7 +12,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
@@ -156,29 +154,7 @@ namespace GuessWhoClient
 
         private void ShowCharacters()
         {
-            IcCharacters.ItemsSource = RecoverCharacters();
-        }
-
-        private List<Character> RecoverCharacters()
-        {
-            List<Character> charactersList = new List<Character>();
-
-            string PROJECT_DIRECTORY = System.IO.Path.Combine(AppContext.BaseDirectory, "..\\..\\");
-            string CHARACTERS_FOLDER = System.IO.Path.Combine(PROJECT_DIRECTORY, "Resources\\Characters");
-            string[] imageFiles = Directory.GetFiles(CHARACTERS_FOLDER, "*.png");
-
-            foreach (string imagePath in imageFiles)
-            {
-                Character character = new Character
-                {
-                    IsSelected = false,
-                    Avatar = new BitmapImage(new Uri(imagePath, UriKind.Relative)),
-                    Name = System.IO.Path.GetFileNameWithoutExtension(imagePath)
-                };
-                charactersList.Add(character);
-            }
-
-            return charactersList;
+            IcCharacters.ItemsSource = gameManager.CharactersInGame;
         }
 
         private void CnvsStartDrawing(object sender, MouseButtonEventArgs e)
@@ -690,6 +666,27 @@ namespace GuessWhoClient
             isOpponentReady = true;
 
             CheckBothPlayersReady();
+        }
+
+        private void BorderClueReceivedClick(object sender, MouseButtonEventArgs e)
+        {
+            BorderClueMessage.Visibility = Visibility.Hidden;
+        }
+
+        public void ShowClueSimilarDrawing()
+        {
+            LbClueDrawing.Content = Properties.Resources.lbWellDone;
+            LbClueDrawingMessge.Content = Properties.Resources.lbClueCorrectDraw;
+
+            BorderClueMessage.Visibility = Visibility.Visible;
+        }
+
+        public void ShowClueNotSimilarDrawing()
+        {
+            LbClueDrawing.Content = Properties.Resources.lbAuch;
+            LbClueDrawingMessge.Content = Properties.Resources.lbClueWrongDraw;
+
+            BorderClueMessage.Visibility = Visibility.Visible;
         }
     }
 }
