@@ -58,13 +58,13 @@ namespace GuessWhoClient
         private void BtnLoginClick(object sender, RoutedEventArgs e)
         {
             LoginPage loginPage = new LoginPage();
-            this.NavigationService.Navigate(loginPage);
+            NavigationService.Navigate(loginPage);
         }
 
         private void BtnRegisterClick(object sender, RoutedEventArgs e)
         {
             RegisterPage registerPage = new RegisterPage();
-            this.NavigationService.Navigate(registerPage);
+            NavigationService.Navigate(registerPage);
         }
 
         private void BtnLogOutClick(object sender, RoutedEventArgs e)
@@ -83,9 +83,15 @@ namespace GuessWhoClient
 
                 DataStore.Profile = null;
             }
-            catch (EndpointNotFoundException)
+            catch (EndpointNotFoundException ex)
             {
+                App.log.Fatal(ex.Message);
                 ServerResponse.ShowServerDownMessage();
+            }
+            catch(CommunicationException ex)
+            {
+                App.log.Error(ex.Message);
+                ServerResponse.ShowConnectionLostMessage();
             }
         }
 
@@ -110,12 +116,18 @@ namespace GuessWhoClient
                 ServerResponse.ShowServerDownMessage();
                 App.log.Fatal(ex.Message);
             }
+            catch (CommunicationException ex)
+            {
+                gameManager.RestartRawValues();
+                ServerResponse.ShowConnectionLostMessage();
+                App.log.Error(ex.Message);
+            }
         }
 
         private void BtnLeaderboardClick(object sender, RoutedEventArgs e)
         {
             ScoreboardPage scoreboardPage = new ScoreboardPage();
-            this.NavigationService.Navigate(scoreboardPage);
+            NavigationService.Navigate(scoreboardPage);
         }
 
         private void BtnJoinMatchClick(object sender, RoutedEventArgs e)
@@ -136,11 +148,6 @@ namespace GuessWhoClient
             }
         }
 
-        private void BtnHowToPlayClick(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void BtnTournamentMatchClick(object sender, RoutedEventArgs e)
         {
             string userNickname = DataStore.Profile != null ? DataStore.Profile.NickName : "";
@@ -156,23 +163,30 @@ namespace GuessWhoClient
                 LobbyPage lobbyPage = new LobbyPage();
                 NavigationService.Navigate(lobbyPage);
             }
-            catch (EndpointNotFoundException)
+            catch (EndpointNotFoundException ex)
             {
                 gameManager.RestartRawValues();
                 ServerResponse.ShowServerDownMessage();
+                App.log.Fatal(ex.Message);
+            }
+            catch (CommunicationException ex)
+            {
+                gameManager.RestartRawValues();
+                ServerResponse.ShowConnectionLostMessage();
+                App.log.Error(ex.Message);
             }
         }
 
         private void BtnFriendsClick(object sender, RoutedEventArgs e)
         {
             FriendsPage friendsPage = new FriendsPage();
-            this.NavigationService.Navigate(friendsPage);
+            NavigationService.Navigate(friendsPage);
         }
 
         private void BorderProfileClick(object sender, RoutedEventArgs e)
         {
             ProfilePage profilePage = new ProfilePage();
-            this.NavigationService.Navigate(profilePage);
+            NavigationService.Navigate(profilePage);
         }
 
         public void LoginProfile()
@@ -227,6 +241,7 @@ namespace GuessWhoClient
 
             ReloadLanguageResources();
         }
+
         private void TbInvitationCodeTextChanged(object sender, TextChangedEventArgs e)
         {
             string code = TbInvitationCode.Text;
@@ -321,10 +336,17 @@ namespace GuessWhoClient
                         break;
                 }
             }
-            catch (EndpointNotFoundException)
+            catch (EndpointNotFoundException ex)
             {
                 gameManager.RestartRawValues();
                 ServerResponse.ShowServerDownMessage();
+                App.log.Fatal(ex.Message);
+            }
+            catch (CommunicationException ex)
+            {
+                gameManager.RestartRawValues();
+                ServerResponse.ShowConnectionLostMessage();
+                App.log.Error(ex.Message);
             }
         }
 
