@@ -8,14 +8,27 @@ namespace GuessWhoDataAccess
 {
     public class UserDAO
     {
-        public static Account VerifyUserSession(string email, string password)
+        public static Response<Account> VerifyUserSession(string email, string password)
         {
-            using (var context = new GuessWhoContext())
+            Response<Account> response = new Response<Account>
             {
-                var account = context.Accounts.FirstOrDefault(a => a.email == email && a.password == password);
+                StatusCode = ResponseStatus.OK,
+                Value = null
+            };
 
-                return account;
+            try
+            {
+                using (var context = new GuessWhoContext())
+                {
+                    response.Value = context.Accounts.FirstOrDefault(a => a.email == email && a.password == password);
+                }
             }
+            catch(SqlException)
+            {
+                response.StatusCode = ResponseStatus.SQL_ERROR;
+            }
+
+            return response;
         }
 
         public static Response<bool> RegisterUser(User user, Account account)
@@ -57,14 +70,27 @@ namespace GuessWhoDataAccess
             return response;
         }
 
-        public static User GetUserByIdAccount(int idAccount)
+        public static Response<User> GetUserByIdAccount(int idAccount)
         {
-            using(var context = new GuessWhoContext())
+            Response<User> response = new Response<User>
             {
-                var user = context.Users.FirstOrDefault(u => u.idAccount == idAccount);
+                StatusCode = ResponseStatus.OK,
+                Value = null
+            };
 
-                return user;
+            try
+            {
+                using (var context = new GuessWhoContext())
+                {
+                    response.Value = context.Users.FirstOrDefault(u => u.idAccount == idAccount);
+                }
             }
+            catch (SqlException)
+            {
+                response.StatusCode = ResponseStatus.SQL_ERROR;
+            }
+
+            return response;
         }
 
         public static Response<Profile> GetUserByEmail(string email)
@@ -105,8 +131,6 @@ namespace GuessWhoDataAccess
 
         public static Response<Profile> GetUserByNickName(string nickname)
         {
-            Console.WriteLine(nickname + " Entrando a DAO");
-
             Response<Profile> response = new Response<Profile>
             {
                 StatusCode = ResponseStatus.OK,

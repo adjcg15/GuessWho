@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
@@ -67,6 +69,101 @@ namespace GuessWhoDataAccess
                 response.StatusCode = ResponseStatus.VALIDATION_ERROR;
             }
             catch (SqlException ex)
+            {
+                response.StatusCode = ResponseStatus.SQL_ERROR;
+            }
+
+            return response;
+        }
+
+        public static Response<bool> CheckPlayerPermanentBan(string email)
+        {
+            string WORST_PLAYER_BEHAVIOUR_REPORT_NAME = "Cheating Player";
+            int MAX_ALLOWED_REPORTS = 3;
+            Response<bool> response = new Response<bool>
+            {
+                Value = false,
+                StatusCode = ResponseStatus.VALIDATION_ERROR
+            };
+
+            try
+            {
+                using (var context = new GuessWhoContext())
+                {
+                    var reportType = context.ReportTypes.FirstOrDefault(type => type.name == WORST_PLAYER_BEHAVIOUR_REPORT_NAME);
+                    var userAccount = context.Accounts.FirstOrDefault(account => account.email == email);
+
+                    if (reportType != null && userAccount != null)
+                    {
+                        var userReported = context.Users.FirstOrDefault(user => user.idAccount == userAccount.idAccount);
+
+                        if (userReported != null)
+                        {
+                            var totalReports = context.Reports.Count(r => r.idReportType == reportType.idReportType && r.idReportedUser == userReported.idUser);
+
+                            response.Value = totalReports >= MAX_ALLOWED_REPORTS;
+                            response.StatusCode = ResponseStatus.OK;
+                        }
+                    }
+                }
+            }
+            catch(SqlException)
+            {
+                response.StatusCode = ResponseStatus.SQL_ERROR;
+            }
+
+            return response;
+        }
+
+        public static Response<DateTime> CheckPlayerTemporalBan(string email)
+        {
+            int MAX_MONTHLY_REPORTS = 3;
+            int MONTH_DAYS = 30;
+            Response<DateTime> response = new Response<DateTime>
+            {
+                Value = DateTime.MinValue,
+                StatusCode = ResponseStatus.VALIDATION_ERROR
+            };
+
+            try
+            {
+                using (var context = new GuessWhoContext())
+                {
+                    var userAccount = context.Accounts.FirstOrDefault(account => account.email == email);
+
+                    if (userAccount != null)
+                    {
+                        var userReported = context.Users.FirstOrDefault(user => user.idAccount == userAccount.idAccount);
+                        DateTime dateUpperLimit = DateTime.Now;
+                        DateTime dateLowerLimit = dateUpperLimit.AddDays(-MONTH_DAYS);
+
+                        if(userReported != null)
+                        {
+                            var lastPlayerReports = context.Reports
+                                .Where(r => r.idReportedUser == userReported.idUser && dateLowerLimit <= r.timestamp && r.timestamp <= dateUpperLimit)
+                                .OrderByDescending(r => r.timestamp)
+                                .Take(3)
+                                .ToList();
+
+                            if (lastPlayerReports.Count >= MAX_MONTHLY_REPORTS)
+                            {
+                                response.StatusCode = ResponseStatus.NOT_ALLOWED;
+                                var dateLastReport = lastPlayerReports.First().timestamp;
+
+                                if (dateLastReport.HasValue)
+                                {
+                                    response.Value = dateLastReport.Value.AddDays(MONTH_DAYS);
+                                }
+                            }
+                            else
+                            {
+                                response.StatusCode = ResponseStatus.OK;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException)
             {
                 response.StatusCode = ResponseStatus.SQL_ERROR;
             }

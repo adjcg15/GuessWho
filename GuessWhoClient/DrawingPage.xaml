@@ -6,7 +6,7 @@
       mc:Ignorable="d" 
       Height="520" Width="900"
       xmlns:p="clr-namespace:GuessWhoClient.Properties"
-      Title="DrawingPage" Loaded="PageLoaded"
+      Title="DrawingPage" Loaded="PageLoaded" Unloaded="PageUnloaded"
       DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
     <Grid Background="White">

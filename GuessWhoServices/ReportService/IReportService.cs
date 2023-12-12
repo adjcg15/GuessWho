@@ -1,4 +1,5 @@
 ﻿using GuessWhoDataAccess;
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -13,6 +14,12 @@ namespace GuessWhoServices
 
         [OperationContract]
         Response<List<Report>> GetReportsByUserId(int idUser);
+
+        [OperationContract]
+        Response<bool> VerifyPlayerPermanentBanned(string email);
+
+        [OperationContract]
+        Response<DateTime> VerifyPlayerTemporarilyBanned(string email);
     }
 
     [DataContract]

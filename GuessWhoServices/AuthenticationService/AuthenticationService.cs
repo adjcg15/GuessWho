@@ -13,10 +13,12 @@ namespace GuessWhoServices
                 Value = null
             };
 
-            Account account = UserDAO.VerifyUserSession(email, password);
+            Response<Account> responseAccount = UserDAO.VerifyUserSession(email, password);
+            Account account = responseAccount.Value;
             if (account != null)
             {
-                User user = UserDAO.GetUserByIdAccount(account.idAccount);
+                Response<User> responseUser = UserDAO.GetUserByIdAccount(account.idAccount);
+                User user = responseUser.Value;
                 if (user != null)
                 {
                     var nicknameInActiveUsers = activeUsers.FirstOrDefault((u) => u == user.nickname);
@@ -40,6 +42,14 @@ namespace GuessWhoServices
                         response.StatusCode = ResponseStatus.NOT_ALLOWED;
                     }
                 }
+                else
+                {
+                    response.StatusCode = responseUser.StatusCode;
+                }
+            }
+            else
+            {
+                response.StatusCode = responseAccount.StatusCode;
             }
             
             return response;
