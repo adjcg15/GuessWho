@@ -10,8 +10,6 @@ namespace GuessWhoServices
 {
     public partial class GuessWhoService : IFriendsService
     {
-        private static List<Friend> friends = new List<Friend>();
-
         public Response<bool> SendRequest(int idUserRequester, int idUserRequested)
         {
             return FriendshipDAO.AddRequest(idUserRequester, idUserRequested);
@@ -37,7 +35,7 @@ namespace GuessWhoServices
                     FullName = friendship.User.fullName,
                     Avatar = friendship.User.avatar,
                     IdFriendship = friendship.idFriendship,
-                    Status = "Request"
+                    Status = FriendshipDAO.REQUESTED_STATUS
                 })
                 .ToList();
 
@@ -66,12 +64,12 @@ namespace GuessWhoServices
                     Nickname = user.nickname,
                     FullName = user.fullName,
                     Avatar = user.avatar,
-                    Status = "Offline"
+                    Status = FriendshipDAO.OFFLINE_STATUS
                 };
 
                 if (activeUsers.Any(userNickname => userNickname == user.nickname))
                 {
-                    friend.Status = "Online";
+                    friend.Status = FriendshipDAO.ONLINE_STATUS;
                 }
 
                 return friend;
@@ -86,10 +84,10 @@ namespace GuessWhoServices
         {
             Response<bool> response = new Response<bool>();
 
-            if(answer == "Accept")
+            if(answer == FriendshipDAO.ACCEPT_REQUEST)
             {
                 response = FriendshipDAO.AcceptRequest(idFriendship);
-            }else if(answer == "Decline")
+            }else if(answer == FriendshipDAO.DECLINE_REQUEST)
             {
                 response = FriendshipDAO.DeclineRequest(idFriendship);
             }

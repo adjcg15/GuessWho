@@ -26,6 +26,9 @@ namespace GuessWhoClient
     /// </summary>
     public partial class FriendsPage : Page
     {
+        private const string ONLINE_STATUS = "Online";
+        private const string ACCEPT_REQUEST = "Accept";
+        private const string DECLINE_REQUEST = "Decline";
         private DispatcherTimer messageTimer;
         private const int MESSAGE_DISPLAY_DURATION = 3000;
 
@@ -56,7 +59,7 @@ namespace GuessWhoClient
             FriendsServiceClient friendsServiceClient = new FriendsServiceClient();
             friends = new ObservableCollection<Friend>(friendsServiceClient.GetFriends(DataStore.Profile.IdUser).Value);
 
-            friends.OrderByDescending(friend => friend.Status == "Online").ToList();
+            friends.OrderByDescending(friend => friend.Status == ONLINE_STATUS).ToList();
 
             ListBoxFriends.ItemsSource = friends;
         }
@@ -74,7 +77,7 @@ namespace GuessWhoClient
             Button button = (Button) sender;
             Friend friend = (Friend) button.DataContext;
             
-            AnswerRequest(friend, "Accept");            
+            AnswerRequest(friend, ACCEPT_REQUEST);            
         }
 
         private void BtnDeclineInvitationClick(object sender, RoutedEventArgs e)
@@ -82,7 +85,7 @@ namespace GuessWhoClient
             Button button = (Button)sender;
             Friend friend = (Friend)button.DataContext;
 
-            AnswerRequest(friend, "Decline");
+            AnswerRequest(friend, DECLINE_REQUEST);
         }
 
         private void AnswerRequest(Friend requester, string answer)

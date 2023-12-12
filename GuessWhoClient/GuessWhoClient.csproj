@@ -274,6 +274,16 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\GameServices\GuessWhoService.wsdl" />
+    <None Include="Connected Services\GameServices\item.disco" />
+    <None Include="Connected Services\GameServices\configuration91.svcinfo" />
+    <None Include="Connected Services\GameServices\configuration.svcinfo" />
+    <None Include="Connected Services\GameServices\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Connected Services\GameServices\item.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -289,9 +299,6 @@
     <None Include="Connected Services\GameServices\item4.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="log4net.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -447,24 +454,6 @@
     <Resource Include="Resources\cancel-guess-icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\GameServices\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\GameServices\item.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\GameServices\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\GameServices\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\GameServices\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\winner-banner.png" />
   </ItemGroup>
   <ItemGroup>
@@ -481,6 +470,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\GameServices\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

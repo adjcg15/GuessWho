@@ -10,6 +10,14 @@ namespace GuessWhoDataAccess
 {
     public class FriendshipDAO
     {
+        public const string REQUESTED_STATUS = "Request";
+        public const string OFFLINE_STATUS = "Offline";
+        public const string ONLINE_STATUS = "Online";
+        public const string ACCEPT_REQUEST = "Accept";
+        public const string DECLINE_REQUEST = "Decline";
+        public const string PENDING_REQUEST = "Pending";
+        public const string ACCEPTED_REQUEST = "Accepted";
+
         public static Response<bool> AddRequest(int idUserRequester, int idUserRequested)
         {
             Response<bool> response = new Response<bool>
@@ -26,7 +34,7 @@ namespace GuessWhoDataAccess
                     {
                         idFriendRequester = idUserRequester,
                         idFriendRequested = idUserRequested,
-                        status = "Pending"
+                        status = PENDING_REQUEST
                     };
 
                     context.Friendships.Add(friendship);
@@ -64,7 +72,7 @@ namespace GuessWhoDataAccess
                 using (var context = new GuessWhoContext())
                 {
                     var friendship = context.Friendships.FirstOrDefault(f => f.idFriendship == idFriendship);
-                    friendship.status = "Accepted";
+                    friendship.status = ACCEPTED_REQUEST;
 
                     context.Entry(friendship).State = EntityState.Modified;
                     context.SaveChanges();
@@ -141,7 +149,7 @@ namespace GuessWhoDataAccess
                     var friendships = context.Friendships
                     .Include(f => f.User) 
                     .Include(f => f.User1) 
-                    .Where(f => f.User1.idAccount == idUserRequested && f.status == "Pending")
+                    .Where(f => f.User1.idAccount == idUserRequested && f.status == PENDING_REQUEST)
                     .ToList();
 
                     response.Value = friendships;
@@ -175,7 +183,7 @@ namespace GuessWhoDataAccess
                 using(var context = new GuessWhoContext())
                 {
                     var friends = context.Friendships
-                    .Where(f => (f.idFriendRequester == idActualUser || f.idFriendRequested == idActualUser) && f.status == "Accepted")
+                    .Where(f => (f.idFriendRequester == idActualUser || f.idFriendRequested == idActualUser) && f.status == ACCEPTED_REQUEST)
                     .Select(f => f.idFriendRequester == idActualUser ? f.User1 : f.User)
                     .Where(u => u.idUser != idActualUser)
                     .ToList();
