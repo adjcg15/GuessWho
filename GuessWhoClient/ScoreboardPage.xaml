@@ -24,6 +24,7 @@
             <TextBox 
                 x:Name="TbSearchQuery"
                 Style="{StaticResource Searchbar}"
+                MaxLength="20"
                 HorizontalAlignment="Left" Margin="33,85,0,0" TextWrapping="Wrap" 
                 VerticalAlignment="Top" Width="739"/>
             <Button 

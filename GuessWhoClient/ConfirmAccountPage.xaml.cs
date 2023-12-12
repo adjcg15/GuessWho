@@ -9,6 +9,8 @@ using GuessWhoClient.Properties;
 using System.Resources;
 using GuessWhoClient.Utils;
 using System.ServiceModel;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace GuessWhoClient
 {
@@ -41,16 +43,16 @@ namespace GuessWhoClient
         {
             generatedConfirmationCode = GenerateConfirmationCode(10);
 
-            bool confirmationSent = SendConfirmationEmail(email, generatedConfirmationCode);
-            if (!confirmationSent)
-            {
-                MessageBox.Show(
-                    Properties.Resources.msgbConfirmEmailSendingErrorMessage,
-                    Properties.Resources.msgbConfirmEmailSendingErrorTitle,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning
-                );
-            }
+            //bool confirmationSent = SendConfirmationEmail(email, generatedConfirmationCode);
+            //if (!confirmationSent)
+            //{
+            //    MessageBox.Show(
+            //        Properties.Resources.msgbConfirmEmailSendingErrorMessage,
+            //        Properties.Resources.msgbConfirmEmailSendingErrorTitle,
+            //        MessageBoxButton.OK,
+            //        MessageBoxImage.Warning
+            //    );
+            //}
         }
 
         private void BtnConfirmAccountClick(object sender, RoutedEventArgs e)
@@ -142,6 +144,18 @@ namespace GuessWhoClient
             }
 
             return successSending;
+        }
+
+        private void TbConfirmationCodeTextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            string input = textBox.Text;
+
+            string filteredInput = new string(input.Where(char.IsLetterOrDigit).ToArray());
+
+            textBox.Text = filteredInput;
+
+            textBox.CaretIndex = filteredInput.Length;
         }
     }
 }

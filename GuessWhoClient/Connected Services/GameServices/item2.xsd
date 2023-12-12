@@ -283,4 +283,18 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Match" nillable="true" type="tns:Match" />
+  <xs:complexType name="dateTimeResponse">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="{0}Response" Namespace="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="dateTime" Namespace="http://www.w3.org/2001/XMLSchema" />
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" name="StatusCode" type="tns:ResponseStatus" />
+      <xs:element minOccurs="0" name="Value" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="dateTimeResponse" nillable="true" type="tns:dateTimeResponse" />
 </xs:schema>

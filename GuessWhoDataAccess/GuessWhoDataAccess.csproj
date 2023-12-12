@@ -80,6 +80,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GuessWhoModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Logger.cs" />
     <Compile Include="Match.cs">
       <DependentUpon>GuessWhoModel.tt</DependentUpon>
     </Compile>
@@ -110,6 +111,9 @@
     <None Include="GuessWhoModel.edmx.diagram">
       <DependentUpon>GuessWhoModel.edmx</DependentUpon>
     </None>
+    <Content Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

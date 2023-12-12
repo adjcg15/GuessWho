@@ -6,6 +6,7 @@ using System.IO;
 using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
 namespace GuessWhoClient
@@ -410,6 +411,24 @@ namespace GuessWhoClient
             catch (EndpointNotFoundException)
             {
                 ServerResponse.ShowServerDownMessage();
+            }
+        }
+        private void PbPasswordPreviewExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (e.Command == ApplicationCommands.Copy ||
+                e.Command == ApplicationCommands.Cut ||
+                e.Command == ApplicationCommands.Paste)
+            {
+                e.Handled = true;
+            }
+        }
+        private void PbPasswordConfirmationPreviewExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (e.Command == ApplicationCommands.Copy ||
+                e.Command == ApplicationCommands.Cut ||
+                e.Command == ApplicationCommands.Paste)
+            {
+                e.Handled = true;
             }
         }
     }

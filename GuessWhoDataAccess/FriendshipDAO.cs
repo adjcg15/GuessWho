@@ -5,8 +5,6 @@ using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GuessWhoDataAccess
 {
@@ -38,7 +36,6 @@ namespace GuessWhoDataAccess
             catch (DbUpdateException ex) {
                 response.StatusCode = ResponseStatus.UPDATE_ERROR;
                 response.Value = false;
-                Console.WriteLine(ex.InnerException?.Message);
             }
             catch (DbEntityValidationException ex)
             {
@@ -56,8 +53,6 @@ namespace GuessWhoDataAccess
 
         public static Response<bool> AcceptRequest(int idFriendship)
         {
-            Console.WriteLine(idFriendship);
-
             Response<bool> response = new Response<bool>
             {
                 StatusCode = ResponseStatus.OK,
@@ -165,7 +160,6 @@ namespace GuessWhoDataAccess
                 response.StatusCode = ResponseStatus.SQL_ERROR;
             }
 
-            Console.WriteLine("Fin del DAO, antes de return");
             return response;
         }
 
@@ -175,7 +169,6 @@ namespace GuessWhoDataAccess
             Response<List<User>> response = new Response<List<User>>();
             response.Value = new List<User>();
             response.StatusCode = ResponseStatus.OK;
-            Console.WriteLine("Creando Lista y Response");
 
             try
             {
@@ -188,7 +181,6 @@ namespace GuessWhoDataAccess
                     .ToList();
 
                     response.Value = friends;
-                    Console.WriteLine("Consultando Friendships y añadiendola al response");
                 }
             }
             catch (DbUpdateException ex)
@@ -204,7 +196,6 @@ namespace GuessWhoDataAccess
                 response.StatusCode = ResponseStatus.SQL_ERROR;
             }
 
-            Console.WriteLine("Fin del DAO, antes de return");
             return response;
         }
     }

@@ -396,6 +396,12 @@
   <data name="msgbErrorSendingGameInvitationTitle" xml:space="preserve">
     <value>Error al enviar la invitación</value>
   </data>
+  <data name="msgbErrorVerifyingBanMessage" xml:space="preserve">
+    <value>Por favor intente en otro momento, pues ha ocurrido un error al verificar el estado de su cuenta</value>
+  </data>
+  <data name="msgbErrorVerifyingBanTitle" xml:space="preserve">
+    <value>No pudo completarse la verificación del estado de su cuenta</value>
+  </data>
   <data name="msgbFinishDrawMessage" xml:space="preserve">
     <value>¿Estas seguro que deseas terminar tu intento? No podrás adivinar o dibujar más.</value>
   </data>
@@ -443,6 +449,12 @@
   </data>
   <data name="msgbMessageNotSentTitle" xml:space="preserve">
     <value>No se pudo enviar el mensaje</value>
+  </data>
+  <data name="msgbPermanentBanMessage" xml:space="preserve">
+    <value>Su cuenta ha sido bloqueada permanentemente. No tiene acceso al juego</value>
+  </data>
+  <data name="msgbPermanentBanTitle" xml:space="preserve">
+    <value>Cuenta bloqueada permanentemente</value>
   </data>
   <data name="msgbRegisterAlertImageSizeMessage" xml:space="preserve">
     <value>La imagen debe tener un tamaño de 20kb o menos.</value>
@@ -512,6 +524,15 @@
   </data>
   <data name="msgbSendMessageMatchFinishedMessage" xml:space="preserve">
     <value>La partida a la que intenta enviar el mensaje ya no existe</value>
+  </data>
+  <data name="msgbTemporalBanGenericMessage" xml:space="preserve">
+    <value>Debido a los reportes recibidos por parte de otros jugadores, su cuenta ha sido bloqueada temporalmente </value>
+  </data>
+  <data name="msgbTemporalBanMessage" xml:space="preserve">
+    <value>Debido a los reportes recibidos por parte de otros jugadores, su cuenta ha sido bloqueada temporalmente hasta la fecha: </value>
+  </data>
+  <data name="msgbTemporalBanTitle" xml:space="preserve">
+    <value>Cuenta bloqueada temporalmente</value>
   </data>
   <data name="msgbWelcome1" xml:space="preserve">
     <value>Bienvenido/a </value>

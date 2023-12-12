@@ -71,10 +71,11 @@
                         FontWeight="Bold" Margin="0,114,0,0"/>
                     <TextBox
                         x:Name="TbNickname"
+                        MaxLength="20"
                         IsEnabled="False"
                         Style="{StaticResource Input}"
                         HorizontalAlignment="Left" TextWrapping="Wrap"
-                        VerticalAlignment="Top" MinWidth="0" Width="274" Margin="0,138,0,0"/>
+                        VerticalAlignment="Top" MinWidth="0" Width="274" Height="29" Margin="0,138,0,0"/>
                     <Image x:Name="ImgEditNicknameIcon" Cursor="Hand" Width="28" Height="28" Source="/Resources/edit-icon.png" Margin="279,136,0,137" MouseDown="ImgEditNicknameClick"/>
                     <Grid x:Name="GridEditNicknameOptions" Visibility="Collapsed" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="246,138,0,0">
                         <Image VerticalAlignment="Center" HorizontalAlignment="Left" Cursor="Hand" Width="28" Height="28" Source="/Resources/save-icon.png" MouseDown="ImgSaveNewNicknameClick"/>
@@ -91,13 +92,13 @@
                          HorizontalAlignment="Left" 
                          VerticalAlignment="Top" 
                          FontSize="12" Margin="0,205,0,0"/>
-                    <PasswordBox x:Name="PbPassword" Height="28" MinWidth="0" Style="{StaticResource PasswordInput}" Margin="0,228,170,45"/>
+                    <PasswordBox x:Name="PbPassword" Height="28" MinWidth="0" MaxLength="64" CommandManager.PreviewExecuted="PbPasswordPreviewExecuted" Style="{StaticResource PasswordInput}" Margin="0,228,170,45"/>
                     <Label 
                         Content="{x:Static p:Resources.lbConfirmPassword}" 
                         HorizontalAlignment="Left" 
                         VerticalAlignment="Top" 
                         FontSize="12" Margin="144,205,0,0"/>
-                    <PasswordBox x:Name="PbPasswordConfirmation" Height="28" MinWidth="0" Style="{StaticResource PasswordInput}" Margin="144,228,1,45"/>
+                    <PasswordBox x:Name="PbPasswordConfirmation" Height="28" MinWidth="0" MaxLength="64" CommandManager.PreviewExecuted="PbPasswordConfirmationPreviewExecuted" Style="{StaticResource PasswordInput}" Margin="144,228,1,45"/>
 
                     <Button 
                         Content="{x:Static p:Resources.btnChangePassword}" 
@@ -108,8 +109,9 @@
                         x:Name="TbFullName"
                         IsEnabled="False"
                         Style="{StaticResource Input}"
+                        MaxLength="255"
                         HorizontalAlignment="Left" TextWrapping="Wrap"
-                        VerticalAlignment="Top" MinWidth="0" Width="274" Margin="0,83,0,0"/>
+                        VerticalAlignment="Top" MinWidth="0" Width="274" Height="29" Margin="0,83,0,0"/>
                     <Image x:Name="ImgEditFullNameIcon" Cursor="Hand" Width="28" Height="28" Source="/Resources/edit-icon.png" Margin="279,83,0,190" MouseDown="ImgEditFullNameClick"/>
                     <Grid x:Name="GridEditFullNameOptions" Visibility="Collapsed" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="246,83,0,0">
                         <Image VerticalAlignment="Center" HorizontalAlignment="Left" Cursor="Hand" Width="28" Height="28" Source="/Resources/save-icon.png" MouseDown="ImgSaveNewFullNameClick"/>

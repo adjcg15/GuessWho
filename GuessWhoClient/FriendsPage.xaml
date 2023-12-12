@@ -121,7 +121,7 @@
                 </ListBox>
             </TabItem>
         </TabControl>
-        <TextBox Name="TbNameRequest" Style="{StaticResource Input}" HorizontalAlignment="Left" Margin="488,45,0,0" VerticalAlignment="Top" Width="194"/>
+        <TextBox Name="TbNameRequest" Style="{StaticResource Input}" HorizontalAlignment="Left" Margin="488,45,0,0" VerticalAlignment="Top" Width="194" MaxLength="20"/>
         <Button Name="BtnAddFriend" Style="{StaticResource SecondaryButtonWithIcon}" HorizontalAlignment="Left" Margin="743,40,0,0" VerticalAlignment="Top" Click="BtnAddFriendClick" IsDefault="True">
             <StackPanel Orientation="Horizontal">
                 <Image Source="/Resources/add-friend-icon.png" Width="19" Height="16"/>

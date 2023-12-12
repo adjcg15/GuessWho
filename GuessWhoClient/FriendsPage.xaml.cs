@@ -94,11 +94,11 @@ namespace GuessWhoClient
             }
         }
 
-        private void BtnAddFriendClick(object sender, RoutedEventArgs e) 
+        private void BtnAddFriendClick(object sender, RoutedEventArgs e)
         {
             string nicknameRequested = TbNameRequest.Text.Trim();
 
-            if (nicknameRequested == "")
+            if (string.IsNullOrEmpty(nicknameRequested))
             {
                 TbMessage.Text = Properties.Resources.lbStatusRequestFailed;
                 StartAnimationTbMessage();
@@ -107,8 +107,8 @@ namespace GuessWhoClient
             {
                 AuthenticationServiceClient authenticationServiceClient = new AuthenticationServiceClient();
                 ProfileResponse profileResponse = authenticationServiceClient.VerifyUserRegisteredByNickName(nicknameRequested);
-                
-                if(profileResponse.StatusCode == ResponseStatus.OK && profileResponse.Value.IdUser == 0) 
+
+                if (profileResponse.StatusCode == ResponseStatus.OK && profileResponse.Value.IdUser == 0)
                 {
                     TbMessage.Text = Properties.Resources.lbStatusRequestFailed;
                     StartAnimationTbMessage();
@@ -116,23 +116,24 @@ namespace GuessWhoClient
                 else
                 {
                     FriendsServiceClient friendsServiceClient = new FriendsServiceClient();
-                    booleanResponse booleanResponse = friendsServiceClient.SendRequest(DataStore.Profile.IdUser, profileResponse.Value.IdUser);
 
-                    if(booleanResponse.Value)
+                    if (friends.Any(friend => friend.Nickname == nicknameRequested))
                     {
-                        TbMessage.Text = Properties.Resources.lbStatusRequestSuccess;
+                        TbMessage.Text = Properties.Resources.txtAlreadyFriends;
+                        StartAnimationTbMessage();
+                    }
+                    else if (nicknameRequested == DataStore.Profile.NickName)
+                    {
+                        TbMessage.Text = Properties.Resources.txtOwnNickname;
                         StartAnimationTbMessage();
                     }
                     else
                     {
-                        if (nicknameRequested == DataStore.Profile.NickName)
+                        booleanResponse booleanResponse = friendsServiceClient.SendRequest(DataStore.Profile.IdUser, profileResponse.Value.IdUser);
+
+                        if (booleanResponse.Value)
                         {
-                            TbMessage.Text = Properties.Resources.txtOwnNickname;
-                            StartAnimationTbMessage();
-                        }
-                        else if (friends.Any(friend => friend.Nickname == nicknameRequested))
-                        {
-                            TbMessage.Text = Properties.Resources.txtAlreadyFriends;
+                            TbMessage.Text = Properties.Resources.lbStatusRequestSuccess;
                             StartAnimationTbMessage();
                         }
                         else
@@ -142,7 +143,6 @@ namespace GuessWhoClient
                         }
                     }
                 }
-
             }
         }
 

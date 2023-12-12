@@ -44,8 +44,9 @@
                     x:Name="TbConfirmationCode" Style="{StaticResource Input}" 
                     HorizontalAlignment="Center" Margin="0,180,0,0" 
                     TextWrapping="Wrap" 
+                    MaxLength="10"
                     VerticalAlignment="Top" 
-                    Width="248" Height="30"/>
+                    Width="248" Height="30" TextChanged="TbConfirmationCodeTextChanged"/>
 
                 <Button
                     Content="{x:Static p:Resources.btnConfirmCode}"

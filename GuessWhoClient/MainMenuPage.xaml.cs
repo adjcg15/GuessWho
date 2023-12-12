@@ -104,10 +104,11 @@ namespace GuessWhoClient
                 LobbyPage lobbyPage = new LobbyPage();
                 NavigationService.Navigate(lobbyPage); 
             }
-            catch (EndpointNotFoundException)
+            catch (EndpointNotFoundException ex)
             {
                 gameManager.RestartRawValues();
                 ServerResponse.ShowServerDownMessage();
+                App.log.Fatal(ex.Message);
             }
         }
 

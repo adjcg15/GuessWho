@@ -1,5 +1,6 @@
 ﻿using GuessWhoClient.Communication;
 using GuessWhoClient.GameServices;
+using log4net;
 using System;
 using System.ServiceModel;
 using System.Windows.Navigation;
@@ -8,9 +9,13 @@ namespace GuessWhoClient
 {
     public partial class MainWindow : NavigationWindow
     {
+        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public MainWindow()
         {
             InitializeComponent();
+            log4net.Config.XmlConfigurator.Configure();
+            log.Warn("Abriendo MainWindow");
         }
 
         private void NavigationWindowClosed(object sender, EventArgs e)
