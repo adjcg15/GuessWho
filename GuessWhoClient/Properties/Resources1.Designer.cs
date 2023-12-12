@@ -898,6 +898,24 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Por favor intente en otro momento, pues ha ocurrido un error al verificar el estado de su cuenta.
+        /// </summary>
+        public static string msgbErrorVerifyingBanMessage {
+            get {
+                return ResourceManager.GetString("msgbErrorVerifyingBanMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No pudo completarse la verificación del estado de su cuenta.
+        /// </summary>
+        public static string msgbErrorVerifyingBanTitle {
+            get {
+                return ResourceManager.GetString("msgbErrorVerifyingBanTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a ¿Estas seguro que deseas terminar tu intento? No podrás adivinar o dibujar más..
         /// </summary>
         public static string msgbFinishDrawMessage {
@@ -1038,6 +1056,24 @@ namespace GuessWhoClient.Properties {
         public static string msgbMessageNotSentTitle {
             get {
                 return ResourceManager.GetString("msgbMessageNotSentTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Su cuenta ha sido bloqueada permanentemente. No tiene acceso al juego.
+        /// </summary>
+        public static string msgbPermanentBanMessage {
+            get {
+                return ResourceManager.GetString("msgbPermanentBanMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cuenta bloqueada permanentemente.
+        /// </summary>
+        public static string msgbPermanentBanTitle {
+            get {
+                return ResourceManager.GetString("msgbPermanentBanTitle", resourceCulture);
             }
         }
         
@@ -1245,6 +1281,33 @@ namespace GuessWhoClient.Properties {
         public static string msgbSendMessageMatchFinishedMessage {
             get {
                 return ResourceManager.GetString("msgbSendMessageMatchFinishedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Debido a los reportes recibidos por parte de otros jugadores, su cuenta ha sido bloqueada temporalmente .
+        /// </summary>
+        public static string msgbTemporalBanGenericMessage {
+            get {
+                return ResourceManager.GetString("msgbTemporalBanGenericMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Debido a los reportes recibidos por parte de otros jugadores, su cuenta ha sido bloqueada temporalmente hasta la fecha: .
+        /// </summary>
+        public static string msgbTemporalBanMessage {
+            get {
+                return ResourceManager.GetString("msgbTemporalBanMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cuenta bloqueada temporalmente.
+        /// </summary>
+        public static string msgbTemporalBanTitle {
+            get {
+                return ResourceManager.GetString("msgbTemporalBanTitle", resourceCulture);
             }
         }
         

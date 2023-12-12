@@ -500,6 +500,18 @@
   <wsdl:message name="IReportService_GetReportsByUserId_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetReportsByUserIdResponse" />
   </wsdl:message>
+  <wsdl:message name="IReportService_VerifyPlayerPermanentBanned_InputMessage">
+    <wsdl:part name="parameters" element="tns:VerifyPlayerPermanentBanned" />
+  </wsdl:message>
+  <wsdl:message name="IReportService_VerifyPlayerPermanentBanned_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VerifyPlayerPermanentBannedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReportService_VerifyPlayerTemporarilyBanned_InputMessage">
+    <wsdl:part name="parameters" element="tns:VerifyPlayerTemporarilyBanned" />
+  </wsdl:message>
+  <wsdl:message name="IReportService_VerifyPlayerTemporarilyBanned_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VerifyPlayerTemporarilyBannedResponse" />
+  </wsdl:message>
   <wsdl:portType name="IUserService">
     <wsdl:operation name="Subscribe">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/Subscribe" message="tns:IUserService_Subscribe_InputMessage" />
@@ -669,6 +681,14 @@
     <wsdl:operation name="GetReportsByUserId">
       <wsdl:input wsaw:Action="http://tempuri.org/IReportService/GetReportsByUserId" message="tns:IReportService_GetReportsByUserId_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IReportService/GetReportsByUserIdResponse" message="tns:IReportService_GetReportsByUserId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="VerifyPlayerPermanentBanned">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReportService/VerifyPlayerPermanentBanned" message="tns:IReportService_VerifyPlayerPermanentBanned_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReportService/VerifyPlayerPermanentBannedResponse" message="tns:IReportService_VerifyPlayerPermanentBanned_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="VerifyPlayerTemporarilyBanned">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReportService/VerifyPlayerTemporarilyBanned" message="tns:IReportService_VerifyPlayerTemporarilyBanned_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReportService/VerifyPlayerTemporarilyBannedResponse" message="tns:IReportService_VerifyPlayerTemporarilyBanned_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IUserService" type="tns:IUserService">
@@ -1030,6 +1050,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetReportsByUserId">
       <soap12:operation soapAction="http://tempuri.org/IReportService/GetReportsByUserId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyPlayerPermanentBanned">
+      <soap12:operation soapAction="http://tempuri.org/IReportService/VerifyPlayerPermanentBanned" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyPlayerTemporarilyBanned">
+      <soap12:operation soapAction="http://tempuri.org/IReportService/VerifyPlayerTemporarilyBanned" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

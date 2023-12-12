@@ -1,9 +1,6 @@
 ﻿using GuessWhoDataAccess;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GuessWhoServices
 {
@@ -52,6 +49,16 @@ namespace GuessWhoServices
             }
            
             return response;
+        }
+
+        public Response<bool> VerifyPlayerPermanentBanned(string email)
+        {
+            return PlayerDAO.CheckPlayerPermanentBan(email);
+        }
+
+        public Response<DateTime> VerifyPlayerTemporarilyBanned(string email)
+        {
+            return PlayerDAO.CheckPlayerTemporalBan(email);
         }
     }
 }

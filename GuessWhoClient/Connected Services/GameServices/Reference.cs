@@ -1871,6 +1871,67 @@ namespace GuessWhoClient.GameServices {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="dateTimeResponse", Namespace="http://schemas.datacontract.org/2004/07/GuessWhoDataAccess")]
+    [System.SerializableAttribute()]
+    public partial class dateTimeResponse : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private GuessWhoClient.GameServices.ResponseStatus StatusCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime ValueField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GuessWhoClient.GameServices.ResponseStatus StatusCode {
+            get {
+                return this.StatusCodeField;
+            }
+            set {
+                if ((this.StatusCodeField.Equals(value) != true)) {
+                    this.StatusCodeField = value;
+                    this.RaisePropertyChanged("StatusCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime Value {
+            get {
+                return this.ValueField;
+            }
+            set {
+                if ((this.ValueField.Equals(value) != true)) {
+                    this.ValueField = value;
+                    this.RaisePropertyChanged("Value");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="GameServices.IUserService", CallbackContract=typeof(GuessWhoClient.GameServices.IUserServiceCallback))]
     public interface IUserService {
@@ -2713,6 +2774,18 @@ namespace GuessWhoClient.GameServices {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReportService/GetReportsByUserId", ReplyAction="http://tempuri.org/IReportService/GetReportsByUserIdResponse")]
         System.Threading.Tasks.Task<GuessWhoClient.GameServices.ArrayOfReportResponse> GetReportsByUserIdAsync(int idUser);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReportService/VerifyPlayerPermanentBanned", ReplyAction="http://tempuri.org/IReportService/VerifyPlayerPermanentBannedResponse")]
+        GuessWhoClient.GameServices.booleanResponse VerifyPlayerPermanentBanned(string email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReportService/VerifyPlayerPermanentBanned", ReplyAction="http://tempuri.org/IReportService/VerifyPlayerPermanentBannedResponse")]
+        System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> VerifyPlayerPermanentBannedAsync(string email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReportService/VerifyPlayerTemporarilyBanned", ReplyAction="http://tempuri.org/IReportService/VerifyPlayerTemporarilyBannedResponse")]
+        GuessWhoClient.GameServices.dateTimeResponse VerifyPlayerTemporarilyBanned(string email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReportService/VerifyPlayerTemporarilyBanned", ReplyAction="http://tempuri.org/IReportService/VerifyPlayerTemporarilyBannedResponse")]
+        System.Threading.Tasks.Task<GuessWhoClient.GameServices.dateTimeResponse> VerifyPlayerTemporarilyBannedAsync(string email);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -2756,6 +2829,22 @@ namespace GuessWhoClient.GameServices {
         
         public System.Threading.Tasks.Task<GuessWhoClient.GameServices.ArrayOfReportResponse> GetReportsByUserIdAsync(int idUser) {
             return base.Channel.GetReportsByUserIdAsync(idUser);
+        }
+        
+        public GuessWhoClient.GameServices.booleanResponse VerifyPlayerPermanentBanned(string email) {
+            return base.Channel.VerifyPlayerPermanentBanned(email);
+        }
+        
+        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> VerifyPlayerPermanentBannedAsync(string email) {
+            return base.Channel.VerifyPlayerPermanentBannedAsync(email);
+        }
+        
+        public GuessWhoClient.GameServices.dateTimeResponse VerifyPlayerTemporarilyBanned(string email) {
+            return base.Channel.VerifyPlayerTemporarilyBanned(email);
+        }
+        
+        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.dateTimeResponse> VerifyPlayerTemporarilyBannedAsync(string email) {
+            return base.Channel.VerifyPlayerTemporarilyBannedAsync(email);
         }
     }
 }

@@ -396,6 +396,12 @@
   <data name="msgbErrorSendingGameInvitationTitle" xml:space="preserve">
     <value>Error sending invitation</value>
   </data>
+  <data name="msgbErrorVerifyingBanMessage" xml:space="preserve">
+    <value>Please try again later, as an error occurred while verifying your account status</value>
+  </data>
+  <data name="msgbErrorVerifyingBanTitle" xml:space="preserve">
+    <value>Your account status check could not be completed</value>
+  </data>
   <data name="msgbFinishDrawMessage" xml:space="preserve">
     <value>Are you sure you want to finish your attempt? You won't be able to guess or draw anymore.</value>
   </data>
@@ -443,6 +449,12 @@
   </data>
   <data name="msgbMessageNotSentTitle" xml:space="preserve">
     <value>Could not send message</value>
+  </data>
+  <data name="msgbPermanentBanMessage" xml:space="preserve">
+    <value>Your account has been permanently blocked. Does not have access to the game</value>
+  </data>
+  <data name="msgbPermanentBanTitle" xml:space="preserve">
+    <value>Account permanently blocked</value>
   </data>
   <data name="msgbRegisterAlertImageSizeMessage" xml:space="preserve">
     <value>The image must be 20kb or less in size.</value>
@@ -512,6 +524,15 @@
   </data>
   <data name="msgbSendMessageMatchFinishedMessage" xml:space="preserve">
     <value>The game you are trying to send the message to no longer exists</value>
+  </data>
+  <data name="msgbTemporalBanGenericMessage" xml:space="preserve">
+    <value>Due to reports received from other players, your account has been temporarily blocked</value>
+  </data>
+  <data name="msgbTemporalBanMessage" xml:space="preserve">
+    <value>Due to reports received from other players, your account has been temporarily blocked to date:</value>
+  </data>
+  <data name="msgbTemporalBanTitle" xml:space="preserve">
+    <value>Account temporarily blocked</value>
   </data>
   <data name="msgbWelcome1" xml:space="preserve">
     <value>Welcome </value>
