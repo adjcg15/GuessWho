@@ -82,7 +82,7 @@ namespace GuessWhoDataAccess
             {
                 using (var context = new GuessWhoContext())
                 {
-                    var user = context.Users.FirstOrDefault(u => u.idAccount == idAccount);
+                    response.Value = context.Users.FirstOrDefault(u => u.idAccount == idAccount);
                 }
             }
             catch (SqlException)
