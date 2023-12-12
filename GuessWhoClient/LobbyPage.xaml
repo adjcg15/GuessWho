@@ -115,7 +115,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <TextBox x:Name="TbMessage" HorizontalAlignment="Left" Style="{StaticResource Input}" Margin="10,476,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="390" FontSize="16"/>
+        <TextBox x:Name="TbMessage" HorizontalAlignment="Left" Style="{StaticResource Input}" Margin="10,476,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="390" Height="32" MaxLength="128" FontSize="16"/>
         <Button Opacity="0.5" IsEnabled="False" x:Name="BtnSendMessage" Click="BtnSendMessageClick" Style="{StaticResource CircularButtonOnlyWithIcon}" HorizontalAlignment="Left" Height="32" Margin="405,475,0,0" VerticalAlignment="Top" Width="32" IsDefault="True">
             <Image Source="/Resources/send-icon.png" Height="16" Width="15"/>
         </Button>

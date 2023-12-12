@@ -7,6 +7,7 @@ using System.Resources;
 using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
 namespace GuessWhoClient
@@ -22,8 +23,10 @@ namespace GuessWhoClient
 
         private void BtnUploadProfilePictureClick(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog fileDialog = new OpenFileDialog();
-            fileDialog.Filter = "Archivos de imagen|*.jpg;*.png;";
+            OpenFileDialog fileDialog = new OpenFileDialog
+            {
+                Filter = "Archivos de imagen|*.jpg;*.png;"
+            };
 
             if (fileDialog.ShowDialog() == true)
             {
@@ -191,6 +194,24 @@ namespace GuessWhoClient
             catch (EndpointNotFoundException)
             {
                 ServerResponse.ShowServerDownMessage();
+            }
+        }
+        private void PbPasswordPreviewExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (e.Command == ApplicationCommands.Copy ||
+                e.Command == ApplicationCommands.Cut ||
+                e.Command == ApplicationCommands.Paste)
+            {
+                e.Handled = true;
+            }
+        }
+        private void PbRepeatedPasswordPreviewExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (e.Command == ApplicationCommands.Copy ||
+                e.Command == ApplicationCommands.Cut ||
+                e.Command == ApplicationCommands.Paste)
+            {
+                e.Handled = true;
             }
         }
     }

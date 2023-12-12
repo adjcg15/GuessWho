@@ -38,6 +38,12 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu IsEnabled="False" Visibility="Hidden">
+                        </ContextMenu>
+                    </Setter.Value>
+                </Setter>
             </Style>
 
             <Style TargetType="PasswordBox" x:Key="PasswordInput">
@@ -66,6 +72,12 @@
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu IsEnabled="False" Visibility="Hidden">
+                        </ContextMenu>
                     </Setter.Value>
                 </Setter>
             </Style>
@@ -398,6 +410,12 @@
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ContextMenu">
+                    <Setter.Value>
+                        <ContextMenu IsEnabled="False" Visibility="Hidden">
+                        </ContextMenu>
                     </Setter.Value>
                 </Setter>
             </Style>
