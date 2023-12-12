@@ -28,20 +28,31 @@ namespace GuessWhoDataAccess
 
             try
             {
-                using (var context = new GuessWhoContext())
-                {
-                    var friendship = new Friendship
-                    {
-                        idFriendRequester = idUserRequester,
-                        idFriendRequested = idUserRequested,
-                        status = PENDING_REQUEST
-                    };
+                bool existingRequest = FriendshipDAO.CheckExistingFriendRequest(idUserRequester, idUserRequested);
 
-                    context.Friendships.Add(friendship);
-                    context.SaveChanges();
+                if (existingRequest)
+                {
+                    response.StatusCode = ResponseStatus.NOT_ALLOWED;
+                    response.Value = false;
+                }
+                else
+                {
+                    using (var context = new GuessWhoContext())
+                    {
+                        var friendship = new Friendship
+                        {
+                            idFriendRequester = idUserRequester,
+                            idFriendRequested = idUserRequested,
+                            status = PENDING_REQUEST
+                        };
+
+                        context.Friendships.Add(friendship);
+                        context.SaveChanges();
+                    }
                 }
             }
-            catch (DbUpdateException ex) {
+            catch (DbUpdateException ex)
+            {
                 response.StatusCode = ResponseStatus.UPDATE_ERROR;
                 response.Value = false;
             }
@@ -205,6 +216,23 @@ namespace GuessWhoDataAccess
             }
 
             return response;
+        }
+
+        public static bool CheckExistingFriendRequest(int idUserRequester, int idUserRequested)
+        {
+            bool requestExists;
+
+            using (var context = new GuessWhoContext())
+            {
+                var existingRequest = context.Friendships
+                    .Any(f =>
+                        (f.idFriendRequester == idUserRequester && f.idFriendRequested == idUserRequested && f.status == PENDING_REQUEST) ||
+                        (f.idFriendRequester == idUserRequested && f.idFriendRequested == idUserRequester && f.status == PENDING_REQUEST));
+
+                requestExists = existingRequest;
+            }
+
+            return requestExists;
         }
     }
 }

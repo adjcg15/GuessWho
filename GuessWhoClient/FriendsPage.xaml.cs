@@ -139,6 +139,11 @@ namespace GuessWhoClient
                             TbMessage.Text = Properties.Resources.lbStatusRequestSuccess;
                             StartAnimationTbMessage();
                         }
+                        else if(booleanResponse.StatusCode == ResponseStatus.NOT_ALLOWED)
+                        {
+                            TbMessage.Text = Properties.Resources.txtAlreadyRequested;
+                            StartAnimationTbMessage();
+                        }
                         else
                         {
                             TbMessage.Text = ServerResponse.GetTitleFromStatusCode(booleanResponse.StatusCode);

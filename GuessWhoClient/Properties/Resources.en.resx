@@ -558,6 +558,9 @@
   <data name="txtAlreadyFriends" xml:space="preserve">
     <value>This user is already your friend</value>
   </data>
+  <data name="txtAlreadyRequested" xml:space="preserve">
+    <value>Friend request already exists</value>
+  </data>
   <data name="txtConfirmationEmailBody" xml:space="preserve">
     <value>Your confirmation code</value>
   </data>

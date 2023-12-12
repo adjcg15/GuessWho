@@ -1384,6 +1384,15 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Solicitud de amigo ya existente.
+        /// </summary>
+        public static string txtAlreadyRequested {
+            get {
+                return ResourceManager.GetString("txtAlreadyRequested", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Tu código de confirmación.
         /// </summary>
         public static string txtConfirmationEmailBody {
