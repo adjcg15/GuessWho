@@ -763,6 +763,24 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No fue posible establecer una conexión con el servidor, intente en otro momento.
+        /// </summary>
+        public static string msgbConnectionServerErrorMessage {
+            get {
+                return ResourceManager.GetString("msgbConnectionServerErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error de conexión con el servidor.
+        /// </summary>
+        public static string msgbConnectionServerErrorTitle {
+            get {
+                return ResourceManager.GetString("msgbConnectionServerErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El correo electrónico y la contraseña son requeridos.
         /// </summary>
         public static string msgbEmptyFieldMessage {
@@ -804,24 +822,6 @@ namespace GuessWhoClient.Properties {
         public static string msgbEmptyReportReason {
             get {
                 return ResourceManager.GetString("msgbEmptyReportReason", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a No fue posible establecer una conexión con el servidor, intente en otro momento.
-        /// </summary>
-        public static string msgbErrorConexionServidorMessage {
-            get {
-                return ResourceManager.GetString("msgbErrorConexionServidorMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a Error de conexión con el servidor.
-        /// </summary>
-        public static string msgbErrorConexionServidorTitle {
-            get {
-                return ResourceManager.GetString("msgbErrorConexionServidorTitle", resourceCulture);
             }
         }
         
@@ -1056,6 +1056,24 @@ namespace GuessWhoClient.Properties {
         public static string msgbMessageNotSentTitle {
             get {
                 return ResourceManager.GetString("msgbMessageNotSentTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Se ha perdido la conexión de la red, intente en otro momento.
+        /// </summary>
+        public static string msgbNetworkConnectionErrorMessage {
+            get {
+                return ResourceManager.GetString("msgbNetworkConnectionErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Conexión perdida.
+        /// </summary>
+        public static string msgbNetworkConnectionErrorTitle {
+            get {
+                return ResourceManager.GetString("msgbNetworkConnectionErrorTitle", resourceCulture);
             }
         }
         

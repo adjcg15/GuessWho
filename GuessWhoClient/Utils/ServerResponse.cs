@@ -48,10 +48,20 @@ namespace GuessWhoClient.Utils
         public static void ShowServerDownMessage()
         {
             MessageBox.Show(
-                    Resources.msgbErrorConexionServidorMessage,
-                    Resources.msgbErrorConexionServidorTitle,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
+                Resources.msgbConnectionServerErrorMessage,
+                Resources.msgbConnectionServerErrorTitle,
+                MessageBoxButton.OK,
+                MessageBoxImage.Error
+            );
+        }
+
+        public static void ShowConnectionLostMessage()
+        {
+            MessageBox.Show(
+                Resources.msgbNetworkConnectionErrorMessage,
+                Resources.msgbNetworkConnectionErrorTitle,
+                MessageBoxButton.OK,
+                MessageBoxImage.Error
             );
         }
     }

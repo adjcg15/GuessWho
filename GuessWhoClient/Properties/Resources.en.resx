@@ -351,6 +351,12 @@
   <data name="msgbConfirmLeaveGameTitle" xml:space="preserve">
     <value>Quit Match</value>
   </data>
+  <data name="msgbConnectionServerErrorMessage" xml:space="preserve">
+    <value>Could not establish a connection to the server, try another time</value>
+  </data>
+  <data name="msgbConnectionServerErrorTitle" xml:space="preserve">
+    <value>Server connection error</value>
+  </data>
   <data name="msgbEmptyFieldMessage" xml:space="preserve">
     <value>Email and password are required</value>
   </data>
@@ -365,12 +371,6 @@
   </data>
   <data name="msgbEmptyReportReason" xml:space="preserve">
     <value>Please select the reason for the report.</value>
-  </data>
-  <data name="msgbErrorConexionServidorMessage" xml:space="preserve">
-    <value>Could not establish a connection to the server, try another time</value>
-  </data>
-  <data name="msgbErrorConexionServidorTitle" xml:space="preserve">
-    <value>Server connection error</value>
   </data>
   <data name="msgbErrorJoiningMatchTitle" xml:space="preserve">
     <value>An error occurred while joining the game</value>
@@ -449,6 +449,12 @@
   </data>
   <data name="msgbMessageNotSentTitle" xml:space="preserve">
     <value>Could not send message</value>
+  </data>
+  <data name="msgbNetworkConnectionErrorMessage" xml:space="preserve">
+    <value>Network connection has been lost, please try another time</value>
+  </data>
+  <data name="msgbNetworkConnectionErrorTitle" xml:space="preserve">
+    <value>Connection lost</value>
   </data>
   <data name="msgbNonExistentAccountMessage" xml:space="preserve">
     <value>No account was found associated with the email provided</value>
