@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GuessWhoClient"
       xmlns:p="clr-namespace:GuessWhoClient.Properties"
-      mc:Ignorable="d"
+      mc:Ignorable="d" Loaded="PageLoaded"
       Title="Scoreboard" Height="520" Width="900">
     <Grid>
         <Image 
