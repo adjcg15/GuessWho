@@ -450,6 +450,12 @@
   <data name="msgbMessageNotSentTitle" xml:space="preserve">
     <value>Could not send message</value>
   </data>
+  <data name="msgbNonExistentAccountMessage" xml:space="preserve">
+    <value>No account was found associated with the email provided</value>
+  </data>
+  <data name="msgbNonExistentAccountTitle" xml:space="preserve">
+    <value>Account not found</value>
+  </data>
   <data name="msgbPermanentBanMessage" xml:space="preserve">
     <value>Your account has been permanently blocked. Does not have access to the game</value>
   </data>
@@ -557,6 +563,9 @@
   </data>
   <data name="txtAlreadyFriends" xml:space="preserve">
     <value>This user is already your friend</value>
+  </data>
+  <data name="txtAlreadyRequested" xml:space="preserve">
+    <value>Friend request already exists</value>
   </data>
   <data name="txtConfirmationEmailBody" xml:space="preserve">
     <value>Your confirmation code</value>

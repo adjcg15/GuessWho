@@ -31,11 +31,92 @@ namespace GuessWhoClient
             }
             else
             {
-                if (!CheckPlayerIsPermanentBanned(email))
+                ValidateUserCredentials(email, password);
+            }
+        }
+
+        private void ValidateUserCredentials(string email, string password)
+        {
+            try
+            {
+                AuthenticationServiceClient authenticationServiceClient = new AuthenticationServiceClient();
+                var emailVerification = authenticationServiceClient.VerifyUserRegisteredByEmail(email);
+
+                switch(emailVerification.StatusCode)
                 {
-                    if (!CheckPlayerIsTemporarilyBanned(email))
+                    case ResponseStatus.OK:
+                        if(emailVerification.Value != null)
+                        {
+                            StablishUserSession(email, password);
+                        }
+                        else
+                        {
+                            MessageBox.Show(
+                                Properties.Resources.msgbNonExistentAccountMessage,
+                                Properties.Resources.msgbNonExistentAccountTitle,
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Warning
+                            );
+                        }
+                        break;
+                    case ResponseStatus.SQL_ERROR:
+                        MessageBox.Show(
+                            ServerResponse.GetMessageFromStatusCode(ResponseStatus.SQL_ERROR),
+                            ServerResponse.GetTitleFromStatusCode(ResponseStatus.SQL_ERROR),
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
+                        );
+                        break;
+                }
+            }
+            catch (EndpointNotFoundException)
+            {
+                ServerResponse.ShowServerDownMessage();
+                RedirectToMainMenu();
+            }
+        }
+
+        private void StablishUserSession(string email, string password)
+        {
+            if (!CheckPlayerIsPermanentBanned(email))
+            {
+                if (!CheckPlayerIsTemporarilyBanned(email))
+                {
+                    AuthenticationServiceClient authenticationServiceClient = new AuthenticationServiceClient();
+                    ProfileResponse userProfile = authenticationServiceClient.Login(email, password);
+
+                    switch (userProfile.StatusCode)
                     {
-                        ValidateUserCredentials(email, password);
+                        case ResponseStatus.OK:
+                            MessageBox.Show(Properties.Resources.msgbWelcome1 + userProfile.Value.FullName + Properties.Resources.msgbWelcome2);
+                            DataStore.Profile = userProfile.Value;
+                            RedirectToMainMenu();
+                            break;
+                        case ResponseStatus.VALIDATION_ERROR:
+                            MessageBox.Show(
+                                Properties.Resources.msgbInvalidCredentialsMessage,
+                                Properties.Resources.msgbInvalidCredentialsTitle,
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Warning
+                            );
+                            break;
+                        case ResponseStatus.NOT_ALLOWED:
+                            MessageBox.Show(
+                                Properties.Resources.msgbInvalidSessionMessage,
+                                Properties.Resources.msgbInvalidSessionTitle,
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Warning
+                            );
+                            break;
+                        default:
+                            MessageBox.Show(
+                                ServerResponse.GetMessageFromStatusCode(userProfile.StatusCode),
+                                ServerResponse.GetTitleFromStatusCode(userProfile.StatusCode),
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Warning
+                            );
+                            RedirectToMainMenu();
+                            break;
                     }
                 }
             }
@@ -45,42 +126,35 @@ namespace GuessWhoClient
         {
             bool permanentBanned = true;
 
-            try
-            {
-                ReportServiceClient reportServiceClient = new ReportServiceClient();
-                var response = reportServiceClient.VerifyPlayerPermanentBanned(playerEmail);
+            ReportServiceClient reportServiceClient = new ReportServiceClient();
+            var response = reportServiceClient.VerifyPlayerPermanentBanned(playerEmail);
 
-                switch(response.StatusCode)
-                {
-                    case ResponseStatus.OK:
-                        if (!response.Value)
-                        {
-                            permanentBanned = false;
-                        }
-                        else
-                        {
-                            MessageBox.Show(
-                                Properties.Resources.msgbPermanentBanMessage,
-                                Properties.Resources.msgbPermanentBanTitle,
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Error
-                            );
-                        }
-                        break;
-                    case ResponseStatus.VALIDATION_ERROR:
-                    case ResponseStatus.SQL_ERROR:
-                        MessageBox.Show(
-                            Properties.Resources.msgbErrorVerifyingBanMessage,
-                            Properties.Resources.msgbErrorVerifyingBanTitle,
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Warning
-                        );
-                        break;
-                }
-            }
-            catch (EndpointNotFoundException)
+            switch (response.StatusCode)
             {
-                ServerResponse.ShowServerDownMessage();
+                case ResponseStatus.OK:
+                    if (!response.Value)
+                    {
+                        permanentBanned = false;
+                    }
+                    else
+                    {
+                        MessageBox.Show(
+                            Properties.Resources.msgbPermanentBanMessage,
+                            Properties.Resources.msgbPermanentBanTitle,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error
+                        );
+                    }
+                    break;
+                case ResponseStatus.VALIDATION_ERROR:
+                case ResponseStatus.SQL_ERROR:
+                    MessageBox.Show(
+                        Properties.Resources.msgbErrorVerifyingBanMessage,
+                        Properties.Resources.msgbErrorVerifyingBanTitle,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning
+                    );
+                    break;
             }
 
             return permanentBanned;
@@ -90,108 +164,49 @@ namespace GuessWhoClient
         {
             bool temporarilyBanned = true;
 
-            try
+            ReportServiceClient reportServiceClient = new ReportServiceClient();
+            var response = reportServiceClient.VerifyPlayerTemporarilyBanned(playerEmail);
+
+            switch (response.StatusCode)
             {
-                ReportServiceClient reportServiceClient = new ReportServiceClient();
-                var response = reportServiceClient.VerifyPlayerTemporarilyBanned(playerEmail);
-
-                switch (response.StatusCode)
-                {
-                    case ResponseStatus.OK:
-                        temporarilyBanned = false;
-                        break;
-                    case ResponseStatus.NOT_ALLOWED:
-                        if (response.Value == DateTime.MinValue)
-                        {
-                            MessageBox.Show(
-                                Properties.Resources.msgbTemporalBanGenericMessage,
-                                Properties.Resources.msgbTemporalBanTitle,
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Error
-                            );
-                        }
-                        else
-                        {
-                            DateTime lockEndDate = response.Value;
-                            string parsedLockEndDate = lockEndDate.ToString("dd/MM/yyyy");
-
-                            MessageBox.Show(
-                                Properties.Resources.msgbTemporalBanMessage + " " + parsedLockEndDate,
-                                Properties.Resources.msgbTemporalBanTitle,
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Error
-                            );
-                        }
-                        break;
-                    case ResponseStatus.VALIDATION_ERROR:
-                    case ResponseStatus.SQL_ERROR:
+                case ResponseStatus.OK:
+                    temporarilyBanned = false;
+                    break;
+                case ResponseStatus.NOT_ALLOWED:
+                    if (response.Value == DateTime.MinValue)
+                    {
                         MessageBox.Show(
-                            Properties.Resources.msgbErrorVerifyingBanMessage,
-                            Properties.Resources.msgbErrorVerifyingBanTitle,
+                            Properties.Resources.msgbTemporalBanGenericMessage,
+                            Properties.Resources.msgbTemporalBanTitle,
                             MessageBoxButton.OK,
-                            MessageBoxImage.Warning
+                            MessageBoxImage.Error
                         );
-                        break;
-                }
-            }
-            catch (EndpointNotFoundException)
-            {
-                ServerResponse.ShowServerDownMessage();
+                    }
+                    else
+                    {
+                        DateTime lockEndDate = response.Value;
+                        string parsedLockEndDate = lockEndDate.ToString("dd/MM/yyyy");
+
+                        MessageBox.Show(
+                            Properties.Resources.msgbTemporalBanMessage + " " + parsedLockEndDate,
+                            Properties.Resources.msgbTemporalBanTitle,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error
+                        );
+                    }
+                    break;
+                case ResponseStatus.VALIDATION_ERROR:
+                case ResponseStatus.SQL_ERROR:
+                    MessageBox.Show(
+                        Properties.Resources.msgbErrorVerifyingBanMessage,
+                        Properties.Resources.msgbErrorVerifyingBanTitle,
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning
+                    );
+                    break;
             }
 
             return temporarilyBanned;
-        }
-
-        private void ValidateUserCredentials(string email, string password)
-        {
-            try
-            {
-                AuthenticationServiceClient authenticationServiceClient = new AuthenticationServiceClient();
-                ProfileResponse response = authenticationServiceClient.Login(email, password);
-
-                switch (response.StatusCode)
-                {
-                    case ResponseStatus.OK:
-                        if (response.Value != null)
-                        {
-                            Profile profile = response.Value;
-                            MessageBox.Show(Properties.Resources.msgbWelcome1 + profile.FullName + Properties.Resources.msgbWelcome2);
-                            DataStore.Profile = profile;
-                            RedirectToMainMenu();
-                        }
-                        break;
-                    case ResponseStatus.VALIDATION_ERROR:
-                        MessageBox.Show(
-                            Properties.Resources.msgbInvalidCredentialsMessage,
-                            Properties.Resources.msgbInvalidCredentialsTitle,
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Warning
-                        );
-                        break;
-                    case ResponseStatus.NOT_ALLOWED:
-                        MessageBox.Show(
-                            Properties.Resources.msgbInvalidSessionMessage,
-                            Properties.Resources.msgbInvalidSessionTitle,
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Warning
-                        );
-                        break;
-                    default:
-                        MessageBox.Show(
-                            ServerResponse.GetMessageFromStatusCode(response.StatusCode),
-                            ServerResponse.GetTitleFromStatusCode(response.StatusCode),
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Warning
-                        );
-                        RedirectToMainMenu();
-                        break;
-                }
-            }
-            catch (EndpointNotFoundException)
-            {
-                ServerResponse.ShowServerDownMessage();
-                RedirectToMainMenu();
-            }
         }
 
         private void BtnSignUpClick(object sender, RoutedEventArgs e)
