@@ -18,7 +18,6 @@ namespace GuessWhoClient
         protected override void OnStartup(StartupEventArgs e)
         {
             log4net.Config.XmlConfigurator.Configure();
-            log.Warn("        =============  Started Logging  =============        ");
             base.OnStartup(e);
         }
     }
