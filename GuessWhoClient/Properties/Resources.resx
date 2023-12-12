@@ -450,6 +450,12 @@
   <data name="msgbMessageNotSentTitle" xml:space="preserve">
     <value>No se pudo enviar el mensaje</value>
   </data>
+  <data name="msgbNonExistentAccountMessage" xml:space="preserve">
+    <value>No se encontró ninguna cuenta asociada al email proporcionado</value>
+  </data>
+  <data name="msgbNonExistentAccountTitle" xml:space="preserve">
+    <value>Cuenta no encontrada</value>
+  </data>
   <data name="msgbPermanentBanMessage" xml:space="preserve">
     <value>Su cuenta ha sido bloqueada permanentemente. No tiene acceso al juego</value>
   </data>

@@ -1060,6 +1060,24 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No se encontró ninguna cuenta asociada al email proporcionado.
+        /// </summary>
+        public static string msgbNonExistentAccountMessage {
+            get {
+                return ResourceManager.GetString("msgbNonExistentAccountMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cuenta no encontrada.
+        /// </summary>
+        public static string msgbNonExistentAccountTitle {
+            get {
+                return ResourceManager.GetString("msgbNonExistentAccountTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Su cuenta ha sido bloqueada permanentemente. No tiene acceso al juego.
         /// </summary>
         public static string msgbPermanentBanMessage {
