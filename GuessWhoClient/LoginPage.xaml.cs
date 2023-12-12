@@ -4,6 +4,7 @@ using System;
 using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace GuessWhoClient
 {
@@ -203,6 +204,16 @@ namespace GuessWhoClient
         {
             MainMenuPage mainMenuPage = new MainMenuPage();
             this.NavigationService.Navigate(mainMenuPage);
+        }
+
+        private void PbPasswordPreviewExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (e.Command == ApplicationCommands.Copy ||
+                e.Command == ApplicationCommands.Cut ||
+                e.Command == ApplicationCommands.Paste)
+            {
+                e.Handled = true;
+            }
         }
     }
 }
