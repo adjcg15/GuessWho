@@ -537,8 +537,6 @@ namespace GuessWhoClient
 
             SpChatMessages.Children.Add(messageElement);
             SvChatMessages.ScrollToBottom();
-
-            TbMessage.Text = "";
         }
 
         private void BtnCopyInvitationCodeClick(object sender, RoutedEventArgs e)
