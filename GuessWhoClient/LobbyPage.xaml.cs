@@ -265,9 +265,10 @@ namespace GuessWhoClient
                         ExitChatRoom();
                         matchStatusManager.Client.StopListeningMatchStatus(matchStatusManager.CurrentMatchCode);
                     }
-                    catch(EndpointNotFoundException)
+                    catch(EndpointNotFoundException ex)
                     {
                         //TO-DO: log exception
+                        App.log.Fatal(ex);
                     }
 
                     ClearCommunicationChannels();
@@ -562,10 +563,11 @@ namespace GuessWhoClient
                 ExitChatRoom();
                 FinishGame();
             }
-            catch (EndpointNotFoundException)
+            catch (EndpointNotFoundException ex)
             {
                 ServerResponse.ShowServerDownMessage();
                 ClearCommunicationChannels();
+                App.log.Fatal(ex);
             }
 
             RedirectPermanentlyToMainMenu();
