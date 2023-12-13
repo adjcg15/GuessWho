@@ -10,14 +10,12 @@ namespace GuessWhoClient
 {
     public class Character : INotifyPropertyChanged
     {
-        private BitmapImage avatar;
         private bool isSelected;
-        private string name;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public BitmapImage Avatar { get { return avatar; } set { avatar = value; } }
+        public BitmapImage Avatar { get ; set ; }
         
-        public string Name { get { return name; } set { name = value; } }
+        public string Name { get ; set ; } 
 
         public bool IsSelected
         {

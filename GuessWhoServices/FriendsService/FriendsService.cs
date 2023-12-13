@@ -12,7 +12,7 @@ namespace GuessWhoServices
     {
         public Response<bool> SendRequest(int idUserRequester, int idUserRequested)
         {
-            return FriendshipDAO.AddRequest(idUserRequester, idUserRequested);
+            return FriendshipDao.AddRequest(idUserRequester, idUserRequested);
         }
 
         public Response<List<Friend>> GetRequests(int idUser)
@@ -21,7 +21,7 @@ namespace GuessWhoServices
             response.Value = new List<Friend>();
             response.StatusCode = ResponseStatus.OK;
 
-            var requestsResponse = FriendshipDAO.GetRequestsById(idUser);
+            var requestsResponse = FriendshipDao.GetRequestsById(idUser);
             if (requestsResponse.StatusCode != ResponseStatus.OK)
             {
                 response.StatusCode = requestsResponse.StatusCode;
@@ -35,7 +35,7 @@ namespace GuessWhoServices
                     FullName = friendship.User.fullName,
                     Avatar = friendship.User.avatar,
                     IdFriendship = friendship.idFriendship,
-                    Status = FriendshipDAO.REQUESTED_STATUS
+                    Status = FriendshipDao.REQUESTED_STATUS
                 })
                 .ToList();
 
@@ -49,7 +49,7 @@ namespace GuessWhoServices
             response.Value = new List<Friend>();
             response.StatusCode = ResponseStatus.OK;
 
-            var friendsResponse = FriendshipDAO.GetFriendsById(idUser);
+            var friendsResponse = FriendshipDao.GetFriendsById(idUser);
             if (friendsResponse.StatusCode != ResponseStatus.OK)
             {
                 response.StatusCode = friendsResponse.StatusCode;
@@ -64,12 +64,12 @@ namespace GuessWhoServices
                     Nickname = user.nickname,
                     FullName = user.fullName,
                     Avatar = user.avatar,
-                    Status = FriendshipDAO.OFFLINE_STATUS
+                    Status = FriendshipDao.OFFLINE_STATUS
                 };
 
                 if (activeUsers.Any(userNickname => userNickname == user.nickname))
                 {
-                    friend.Status = FriendshipDAO.ONLINE_STATUS;
+                    friend.Status = FriendshipDao.ONLINE_STATUS;
                 }
 
                 return friend;
@@ -84,12 +84,12 @@ namespace GuessWhoServices
         {
             Response<bool> response = new Response<bool>();
 
-            if(answer == FriendshipDAO.ACCEPT_REQUEST)
+            if(answer == FriendshipDao.ACCEPT_REQUEST)
             {
-                response = FriendshipDAO.AcceptRequest(idFriendship);
-            }else if(answer == FriendshipDAO.DECLINE_REQUEST)
+                response = FriendshipDao.AcceptRequest(idFriendship);
+            }else if(answer == FriendshipDao.DECLINE_REQUEST)
             {
-                response = FriendshipDAO.DeclineRequest(idFriendship);
+                response = FriendshipDao.DeclineRequest(idFriendship);
             }
 
             return response;

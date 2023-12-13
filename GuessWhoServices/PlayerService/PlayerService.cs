@@ -7,7 +7,7 @@ namespace GuessWhoServices
     {
         Response<List<TopPlayer>> IPlayerService.GetBestPlayers(string query, int totalPlayers)
         {
-            return PlayerDAO.GetTopPlayers(query, totalPlayers);
+            return PlayerDao.GetTopPlayers(query, totalPlayers);
         }
     }
 }

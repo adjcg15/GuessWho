@@ -57,7 +57,7 @@ namespace GuessWhoServices
 
         private void AddScorePoints(string playerNickname)
         {
-            MatchDAO.AddScorePoints(playerNickname);
+            MatchDao.AddScorePoints(playerNickname);
         }
 
         public void ListenMatchStatus(string matchCode, string nickname)

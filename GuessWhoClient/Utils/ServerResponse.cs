@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace GuessWhoClient.Utils
 {
-    public class ServerResponse
+    public static class ServerResponse
     {
         public static string GetTitleFromStatusCode(GameServices.ResponseStatus statusCode)
         {

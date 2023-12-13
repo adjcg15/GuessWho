@@ -14,7 +14,6 @@ namespace GuessWhoClient.Communication
         private static MatchStatusManager instance;
         private MatchStatusServiceClient client;
         private List<IMatchStatusPage> subscribedPages = new List<IMatchStatusPage>();
-        private string currentMatchCode;
 
         private MatchStatusManager() { }
 
@@ -62,7 +61,7 @@ namespace GuessWhoClient.Communication
             subscribedPages = new List<IMatchStatusPage>();
         }
 
-        public string CurrentMatchCode { get { return currentMatchCode; } set { currentMatchCode = value; } }
+        public string CurrentMatchCode { get ; set ; }
 
         public void MatchStatusChanged(MatchStatus matchStatusCode)
         {

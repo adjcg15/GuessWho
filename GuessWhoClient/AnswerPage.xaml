@@ -16,7 +16,7 @@
 
         <Canvas x:Name="CnvsOpponentDraw" Margin="30,18,320,18" Background="White"/>
 
-        <Button x:Name="BtnReportPlayer" Content="{x:Static p:Resources.txtReportPlayer}" Style="{StaticResource PrimaryCancelButtonWithIcon}"  HorizontalAlignment="Left" Margin="45,25,0,0" VerticalAlignment="Top" Height="44" FontWeight="Medium" Click="BtnReportPlayerClick"/>
+        <Button x:Name="BtnReportPlayer" Content="{x:Static p:Resources.txtReportPlayer}" Style="{StaticResource PrimaryCancelButtonWithIcon}" Visibility="Visible" HorizontalAlignment="Left" Margin="45,25,0,0" VerticalAlignment="Top" Height="44" FontWeight="Medium" Click="BtnReportPlayerClick"/>
         <Border Margin="609,35,27,381" BorderBrush="#E21818" CornerRadius="50" Background="White" BorderThickness="4">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Width="191">
                 <TextBlock Margin="0, 0, 10, 0" TextWrapping="Wrap" Text="{x:Static p:Resources.lbCharacterLooksLikeQuestion}" FontSize="16" FontWeight="Bold" Foreground="#0A6EBD" VerticalAlignment="Center" Width="101"/>

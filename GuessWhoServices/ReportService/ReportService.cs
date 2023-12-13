@@ -8,7 +8,7 @@ namespace GuessWhoServices
     {
         public Response<List<Report>> GetReportsByUserId(int idUser)
         {
-            return ReportDAO.GetReportsByUserId(idUser);
+            return ReportDao.GetReportsByUserId(idUser);
         }
 
         public Response<bool> ReportPlayer(PlayerReport playerReport)
@@ -20,7 +20,7 @@ namespace GuessWhoServices
             };
 
 
-            Response<Profile> reportedUserProfile = UserDAO.GetUserByNickName(playerReport.NicknameReported);
+            Response<Profile> reportedUserProfile = UserDao.GetUserByNickName(playerReport.NicknameReported);
 
             if (reportedUserProfile.StatusCode == ResponseStatus.OK && reportedUserProfile.Value != null)
             {
@@ -32,7 +32,7 @@ namespace GuessWhoServices
                     timestamp = DateTime.Now 
                 };
 
-                Response<bool> addReportResponse = ReportDAO.AddPlayerReport(report);
+                Response<bool> addReportResponse = ReportDao.AddPlayerReport(report);
 
                 if (addReportResponse.StatusCode == ResponseStatus.OK && addReportResponse.Value)
                 {
@@ -53,12 +53,12 @@ namespace GuessWhoServices
 
         public Response<bool> VerifyPlayerPermanentBanned(string email)
         {
-            return PlayerDAO.CheckPlayerPermanentBan(email);
+            return PlayerDao.CheckPlayerPermanentBan(email);
         }
 
         public Response<DateTime> VerifyPlayerTemporarilyBanned(string email)
         {
-            return PlayerDAO.CheckPlayerTemporalBan(email);
+            return PlayerDao.CheckPlayerTemporalBan(email);
         }
     }
 }

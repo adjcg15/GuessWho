@@ -695,9 +695,9 @@ namespace GuessWhoClient
         private void BtnInviteToGameClick(object sender, RoutedEventArgs e)
         {
             Button invitationButton = e.Source as Button;
-            string activeUserNickname = (string)invitationButton.DataContext;
+            UserCard activeUserCard = (UserCard)invitationButton.DataContext;
 
-            string nickname = activeUserNickname;
+            string nickname = activeUserCard.Nickname;
             try
             {
                 bool playerInvitedSuccessfully = SendInvitationToUser(nickname);

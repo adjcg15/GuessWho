@@ -11,6 +11,7 @@ using GuessWhoClient.Utils;
 using System.ServiceModel;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Configuration;
 
 namespace GuessWhoClient
 {
@@ -43,16 +44,16 @@ namespace GuessWhoClient
         {
             generatedConfirmationCode = GenerateConfirmationCode(10);
 
-            //bool confirmationSent = SendConfirmationEmail(email, generatedConfirmationCode);
-            //if (!confirmationSent)
-            //{
-            //    MessageBox.Show(
-            //        Properties.Resources.msgbConfirmEmailSendingErrorMessage,
-            //        Properties.Resources.msgbConfirmEmailSendingErrorTitle,
-            //        MessageBoxButton.OK,
-            //        MessageBoxImage.Warning
-            //    );
-            //}
+            bool confirmationSent = SendConfirmationEmail(email, generatedConfirmationCode);
+            if (!confirmationSent)
+            {
+                MessageBox.Show(
+                    Properties.Resources.msgbConfirmEmailSendingErrorMessage,
+                    Properties.Resources.msgbConfirmEmailSendingErrorTitle,
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+            }
         }
 
         private void BtnConfirmAccountClick(object sender, RoutedEventArgs e)
@@ -119,31 +120,7 @@ namespace GuessWhoClient
 
         private static bool SendConfirmationEmail(string email, string code)
         {
-            bool successSending = true;
-
-            try
-            {
-                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
-                smtpClient.EnableSsl = true;
-                smtpClient.UseDefaultCredentials = false;
-                smtpClient.Port = 587;
-                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-                smtpClient.Credentials = new NetworkCredential("guesswhodrawn@gmail.com", "dwny hpdm zdmg jyme");
-
-                MailMessage mailMessage = new MailMessage();
-                mailMessage.From = new MailAddress("guesswhodrawn@gmail.com");
-                mailMessage.To.Add(new MailAddress(email));
-                mailMessage.Subject = Properties.Resources.txtConfirmationEmailSubject;
-                mailMessage.Body = Properties.Resources.txtConfirmationEmailBody + ": " + code;
-
-                smtpClient.Send(mailMessage);
-            } 
-            catch(SmtpException ex)
-            {
-                successSending = false;
-            }
-
-            return successSending;
+            return Email.SendMail(email, Properties.Resources.txtConfirmationEmailSubject, (Properties.Resources.txtConfirmationEmailBody + ": " + code));
         }
 
         private void TbConfirmationCodeTextChanged(object sender, TextChangedEventArgs e)

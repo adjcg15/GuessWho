@@ -200,7 +200,7 @@ namespace GuessWhoClient
             catch (EndpointNotFoundException ex)
             {
                 ServerResponse.ShowServerDownMessage();
-                //TO-DO Ex log
+                App.log.Fatal(ex.Message);
             }
         }
 
@@ -216,7 +216,7 @@ namespace GuessWhoClient
             catch (EndpointNotFoundException ex)
             {
                 ServerResponse.ShowServerDownMessage();
-                //TO-DO Ex log
+                App.log.Fatal(ex.Message);
             } 
         }
 

@@ -2,6 +2,7 @@
 using GuessWhoClient.GameServices;
 using GuessWhoClient.Model.Interfaces;
 using GuessWhoClient.Utils;
+using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.Windows;
@@ -36,7 +37,7 @@ namespace GuessWhoClient
         {
             ShowCharacterSelected();
 
-            if (gameManager.AdversaryNickname == string.Empty || DataStore.Profile == null)
+            if (gameManager.AdversaryNickname == Properties.Resources.txtGuest || DataStore.Profile == null || gameManager.AdversaryNickname == Properties.Resources.txtHost)
             {
                 BtnReportPlayer.Visibility = Visibility.Collapsed;
             }
@@ -319,6 +320,8 @@ namespace GuessWhoClient
         {
             ReportServiceClient reportServiceClient = new ReportServiceClient();
 
+            Console.WriteLine(CbReportReason.SelectedIndex + 1 + " " + gameManager.AdversaryNickname + " " + TbReportComment.Text);
+
             PlayerReport playerReport = new PlayerReport
             {
                 IdReportType = CbReportReason.SelectedIndex + 1,
@@ -326,6 +329,7 @@ namespace GuessWhoClient
                 ReportComment = TbReportComment.Text
             };
 
+            Console.WriteLine(playerReport.IdReportType + " " + playerReport.NicknameReported + " " + playerReport.ReportComment);
 
             try
             {
@@ -344,8 +348,10 @@ namespace GuessWhoClient
                     ShowErrorSendingReport(response.StatusCode);
                 }
             }
-            catch (EndpointNotFoundException)
+            catch (EndpointNotFoundException ex)
             {
+                App.log.Fatal(ex.Message);
+
                 ServerResponse.ShowServerDownMessage();
             }
         }

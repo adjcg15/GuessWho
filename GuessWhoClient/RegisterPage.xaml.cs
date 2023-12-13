@@ -60,6 +60,8 @@ namespace GuessWhoClient
             }
             catch (IOException ex)
             {
+                App.log.Warn(ex.Message);
+
                 MessageBox.Show(
                     Properties.Resources.msgbRegisterImageNotFoundMessage,
                     Properties.Resources.msgbRegisterImageNotFoundTitle,
@@ -191,8 +193,10 @@ namespace GuessWhoClient
                 ConfirmAccountPage confirmAccountPage = new ConfirmAccountPage(nickname, email, password, fullName, profileImage);
                 this.NavigationService.Navigate(confirmAccountPage);
             } 
-            catch (EndpointNotFoundException)
+            catch (EndpointNotFoundException ex)
             {
+                App.log.Fatal(ex.Message);
+
                 ServerResponse.ShowServerDownMessage();
             }
         }
