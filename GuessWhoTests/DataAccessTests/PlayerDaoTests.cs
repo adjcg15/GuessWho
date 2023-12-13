@@ -11,11 +11,11 @@ using Xunit;
 
 namespace GuessWhoTests.DataAccessTests
 {
-    public class PlayerDaoTests: IClassFixture<PlayerDaoTestsFixture>
+    public class PlayerDaoTests : IClassFixture<PlayerDaoTestsFixture>
     {
         private readonly PlayerDaoTestsFixture fixture;
 
-        public PlayerDaoTests(PlayerDaoTestsFixture fixture) 
+        public PlayerDaoTests(PlayerDaoTestsFixture fixture)
         {
             this.fixture = fixture;
         }
@@ -23,28 +23,25 @@ namespace GuessWhoTests.DataAccessTests
         [Fact]
         public void TestGetTopPlayersSucces()
         {
-            var response = PlayerDao.GetTopPlayers(fixture.SearchQuery, fixture.ValidNumberOfTopPlayers);
+            var players = PlayerDao.GetTopPlayers("", 10);
 
-            Assert.Equal(ResponseStatus.OK, response.StatusCode);
+            Assert.Equal(ResponseStatus.OK, players.StatusCode);
         }
 
         [Fact]
-        public void TestGetTopPlayersFail()
+        public void TestGetTopPlayersExactNumberSuccess()
         {
-            var response = PlayerDao.GetTopPlayers(fixture.SearchQuery, fixture.InvalidNumberOfTopPlayers);
+            int expectedPlayers = 0;
 
-            Assert.Equal(ResponseStatus.OK, response.StatusCode);
+            var players = PlayerDao.GetTopPlayers("", 10);
+
+            Assert.True(players.Value.Count == expectedPlayers);
         }
     }
 
     public class PlayerDaoTestsFixture : IDisposable
     {
-        public string EmailAccountRegistered { get { return "unit-testing@test.com"; } }
-        public string PasswordAccountRegistered { get { return "b221d9dbb083a7f33428d7c2a3c3198ae925614d70210e28716ccaa7cd4ddb79"; } }
-        public int IdUserRegistered { get; }
-        public string SearchQuery { get { return ""; } }
-        public int ValidNumberOfTopPlayers { get { return 100; } }
-        public int InvalidNumberOfTopPlayers { get { return -1; } }
+        private int idAccountAlreadyRegistered;
 
         public PlayerDaoTestsFixture()
         {
@@ -52,11 +49,12 @@ namespace GuessWhoTests.DataAccessTests
             {
                 Account newAccount = new Account()
                 {
-                    email = EmailAccountRegistered,
-                    password = PasswordAccountRegistered
+                    email = "unit-testing@test.com",
+                    password = "b221d9dbb083a7f33428d7c2a3c3198ae925614d70210e28716ccaa7cd4ddb79"
                 };
                 context.Accounts.Add(newAccount);
                 context.SaveChanges();
+                idAccountAlreadyRegistered = newAccount.idAccount;
 
                 User newUser = new User
                 {
@@ -67,8 +65,6 @@ namespace GuessWhoTests.DataAccessTests
                 };
                 context.Users.Add(newUser);
                 context.SaveChanges();
-
-                IdUserRegistered = newUser.idUser;
             }
         }
 
@@ -76,12 +72,12 @@ namespace GuessWhoTests.DataAccessTests
         {
             using (var context = new GuessWhoContext())
             {
-                Account accountToRemove = context.Accounts.FirstOrDefault(a => a.email == EmailAccountRegistered);
+                Account accountToRemove = context.Accounts.FirstOrDefault(a => a.idAccount == idAccountAlreadyRegistered);
                 context.Accounts.Remove(accountToRemove);
 
                 context.SaveChanges();
             }
-        }  
-          
+        }
+
     }
 }
