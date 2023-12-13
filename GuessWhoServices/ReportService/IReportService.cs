@@ -25,17 +25,13 @@ namespace GuessWhoServices
     [DataContract]
     public class PlayerReport
     {
-        private string nicknameReported;
-        private string reportComment;
-        private int idReportType;
+        [DataMember]
+        public string NicknameReported { get; set; }
 
         [DataMember]
-        public string NicknameReported { get { return nicknameReported; } set { nicknameReported = value; } }
+        public string ReportComment { get; set; }
 
         [DataMember]
-        public string ReportComment { get { return reportComment; } set { reportComment = value; } }
-
-        [DataMember]
-        public int IdReportType { get { return idReportType; } set { idReportType = value; } }
+        public int IdReportType { get; set; }
     }
 }

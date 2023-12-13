@@ -91,35 +91,16 @@ namespace GuessWhoServices
                         }
                     }
 
-                    PlayerInMatch guest = new PlayerInMatch();
-                    guest.Nickname = "";
-                    guest.Avatar = null;
-                    guest.FullName = "";
-
-                    //If nickname is empty it is assumed that the player is a guest so it does not have an account
-                    if (!string.IsNullOrEmpty(nickname))
-                    {
-                        Response<Profile> userResponse = UserDao.GetUserByNickName(nickname);
-
-                        if (userResponse.StatusCode == ResponseStatus.OK)
-                        {
-                            guest.Nickname = userResponse.Value.NickName;
-                            guest.Avatar = userResponse.Value.Avatar;
-                            guest.FullName = userResponse.Value.FullName;
-                        }
-                        else
-                        {
-                            //If guest is null, an error occurred when recovering its information
-                            guest = null;
-                        }
-                    }
+                    PlayerInMatch guest = VerifyGuestWithAccount(nickname);
 
                     try
                     {
                         storedMatch.HostChannel.PlayerStatusInMatchChanged(guest, true);
                     } 
-                    catch(CommunicationObjectAbortedException)
+                    catch(CommunicationObjectAbortedException ex)
                     {
+                        ServerLogger.Instance.Error(ex.Message);
+
                         response.StatusCode = ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR;
                         response.Value = null;
 
@@ -129,6 +110,36 @@ namespace GuessWhoServices
             }
 
             return response;
+        }
+
+        private PlayerInMatch VerifyGuestWithAccount(string nickname)
+        {
+            PlayerInMatch guest = new PlayerInMatch
+            {
+                Nickname = "",
+                Avatar = null,
+                FullName = ""
+            };
+
+            //If nickname is empty it is assumed that the player is a guest so it does not have an account
+            if (!string.IsNullOrEmpty(nickname))
+            {
+                Response<Profile> userResponse = UserDao.GetUserByNickName(nickname);
+
+                if (userResponse.StatusCode == ResponseStatus.OK)
+                {
+                    guest.Nickname = userResponse.Value.NickName;
+                    guest.Avatar = userResponse.Value.Avatar;
+                    guest.FullName = userResponse.Value.FullName;
+                }
+                else
+                {
+                    //If guest is null, an error occurred when recovering its information
+                    guest = null;
+                }
+            }
+
+            return guest;
         }
 
         public void ExitGame(string invitationCode)

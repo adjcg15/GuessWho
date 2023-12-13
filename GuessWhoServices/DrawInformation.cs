@@ -9,10 +9,7 @@ namespace GuessWhoServices
 {
     public class DrawInformation
     {
-        private IDrawServiceCallback playerOneChannel;
-        private IDrawServiceCallback playerTwoChannel;
-
-        public IDrawServiceCallback PlayerOneChannel { get { return playerOneChannel; } set { playerOneChannel = value; } }
-        public IDrawServiceCallback PlayerTwoChannel { get { return playerTwoChannel; } set { playerTwoChannel = value; } }
+        public IDrawServiceCallback PlayerOneChannel { get; set; }
+        public IDrawServiceCallback PlayerTwoChannel { get ; set ; }
     }
 }

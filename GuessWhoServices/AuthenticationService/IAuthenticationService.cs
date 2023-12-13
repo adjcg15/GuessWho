@@ -7,7 +7,7 @@ namespace GuessWhoServices
     public interface IAuthenticationService
     {
         [OperationContract]
-        Response<bool> RegisterUser(Profile user);
+        Response<bool> RegisterUser(Profile profile);
 
         [OperationContract]
         Response<Profile> Login(string email, string password);

@@ -21,7 +21,7 @@ namespace GuessWhoServices
                 User user = responseUser.Value;
                 if (user != null)
                 {
-                    var nicknameInActiveUsers = activeUsers.FirstOrDefault((u) => u == user.nickname);
+                    var nicknameInActiveUsers = activeUsers.Find((u) => u == user.nickname);
                     if (string.IsNullOrEmpty(nicknameInActiveUsers))
                     {
                         UpdateUserStatus(user.nickname, true);

@@ -44,8 +44,10 @@ namespace GuessWhoClient
                 UploadRequests();
                 UploadFriends();
             }
-            catch (EndpointNotFoundException)
+            catch (EndpointNotFoundException ex)
             {
+                App.log.Fatal(ex.Message);
+
                 ServerResponse.ShowServerDownMessage();
                 RedirectPermanentlyToMainMenu();
             }

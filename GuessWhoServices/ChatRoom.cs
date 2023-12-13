@@ -2,11 +2,8 @@
 {
     public class ChatRoom
     {
-        private IChatCallback firstUserIChatRoomChannel;
-        private IChatCallback secondUserInChatRoomChannel;
+        public IChatCallback FirstUserInChatRoomChannel { get; set ; }
 
-        public IChatCallback FirstUserInChatRoomChannel { get { return firstUserIChatRoomChannel; } set { firstUserIChatRoomChannel = value; } }
-
-        public IChatCallback SecondUserInChatRoomChannel { get { return secondUserInChatRoomChannel; } set { secondUserInChatRoomChannel = value; } }
+        public IChatCallback SecondUserInChatRoomChannel { get ; set ; }
     }
 }

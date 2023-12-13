@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GuessWhoDataAccess;
+using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 
@@ -61,13 +62,10 @@ namespace GuessWhoServices
                 {
                     subscriber.UserStatusChanged(userNickname, isOnline);
                 }
-                catch (CommunicationObjectAbortedException)
+                catch (CommunicationObjectAbortedException ex)
                 {
+                    ServerLogger.Instance.Error(ex.Message);
                     clientChannels.Remove(subscriber);
-                }
-                catch (TimeoutException)
-                {
-
                 }
             }
         } 

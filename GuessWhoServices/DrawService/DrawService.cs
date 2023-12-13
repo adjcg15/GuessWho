@@ -9,7 +9,7 @@ namespace GuessWhoServices
         private static Dictionary<string, DrawInformation> playersDrawInformation = new Dictionary<string, DrawInformation>();
         private static readonly object lockObject = new object();
 
-        public void SendDraw(List<SerializedLine> draw, string matchCode)
+        public void SendDraw(List<SerializedLine> localDrawMap, string matchCode)
         {
             lock (lockObject)
             {
@@ -22,11 +22,11 @@ namespace GuessWhoServices
                     Console.WriteLine("Jugador " + currentChannel.GetHashCode() + " enviando dibujo en partida " + matchCode);
                     if (currentChannel.GetHashCode() == currentPlayersDraw.PlayerOneChannel.GetHashCode())
                     {
-                        SendDrawToAdversary(currentPlayersDraw.PlayerTwoChannel, draw);
+                        SendDrawToAdversary(currentPlayersDraw.PlayerTwoChannel, localDrawMap);
                     }
                     else if (currentChannel.GetHashCode() == currentPlayersDraw.PlayerTwoChannel.GetHashCode())
                     {
-                        SendDrawToAdversary(currentPlayersDraw.PlayerOneChannel, draw);
+                        SendDrawToAdversary(currentPlayersDraw.PlayerOneChannel, localDrawMap);
                     }
                 }
             }

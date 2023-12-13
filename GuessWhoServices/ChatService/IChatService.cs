@@ -16,6 +16,7 @@ namespace GuessWhoServices
         Response<bool> SendMessage(string chatRoomCode, string message);
     }
 
+    [ServiceContract]
     public interface IChatCallback
     {
         [OperationContract]

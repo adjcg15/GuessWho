@@ -3,7 +3,7 @@ using System;
 
 namespace GuessWhoServices.Utils
 {
-    public class Game
+    public static class Game
     {
         public static string GenerateInvitationCode()
         {

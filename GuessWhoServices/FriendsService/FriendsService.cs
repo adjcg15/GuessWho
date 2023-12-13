@@ -14,7 +14,7 @@ namespace GuessWhoServices
         {
             return FriendshipDao.AddRequest(idUserRequester, idUserRequested);
         }
-
+            
         public Response<List<Friend>> GetRequests(int idUser)
         {
             Response<List<Friend>> response = new Response<List<Friend>>();
@@ -56,7 +56,7 @@ namespace GuessWhoServices
                 return response;
             }
 
-            var activeUsers = GetActiveUsers();
+            var currentActiveUsers = GetActiveUsers();
             var friends = friendsResponse.Value.Select(user =>
             {
                 var friend = new Friend
@@ -67,7 +67,7 @@ namespace GuessWhoServices
                     Status = FriendshipDao.OFFLINE_STATUS
                 };
 
-                if (activeUsers.Any(userNickname => userNickname == user.nickname))
+                if (activeUsers.Exists(userNickname => userNickname == user.nickname))
                 {
                     friend.Status = FriendshipDao.ONLINE_STATUS;
                 }
