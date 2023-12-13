@@ -37,7 +37,7 @@ namespace GuessWhoClient.Utils
             {
                 try
                 {
-                    new MailAddress(email);
+                    _ = new MailAddress(email);
                     isValidEmail = true;
                 }
                 catch (FormatException)
