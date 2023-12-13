@@ -126,7 +126,7 @@ namespace GuessWhoTests.DataAccessTests
         [Fact]
         public void TestGetLastTimeNicknameChangeByIdSuccess()
         {
-            DateTime expectedLastUpdate = new DateTime(2001, 04, 15);
+            DateTime expectedLastUpdate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 
             var lastUpdateDate = UserDao.GetLastTimeNicknameChangeById(fixture.IdUserAlreadyRegistered);
 
