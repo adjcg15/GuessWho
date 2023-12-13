@@ -255,7 +255,7 @@ namespace GuessWhoClient
             matchStatusManager.UnsubscribePage(this);
 
             ClearCommunicationChannels();
-            Red();
+            RedirectToMainMenuFromCanceledMatch();
         }
 
         private void ClearCommunicationChannels()
