@@ -190,9 +190,9 @@ namespace GuessWhoServices
                             Console.WriteLine("Eliminando partida " + invitationCode + " y avisando a suscriptor " + storedMatch.GuestChannel.GetHashCode());
                             storedMatch.GuestChannel.PlayerStatusInMatchChanged(emptyPlayer, false);
                         }
-                        catch (CommunicationObjectAbortedException)
+                        catch (CommunicationObjectAbortedException ex)
                         {
-                            //TO-DO: log exception
+                            ServerLogger.Instance.Error(ex.Message);
                         }
                     }
 

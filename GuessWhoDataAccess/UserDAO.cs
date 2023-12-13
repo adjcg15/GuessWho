@@ -28,7 +28,7 @@ namespace GuessWhoDataAccess
                     }
                 }
             }
-            catch(SqlException)
+            catch(SqlException ex)
             {
                 ServerLogger.Instance.Fatal(ex.Message);
 
