@@ -362,3 +362,6 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /.sonarqube/conf
+/GuessWhoDataAccess/connections.config
+/GuessWhoHost/connections.config
+/GuessWhoTests/connections.config

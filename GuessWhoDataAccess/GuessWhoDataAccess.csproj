@@ -108,6 +108,9 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>GuessWhoModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="connections.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="GuessWhoModel.edmx.diagram">
       <DependentUpon>GuessWhoModel.edmx</DependentUpon>
     </None>

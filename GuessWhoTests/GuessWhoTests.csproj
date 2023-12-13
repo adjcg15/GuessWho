@@ -105,6 +105,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <Compile Include="DataAccessTests\UserDAOTests.cs" />
+    <Content Include="connections.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
