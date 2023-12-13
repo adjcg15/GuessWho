@@ -13,8 +13,6 @@ namespace GuessWhoDataAccess
     {
         public static Response<bool> AddScorePoints(string winnerNickname)
         {
-            Console.WriteLine("Entrando a AddScorePoints Ganador: " + winnerNickname);
-
             var response = new Response<bool>
             {
                 StatusCode = ResponseStatus.OK,
@@ -38,7 +36,6 @@ namespace GuessWhoDataAccess
                         context.SaveChanges();
 
                         response.Value = true;
-                        Console.WriteLine("DAO: Sumando 5 puntos a " + winnerNickname);
                     }
                 }
             }

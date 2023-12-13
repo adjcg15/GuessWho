@@ -101,6 +101,7 @@
   <ItemGroup>
     <Compile Include="ClientTests\Utils\AuthenticationTests.cs" />
     <Compile Include="DataAccessTests\ReportDAOTests.cs" />
+    <Compile Include="DataAccessTests\MatchDAOTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
