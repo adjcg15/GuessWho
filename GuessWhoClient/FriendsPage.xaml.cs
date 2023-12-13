@@ -21,9 +21,6 @@ using System.Windows.Threading;
 
 namespace GuessWhoClient
 {
-    /// <summary>
-    /// Lógica de interacción para FriendsPage.xaml
-    /// </summary>
     public partial class FriendsPage : Page
     {
         private const string ONLINE_STATUS = "Online";
@@ -108,18 +105,24 @@ namespace GuessWhoClient
             }
             else
             {
-                AuthenticationServiceClient authenticationServiceClient = new AuthenticationServiceClient();
-                ProfileResponse profileResponse = authenticationServiceClient.VerifyUserRegisteredByNickName(nicknameRequested);
+                AddFriend(nicknameRequested);
+            }
+        }
 
-                if (profileResponse.StatusCode == ResponseStatus.OK && profileResponse.Value.IdUser == 0)
+        private void AddFriend(string nicknameRequested)
+        {
+            try
+            {
+                var authenticationServiceClient = new AuthenticationServiceClient();
+                var userRegistered = authenticationServiceClient.VerifyUserRegisteredByNickName(nicknameRequested);
+
+                if(userRegistered.StatusCode != ResponseStatus.OK || userRegistered.Value == null)
                 {
                     TbMessage.Text = Properties.Resources.lbStatusRequestFailed;
                     StartAnimationTbMessage();
                 }
                 else
                 {
-                    FriendsServiceClient friendsServiceClient = new FriendsServiceClient();
-
                     if (friends.Any(friend => friend.Nickname == nicknameRequested))
                     {
                         TbMessage.Text = Properties.Resources.txtAlreadyFriends;
@@ -132,25 +135,41 @@ namespace GuessWhoClient
                     }
                     else
                     {
-                        booleanResponse booleanResponse = friendsServiceClient.SendRequest(DataStore.Profile.IdUser, profileResponse.Value.IdUser);
-
-                        if (booleanResponse.Value)
-                        {
-                            TbMessage.Text = Properties.Resources.lbStatusRequestSuccess;
-                            StartAnimationTbMessage();
-                        }
-                        else if(booleanResponse.StatusCode == ResponseStatus.NOT_ALLOWED)
-                        {
-                            TbMessage.Text = Properties.Resources.txtAlreadyRequested;
-                            StartAnimationTbMessage();
-                        }
-                        else
-                        {
-                            TbMessage.Text = ServerResponse.GetTitleFromStatusCode(booleanResponse.StatusCode);
-                            StartAnimationTbMessage();
-                        }
+                        SendFriendshipRequest(userRegistered.Value.IdUser);
                     }
                 }
+            }
+            catch(EndpointNotFoundException ex)
+            {
+                ServerResponse.ShowServerDownMessage();
+                App.log.Fatal(ex.Message);
+            }
+            catch (CommunicationException ex)
+            {
+                ServerResponse.ShowConnectionLostMessage();
+                App.log.Error(ex.Message);
+            }
+        }
+
+        private void SendFriendshipRequest(int idUserRequested)
+        {
+            var friendsServiceClient = new FriendsServiceClient();
+            var friendshipRequest = friendsServiceClient.SendRequest(DataStore.Profile.IdUser, idUserRequested);
+
+            if (friendshipRequest.Value)
+            {
+                TbMessage.Text = Properties.Resources.lbStatusRequestSuccess;
+                StartAnimationTbMessage();
+            }
+            else if (friendshipRequest.StatusCode == ResponseStatus.NOT_ALLOWED)
+            {
+                TbMessage.Text = Properties.Resources.txtAlreadyRequested;
+                StartAnimationTbMessage();
+            }
+            else
+            {
+                TbMessage.Text = ServerResponse.GetTitleFromStatusCode(friendshipRequest.StatusCode);
+                StartAnimationTbMessage();
             }
         }
 

@@ -153,7 +153,7 @@ namespace GuessWhoDataAccess
                             Avatar = user.avatar,
                             Email = account.email,
                             Password = account.password,
-                            IdUser = user.idAccount,
+                            IdUser = user.idUser,
                         };
                     }
                 }

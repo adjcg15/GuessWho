@@ -158,11 +158,11 @@ namespace GuessWhoDataAccess
                 using (var context = new GuessWhoContext())
                 {
                     var friendships = context.Friendships
-                    .Include(f => f.User) 
-                    .Include(f => f.User1) 
-                    .Where(f => f.User1.idAccount == idUserRequested && f.status == PENDING_REQUEST)
-                    .ToList();
-
+                        .Include(f => f.User) 
+                        .Include(f => f.User1) 
+                        .Where(f => f.User1.idUser == idUserRequested && f.status == PENDING_REQUEST)
+                        .ToList();
+                    
                     response.Value = friendships;
                 }
             }
