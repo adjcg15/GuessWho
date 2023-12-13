@@ -61,14 +61,16 @@ namespace GuessWhoClient
             }
             catch (EndpointNotFoundException ex)
             {
-                ServerResponse.ShowServerDownMessage();
                 App.log.Fatal(ex.Message);
+
+                ServerResponse.ShowServerDownMessage();
                 RedirectToMainMenu();
             }
             catch (CommunicationException ex)
             {
-                ServerResponse.ShowConnectionLostMessage();
                 App.log.Error(ex.Message);
+
+                ServerResponse.ShowConnectionLostMessage();
                 RedirectToMainMenu();
             }
         }

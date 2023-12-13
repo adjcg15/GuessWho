@@ -122,6 +122,12 @@ namespace GuessWhoClient
 
                 ServerResponse.ShowServerDownMessage();
             }
+            catch(CommunicationException ex)
+            {
+                App.log.Error(ex.Message);
+
+                ServerResponse.ShowConnectionLostMessage();
+            }
         }
 
         private void BtnChangePasswordClick(object sender, RoutedEventArgs e)
@@ -199,11 +205,18 @@ namespace GuessWhoClient
                         Properties.Resources.txtPasswordChangeSuccesfulTitle
                    );
                 }
-            }catch (EndpointNotFoundException ex)
+            }
+            catch (EndpointNotFoundException ex)
             {
                 App.log.Fatal(ex.Message);
 
                 ServerResponse.ShowServerDownMessage();
+            }
+            catch(CommunicationException ex)
+            {
+                App.log.Error(ex.Message);
+
+                ServerResponse.ShowConnectionLostMessage();
             }
         }
 
@@ -255,6 +268,12 @@ namespace GuessWhoClient
                     App.log.Fatal(ex.Message);
 
                     ServerResponse.ShowServerDownMessage();
+                }
+                catch(CommunicationException ex)
+                {
+                    App.log.Error(ex.Message);
+
+                    ServerResponse.ShowConnectionLostMessage();
                 }
             }
         }
@@ -421,6 +440,12 @@ namespace GuessWhoClient
                 App.log.Fatal(ex.Message);
 
                 ServerResponse.ShowServerDownMessage();
+            }
+            catch (CommunicationException ex)
+            {
+                App.log.Error(ex.Message);
+
+                ServerResponse.ShowConnectionLostMessage();
             }
         }
         private void PbPasswordPreviewExecuted(object sender, ExecutedRoutedEventArgs e)

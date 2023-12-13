@@ -90,8 +90,10 @@ namespace GuessWhoClient
                 drawServiceClient = new DrawServiceClient(new InstanceContext(this));
                 drawServiceClient.SubscribeToDrawService(gameManager.CurrentMatchCode);
             }
-            catch (EndpointNotFoundException)
+            catch (EndpointNotFoundException ex)
             {
+                App.log.Fatal(ex.Message);
+
                 StopTimer();
                 ServerResponse.ShowServerDownMessage();
                 ClearCommunicationChannels();

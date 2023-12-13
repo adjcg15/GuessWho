@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GuessWhoDataAccess;
+using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 
@@ -92,9 +93,9 @@ namespace GuessWhoServices
                 {
                     adversaryChannel.DrawReceived(draw);
                 }
-                catch (CommunicationObjectAbortedException)
+                catch (CommunicationObjectAbortedException ex)
                 {
-                    //TO-DO: log exception
+                    ServerLogger.Instance.Error(ex.Message);
                 }
             }
         }

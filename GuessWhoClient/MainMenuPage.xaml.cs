@@ -112,15 +112,17 @@ namespace GuessWhoClient
             }
             catch (EndpointNotFoundException ex)
             {
+                App.log.Fatal(ex.Message);
+
                 gameManager.RestartRawValues();
                 ServerResponse.ShowServerDownMessage();
-                App.log.Fatal(ex.Message);
             }
             catch (CommunicationException ex)
             {
+                App.log.Error(ex.Message);
+
                 gameManager.RestartRawValues();
                 ServerResponse.ShowConnectionLostMessage();
-                App.log.Error(ex.Message);
             }
         }
 
@@ -165,15 +167,17 @@ namespace GuessWhoClient
             }
             catch (EndpointNotFoundException ex)
             {
+                App.log.Fatal(ex.Message);
+
                 gameManager.RestartRawValues();
                 ServerResponse.ShowServerDownMessage();
-                App.log.Fatal(ex.Message);
             }
             catch (CommunicationException ex)
             {
+                App.log.Error(ex.Message);
+
                 gameManager.RestartRawValues();
                 ServerResponse.ShowConnectionLostMessage();
-                App.log.Error(ex.Message);
             }
         }
 
@@ -338,15 +342,17 @@ namespace GuessWhoClient
             }
             catch (EndpointNotFoundException ex)
             {
+                App.log.Fatal(ex.Message);
+
                 gameManager.RestartRawValues();
                 ServerResponse.ShowServerDownMessage();
-                App.log.Fatal(ex.Message);
             }
             catch (CommunicationException ex)
             {
+                App.log.Error(ex.Message);
+
                 gameManager.RestartRawValues();
                 ServerResponse.ShowConnectionLostMessage();
-                App.log.Error(ex.Message);
             }
         }
 

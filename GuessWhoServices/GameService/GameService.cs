@@ -166,8 +166,9 @@ namespace GuessWhoServices
                     {
                         storedMatch.HostChannel.PlayerStatusInMatchChanged(emptyPlayer, false);
                     }
-                    catch (CommunicationObjectAbortedException)
+                    catch (CommunicationObjectAbortedException ex)
                     {
+                        ServerLogger.Instance.Error(ex.Message);
                         Console.WriteLine("Avisando a suscriptor " + storedMatch.HostChannel.GetHashCode() + " de salida de partida " + invitationCode);
                         
                         matches.Remove(invitationCode);

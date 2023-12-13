@@ -109,9 +109,22 @@ namespace GuessWhoClient
                 DisableAnswerButtons();
                 ShowWaitingAnswerMessage();
             }
-            catch(EndpointNotFoundException)
+            catch(EndpointNotFoundException ex)
             {
+                App.log.Fatal(ex.Message);
                 ServerResponse.ShowServerDownMessage();
+
+                gameManager.UnsubscribePage(this);
+                matchStatusManager.UnsubscribePage(this);
+                gameManager.RestartRawValues();
+                matchStatusManager.RestartRawValues();
+
+                RedirectToMainMenuFromCanceledMatch();
+            }
+            catch(CommunicationException ex)
+            {
+                App.log.Error(ex.Message);
+                ServerResponse.ShowConnectionLostMessage();
 
                 gameManager.UnsubscribePage(this);
                 matchStatusManager.UnsubscribePage(this);
@@ -130,8 +143,21 @@ namespace GuessWhoClient
                 DisableAnswerButtons();
                 ShowWaitingAnswerMessage();
             }
-            catch(EndpointNotFoundException)
+            catch(EndpointNotFoundException ex)
             {
+                App.log.Fatal(ex.Message);
+                ServerResponse.ShowServerDownMessage();
+
+                gameManager.UnsubscribePage(this);
+                matchStatusManager.UnsubscribePage(this);
+                gameManager.RestartRawValues();
+                matchStatusManager.RestartRawValues();
+
+                RedirectToMainMenuFromCanceledMatch();
+            }
+            catch(CommunicationException ex)
+            {
+                App.log.Error(ex.Message);
                 ServerResponse.ShowServerDownMessage();
 
                 gameManager.UnsubscribePage(this);
@@ -229,7 +255,7 @@ namespace GuessWhoClient
             matchStatusManager.UnsubscribePage(this);
 
             ClearCommunicationChannels();
-            RedirectToMainMenuFromCanceledMatch();
+            Red();
         }
 
         private void ClearCommunicationChannels()
@@ -352,7 +378,15 @@ namespace GuessWhoClient
             {
                 App.log.Fatal(ex.Message);
 
+                RedirectToMainMenuFromCanceledMatch();
                 ServerResponse.ShowServerDownMessage();
+            }
+            catch(CommunicationException ex)
+            {
+                App.log.Error(ex.Message);
+
+                RedirectToMainMenuFromCanceledMatch();
+                ServerResponse.ShowConnectionLostMessage();
             }
         }
 

@@ -69,9 +69,18 @@ namespace GuessWhoClient
                         break;
                 }
             }
-            catch (EndpointNotFoundException)
+            catch (EndpointNotFoundException ex)
             {
+                App.log.Fatal(ex.Message);
+
                 ServerResponse.ShowServerDownMessage();
+                RedirectToMainMenu();
+            }
+            catch(CommunicationException ex)
+            {
+                App.log.Error(ex.Message);
+
+                ServerResponse.ShowConnectionLostMessage();
                 RedirectToMainMenu();
             }
         }

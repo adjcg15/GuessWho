@@ -97,9 +97,17 @@ namespace GuessWhoClient
                 MainMenuPage mainMenu = new MainMenuPage();
                 this.NavigationService.Navigate(mainMenu);
             }
-            catch (EndpointNotFoundException)
+            catch (EndpointNotFoundException ex)
             {
+                App.log.Fatal(ex.Message);
+
                 ServerResponse.ShowServerDownMessage();
+            }
+            catch(CommunicationException ex) 
+            {
+                App.log.Error(ex.Message);
+
+                ServerResponse.ShowConnectionLostMessage();
             }
         }
 

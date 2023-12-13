@@ -112,8 +112,10 @@ namespace GuessWhoServices
                         storedChatRoom.FirstUserInChatRoomChannel.NewMessageReceived(message);
                     }
                 }
-                catch (CommunicationObjectAbortedException)
+                catch (CommunicationObjectAbortedException ex)
                 {
+                    ServerLogger.Instance.Error(ex.Message);
+
                     response.StatusCode = ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR;
                     response.Value = false;
 

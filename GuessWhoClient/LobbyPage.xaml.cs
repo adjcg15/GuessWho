@@ -77,17 +77,19 @@ namespace GuessWhoClient
             }
             catch (EndpointNotFoundException ex)
             {
+                App.log.Fatal(ex.Message);
+
                 ServerResponse.ShowServerDownMessage();
                 ClearCommunicationChannels();
                 RedirectPermanentlyToMainMenu();
-                App.log.Fatal(ex.Message);
             }
             catch (CommunicationException ex)
             {
+                App.log.Error(ex.Message);
+
                 ServerResponse.ShowConnectionLostMessage();
                 ClearCommunicationChannels();
                 RedirectPermanentlyToMainMenu();
-                App.log.Error(ex.Message);
             }
         }
 
@@ -176,14 +178,19 @@ namespace GuessWhoClient
                 }
                 catch (EndpointNotFoundException ex)
                 {
+                    App.log.Fatal(ex.Message);
+
                     ServerResponse.ShowServerDownMessage();
                     ClearCommunicationChannels();
                     RedirectPermanentlyToMainMenu();
-                    App.log.Fatal(ex.Message);
                 }
                 catch (CommunicationException ex)
                 {
                     App.log.Error(ex.Message);
+
+                    ServerResponse.ShowConnectionLostMessage();
+                    ClearCommunicationChannels();
+                    RedirectPermanentlyToMainMenu();
                 }
             }
         }
@@ -338,17 +345,19 @@ namespace GuessWhoClient
             }
             catch (EndpointNotFoundException ex)
             {
+                App.log.Fatal(ex.Message);
+
                 ServerResponse.ShowServerDownMessage();
                 ClearCommunicationChannels();
                 RedirectPermanentlyToMainMenu();
-                App.log.Fatal(ex.Message);
             }
             catch (CommunicationException ex)
             {
+                App.log.Error(ex.Message);
+
                 ServerResponse.ShowConnectionLostMessage();
                 ClearCommunicationChannels();
                 RedirectPermanentlyToMainMenu();
-                App.log.Error(ex.Message);
             }
         }
 
@@ -474,17 +483,19 @@ namespace GuessWhoClient
             }
             catch (EndpointNotFoundException ex)
             {
+                App.log.Fatal(ex.Message);
+
                 ServerResponse.ShowServerDownMessage();
                 ClearCommunicationChannels();
                 RedirectPermanentlyToMainMenu();
-                App.log.Fatal(ex.Message);
             }
             catch (CommunicationException ex)
             {
+                App.log.Error(ex.Message);
+
                 ServerResponse.ShowConnectionLostMessage();
                 ClearCommunicationChannels();
                 RedirectPermanentlyToMainMenu();
-                App.log.Error(ex.Message);
             }
         }
 
@@ -597,15 +608,17 @@ namespace GuessWhoClient
             }
             catch (EndpointNotFoundException ex)
             {
+                App.log.Fatal(ex.Message);
+
                 ServerResponse.ShowServerDownMessage();
                 ClearCommunicationChannels();
-                App.log.Fatal(ex.Message);
             }
             catch (CommunicationException ex)
             {
+                App.log.Error(ex.Message);
+
                 ServerResponse.ShowConnectionLostMessage();
                 ClearCommunicationChannels();
-                App.log.Error(ex.Message);
             }
 
             RedirectPermanentlyToMainMenu();
@@ -641,13 +654,15 @@ namespace GuessWhoClient
             }
             catch (EndpointNotFoundException ex)
             {
-                ClearCommunicationChannels();
                 App.log.Fatal(ex);
+
+                ClearCommunicationChannels();
             }
             catch (CommunicationException ex)
             {
-                ClearCommunicationChannels();
                 App.log.Error(ex.Message);
+
+                ClearCommunicationChannels();
             }
 
 
@@ -673,17 +688,19 @@ namespace GuessWhoClient
             }
             catch (EndpointNotFoundException ex)
             {
+                App.log.Fatal(ex);
+
                 ServerResponse.ShowServerDownMessage();
                 ClearCommunicationChannels();
                 RedirectPermanentlyToMainMenu();
-                App.log.Fatal(ex);
             }
             catch (CommunicationException ex)
             {
+                App.log.Error(ex.Message);
+
                 ServerResponse.ShowConnectionLostMessage();
                 ClearCommunicationChannels();
                 RedirectPermanentlyToMainMenu();
-                App.log.Error(ex.Message);
             }
         }
 
@@ -715,17 +732,19 @@ namespace GuessWhoClient
             }
             catch (EndpointNotFoundException ex)
             {
+                App.log.Fatal(ex.Message);
+
                 ServerResponse.ShowServerDownMessage();
                 ClearCommunicationChannels();
                 RedirectPermanentlyToMainMenu();
-                App.log.Fatal(ex.Message);
             }
             catch (CommunicationException ex)
             {
+                App.log.Error(ex.Message);
+
                 ServerResponse.ShowConnectionLostMessage();
                 ClearCommunicationChannels();
                 RedirectPermanentlyToMainMenu();
-                App.log.Error(ex.Message);
             }
         }
 

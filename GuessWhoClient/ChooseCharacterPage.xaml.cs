@@ -199,8 +199,15 @@ namespace GuessWhoClient
             }
             catch (EndpointNotFoundException ex)
             {
-                ServerResponse.ShowServerDownMessage();
                 App.log.Fatal(ex.Message);
+
+                ServerResponse.ShowServerDownMessage();
+            }
+            catch(CommunicationException ex)
+            {
+                App.log.Error(ex.Message);
+
+                ServerResponse.ShowConnectionLostMessage();
             }
         }
 
@@ -215,9 +222,16 @@ namespace GuessWhoClient
             }
             catch (EndpointNotFoundException ex)
             {
-                ServerResponse.ShowServerDownMessage();
                 App.log.Fatal(ex.Message);
-            } 
+
+                ServerResponse.ShowServerDownMessage();
+            }
+            catch(CommunicationException ex)
+            {
+                App.log.Error(ex.Message);
+
+                ServerResponse.ShowConnectionLostMessage();
+            }
         }
 
         private void ConfirmSelectedCharacter()

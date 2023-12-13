@@ -51,6 +51,13 @@ namespace GuessWhoClient
                 ServerResponse.ShowServerDownMessage();
                 RedirectPermanentlyToMainMenu();
             }
+            catch(CommunicationException ex)
+            {
+                App.log.Error(ex.Message);
+
+                ServerResponse.ShowConnectionLostMessage();
+                RedirectPermanentlyToMainMenu();
+            }
         }
 
         private void UploadFriends()
@@ -143,13 +150,15 @@ namespace GuessWhoClient
             }
             catch(EndpointNotFoundException ex)
             {
-                ServerResponse.ShowServerDownMessage();
                 App.log.Fatal(ex.Message);
+
+                ServerResponse.ShowServerDownMessage();
             }
             catch (CommunicationException ex)
             {
-                ServerResponse.ShowConnectionLostMessage();
                 App.log.Error(ex.Message);
+
+                ServerResponse.ShowConnectionLostMessage();
             }
         }
 
