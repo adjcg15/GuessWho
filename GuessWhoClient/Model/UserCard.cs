@@ -5,11 +5,10 @@ namespace GuessWhoClient
 {
     public class UserCard : INotifyPropertyChanged
     {
-        private string nickname;
         private BitmapImage avatar;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string Nickname { get { return nickname; } set { nickname = value; } }
+        public string Nickname { get; set; }
 
         public BitmapImage Avatar
         {

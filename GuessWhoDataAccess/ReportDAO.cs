@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GuessWhoDataAccess
 {
-    public class ReportDAO
+    public static class ReportDao
     {
         public static Response<bool> AddPlayerReport(Report playerReport)
         {
@@ -29,16 +29,22 @@ namespace GuessWhoDataAccess
             }
             catch (DbUpdateException ex)
             {
+                ServerLogger.Instance.Error(ex.Message);
+
                 response.StatusCode = ResponseStatus.UPDATE_ERROR;
                 response.Value = false;
             }
             catch (DbEntityValidationException ex)
             {
+                ServerLogger.Instance.Error(ex.Message);
+
                 response.StatusCode = ResponseStatus.VALIDATION_ERROR;
                 response.Value = false;
             }
             catch (SqlException ex)
             {
+                ServerLogger.Instance.Fatal(ex.Message);
+
                 response.StatusCode = ResponseStatus.SQL_ERROR;
                 response.Value = false;
             }
@@ -65,6 +71,8 @@ namespace GuessWhoDataAccess
             }
             catch (SqlException ex)
             {
+                ServerLogger.Instance.Fatal(ex.Message);
+
                 response.StatusCode = ResponseStatus.SQL_ERROR;
             }
 

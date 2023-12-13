@@ -76,7 +76,7 @@ namespace GuessWhoServices
                     //If HostNickname is empty it is assumed that the host is a guest so it does not have an account
                     if (!string.IsNullOrEmpty(storedMatch.HostNickname))
                     {
-                        Response<Profile> userResponse = UserDAO.GetUserByNickName(storedMatch.HostNickname);
+                        Response<Profile> userResponse = UserDao.GetUserByNickName(storedMatch.HostNickname);
 
                         if (userResponse.StatusCode == ResponseStatus.OK)
                         {
@@ -99,7 +99,7 @@ namespace GuessWhoServices
                     //If nickname is empty it is assumed that the player is a guest so it does not have an account
                     if (!string.IsNullOrEmpty(nickname))
                     {
-                        Response<Profile> userResponse = UserDAO.GetUserByNickName(nickname);
+                        Response<Profile> userResponse = UserDao.GetUserByNickName(nickname);
 
                         if (userResponse.StatusCode == ResponseStatus.OK)
                         {

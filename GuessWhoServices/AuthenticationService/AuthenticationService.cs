@@ -13,11 +13,11 @@ namespace GuessWhoServices
                 Value = null
             };
 
-            Response<Account> responseAccount = UserDAO.VerifyUserSession(email, password);
+            Response<Account> responseAccount = UserDao.VerifyUserSession(email, password);
             Account account = responseAccount.Value;
             if (account != null)
             {
-                Response<User> responseUser = UserDAO.GetUserByIdAccount(account.idAccount);
+                Response<User> responseUser = UserDao.GetUserByIdAccount(account.idAccount);
                 User user = responseUser.Value;
                 if (user != null)
                 {
@@ -69,18 +69,18 @@ namespace GuessWhoServices
                 password = profile.Password,
             };
             
-            return UserDAO.RegisterUser(user, account);
+            return UserDao.RegisterUser(user, account);
         }
 
         public Response<Profile> VerifyUserRegisteredByEmail(string email)
         {
-            Response<Profile> userStored = UserDAO.GetUserByEmail(email);
+            Response<Profile> userStored = UserDao.GetUserByEmail(email);
             return userStored;
         }
 
         public Response<Profile> VerifyUserRegisteredByNickName(string nickname)
         {
-            Response<Profile> userStored = UserDAO.GetUserByNickName(nickname);
+            Response<Profile> userStored = UserDao.GetUserByNickName(nickname);
             return userStored;
         }
 
@@ -91,7 +91,7 @@ namespace GuessWhoServices
 
         public Response<byte[]> GetAvatar(string userNickname)
         {
-            return UserDAO.GetUserAvatarByNickname(userNickname);
+            return UserDao.GetUserAvatarByNickname(userNickname);
         }
     }
 }

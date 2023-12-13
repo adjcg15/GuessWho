@@ -7,24 +7,31 @@ using System.Windows.Resources;
 
 namespace GuessWhoClient.Utils
 {
-    public class ImageTransformator
+    public static class ImageTransformator
     {
         public static byte[] GetImageBytesFromImagePath(string imagePath)
         {
-            if (string.IsNullOrEmpty(imagePath))
-            {
-                return null;
-            }
+            byte[] imageBytes;
 
             try
             {
-                return File.ReadAllBytes(imagePath);
-            } 
-            catch(IOException)
-            {
-                return null;
+                if (string.IsNullOrEmpty(imagePath) || !File.Exists(imagePath))
+                {
+                    imageBytes = Array.Empty<byte>();
+                }
+
+                imageBytes = File.ReadAllBytes(imagePath);
             }
+            catch (IOException ex)
+            {
+                App.log.Error(ex.Message);
+
+                imageBytes = Array.Empty<byte>();
+            }
+
+            return imageBytes;
         }
+
 
         public static BitmapImage GetBitmapImageFromByteArray(byte[] byteArray)
         {

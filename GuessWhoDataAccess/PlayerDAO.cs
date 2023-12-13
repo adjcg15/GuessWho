@@ -9,7 +9,7 @@ using System.Runtime.Serialization;
 
 namespace GuessWhoDataAccess
 {
-    public class PlayerDAO
+    public static class PlayerDao
     {
         public static Response<List<TopPlayer>> GetTopPlayers(string query, int numberOfPlayers)
         {
@@ -62,14 +62,20 @@ namespace GuessWhoDataAccess
             }
             catch (DbUpdateException ex)
             {
+                ServerLogger.Instance.Error(ex.Message);
+
                 response.StatusCode = ResponseStatus.UPDATE_ERROR;
             }
             catch (DbEntityValidationException ex)
             {
+                ServerLogger.Instance.Error(ex.Message);
+
                 response.StatusCode = ResponseStatus.VALIDATION_ERROR;
             }
             catch (SqlException ex)
             {
+                ServerLogger.Instance.Fatal(ex.Message);
+
                 response.StatusCode = ResponseStatus.SQL_ERROR;
             }
 
@@ -107,8 +113,10 @@ namespace GuessWhoDataAccess
                     }
                 }
             }
-            catch(SqlException)
+            catch(SqlException ex)
             {
+                ServerLogger.Instance.Fatal(ex.Message);
+
                 response.StatusCode = ResponseStatus.SQL_ERROR;
             }
 
@@ -148,7 +156,7 @@ namespace GuessWhoDataAccess
                             if (lastPlayerReports.Count >= MAX_MONTHLY_REPORTS)
                             {
                                 response.StatusCode = ResponseStatus.NOT_ALLOWED;
-                                var dateLastReport = lastPlayerReports.First().timestamp;
+                                var dateLastReport = lastPlayerReports[0].timestamp;
 
                                 if (dateLastReport.HasValue)
                                 {
@@ -163,8 +171,10 @@ namespace GuessWhoDataAccess
                     }
                 }
             }
-            catch (SqlException)
+            catch (SqlException ex)
             {
+                ServerLogger.Instance.Fatal(ex.Message);
+
                 response.StatusCode = ResponseStatus.SQL_ERROR;
             }
 
