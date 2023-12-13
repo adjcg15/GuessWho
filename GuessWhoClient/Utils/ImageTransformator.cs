@@ -19,8 +19,10 @@ namespace GuessWhoClient.Utils
                 {
                     imageBytes = Array.Empty<byte>();
                 }
-
-                imageBytes = File.ReadAllBytes(imagePath);
+                else
+                {
+                    imageBytes = File.ReadAllBytes(imagePath);
+                }
             }
             catch (IOException ex)
             {
