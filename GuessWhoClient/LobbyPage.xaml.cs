@@ -161,7 +161,7 @@ namespace GuessWhoClient
             }
         }
 
-        private async void LoadUserAvatar(UserCard activeUser)
+        private async Task LoadUserAvatar(UserCard activeUser)
         {
             if (activeUser != null)
             {
@@ -271,13 +271,13 @@ namespace GuessWhoClient
             ShowActiveUsersList();
         }
 
-        public void PlayerStatusInMatchChanged(PlayerInMatch user, bool isJoiningMatch)
+        public void PlayerStatusInMatchChanged(PlayerInMatch player, bool isInMatch)
         {
             bool isAdversaryCurrentMatchHost = !gameManager.IsCurrentMatchHost;
 
             if(isAdversaryCurrentMatchHost)
             {
-                if(!isJoiningMatch)
+                if(!isInMatch)
                 {
                     try
                     {
@@ -300,10 +300,10 @@ namespace GuessWhoClient
             }
             else
             {
-                if (isJoiningMatch)
+                if (isInMatch)
                 {
-                    gameManager.AdversaryNickname = user.Nickname;
-                    gameManager.AdversaryAvatar = user.Avatar;
+                    gameManager.AdversaryNickname = player.Nickname;
+                    gameManager.AdversaryAvatar = player.Avatar;
 
                     ShowAdversaryInformation();
                     ShowGameFullMessage();

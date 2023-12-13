@@ -56,7 +56,6 @@ namespace GuessWhoServices
                 return response;
             }
 
-            var currentActiveUsers = GetActiveUsers();
             var friends = friendsResponse.Value.Select(user =>
             {
                 var friend = new Friend
