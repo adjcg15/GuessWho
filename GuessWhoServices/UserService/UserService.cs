@@ -67,6 +67,11 @@ namespace GuessWhoServices
                     ServerLogger.Instance.Error(ex.Message);
                     clientChannels.Remove(subscriber);
                 }
+                catch (CommunicationException ex)
+                {
+                    ServerLogger.Instance.Error(ex.Message);
+                    clientChannels.Remove(subscriber);
+                }
             }
         } 
     }

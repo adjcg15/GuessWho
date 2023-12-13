@@ -99,6 +99,15 @@ namespace GuessWhoClient
                 ClearCommunicationChannels();
                 RedirectToMainMenu();
             }
+            catch(CommunicationException ex)
+            {
+                App.log.Error(ex.Message);
+
+                StopTimer();
+                ServerResponse.ShowServerDownMessage();
+                ClearCommunicationChannels();
+                RedirectToMainMenu();
+            }
         }
 
         private void PageUnloaded(object sender, RoutedEventArgs e)
@@ -133,8 +142,33 @@ namespace GuessWhoClient
             IsEnabled = false;
             isActualPlayerReady = true;
 
-            drawServiceClient.SendDraw(GetSerializedDraw(), gameManager.CurrentMatchCode);
-            CheckBothPlayersReady();
+            try
+            {
+                drawServiceClient.SendDraw(GetSerializedDraw(), gameManager.CurrentMatchCode);
+                CheckBothPlayersReady();
+            }
+            catch (EndpointNotFoundException ex)
+            {
+                App.log.Fatal(ex.Message);
+
+                gameManager.UnsubscribePage(this);
+                matchStatusManager.UnsubscribePage(this);
+                ClearCommunicationChannels();
+
+                RedirectToMainMenu();
+                ServerResponse.ShowServerDownMessage();
+            }
+            catch (CommunicationException ex)
+            {
+                App.log.Error(ex.Message);
+
+                gameManager.UnsubscribePage(this);
+                matchStatusManager.UnsubscribePage(this);
+                ClearCommunicationChannels();
+
+                RedirectToMainMenu();
+                ServerResponse.ShowServerDownMessage();
+            }
         }
 
         private void CheckBothPlayersReady()
@@ -460,9 +494,31 @@ namespace GuessWhoClient
 
             if (!isPageUnloaded && confirmSelection == MessageBoxResult.Yes)
             {
-                LeaveCurrentGame();
+                try
+                {
+                    LeaveCurrentGame();
 
-                drawServiceClient.UnsubscribeFromDrawService(gameManager.CurrentMatchCode);
+                    drawServiceClient.UnsubscribeFromDrawService(gameManager.CurrentMatchCode);
+                }
+                catch(EndpointNotFoundException ex) 
+                {
+                    App.log.Fatal(ex.Message);
+
+                    gameManager.UnsubscribePage(this);
+                    matchStatusManager.UnsubscribePage(this);
+
+                    ServerResponse.ShowServerDownMessage();
+                }
+                catch(CommunicationException ex)
+                {
+                    App.log.Fatal(ex.Message);
+
+                    gameManager.UnsubscribePage(this);
+                    matchStatusManager.UnsubscribePage(this);
+
+                    ServerResponse.ShowServerDownMessage();
+                }
+                
                 ClearCommunicationChannels();
                 RedirectToMainMenu();
             }
@@ -511,10 +567,35 @@ namespace GuessWhoClient
             {
                 StopTimer();
                 isActualPlayerReady = true;
-                drawServiceClient.SendDraw(GetSerializedDraw(), gameManager.CurrentMatchCode);
-                DisableUI();
+                try
+                {
+                    drawServiceClient.SendDraw(GetSerializedDraw(), gameManager.CurrentMatchCode);
+                    DisableUI();
 
-                CheckBothPlayersReady();
+                    CheckBothPlayersReady();
+                }
+                catch (EndpointNotFoundException ex)
+                {
+                    App.log.Fatal(ex.Message);
+
+                    gameManager.UnsubscribePage(this);
+                    matchStatusManager.UnsubscribePage(this);
+                    ClearCommunicationChannels();
+
+                    RedirectToMainMenu();
+                    ServerResponse.ShowServerDownMessage();
+                }
+                catch (CommunicationException ex)
+                {
+                    App.log.Error(ex.Message);
+
+                    gameManager.UnsubscribePage(this);
+                    matchStatusManager.UnsubscribePage(this);
+                    ClearCommunicationChannels();
+
+                    RedirectToMainMenu();
+                    ServerResponse.ShowServerDownMessage();
+                }
             }
         }
 
@@ -600,10 +681,35 @@ namespace GuessWhoClient
 
                 if (!isPageUnloaded && confirmSelection == MessageBoxResult.Yes)
                 {
-                    var isWinner = matchStatusManager.Client.GuessCharacter(character.Name, matchStatusManager.CurrentMatchCode);
-                    if (isWinner.StatusCode == ResponseStatus.OK)
+                    try
                     {
-                        RedirectToWinnerPage(isWinner.Value);
+                        var isWinner = matchStatusManager.Client.GuessCharacter(character.Name, matchStatusManager.CurrentMatchCode);
+                        if (isWinner.StatusCode == ResponseStatus.OK)
+                        {
+                            RedirectToWinnerPage(isWinner.Value);
+                        }
+                    }
+                    catch (EndpointNotFoundException ex)
+                    {
+                        App.log.Fatal(ex.Message);
+
+                        gameManager.UnsubscribePage(this);
+                        matchStatusManager.UnsubscribePage(this);
+                        ClearCommunicationChannels();
+
+                        RedirectToMainMenu();
+                        ServerResponse.ShowServerDownMessage();
+                    }
+                    catch (CommunicationException ex)
+                    {
+                        App.log.Error(ex.Message);
+
+                        gameManager.UnsubscribePage(this);
+                        matchStatusManager.UnsubscribePage(this);
+                        ClearCommunicationChannels();
+
+                        RedirectToMainMenu();
+                        ServerResponse.ShowServerDownMessage();
                     }
                 }
             }
@@ -670,7 +776,32 @@ namespace GuessWhoClient
             opponentDraw = adversaryDrawMap;
             isOpponentReady = true;
 
-            CheckBothPlayersReady();
+            try
+            {
+                CheckBothPlayersReady();
+            }
+            catch(EndpointNotFoundException ex)
+            {
+                App.log.Fatal(ex.Message);
+
+                gameManager.UnsubscribePage(this);
+                matchStatusManager.UnsubscribePage(this);
+                ClearCommunicationChannels();
+
+                RedirectToMainMenu();
+                ServerResponse.ShowServerDownMessage();
+            }
+            catch (CommunicationException ex)
+            {
+                App.log.Error(ex.Message);
+
+                gameManager.UnsubscribePage(this);
+                matchStatusManager.UnsubscribePage(this);
+                ClearCommunicationChannels();
+
+                RedirectToMainMenu();
+                ServerResponse.ShowServerDownMessage();
+            }
         }
 
         private void BorderClueReceivedClick(object sender, MouseButtonEventArgs e)

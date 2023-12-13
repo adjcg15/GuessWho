@@ -23,11 +23,11 @@ namespace GuessWhoServices
                     Console.WriteLine("Jugador " + currentChannel.GetHashCode() + " enviando dibujo en partida " + matchCode);
                     if (currentChannel.GetHashCode() == currentPlayersDraw.PlayerOneChannel.GetHashCode())
                     {
-                        SendDrawToAdversary(currentPlayersDraw.PlayerTwoChannel, localDrawMap);
+                        SendDrawToAdversary(currentPlayersDraw.PlayerTwoChannel, localDrawMap, matchCode);
                     }
                     else if (currentChannel.GetHashCode() == currentPlayersDraw.PlayerTwoChannel.GetHashCode())
                     {
-                        SendDrawToAdversary(currentPlayersDraw.PlayerOneChannel, localDrawMap);
+                        SendDrawToAdversary(currentPlayersDraw.PlayerOneChannel, localDrawMap, matchCode);
                     }
                 }
             }
@@ -84,7 +84,7 @@ namespace GuessWhoServices
             }
         }
 
-        private void SendDrawToAdversary(IDrawServiceCallback adversaryChannel, List<SerializedLine> draw)
+        private void SendDrawToAdversary(IDrawServiceCallback adversaryChannel, List<SerializedLine> draw, string matchCode)
         {
             if (adversaryChannel != null)
             {
@@ -96,6 +96,14 @@ namespace GuessWhoServices
                 catch (CommunicationObjectAbortedException ex)
                 {
                     ServerLogger.Instance.Error(ex.Message);
+
+                    matches.Remove(matchCode);
+                }
+                catch (CommunicationException ex)
+                {
+                    ServerLogger.Instance.Error(ex.Message);
+
+                    matches.Remove(matchCode);
                 }
             }
         }

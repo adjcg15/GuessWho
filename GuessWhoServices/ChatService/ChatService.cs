@@ -121,6 +121,15 @@ namespace GuessWhoServices
 
                     chatRooms.Remove(chatRoomCode);
                 }
+                catch (CommunicationException ex)
+                {
+                    ServerLogger.Instance.Error(ex.Message);
+
+                    response.StatusCode = ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR;
+                    response.Value = false;
+
+                    chatRooms.Remove(chatRoomCode);
+                }
             }
 
             return response;

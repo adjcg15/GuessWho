@@ -106,6 +106,15 @@ namespace GuessWhoServices
 
                         matches.Remove(invitationCode);
                     }
+                    catch (CommunicationException ex)
+                    {
+                        ServerLogger.Instance.Error(ex.Message);
+
+                        response.StatusCode = ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR;
+                        response.Value = null;
+
+                        matches.Remove(invitationCode);
+                    }
                 }
             }
 
@@ -173,6 +182,13 @@ namespace GuessWhoServices
                         
                         matches.Remove(invitationCode);
                     }
+                    catch (CommunicationException ex)
+                    {
+                        ServerLogger.Instance.Error(ex.Message);
+                        Console.WriteLine("Avisando a suscriptor " + storedMatch.HostChannel.GetHashCode() + " de salida de partida " + invitationCode);
+
+                        matches.Remove(invitationCode);
+                    }
                 }
             }
         }
@@ -203,6 +219,10 @@ namespace GuessWhoServices
                             storedMatch.GuestChannel.PlayerStatusInMatchChanged(emptyPlayer, false);
                         }
                         catch (CommunicationObjectAbortedException ex)
+                        {
+                            ServerLogger.Instance.Error(ex.Message);
+                        }
+                        catch (CommunicationException ex)
                         {
                             ServerLogger.Instance.Error(ex.Message);
                         }

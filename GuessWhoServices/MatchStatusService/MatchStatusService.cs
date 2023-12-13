@@ -30,7 +30,7 @@ namespace GuessWhoServices
                     response.Value = string.Equals(characterName.Trim(), currentMatchInfo.GuestSelectedCharacterName.Trim(), StringComparison.OrdinalIgnoreCase);
                     response.StatusCode = ResponseStatus.OK;
 
-                    NotifyOtherPlayer(currentMatchInfo.GuestChannel, response.Value ? MatchStatus.GameLost : MatchStatus.GameWon);
+                    NotifyOtherPlayer(currentMatchInfo.GuestChannel, response.Value ? MatchStatus.GameLost : MatchStatus.GameWon, matchCode);
 
                     if (currentMatchInfo.IsTournamentMatch)
                     {
@@ -42,7 +42,7 @@ namespace GuessWhoServices
                     response.Value = string.Equals(characterName.Trim(), currentMatchInfo.GuestSelectedCharacterName.Trim(), StringComparison.OrdinalIgnoreCase);
                     response.StatusCode = ResponseStatus.OK;
 
-                    NotifyOtherPlayer(currentMatchInfo.HostChannel, response.Value ? MatchStatus.GameLost : MatchStatus.GameWon);
+                    NotifyOtherPlayer(currentMatchInfo.HostChannel, response.Value ? MatchStatus.GameLost : MatchStatus.GameWon, matchCode);
 
                     if (currentMatchInfo.IsTournamentMatch)
                     {
@@ -83,23 +83,38 @@ namespace GuessWhoServices
 
         public void SelectCharacter(string characterName, string matchCode)
         {
-            if (matchCode != string.Empty)
+            try
             {
-                var matchPlayersInfo = matchPlayersListening[matchCode];
-
-                if (string.IsNullOrEmpty(matchPlayersInfo.GuestSelectedCharacterName))
+                if (matchCode != string.Empty)
                 {
-                    matchPlayersInfo.GuestSelectedCharacterName = characterName;
-                    matchPlayersInfo.HostChannel.MatchStatusChanged(MatchStatus.PlayerReady);
+                    var matchPlayersInfo = matchPlayersListening[matchCode];
+
+                    if (string.IsNullOrEmpty(matchPlayersInfo.GuestSelectedCharacterName))
+                    {
+                        matchPlayersInfo.GuestSelectedCharacterName = characterName;
+                        matchPlayersInfo.HostChannel.MatchStatusChanged(MatchStatus.PlayerReady);
+                    }
+                    else
+                    {
+                        Console.WriteLine("El invitado ya ha seleccionado personaje");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("El invitado ya ha seleccionado personaje");
+                    Console.WriteLine("No se encontró canal registrado");
                 }
             }
-            else
+            catch (CommunicationObjectAbortedException ex)
             {
-                Console.WriteLine("No se encontró canal registrado");
+                ServerLogger.Instance.Error(ex.Message);
+
+                matchPlayersListening.Remove(matchCode);
+            }
+            catch (CommunicationException ex)
+            {
+                ServerLogger.Instance.Error(ex.Message);
+
+                matchPlayersListening.Remove(matchCode);
             }
         }
 
@@ -112,11 +127,11 @@ namespace GuessWhoServices
 
                 if (currentChannel.GetHashCode() == currentMatchInfo.HostChannel.GetHashCode())
                 {
-                    NotifyOtherPlayer(currentMatchInfo.GuestChannel, looksLikeMyCharacter ? MatchStatus.LooksLike : MatchStatus.DoesNotLookLike);
+                    NotifyOtherPlayer(currentMatchInfo.GuestChannel, looksLikeMyCharacter ? MatchStatus.LooksLike : MatchStatus.DoesNotLookLike, matchCode);
                 }
                 else if (currentChannel.GetHashCode() == currentMatchInfo.GuestChannel.GetHashCode())
                 {
-                    NotifyOtherPlayer(currentMatchInfo.HostChannel, looksLikeMyCharacter ? MatchStatus.LooksLike : MatchStatus.DoesNotLookLike);
+                    NotifyOtherPlayer(currentMatchInfo.HostChannel, looksLikeMyCharacter ? MatchStatus.LooksLike : MatchStatus.DoesNotLookLike, matchCode);
                 }
             }
         }
@@ -127,7 +142,7 @@ namespace GuessWhoServices
             {
                 var currentMatchInfo = matchPlayersListening[matchCode];
 
-                NotifyOtherPlayer(currentMatchInfo.GuestChannel, MatchStatus.CharacterSelection);
+                NotifyOtherPlayer(currentMatchInfo.GuestChannel, MatchStatus.CharacterSelection, matchCode);
             }
             else
             {
@@ -145,7 +160,7 @@ namespace GuessWhoServices
                 if (string.IsNullOrEmpty(matchPlayersInfo.HostSelectedCharacterName))
                 {
                     matchPlayersInfo.HostSelectedCharacterName = characterName;
-                    NotifyOtherPlayer(matchPlayersInfo.GuestChannel, MatchStatus.StartGame);
+                    NotifyOtherPlayer(matchPlayersInfo.GuestChannel, MatchStatus.StartGame, matchCode);
                 }
                 else
                 {
@@ -182,11 +197,20 @@ namespace GuessWhoServices
                 }
             }
         }
-        private void NotifyOtherPlayer(IMatchStatusCallback otherPlayerChannel, MatchStatus status)
+        private void NotifyOtherPlayer(IMatchStatusCallback otherPlayerChannel, MatchStatus status, string matchCode)
         {
             if (otherPlayerChannel != null)
             {
-                otherPlayerChannel.MatchStatusChanged(status);
+                try
+                {
+                    otherPlayerChannel.MatchStatusChanged(status);
+                }
+                catch(CommunicationObjectAbortedException ex)
+                {
+                    ServerLogger.Instance.Error(ex.Message);
+
+                    matches.Remove(matchCode);
+                }
             }
         }
     }
