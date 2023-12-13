@@ -75,11 +75,19 @@ namespace GuessWhoClient
                     EnableSendMessageButton();
                 }
             }
-            catch (EndpointNotFoundException)
+            catch (EndpointNotFoundException ex)
             {
                 ServerResponse.ShowServerDownMessage();
                 ClearCommunicationChannels();
                 RedirectPermanentlyToMainMenu();
+                App.log.Fatal(ex.Message);
+            }
+            catch (CommunicationException ex)
+            {
+                ServerResponse.ShowConnectionLostMessage();
+                ClearCommunicationChannels();
+                RedirectPermanentlyToMainMenu();
+                App.log.Error(ex.Message);
             }
         }
 
@@ -93,8 +101,17 @@ namespace GuessWhoClient
             DataStore.UsersClient.Subscribe();
         }
 
+        private void StartListeningMatchStatus()
+        {
+            matchStatusManager.CurrentMatchCode = gameManager.CurrentMatchCode;
+            matchStatusManager.Client.ListenMatchStatus(matchStatusManager.CurrentMatchCode, DataStore.Profile?.NickName);
+        }
+
         private void RedirectPermanentlyToMainMenu()
         {
+            gameManager.UnsubscribePage(this);
+            matchStatusManager.UnsubscribePage(this);
+
             ShowsNavigationUI = true;
             MainMenuPage menuPage = new MainMenuPage();
             NavigationService.Navigate(menuPage);
@@ -158,11 +175,16 @@ namespace GuessWhoClient
                         });
                     }
                 }
-                catch (EndpointNotFoundException)
+                catch (EndpointNotFoundException ex)
                 {
                     ServerResponse.ShowServerDownMessage();
                     ClearCommunicationChannels();
                     RedirectPermanentlyToMainMenu();
+                    App.log.Fatal(ex.Message);
+                }
+                catch (CommunicationException ex)
+                {
+                    App.log.Error(ex.Message);
                 }
             }
         }
@@ -200,12 +222,6 @@ namespace GuessWhoClient
             LbUsersListMessage.Visibility = Visibility.Visible;
 
             ListBoxActiveUsers.Visibility = Visibility.Hidden;
-        }
-
-        private void StartListeningMatchStatus()
-        {
-            matchStatusManager.CurrentMatchCode = gameManager.CurrentMatchCode;
-            matchStatusManager.Client.ListenMatchStatus(matchStatusManager.CurrentMatchCode, DataStore.Profile?.NickName);
         }
 
         private void ShowHostInformation()
@@ -252,8 +268,6 @@ namespace GuessWhoClient
         public void PlayerStatusInMatchChanged(PlayerInMatch user, bool isJoiningMatch)
         {
             bool isAdversaryCurrentMatchHost = !gameManager.IsCurrentMatchHost;
-            gameManager.AdversaryNickname = user.Nickname;
-            gameManager.AdversaryAvatar = user.Avatar;
 
             if(isAdversaryCurrentMatchHost)
             {
@@ -267,8 +281,11 @@ namespace GuessWhoClient
                     }
                     catch(EndpointNotFoundException ex)
                     {
-                        //TO-DO: log exception
                         App.log.Fatal(ex);
+                    }
+                    catch (CommunicationException ex)
+                    {
+                        App.log.Error(ex);
                     }
 
                     ClearCommunicationChannels();
@@ -279,6 +296,9 @@ namespace GuessWhoClient
             {
                 if (isJoiningMatch)
                 {
+                    gameManager.AdversaryNickname = user.Nickname;
+                    gameManager.AdversaryAvatar = user.Avatar;
+
                     ShowAdversaryInformation();
                     ShowGameFullMessage();
                     HideInvitationOptions();
@@ -287,6 +307,9 @@ namespace GuessWhoClient
                 }
                 else
                 {
+                    gameManager.AdversaryNickname = "";
+                    gameManager.AdversaryAvatar = null;
+
                     HideAdversaryInformation();
                     ShowActiveUsersList();
                     ShowInvitationOptions();
@@ -314,11 +337,19 @@ namespace GuessWhoClient
                     NavigateToChooseCharacterPage();
                 }
             }
-            catch(EndpointNotFoundException)
+            catch (EndpointNotFoundException ex)
             {
                 ServerResponse.ShowServerDownMessage();
                 ClearCommunicationChannels();
                 RedirectPermanentlyToMainMenu();
+                App.log.Fatal(ex.Message);
+            }
+            catch (CommunicationException ex)
+            {
+                ServerResponse.ShowConnectionLostMessage();
+                ClearCommunicationChannels();
+                RedirectPermanentlyToMainMenu();
+                App.log.Error(ex.Message);
             }
         }
 
@@ -346,8 +377,12 @@ namespace GuessWhoClient
 
         private void RedirectToMainMenuGameCanceled()
         {
+            gameManager.UnsubscribePage(this);
+            matchStatusManager.UnsubscribePage(this);
+
             MainMenuPage mainMenu = new MainMenuPage();
             mainMenu.ShowHostCanceledMatchMessage();
+
             NavigationService.Navigate(mainMenu);
         }
 
@@ -438,11 +473,19 @@ namespace GuessWhoClient
             {
                 SendMessage();
             }
-            catch (EndpointNotFoundException)
+            catch (EndpointNotFoundException ex)
             {
                 ServerResponse.ShowServerDownMessage();
                 ClearCommunicationChannels();
                 RedirectPermanentlyToMainMenu();
+                App.log.Fatal(ex.Message);
+            }
+            catch (CommunicationException ex)
+            {
+                ServerResponse.ShowConnectionLostMessage();
+                ClearCommunicationChannels();
+                RedirectPermanentlyToMainMenu();
+                App.log.Error(ex.Message);
             }
         }
 
@@ -553,10 +596,17 @@ namespace GuessWhoClient
                 ExitChatRoom();
                 ExitGame();
             }
-            catch (EndpointNotFoundException)
+            catch (EndpointNotFoundException ex)
             {
                 ServerResponse.ShowServerDownMessage();
                 ClearCommunicationChannels();
+                App.log.Fatal(ex.Message);
+            }
+            catch (CommunicationException ex)
+            {
+                ServerResponse.ShowConnectionLostMessage();
+                ClearCommunicationChannels();
+                App.log.Error(ex.Message);
             }
 
             RedirectPermanentlyToMainMenu();
@@ -592,10 +642,15 @@ namespace GuessWhoClient
             }
             catch (EndpointNotFoundException ex)
             {
-                ServerResponse.ShowServerDownMessage();
                 ClearCommunicationChannels();
                 App.log.Fatal(ex);
             }
+            catch (CommunicationException ex)
+            {
+                ClearCommunicationChannels();
+                App.log.Error(ex.Message);
+            }
+
 
             RedirectPermanentlyToMainMenu();
         }
@@ -617,11 +672,19 @@ namespace GuessWhoClient
                 StartCharacterSelection();
                 NavigateToChooseCharacterPage();
             }
-            catch (EndpointNotFoundException)
+            catch (EndpointNotFoundException ex)
             {
                 ServerResponse.ShowServerDownMessage();
                 ClearCommunicationChannels();
                 RedirectPermanentlyToMainMenu();
+                App.log.Fatal(ex);
+            }
+            catch (CommunicationException ex)
+            {
+                ServerResponse.ShowConnectionLostMessage();
+                ClearCommunicationChannels();
+                RedirectPermanentlyToMainMenu();
+                App.log.Error(ex.Message);
             }
         }
 
@@ -651,26 +714,34 @@ namespace GuessWhoClient
                     invitationButton.Visibility = Visibility.Hidden;
                 }
             }
-            catch (EndpointNotFoundException)
+            catch (EndpointNotFoundException ex)
             {
                 ServerResponse.ShowServerDownMessage();
                 ClearCommunicationChannels();
                 RedirectPermanentlyToMainMenu();
+                App.log.Fatal(ex.Message);
+            }
+            catch (CommunicationException ex)
+            {
+                ServerResponse.ShowConnectionLostMessage();
+                ClearCommunicationChannels();
+                RedirectPermanentlyToMainMenu();
+                App.log.Error(ex.Message);
             }
         }
 
-        private bool SendInvitationToUser(string nickname)
+        private bool SendInvitationToUser(string nicknameUserInvited)
         {
             bool successSent = false;
             var authenticationClient = new AuthenticationServiceClient();
-            ProfileResponse response = authenticationClient.VerifyUserRegisteredByNickName(nickname);
+            ProfileResponse userInvited = authenticationClient.VerifyUserRegisteredByNickName(nicknameUserInvited);
 
-            switch(response.StatusCode)
+            switch(userInvited.StatusCode)
             {
                 case ResponseStatus.OK:
-                    if(response.Value != null)
+                    if(userInvited.Value != null)
                     {
-                        successSent = SendEmailInvitation(response.Value.Email);
+                        successSent = SendEmailInvitation(userInvited.Value.Email);
                     }
                     break;
                 case ResponseStatus.SQL_ERROR:
@@ -683,7 +754,7 @@ namespace GuessWhoClient
                     break;
                 default:
                     MessageBox.Show(
-                        ServerResponse.GetMessageFromStatusCode(response.StatusCode),
+                        ServerResponse.GetMessageFromStatusCode(userInvited.StatusCode),
                         Properties.Resources.msgbErrorSendingGameInvitationTitle,
                         MessageBoxButton.OK,
                         MessageBoxImage.Warning
@@ -694,10 +765,10 @@ namespace GuessWhoClient
             return successSent;
         }
 
-        private bool SendEmailInvitation(string email)
+        private bool SendEmailInvitation(string emailUserInvited)
         {
             bool successSent = Email.SendMail(
-                email,
+                emailUserInvited,
                 Properties.Resources.txtInviteToGameSubject,
                 Properties.Resources.txtInviteToGameBody + gameManager.CurrentMatchCode
             );
