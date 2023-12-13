@@ -214,5 +214,10 @@ namespace GuessWhoClient
                 e.Handled = true;
             }
         }
+
+        private void BtnReturnPreviousPageClick(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
+        }
     }
 }

@@ -90,5 +90,10 @@ namespace GuessWhoClient
             DataGridPlayers.Visibility = Visibility.Visible;
             LbEmptyScoreboard.Visibility = Visibility.Collapsed;
         }
+
+        private void BtnReturnPreviousPageClick(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
+        }
     }
 }

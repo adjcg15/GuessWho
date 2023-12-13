@@ -129,5 +129,11 @@
                     Click="BtnCreateAccountClick" IsDefault="True"/>
             </Grid>
         </Border>
+
+        <Button 
+            Style="{StaticResource CircularButtonOnlyWithIcon}" 
+            Margin="10,10,856,476" Click="BtnReturnPreviousPageClick">
+            <Image Source="/Resources/go-back-arrow-icon.png" Width="18" Height="18" Cursor=""/>
+        </Button>
     </Grid>
 </Page>

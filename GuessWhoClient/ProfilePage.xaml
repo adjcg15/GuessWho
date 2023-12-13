@@ -12,7 +12,7 @@
             Source="/Resources/background.png" 
             Stretch="UniformToFill" 
             HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-        <Image Source="/Resources/logo.ES-MX.png" Margin="8,10,758,452"/>
+        <Image Source="/Resources/logo.ES-MX.png" Margin="758,10,8,452"/>
 
         <Border
             Width="550" Height="380" 
@@ -120,5 +120,10 @@
                 </Grid>
             </Grid>
         </Border>
+        <Button 
+            Style="{StaticResource CircularButtonOnlyWithIcon}" 
+            Margin="10,10,856,476" Click="BtnReturnPreviousPageClick">
+            <Image Source="/Resources/go-back-arrow-icon.png" Width="18" Height="18" Cursor=""/>
+        </Button>
     </Grid>
 </Page>

@@ -11,7 +11,6 @@
 
     <Grid>
         <Image Source="/Resources/background.png"  HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill"/>
-        <Image Source ="/Resources/logo.ES-MX.png" Width="134" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <Label Content="{x:Static p:Resources.lbTitleFriends}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0" FontWeight="Bold" FontSize="16"/>
         <TabControl Margin="10,98,10,10" BorderBrush="#FFBCBCBC" BorderThickness="3,3,3,3" >
             <TabItem Name="TabRequests" Header="{x:Static p:Resources.txtFriendRequests}" FontSize="16" FontWeight="Bold">
@@ -131,5 +130,10 @@
         <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Margin="492,46,0,0" Height="28" Width="246">
             <TextBox x:Name="TbMessage" IsReadOnly="True" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,0,0,0" Background="{x:Null}" TextAlignment="Center" TextWrapping="Wrap" FontSize="10"/>
         </Grid>
+        <Button 
+            Style="{StaticResource CircularButtonOnlyWithIcon}" 
+            Margin="10,10,856,476" Click="BtnReturnPreviousPageClick">
+            <Image Source="/Resources/go-back-arrow-icon.png" Width="18" Height="18" Cursor=""/>
+        </Button>
     </Grid>
 </Page>

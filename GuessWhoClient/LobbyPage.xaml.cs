@@ -112,7 +112,6 @@ namespace GuessWhoClient
             gameManager.UnsubscribePage(this);
             matchStatusManager.UnsubscribePage(this);
 
-            ShowsNavigationUI = true;
             MainMenuPage menuPage = new MainMenuPage();
             NavigationService.Navigate(menuPage);
         }

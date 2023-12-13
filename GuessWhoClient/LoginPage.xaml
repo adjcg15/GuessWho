@@ -14,8 +14,7 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             BorderBrush="#FFC436" BorderThickness="8" CornerRadius="16"
-            Background="White"
-        >
+            Background="White">
             <Grid>
                 <Label
                     Content="{x:Static p:Resources.txtLoginGlobal}"
@@ -37,5 +36,10 @@
                 <Button x:Name="BtnLogin" Style="{StaticResource PrimaryButton}" Content="{x:Static p:Resources.txtLoginGlobal}" HorizontalAlignment="Center" Margin="0,307,0,0" VerticalAlignment="Top" Click="BtnLoginClick" IsDefault="True"/>
             </Grid>
         </Border>
+        <Button 
+            Style="{StaticResource CircularButtonOnlyWithIcon}" 
+            Margin="10,10,856,476" Click="BtnReturnPreviousPageClick">
+            <Image Source="/Resources/go-back-arrow-icon.png" Width="18" Height="18" Cursor=""/>
+        </Button>
     </Grid>
 </Page>

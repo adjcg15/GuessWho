@@ -8,7 +8,6 @@
       xmlns:Properties="clr-namespace:GuessWhoClient.Properties" x:Class="GuessWhoClient.ChooseCharacterPage"
       mc:Ignorable="d"
       Height="520" Width="900"
-      ShowsNavigationUI="False"
       Title="ChooseCharacterPage" Loaded="PageLoaded">
     <Page.Resources>
         <SolidColorBrush x:Key="BlueBrush" Color="#0A6EBD" />

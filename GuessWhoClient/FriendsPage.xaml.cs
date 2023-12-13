@@ -179,9 +179,13 @@ namespace GuessWhoClient
 
         private void RedirectPermanentlyToMainMenu()
         {
-            ShowsNavigationUI = true;
             MainMenuPage mainMenuPage = new MainMenuPage();
             NavigationService.Navigate(mainMenuPage);
+        }
+
+        private void BtnReturnPreviousPageClick(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
         }
     }
 }
