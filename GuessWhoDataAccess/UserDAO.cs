@@ -42,20 +42,33 @@ namespace GuessWhoDataAccess
         {
             Response<bool> response = new Response<bool>
             {
-                StatusCode = ResponseStatus.OK,
-                Value = true
+                StatusCode = ResponseStatus.NOT_ALLOWED,
+                Value = false
             };
 
             try
             {
-                using (var context = new GuessWhoContext())
-                {
-                    context.Accounts.Add(account);
-                    context.SaveChanges();
 
-                    user.idAccount = account.idAccount;
-                    context.Users.Add(user);
-                    context.SaveChanges();
+                if (account != null && user != null)
+                {
+                    using (var context = new GuessWhoContext())
+                    {
+                        Account registeredAccount = context.Accounts.FirstOrDefault(a => a.email == account.email);
+                        User registeredUser = context.Users.FirstOrDefault(u => u.nickname == user.nickname);
+
+                        if (registeredAccount == null && registeredUser == null)
+                        {
+                            context.Accounts.Add(account);
+                            context.SaveChanges();
+
+                            user.idAccount = account.idAccount;
+                            context.Users.Add(user);
+                            context.SaveChanges();
+
+                            response.StatusCode = ResponseStatus.OK;
+                            response.Value = true;
+                        }
+                    } 
                 }
             } 
             catch (DbUpdateException ex)
@@ -118,12 +131,16 @@ namespace GuessWhoDataAccess
 
             try
             {
+
                 using (var context = new GuessWhoContext())
                 {
                     var account = context.Accounts.FirstOrDefault(a => a.email == email);
+                    Console.WriteLine(account == null ? "account null" : "account not null");
+
                     if (account != null)
                     {
                         var user = context.Users.FirstOrDefault(a => a.idAccount == account.idAccount);
+                        Console.WriteLine(user == null ? "null account" : "not null account");
 
                         if (user != null)
                         {
@@ -145,6 +162,8 @@ namespace GuessWhoDataAccess
 
                 response.StatusCode = ResponseStatus.SQL_ERROR;
             }
+
+            Console.WriteLine("llegó al final del userDAO");
 
             return response;
         }

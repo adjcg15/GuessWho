@@ -546,6 +546,18 @@
   <data name="msgbTemporalBanTitle" xml:space="preserve">
     <value>Cuenta bloqueada temporalmente</value>
   </data>
+  <data name="msgbUserAlreadyRegisteredMessage" xml:space="preserve">
+    <value>Parece que alguien ya ha registrado el nickname o email ingresado</value>
+  </data>
+  <data name="msgbUserAlreadyRegisteredTitle" xml:space="preserve">
+    <value>Usuario ya registrado</value>
+  </data>
+  <data name="msgbUserRegisteredSuccessfullyMessage" xml:space="preserve">
+    <value>Ahora podrás iniciar sesión con tu correo y contraseña</value>
+  </data>
+  <data name="msgbUserRegisteredSuccessfullyTitle" xml:space="preserve">
+    <value>¡Cuenta registrada!</value>
+  </data>
   <data name="msgbWelcome1" xml:space="preserve">
     <value>Bienvenido/a </value>
   </data>

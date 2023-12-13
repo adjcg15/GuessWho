@@ -43,8 +43,11 @@ namespace GuessWhoClient
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
             generatedConfirmationCode = GenerateConfirmationCode(10);
+            Console.WriteLine(generatedConfirmationCode);
+
 
             bool confirmationSent = SendConfirmationEmail(email, generatedConfirmationCode);
+
             if (!confirmationSent)
             {
                 MessageBox.Show(
@@ -82,20 +85,34 @@ namespace GuessWhoClient
             try
             {
                 booleanResponse response = authenticationServiceClient.RegisterUser(newUser);
-                bool successRegister = response.Value;
-                if (!successRegister)
-                {
-                    MessageBox.Show(
-                        ServerResponse.GetMessageFromStatusCode(response.StatusCode),
-                        ServerResponse.GetTitleFromStatusCode(response.StatusCode),
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Warning
-                    );
-                    return;
-                }
 
-                MainMenuPage mainMenu = new MainMenuPage();
-                this.NavigationService.Navigate(mainMenu);
+                switch (response.StatusCode)
+                {
+                    case ResponseStatus.OK:
+                        MessageBox.Show(
+                            Properties.Resources.msgbUserRegisteredSuccessfullyMessage,
+                             Properties.Resources.msgbUserRegisteredSuccessfullyTitle,
+                             MessageBoxButton.OK,
+                             MessageBoxImage.Information
+                        );
+                        break;
+                    case ResponseStatus.NOT_ALLOWED:
+                        MessageBox.Show(
+                            Properties.Resources.msgbUserAlreadyRegisteredMessage,
+                            Properties.Resources.msgbUserAlreadyRegisteredTitle,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
+                        );
+                        break;
+                    default:
+                        MessageBox.Show(
+                           ServerResponse.GetMessageFromStatusCode(response.StatusCode),
+                           ServerResponse.GetTitleFromStatusCode(response.StatusCode),
+                           MessageBoxButton.OK,
+                           MessageBoxImage.Warning
+                        );
+                        break;
+                }
             }
             catch (EndpointNotFoundException ex)
             {
@@ -108,6 +125,11 @@ namespace GuessWhoClient
                 App.log.Error(ex.Message);
 
                 ServerResponse.ShowConnectionLostMessage();
+            }
+            finally
+            {
+                MainMenuPage mainMenu = new MainMenuPage();
+                this.NavigationService.Navigate(mainMenu);
             }
         }
 

@@ -546,6 +546,18 @@
   <data name="msgbTemporalBanTitle" xml:space="preserve">
     <value>Account temporarily blocked</value>
   </data>
+  <data name="msgbUserAlreadyRegisteredMessage" xml:space="preserve">
+    <value>Seems like somebody has already registered your nickname or email</value>
+  </data>
+  <data name="msgbUserAlreadyRegisteredTitle" xml:space="preserve">
+    <value>User already registered</value>
+  </data>
+  <data name="msgbUserRegisteredSuccessfullyMessage" xml:space="preserve">
+    <value>Now you can login with your email and password</value>
+  </data>
+  <data name="msgbUserRegisteredSuccessfullyTitle" xml:space="preserve">
+    <value>Registered Account!</value>
+  </data>
   <data name="msgbWelcome1" xml:space="preserve">
     <value>Welcome </value>
   </data>

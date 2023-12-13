@@ -1348,6 +1348,42 @@ namespace GuessWhoClient.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Parece que alguien ya ha registrado el nickname o email ingresado.
+        /// </summary>
+        public static string msgbUserAlreadyRegisteredMessage {
+            get {
+                return ResourceManager.GetString("msgbUserAlreadyRegisteredMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Usuario ya registrado.
+        /// </summary>
+        public static string msgbUserAlreadyRegisteredTitle {
+            get {
+                return ResourceManager.GetString("msgbUserAlreadyRegisteredTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ahora podrás iniciar sesión con tu correo y contraseña.
+        /// </summary>
+        public static string msgbUserRegisteredSuccessfullyMessage {
+            get {
+                return ResourceManager.GetString("msgbUserRegisteredSuccessfullyMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ¡Cuenta registrada!.
+        /// </summary>
+        public static string msgbUserRegisteredSuccessfullyTitle {
+            get {
+                return ResourceManager.GetString("msgbUserRegisteredSuccessfullyTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Bienvenido/a .
         /// </summary>
         public static string msgbWelcome1 {
