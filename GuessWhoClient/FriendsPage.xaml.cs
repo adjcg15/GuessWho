@@ -82,8 +82,23 @@ namespace GuessWhoClient
         {
             Button button = (Button) sender;
             Friend friend = (Friend) button.DataContext;
-            
-            AnswerRequest(friend, ACCEPT_REQUEST);            
+
+            try
+            {
+                AnswerRequest(friend, ACCEPT_REQUEST);
+            }
+            catch (EndpointNotFoundException ex)
+            {
+                App.log.Fatal(ex.Message);
+
+                ServerResponse.ShowServerDownMessage();
+            }
+            catch(CommunicationException ex)
+            {
+                App.log.Error(ex.Message);
+
+                ServerResponse.ShowConnectionLostMessage();
+            }
         }
 
         private void BtnDeclineInvitationClick(object sender, RoutedEventArgs e)
@@ -91,7 +106,22 @@ namespace GuessWhoClient
             Button button = (Button)sender;
             Friend friend = (Friend)button.DataContext;
 
-            AnswerRequest(friend, DECLINE_REQUEST);
+            try
+            {
+                AnswerRequest(friend, DECLINE_REQUEST);
+            }
+            catch (EndpointNotFoundException ex)
+            {
+                App.log.Fatal(ex.Message);
+
+                ServerResponse.ShowServerDownMessage();
+            }
+            catch (CommunicationException ex)
+            {
+                App.log.Error(ex.Message);
+
+                ServerResponse.ShowConnectionLostMessage();
+            }
         }
 
         private void AnswerRequest(Friend requester, string answer)

@@ -251,11 +251,30 @@ namespace GuessWhoClient
 
         public void PlayerStatusInMatchChanged(PlayerInMatch player, bool isInMatch)
         {
-            gameManager.UnsubscribePage(this);
-            matchStatusManager.UnsubscribePage(this);
+            try
+            {
+                ClearCommunicationChannels();
+                RedirectToMainMenuFromCanceledMatch();
+            }
+            catch (EndpointNotFoundException ex)
+            {
+                App.log.Fatal(ex.Message);
 
-            ClearCommunicationChannels();
-            RedirectToMainMenuFromCanceledMatch();
+                matchStatusManager.UnsubscribePage(this);
+                gameManager.UnsubscribePage(this);
+                gameManager.RestartRawValues();
+                matchStatusManager.RestartRawValues();
+                RedirectToMainMenuFromCanceledMatch();
+            }
+            catch (CommunicationException ex)
+            {
+                App.log.Error(ex.Message);
+
+                matchStatusManager.UnsubscribePage(this);
+                gameManager.UnsubscribePage(this);
+                gameManager.RestartRawValues();
+                matchStatusManager.RestartRawValues();
+            }
         }
 
         private void ClearCommunicationChannels()
@@ -346,8 +365,6 @@ namespace GuessWhoClient
         {
             ReportServiceClient reportServiceClient = new ReportServiceClient();
 
-            Console.WriteLine(CbReportReason.SelectedIndex + 1 + " " + gameManager.AdversaryNickname + " " + TbReportComment.Text);
-
             PlayerReport playerReport = new PlayerReport
             {
                 IdReportType = CbReportReason.SelectedIndex + 1,
@@ -378,6 +395,10 @@ namespace GuessWhoClient
             {
                 App.log.Fatal(ex.Message);
 
+                matchStatusManager.UnsubscribePage(this);
+                gameManager.UnsubscribePage(this);
+                gameManager.RestartRawValues();
+                matchStatusManager.RestartRawValues();
                 RedirectToMainMenuFromCanceledMatch();
                 ServerResponse.ShowServerDownMessage();
             }
@@ -385,6 +406,10 @@ namespace GuessWhoClient
             {
                 App.log.Error(ex.Message);
 
+                matchStatusManager.UnsubscribePage(this);
+                gameManager.UnsubscribePage(this);
+                gameManager.RestartRawValues();
+                matchStatusManager.RestartRawValues();
                 RedirectToMainMenuFromCanceledMatch();
                 ServerResponse.ShowConnectionLostMessage();
             }
