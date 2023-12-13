@@ -9,13 +9,9 @@ namespace GuessWhoClient
 {
     public partial class MainWindow : NavigationWindow
     {
-        private static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
         public MainWindow()
         {
             InitializeComponent();
-            log4net.Config.XmlConfigurator.Configure();
-            log.Warn("Abriendo MainWindow");
         }
 
         private void NavigationWindowClosed(object sender, EventArgs e)
@@ -27,17 +23,17 @@ namespace GuessWhoClient
                 UnsubscribeActiveUsersList();
                 Logout();
             }
-            catch (EndpointNotFoundException)
+            catch (EndpointNotFoundException ex)
             {
-
+                App.log.Fatal(ex.Message);
             }
-            catch (CommunicationObjectFaultedException)
+            catch (CommunicationObjectFaultedException ex)
             {
-
+                App.log.Error(ex.Message);
             }
-            catch (CommunicationException)
+            catch (CommunicationException ex)
             {
-
+                App.log.Error(ex.Message);
             }
         }
 

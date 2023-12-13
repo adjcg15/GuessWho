@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace GuessWhoDataAccess
 {
-    public class UserDAO
+    public static class UserDao
     {
         public static Response<Account> VerifyUserSession(string email, string password)
         {
@@ -21,10 +21,17 @@ namespace GuessWhoDataAccess
                 using (var context = new GuessWhoContext())
                 {
                     response.Value = context.Accounts.FirstOrDefault(a => a.email == email && a.password == password);
+
+                    if(response.Value == null)
+                    {
+                        response.StatusCode = ResponseStatus.VALIDATION_ERROR;
+                    }
                 }
             }
             catch(SqlException)
             {
+                ServerLogger.Instance.Fatal(ex.Message);
+
                 response.StatusCode = ResponseStatus.SQL_ERROR;
             }
 
@@ -53,16 +60,22 @@ namespace GuessWhoDataAccess
             } 
             catch (DbUpdateException ex)
             {
+                ServerLogger.Instance.Error(ex.Message);
+
                 response.StatusCode = ResponseStatus.UPDATE_ERROR;
                 response.Value = false;
             }
             catch (DbEntityValidationException ex)
             {
+                ServerLogger.Instance.Error(ex.Message);
+
                 response.StatusCode = ResponseStatus.VALIDATION_ERROR;
                 response.Value = false;
             }
             catch (SqlException ex)
             {
+                ServerLogger.Instance.Fatal(ex.Message);
+
                 response.StatusCode = ResponseStatus.SQL_ERROR;
                 response.Value = false;
             }
@@ -85,8 +98,10 @@ namespace GuessWhoDataAccess
                     response.Value = context.Users.FirstOrDefault(u => u.idAccount == idAccount);
                 }
             }
-            catch (SqlException)
+            catch (SqlException ex)
             {
+                ServerLogger.Instance.Fatal(ex.Message);
+
                 response.StatusCode = ResponseStatus.SQL_ERROR;
             }
 
@@ -110,19 +125,24 @@ namespace GuessWhoDataAccess
                     {
                         var user = context.Users.FirstOrDefault(a => a.idAccount == account.idAccount);
 
-                        response.Value = new Profile
+                        if (user != null)
                         {
-                            NickName = user.nickname,
-                            FullName = user.fullName,
-                            Avatar = user.avatar,
-                            Email = account.email,
-                            Password = account.password
-                        };
+                            response.Value = new Profile
+                            {
+                                NickName = user.nickname,
+                                FullName = user.fullName,
+                                Avatar = user.avatar,
+                                Email = account.email,
+                                Password = account.password
+                            }; 
+                        }
                     }
                 }
             }
             catch (SqlException ex)
             {
+                ServerLogger.Instance.Fatal(ex.Message);
+
                 response.StatusCode = ResponseStatus.SQL_ERROR;
             }
 
@@ -146,20 +166,25 @@ namespace GuessWhoDataAccess
                     {
                         var account = context.Accounts.FirstOrDefault(a => a.idAccount == user.idAccount);
 
-                        response.Value = new Profile
+                        if (account != null)
                         {
-                            NickName = user.nickname,
-                            FullName = user.fullName,
-                            Avatar = user.avatar,
-                            Email = account.email,
-                            Password = account.password,
-                            IdUser = user.idUser,
-                        };
+                            response.Value = new Profile 
+                            { 
+                                NickName = user.nickname, 
+                                FullName = user.fullName, 
+                                Avatar = user.avatar,
+                                Email = account.email, 
+                                Password = account.password, 
+                                IdUser = user.idUser 
+                            };
+                        }
                     }
                 }
             }
             catch (SqlException ex)
             {
+                ServerLogger.Instance.Fatal(ex.Message);
+
                 response.StatusCode = ResponseStatus.SQL_ERROR;
             }
 
@@ -194,16 +219,22 @@ namespace GuessWhoDataAccess
             }
             catch (DbUpdateException ex)
             {
+                ServerLogger.Instance.Error(ex.Message);
+
                 response.StatusCode = ResponseStatus.UPDATE_ERROR;
                 response.Value = false;
             }
             catch (DbEntityValidationException ex)
             {
+                ServerLogger.Instance.Error(ex.Message);
+
                 response.StatusCode = ResponseStatus.VALIDATION_ERROR;
                 response.Value = false;
             }
             catch (SqlException ex)
             {
+                ServerLogger.Instance.Fatal(ex.Message);
+
                 response.StatusCode = ResponseStatus.SQL_ERROR;
                 response.Value = false;
             }
@@ -236,14 +267,20 @@ namespace GuessWhoDataAccess
             }
             catch (DbUpdateException ex)
             {
+                ServerLogger.Instance.Error(ex.Message);
+
                 response.StatusCode = ResponseStatus.UPDATE_ERROR;
             }
             catch (DbEntityValidationException ex)
             {
+                ServerLogger.Instance.Error(ex.Message);
+
                 response.StatusCode = ResponseStatus.VALIDATION_ERROR;
             }
             catch (SqlException ex)
             {
+                ServerLogger.Instance.Fatal(ex.Message);
+
                 response.StatusCode = ResponseStatus.SQL_ERROR;
             }
 
@@ -279,16 +316,22 @@ namespace GuessWhoDataAccess
             }
             catch (DbUpdateException ex)
             {
+                ServerLogger.Instance.Error(ex.Message);
+
                 response.StatusCode = ResponseStatus.UPDATE_ERROR;
                 response.Value = false;
             }
             catch (DbEntityValidationException ex)
             {
+                ServerLogger.Instance.Error(ex.Message);
+
                 response.StatusCode = ResponseStatus.VALIDATION_ERROR;
                 response.Value = false;
             }
             catch (SqlException ex)
             {
+                ServerLogger.Instance.Fatal(ex.Message);
+
                 response.StatusCode = ResponseStatus.SQL_ERROR;
                 response.Value = false;
             }
@@ -324,16 +367,22 @@ namespace GuessWhoDataAccess
             }
             catch (DbUpdateException ex)
             {
+                ServerLogger.Instance.Error(ex.Message);
+
                 response.StatusCode = ResponseStatus.UPDATE_ERROR;
                 response.Value = false;
             }
             catch (DbEntityValidationException ex)
             {
+                ServerLogger.Instance.Error(ex.Message);
+
                 response.StatusCode = ResponseStatus.VALIDATION_ERROR;
                 response.Value = false;
             }
             catch (SqlException ex)
             {
+                ServerLogger.Instance.Fatal(ex.Message);
+
                 response.StatusCode = ResponseStatus.SQL_ERROR;
                 response.Value = false;
             }
@@ -369,16 +418,22 @@ namespace GuessWhoDataAccess
             }
             catch (DbUpdateException ex)
             {
+                ServerLogger.Instance.Error(ex.Message);
+
                 response.StatusCode = ResponseStatus.UPDATE_ERROR;
                 response.Value = false;
             }
             catch (DbEntityValidationException ex)
             {
+                ServerLogger.Instance.Error(ex.Message);
+
                 response.StatusCode = ResponseStatus.VALIDATION_ERROR;
                 response.Value = false;
             }
             catch (SqlException ex)
             {
+                ServerLogger.Instance.Fatal(ex.Message);
+
                 response.StatusCode = ResponseStatus.SQL_ERROR;
                 response.Value = false;
             }
@@ -408,8 +463,10 @@ namespace GuessWhoDataAccess
                         }
                     }
                 }
-                catch (SqlException)
+                catch (SqlException ex)
                 {
+                    ServerLogger.Instance.Fatal(ex.Message);
+
                     response.StatusCode = ResponseStatus.SQL_ERROR;
                 }
             }

@@ -12,11 +12,6 @@ namespace GuessWhoClient
         private static GameManager instance;
         private GameServiceClient client;
         private List<IGamePage> subscribedPages = new List<IGamePage>();
-        private string currentMatchCode;
-        private bool isCurrentMatchHost;
-        private string adversaryNickname;
-        private byte[] adversaryAvatar;
-        private Character selectedCharacter;
         private List<Character> charactersInGame;
 
         private GameManager() { }
@@ -45,15 +40,15 @@ namespace GuessWhoClient
                 return client; 
             } 
         }
-        public string CurrentMatchCode { get { return currentMatchCode; } set { currentMatchCode = value; } }
+        public string CurrentMatchCode { get ;set ; } 
 
-        public bool IsCurrentMatchHost { get { return isCurrentMatchHost; } set { isCurrentMatchHost = value; } }
+        public bool IsCurrentMatchHost { get ; set ; }
 
-        public string AdversaryNickname { get { return adversaryNickname; } set { adversaryNickname = value; } }
+        public string AdversaryNickname { get; set; }
 
-        public byte[] AdversaryAvatar { get { return adversaryAvatar; } set { adversaryAvatar = value; } }
+        public byte[] AdversaryAvatar { get; set; }
 
-        public Character SelectedCharacter { get { return selectedCharacter; } set { selectedCharacter = value; } }
+        public Character SelectedCharacter { get; set; }
 
         public List<Character> CharactersInGame
         {
@@ -106,13 +101,13 @@ namespace GuessWhoClient
 
         public void RestartRawValues()
         {
-            isCurrentMatchHost = false;
-            currentMatchCode = "";
-            adversaryAvatar = null;
-            adversaryNickname = "";
+            IsCurrentMatchHost = false;
+            CurrentMatchCode = "";
+            AdversaryAvatar = null;
+            AdversaryNickname = "";
             client = null;
             subscribedPages = new List<IGamePage>();
-            selectedCharacter = null;
+            SelectedCharacter = null;
         }
 
         public void PlayerStatusInMatchChanged(PlayerInMatch player, bool isInMatch)

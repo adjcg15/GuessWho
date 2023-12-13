@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GuessWhoDataAccess
 {
-    public class MatchDAO
+    public static class MatchDao
     {
         public static Response<bool> AddScorePoints(string winnerNickname)
         {
@@ -44,21 +44,21 @@ namespace GuessWhoDataAccess
             }
             catch (DbUpdateException ex)
             {
-                Console.WriteLine("DbUpdateException");
+                ServerLogger.Instance.Error(ex.Message);
 
                 response.StatusCode = ResponseStatus.UPDATE_ERROR;
                 response.Value = false;
             }
             catch (DbEntityValidationException ex)
             {
-                Console.WriteLine("DbEntityValidationException");
+                ServerLogger.Instance.Error(ex.Message);
 
                 response.StatusCode = ResponseStatus.VALIDATION_ERROR;
                 response.Value = false;
             }
             catch (SqlException ex)
             {
-                Console.WriteLine("SqlException");
+                ServerLogger.Instance.Fatal(ex.Message);
 
                 response.StatusCode = ResponseStatus.SQL_ERROR;
                 response.Value = false;

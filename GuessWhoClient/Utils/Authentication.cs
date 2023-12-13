@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GuessWhoClient.Utils
 {
-    public class Authentication
+    public static class Authentication
     {
         public static string HashPassword(string password)
         {
@@ -28,7 +28,7 @@ namespace GuessWhoClient.Utils
         }
         public static bool IsValidEmail(string email)
         {
-            bool isValidEmail = true;
+            bool isValidEmail;
             if(string.IsNullOrEmpty(email))
             {
                 isValidEmail = false;
@@ -37,7 +37,7 @@ namespace GuessWhoClient.Utils
             {
                 try
                 {
-                    MailAddress mailAddress = new MailAddress(email);
+                    new MailAddress(email);
                     isValidEmail = true;
                 }
                 catch (FormatException)
@@ -51,14 +51,44 @@ namespace GuessWhoClient.Utils
 
         public static bool IsSecurePassword(string password)
         {
-            string pattern = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?#-&_])[A-Za-z\d@$!%*?#-&_]{8,}$";
-            return Regex.IsMatch(password, pattern);
+            bool isSecurePassword;
+            string pattern = @"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?#\-&_])[A-Za-z\d@$!%*?#\-&_]{8,}$";
+
+            TimeSpan timeout = TimeSpan.FromMilliseconds(500);
+
+            try
+            {
+                isSecurePassword = Regex.IsMatch(password, pattern, RegexOptions.None, timeout);
+            }
+            catch (RegexMatchTimeoutException ex)
+            {
+                App.log.Warn(ex.Message);
+
+                isSecurePassword = false;
+            }
+
+            return isSecurePassword;
         }
 
         public static bool IsValidNickname(string nickname)
         {
+            bool isValidNickname;
             string pattern = @"^[a-zA-Z0-9_]+$";
-            return Regex.IsMatch(nickname, pattern);
+
+            TimeSpan timeout = TimeSpan.FromMilliseconds(500);
+
+            try
+            {
+                isValidNickname = Regex.IsMatch(nickname, pattern, RegexOptions.None, timeout);
+            }
+            catch (RegexMatchTimeoutException ex)
+            {
+                App.log.Warn(ex.Message);
+
+                isValidNickname = false;
+            }
+
+            return isValidNickname;
         }
     }
 }

@@ -5,9 +5,6 @@ namespace GuessWhoDataAccess
     [DataContract(Name = "{0}Response")]
     public class Response<T>
     {
-        private ResponseStatus statusCode;
-        private T value;
-
         [DataMember]
         public ResponseStatus StatusCode { get; set; }
 

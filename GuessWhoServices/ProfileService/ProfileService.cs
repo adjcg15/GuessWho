@@ -13,7 +13,7 @@ namespace GuessWhoServices
 
         public Response<bool> UpdateUserProfileImage(byte[] newImage, int idUser) 
         {
-            return UserDAO.UpdateUserProfileImage(newImage, idUser);
+            return UserDao.UpdateUserProfileImage(newImage, idUser);
         }
 
         public Response<bool> UpdateUserNickname(string newNickname, int idUser)
@@ -26,7 +26,7 @@ namespace GuessWhoServices
 
             DateTime currentDate = DateTime.Now;
 
-            var lastTimeNicknameChangedResponse = UserDAO.GetLastTimeNicknameChangeById(idUser);
+            var lastTimeNicknameChangedResponse = UserDao.GetLastTimeNicknameChangeById(idUser);
 
             if(lastTimeNicknameChangedResponse.StatusCode != ResponseStatus.OK)
             {
@@ -42,7 +42,7 @@ namespace GuessWhoServices
             {
                 if ((currentDate - lastTimeNicknameChangedResponse.Value).TotalDays >= MINIMAL_DAYS_FOR_CHANGE)
                 {
-                    response = UserDAO.UpdateUserNickname(newNickname, idUser);
+                    response = UserDao.UpdateUserNickname(newNickname, idUser);
                 }
                 else
                 {
@@ -55,12 +55,12 @@ namespace GuessWhoServices
 
         public Response<bool> UpdateUserFullName(string newFullName, int idUser)
         {
-            return UserDAO.UpdateUserFullname(newFullName, idUser);
+            return UserDao.UpdateUserFullname(newFullName, idUser);
         }
 
         public Response<bool> UpdateUserPassword(string newPassword, int idAccount)
         {
-            return UserDAO.UpdateAccountPassword(newPassword, idAccount);
+            return UserDao.UpdateAccountPassword(newPassword, idAccount);
         }
     }
 }

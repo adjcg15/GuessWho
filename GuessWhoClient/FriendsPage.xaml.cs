@@ -56,9 +56,9 @@ namespace GuessWhoClient
             FriendsServiceClient friendsServiceClient = new FriendsServiceClient();
             friends = new ObservableCollection<Friend>(friendsServiceClient.GetFriends(DataStore.Profile.IdUser).Value);
 
-            friends.OrderByDescending(friend => friend.Status == ONLINE_STATUS).ToList();
+            var onlineFriends = friends.OrderByDescending(friend => friend.Status == ONLINE_STATUS).ToList();
 
-            ListBoxFriends.ItemsSource = friends;
+            ListBoxFriends.ItemsSource = onlineFriends;
         }
 
         private void UploadRequests()

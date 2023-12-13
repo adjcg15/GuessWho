@@ -40,7 +40,7 @@ namespace GuessWhoTests.DataAccessTests
             string email = TEST_ACCOUNT_EMAIL;
             string hashedPassword = TEST_ACCOUNT_PASSWORD_HASH;
 
-            var account = UserDAO.VerifyUserSession(email, hashedPassword);
+            var account = UserDao.VerifyUserSession(email, hashedPassword);
             
             Assert.NotNull(account);
 		}
@@ -51,7 +51,7 @@ namespace GuessWhoTests.DataAccessTests
 			string email = "not-registered-email@gmail.com";
 			string hashedPassword = "b221d9dbb083a7f33428d7c2a3c3198ae925614d70210e28716ccaa7cd4ddb79";
 
-			var account = UserDAO.VerifyUserSession(email, hashedPassword);
+			var account = UserDao.VerifyUserSession(email, hashedPassword);
 
 			Assert.Null(account);
 		}

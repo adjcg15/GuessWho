@@ -456,16 +456,13 @@ namespace GuessWhoClient
                 MessageBoxButton.YesNo
             );
 
-            if (!isPageUnloaded)
+            if (!isPageUnloaded && confirmSelection == MessageBoxResult.Yes)
             {
-                if (confirmSelection == MessageBoxResult.Yes)
-                {
-                    LeaveCurrentGame();
+                LeaveCurrentGame();
 
-                    drawServiceClient.UnsubscribeFromDrawService(gameManager.CurrentMatchCode);
-                    ClearCommunicationChannels();
-                    RedirectToMainMenu();
-                }
+                drawServiceClient.UnsubscribeFromDrawService(gameManager.CurrentMatchCode);
+                ClearCommunicationChannels();
+                RedirectToMainMenu();
             }
         }
 
@@ -508,17 +505,14 @@ namespace GuessWhoClient
                 MessageBoxButton.YesNo
             );
 
-            if (!isPageUnloaded)
+            if (!isPageUnloaded && confirmSelection == MessageBoxResult.Yes)
             {
-                if (confirmSelection == MessageBoxResult.Yes)
-                {
-                    StopTimer();
-                    isActualPlayerReady = true;
-                    drawServiceClient.SendDraw(GetSerializedDraw(), gameManager.CurrentMatchCode);
-                    DisableUI();
+                StopTimer();
+                isActualPlayerReady = true;
+                drawServiceClient.SendDraw(GetSerializedDraw(), gameManager.CurrentMatchCode);
+                DisableUI();
 
-                    CheckBothPlayersReady();
-                }
+                CheckBothPlayersReady();
             }
         }
 
@@ -602,15 +596,12 @@ namespace GuessWhoClient
                     MessageBoxButton.YesNo
                 );
 
-                if (!isPageUnloaded)
+                if (!isPageUnloaded && confirmSelection == MessageBoxResult.Yes)
                 {
-                    if (confirmSelection == MessageBoxResult.Yes)
+                    var isWinner = matchStatusManager.Client.GuessCharacter(character.Name, matchStatusManager.CurrentMatchCode);
+                    if (isWinner.StatusCode == ResponseStatus.OK)
                     {
-                        var isWinner = matchStatusManager.Client.GuessCharacter(character.Name, matchStatusManager.CurrentMatchCode);
-                        if (isWinner.StatusCode == ResponseStatus.OK)
-                        {
-                            RedirectToWinnerPage(isWinner.Value);
-                        }
+                        RedirectToWinnerPage(isWinner.Value);
                     }
                 }
             }

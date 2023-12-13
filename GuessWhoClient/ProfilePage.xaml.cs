@@ -107,6 +107,8 @@ namespace GuessWhoClient
             }
             catch (IOException ex)
             {
+                App.log.Warn(ex.Message);
+
                 MessageBox.Show(
                     Properties.Resources.msgbRegisterImageNotFoundMessage,
                     Properties.Resources.msgbRegisterImageNotFoundTitle,
@@ -114,8 +116,10 @@ namespace GuessWhoClient
                     MessageBoxImage.Warning
                 );
             }
-            catch (EndpointNotFoundException)
+            catch (EndpointNotFoundException ex)
             {
+                App.log.Fatal(ex.Message);
+
                 ServerResponse.ShowServerDownMessage();
             }
         }
@@ -195,8 +199,10 @@ namespace GuessWhoClient
                         Properties.Resources.txtPasswordChangeSuccesfulTitle
                    );
                 }
-            }catch (EndpointNotFoundException)
+            }catch (EndpointNotFoundException ex)
             {
+                App.log.Fatal(ex.Message);
+
                 ServerResponse.ShowServerDownMessage();
             }
         }
@@ -244,8 +250,10 @@ namespace GuessWhoClient
                 {
                     VerifyUnRegisteredNickname(newNickname);
                 }
-                catch(EndpointNotFoundException) 
+                catch(EndpointNotFoundException ex) 
                 {
+                    App.log.Fatal(ex.Message);
+
                     ServerResponse.ShowServerDownMessage();
                 }
             }
@@ -408,8 +416,10 @@ namespace GuessWhoClient
                     DataStore.Profile.FullName = newFullName;
                 }
             }
-            catch (EndpointNotFoundException)
+            catch (EndpointNotFoundException ex)
             {
+                App.log.Fatal(ex.Message);
+
                 ServerResponse.ShowServerDownMessage();
             }
         }

@@ -78,46 +78,43 @@ namespace GuessWhoClient
 
         private void StablishUserSession(string email, string password)
         {
-            if (!CheckPlayerIsPermanentBanned(email))
+            if (!CheckPlayerIsPermanentBanned(email) && !CheckPlayerIsTemporarilyBanned(email))
             {
-                if (!CheckPlayerIsTemporarilyBanned(email))
-                {
-                    AuthenticationServiceClient authenticationServiceClient = new AuthenticationServiceClient();
-                    ProfileResponse userProfile = authenticationServiceClient.Login(email, password);
+                AuthenticationServiceClient authenticationServiceClient = new AuthenticationServiceClient();
+                ProfileResponse userProfile = authenticationServiceClient.Login(email, password);
 
-                    switch (userProfile.StatusCode)
-                    {
-                        case ResponseStatus.OK:
-                            MessageBox.Show(Properties.Resources.msgbWelcome1 + userProfile.Value.FullName + Properties.Resources.msgbWelcome2);
-                            DataStore.Profile = userProfile.Value;
-                            RedirectToMainMenu();
-                            break;
-                        case ResponseStatus.VALIDATION_ERROR:
-                            MessageBox.Show(
-                                Properties.Resources.msgbInvalidCredentialsMessage,
-                                Properties.Resources.msgbInvalidCredentialsTitle,
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Warning
-                            );
-                            break;
-                        case ResponseStatus.NOT_ALLOWED:
-                            MessageBox.Show(
-                                Properties.Resources.msgbInvalidSessionMessage,
-                                Properties.Resources.msgbInvalidSessionTitle,
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Warning
-                            );
-                            break;
-                        default:
-                            MessageBox.Show(
-                                ServerResponse.GetMessageFromStatusCode(userProfile.StatusCode),
-                                ServerResponse.GetTitleFromStatusCode(userProfile.StatusCode),
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Warning
-                            );
-                            RedirectToMainMenu();
-                            break;
-                    }
+                switch (userProfile.StatusCode)
+                {
+                    case ResponseStatus.OK:
+                        MessageBox.Show(Properties.Resources.msgbWelcome1 + userProfile.Value.FullName + Properties.Resources.msgbWelcome2);
+                        DataStore.Profile = userProfile.Value;
+                        RedirectToMainMenu();
+                        break;
+                    case ResponseStatus.VALIDATION_ERROR:
+                        MessageBox.Show(
+                            Properties.Resources.msgbInvalidCredentialsMessage,
+                            Properties.Resources.msgbInvalidCredentialsTitle,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
+                        );
+                        break;
+                    case ResponseStatus.NOT_ALLOWED:
+                        MessageBox.Show(
+                            Properties.Resources.msgbInvalidSessionMessage,
+                            Properties.Resources.msgbInvalidSessionTitle,
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
+                        );
+                        break;
+                    default:
+                        MessageBox.Show(
+                            ServerResponse.GetMessageFromStatusCode(userProfile.StatusCode),
+                            ServerResponse.GetTitleFromStatusCode(userProfile.StatusCode),
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
+                        );
+                        RedirectToMainMenu();
+                        break;
                 }
             }
         }
