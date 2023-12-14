@@ -28,6 +28,13 @@ namespace GuessWhoDataAccess
                     context.SaveChanges();
                 }
             }
+            catch (ArgumentNullException ex)
+            {
+                ServerLogger.Instance.Warn(ex.Message);
+
+                response.StatusCode = ResponseStatus.UPDATE_ERROR;
+                response.Value = false;
+            }
             catch (DbUpdateException ex)
             {
                 ServerLogger.Instance.Error(ex.Message);
