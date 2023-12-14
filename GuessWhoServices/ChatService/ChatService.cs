@@ -10,15 +10,18 @@ namespace GuessWhoServices
 
         public void EnterToChatRoom(string chatRoomCode)
         {
-            bool isChatRoomAlreadyRegistered = chatRooms.ContainsKey(chatRoomCode);
+            lock (lockObject)
+            {
+                bool isChatRoomAlreadyRegistered = chatRooms.ContainsKey(chatRoomCode);
 
-            if (isChatRoomAlreadyRegistered)
-            {
-                JoinChatRoom(chatRoomCode);
-            }
-            else
-            {
-                RegisterChatRoom(chatRoomCode);
+                if (isChatRoomAlreadyRegistered)
+                {
+                    JoinChatRoom(chatRoomCode);
+                }
+                else
+                {
+                    RegisterChatRoom(chatRoomCode);
+                }
             }
         }
 
@@ -41,19 +44,22 @@ namespace GuessWhoServices
 
         public void LeaveChatRoom(string chatRoomCode)
         {
-            ChatRoom chatRoom = chatRooms[chatRoomCode];
-
-            if(chatRoom != null)
+            lock (lockObject)
             {
-                bool isLastUserLeavingChatRoom = chatRoom.FirstUserInChatRoomChannel == null || chatRoom.SecondUserInChatRoomChannel == null;
-                
-                if (isLastUserLeavingChatRoom)
+                ChatRoom chatRoom = chatRooms[chatRoomCode];
+
+                if (chatRoom != null)
                 {
-                    DeleteChatRoom(chatRoomCode);
-                }
-                else
-                {
-                    RemoveUserFromChatRoom(chatRoomCode);
+                    bool isLastUserLeavingChatRoom = chatRoom.FirstUserInChatRoomChannel == null || chatRoom.SecondUserInChatRoomChannel == null;
+
+                    if (isLastUserLeavingChatRoom)
+                    {
+                        DeleteChatRoom(chatRoomCode);
+                    }
+                    else
+                    {
+                        RemoveUserFromChatRoom(chatRoomCode);
+                    }
                 }
             }
         }
@@ -80,59 +86,62 @@ namespace GuessWhoServices
 
         public Response<bool> SendMessage(string chatRoomCode, string message)
         {
-            Response<bool> response = new Response<bool>
+            lock (lockObject)
             {
-                StatusCode = ResponseStatus.VALIDATION_ERROR,
-                Value = false
-            };
-
-            if (chatRooms.ContainsKey(chatRoomCode))
-            {
-                ChatRoom storedChatRoom = chatRooms[chatRoomCode];
-                IChatCallback userChannel = OperationContext.Current.GetCallbackChannel<IChatCallback>();
-
-                response.StatusCode = ResponseStatus.OK;
-                response.Value = true;
-                try
+                Response<bool> response = new Response<bool>
                 {
-                    bool isFirstPlayerToJoinSendingMessage = userChannel.GetHashCode() == storedChatRoom.FirstUserInChatRoomChannel.GetHashCode();
-                    if (isFirstPlayerToJoinSendingMessage)
+                    StatusCode = ResponseStatus.VALIDATION_ERROR,
+                    Value = false
+                };
+
+                if (chatRooms.ContainsKey(chatRoomCode))
+                {
+                    ChatRoom storedChatRoom = chatRooms[chatRoomCode];
+                    IChatCallback userChannel = OperationContext.Current.GetCallbackChannel<IChatCallback>();
+
+                    response.StatusCode = ResponseStatus.OK;
+                    response.Value = true;
+                    try
                     {
-                        if (storedChatRoom.SecondUserInChatRoomChannel != null)
+                        bool isFirstPlayerToJoinSendingMessage = userChannel.GetHashCode() == storedChatRoom.FirstUserInChatRoomChannel.GetHashCode();
+                        if (isFirstPlayerToJoinSendingMessage)
                         {
-                            storedChatRoom.SecondUserInChatRoomChannel.NewMessageReceived(message);
+                            if (storedChatRoom.SecondUserInChatRoomChannel != null)
+                            {
+                                storedChatRoom.SecondUserInChatRoomChannel.NewMessageReceived(message);
+                            }
+                            else
+                            {
+                                response.Value = false;
+                            }
                         }
                         else
                         {
-                            response.Value = false;
+                            storedChatRoom.FirstUserInChatRoomChannel.NewMessageReceived(message);
                         }
                     }
-                    else
+                    catch (CommunicationObjectAbortedException ex)
                     {
-                        storedChatRoom.FirstUserInChatRoomChannel.NewMessageReceived(message);
+                        ServerLogger.Instance.Error(ex.Message);
+
+                        response.StatusCode = ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR;
+                        response.Value = false;
+
+                        chatRooms.Remove(chatRoomCode);
+                    }
+                    catch (CommunicationException ex)
+                    {
+                        ServerLogger.Instance.Error(ex.Message);
+
+                        response.StatusCode = ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR;
+                        response.Value = false;
+
+                        chatRooms.Remove(chatRoomCode);
                     }
                 }
-                catch (CommunicationObjectAbortedException ex)
-                {
-                    ServerLogger.Instance.Error(ex.Message);
 
-                    response.StatusCode = ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR;
-                    response.Value = false;
-
-                    chatRooms.Remove(chatRoomCode);
-                }
-                catch (CommunicationException ex)
-                {
-                    ServerLogger.Instance.Error(ex.Message);
-
-                    response.StatusCode = ResponseStatus.CLIENT_CHANNEL_CONNECTION_ERROR;
-                    response.Value = false;
-
-                    chatRooms.Remove(chatRoomCode);
-                }
+                return response;
             }
-
-            return response;
         }
     }
 }

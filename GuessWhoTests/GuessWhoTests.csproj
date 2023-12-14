@@ -111,6 +111,8 @@
     <Compile Include="DataAccessTests\MatchDAOTests.cs" />
     <Compile Include="DataAccessTests\PlayerDaoTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServicesTests\ChatService\ChatServiceTests.cs" />
+    <Compile Include="ServicesTests\ChatService\MockChatServiceClient.cs" />
     <Compile Include="ServicesTests\GameService\GameServiceTests.cs" />
     <Compile Include="ServicesTests\GameService\MockGameServiceClient.cs" />
     <Compile Include="ServicesTests\MatchStatusService\MatchStatusServiceTests.cs" />
