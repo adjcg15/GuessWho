@@ -68,7 +68,7 @@ namespace GuessWhoClient
         }
 
         private void TimerTick(object state)
-        {   
+        {
             secondsRemaining--;
 
             if (secondsRemaining <= 0)
@@ -99,7 +99,7 @@ namespace GuessWhoClient
                 ClearCommunicationChannels();
                 RedirectToMainMenu();
             }
-            catch(CommunicationException ex)
+            catch (CommunicationException ex)
             {
                 App.log.Error(ex.Message);
 
@@ -191,7 +191,7 @@ namespace GuessWhoClient
 
             NavigationService.Navigate(answerPage);
 
-            drawServiceClient.UnsubscribeFromDrawService(gameManager.CurrentMatchCode);
+            StopListeningDrawingService();
         }
 
         private void ShowCharacters()
@@ -203,7 +203,7 @@ namespace GuessWhoClient
         {
             isInteractingWithCanvas = true;
 
-            if(isDrawingMode)
+            if (isDrawingMode)
             {
                 Point currentPoint = e.GetPosition(CnvsDrawing);
                 drawingPoints.Add(currentPoint);
@@ -215,7 +215,7 @@ namespace GuessWhoClient
         private void CnvsOnDrawing(object sender, MouseEventArgs e)
         {
             Point currentPoint = e.GetPosition(CnvsDrawing);
-            if(IsPointInsideCanvas(currentPoint))
+            if (IsPointInsideCanvas(currentPoint))
             {
                 if (isInteractingWithCanvas)
                 {
@@ -253,7 +253,7 @@ namespace GuessWhoClient
             isInteractingWithCanvas = false;
 
             Point currentPoint = e.GetPosition(CnvsDrawing);
-            if(IsPointInsideCanvas(currentPoint) && isDrawingMode)
+            if (IsPointInsideCanvas(currentPoint) && isDrawingMode)
             {
                 drawingPoints.Add(currentPoint);
                 DrawSmoothLine();
@@ -290,7 +290,7 @@ namespace GuessWhoClient
         {
             List<Point> pointsUnderTolerance = points;
 
-            if(points.Count > 3)
+            if (points.Count > 3)
             {
                 double distanceToFurtherPoint = 0;
                 int furthestPointIndex = 0;
@@ -302,27 +302,27 @@ namespace GuessWhoClient
                     Y2 = points[points.Count - 1].Y
                 };
 
-                for(int i = 1; i < points.Count - 1; i ++)
+                for (int i = 1; i < points.Count - 1; i++)
                 {
                     double distanceToPoint = DistancePointToLine(points[i], lineBetweenEndpoints);
 
-                    if(distanceToPoint > distanceToFurtherPoint)
+                    if (distanceToPoint > distanceToFurtherPoint)
                     {
                         distanceToFurtherPoint = distanceToPoint;
                         furthestPointIndex = i;
                     }
                 }
 
-                if(distanceToFurtherPoint >  errorTolerance)
+                if (distanceToFurtherPoint > errorTolerance)
                 {
                     List<Point> leftReduction = DouglasPeuckerReduction(points.GetRange(0, furthestPointIndex + 1), MIN_DISTANCE);
                     List<Point> rightReduction = DouglasPeuckerReduction(points.GetRange(furthestPointIndex, points.Count - furthestPointIndex), MIN_DISTANCE);
-                
+
                     pointsUnderTolerance = leftReduction.Concat(rightReduction).ToList();
                 }
                 else
                 {
-                    pointsUnderTolerance = new List<Point>{ points[0], points[points.Count - 1] };
+                    pointsUnderTolerance = new List<Point> { points[0], points[points.Count - 1] };
                 }
             }
 
@@ -340,7 +340,7 @@ namespace GuessWhoClient
                 List<Point> polylinePoints = polyline.Points.ToList();
 
                 List<Point> currentSegment = new List<Point>();
-                for (int i = 0; i < polylinePoints.Count; i++) 
+                for (int i = 0; i < polylinePoints.Count; i++)
                 {
                     Point currentPoint = polylinePoints[i];
                     if (DistanceBetweenPoints(currentPoint, cursorPoint) > ERASER_SIZE)
@@ -349,7 +349,7 @@ namespace GuessWhoClient
                     }
                     else
                     {
-                        if(currentSegment.Count > 0)
+                        if (currentSegment.Count > 0)
                         {
                             polylineSegments.Add(currentSegment);
                             currentSegment = new List<Point>();
@@ -372,7 +372,7 @@ namespace GuessWhoClient
 
             foreach (var segment in segments)
             {
-                if(segment.Count > 2)
+                if (segment.Count > 2)
                 {
                     var newPolyline = new Polyline
                     {
@@ -444,7 +444,7 @@ namespace GuessWhoClient
                 selectedColor = color;
             }
 
-            foreach (Button colorButton in GridColors.Children )
+            foreach (Button colorButton in GridColors.Children)
             {
                 string colorTag = colorButton.Tag as string;
                 if (selectedColor == colorTag)
@@ -496,11 +496,15 @@ namespace GuessWhoClient
             {
                 try
                 {
+                    StopTimer();
                     LeaveCurrentGame();
+
+                    gameManager.UnsubscribePage(this);
+                    matchStatusManager.UnsubscribePage(this);
 
                     drawServiceClient.UnsubscribeFromDrawService(gameManager.CurrentMatchCode);
                 }
-                catch(EndpointNotFoundException ex) 
+                catch (EndpointNotFoundException ex)
                 {
                     App.log.Fatal(ex.Message);
 
@@ -509,7 +513,7 @@ namespace GuessWhoClient
 
                     ServerResponse.ShowServerDownMessage();
                 }
-                catch(CommunicationException ex)
+                catch (CommunicationException ex)
                 {
                     App.log.Fatal(ex.Message);
 
@@ -518,7 +522,7 @@ namespace GuessWhoClient
 
                     ServerResponse.ShowServerDownMessage();
                 }
-                
+
                 ClearCommunicationChannels();
                 RedirectToMainMenu();
             }
@@ -626,9 +630,9 @@ namespace GuessWhoClient
             int totalPoints = 0;
             foreach (var line in polylines)
             {
-                List<SerializedPoint> serializedPointsOfLine= new List<SerializedPoint>();
+                List<SerializedPoint> serializedPointsOfLine = new List<SerializedPoint>();
                 totalPoints += line.Points.Count;
-                foreach(Point point in  line.Points)
+                foreach (Point point in line.Points)
                 {
                     serializedPointsOfLine.Add(new SerializedPoint
                     {
@@ -653,7 +657,7 @@ namespace GuessWhoClient
         {
             if (sender is FrameworkElement element && element.DataContext is Character character)
             {
-                if(isChoosingCharacter)
+                if (isChoosingCharacter)
                 {
                     GuessCharacter(character);
                 }
@@ -671,7 +675,7 @@ namespace GuessWhoClient
 
         private void GuessCharacter(Character character)
         {
-            if(!character.IsSelected)
+            if (!character.IsSelected)
             {
                 MessageBoxResult confirmSelection = MessageBox.Show(
                     Properties.Resources.msgbConfirmGuessChoiceMessage,
@@ -721,7 +725,7 @@ namespace GuessWhoClient
             matchStatusManager.UnsubscribePage(this);
 
             WinnerPage winnerPage = new WinnerPage();
-            if(DataStore.Profile != null)
+            if (DataStore.Profile != null)
             {
                 winnerPage.InitializeWinnerTextBlock(isCurrentPlayerWinner ? DataStore.Profile.NickName : gameManager.AdversaryNickname);
             }
@@ -743,11 +747,11 @@ namespace GuessWhoClient
 
         public void MatchStatusChanged(MatchStatus matchStatusCode)
         {
-            if(matchStatusCode == MatchStatus.GameLost) 
+            if (matchStatusCode == MatchStatus.GameLost)
             {
                 RedirectToWinnerPage(false);
             }
-            else if(matchStatusCode == MatchStatus.GameWon)
+            else if (matchStatusCode == MatchStatus.GameWon)
             {
                 RedirectToWinnerPage(true);
             }
@@ -760,8 +764,29 @@ namespace GuessWhoClient
 
         private void NotifyGameHasBeenCanceled()
         {
+            gameManager.UnsubscribePage(this);
+            matchStatusManager.UnsubscribePage(this);
+
+            StopTimer();
+            StopListeningDrawingService();
             ClearCommunicationChannels();
             RedirectToMainMenuFromCanceledMatch();
+        }
+
+        private void StopListeningDrawingService()
+        {
+            try
+            {
+                drawServiceClient.UnsubscribeFromDrawService(gameManager.CurrentMatchCode);
+            }
+            catch (EndpointNotFoundException ex)
+            {
+                App.log.Fatal(ex.Message);
+            }
+            catch (CommunicationException ex)
+            {
+                App.log.Error(ex.Message);
+            }
         }
 
         private void RedirectToMainMenuFromCanceledMatch()
