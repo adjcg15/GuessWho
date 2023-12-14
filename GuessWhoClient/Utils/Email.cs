@@ -23,6 +23,7 @@ namespace GuessWhoClient.Utils
                 smtpClient.Port = int.Parse(ConfigurationManager.AppSettings["PORT"]);
                 smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtpClient.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["USERNAME"], ConfigurationManager.AppSettings["PASSWORD"]);
+                smtpClient.Timeout = 15000;
 
                 MailMessage mailMessage = new MailMessage();
                 mailMessage.From = new MailAddress(ConfigurationManager.AppSettings["SENDER_EMAIL_ADDRESS"]);

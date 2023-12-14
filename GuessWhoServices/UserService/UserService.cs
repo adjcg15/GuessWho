@@ -37,41 +37,44 @@ namespace GuessWhoServices
 
         public static void UpdateUserStatus(string userNickname, bool isOnline)
         {
-            string userNicknameStored = activeUsers.Find(n => n == userNickname);
+            lock (lockObject)
+            {
+                string userNicknameStored = activeUsers.Find(n => n == userNickname);
 
-            if (isOnline)
-            {
-                if (string.IsNullOrEmpty(userNicknameStored))
+                if (isOnline)
                 {
-                    activeUsers.Add(userNickname);
+                    if (string.IsNullOrEmpty(userNicknameStored))
+                    {
+                        activeUsers.Add(userNickname);
+                    }
                 }
-            }
-            else
-            {
-                activeUsers.Remove(userNicknameStored);
-            }
+                else
+                {
+                    activeUsers.Remove(userNicknameStored);
+                }
 
-            foreach (var subscriber in clientChannels)
-            {
-                Console.WriteLine(
-                    "Avisando a suscriptor de lista de usuarios activos " + subscriber.GetHashCode() + 
-                    " que usuario " + userNickname + 
-                    (isOnline ? " inicia sesión" : " cierra sesión")
-                );
-                try
+                foreach (var subscriber in clientChannels)
                 {
-                    subscriber.UserStatusChanged(userNickname, isOnline);
-                }
-                catch (CommunicationObjectAbortedException ex)
-                {
-                    ServerLogger.Instance.Error(ex.Message);
-                    clientChannels.Remove(subscriber);
-                }
-                catch (CommunicationException ex)
-                {
-                    ServerLogger.Instance.Error(ex.Message);
-                    clientChannels.Remove(subscriber);
-                }
+                    Console.WriteLine(
+                        "Avisando a suscriptor de lista de usuarios activos " + subscriber.GetHashCode() +
+                        " que usuario " + userNickname +
+                        (isOnline ? " inicia sesión" : " cierra sesión")
+                    );
+                    try
+                    {
+                        subscriber.UserStatusChanged(userNickname, isOnline);
+                    }
+                    catch (CommunicationObjectAbortedException ex)
+                    {
+                        ServerLogger.Instance.Error(ex.Message);
+                        clientChannels.Remove(subscriber);
+                    }
+                    catch (CommunicationException ex)
+                    {
+                        ServerLogger.Instance.Error(ex.Message);
+                        clientChannels.Remove(subscriber);
+                    }
+                } 
             }
         } 
     }

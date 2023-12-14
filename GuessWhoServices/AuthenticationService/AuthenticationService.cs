@@ -57,19 +57,22 @@ namespace GuessWhoServices
 
         public Response<bool> RegisterUser(Profile profile)
         {
-            User user = new User
+            lock (lockObject)
             {
-                nickname = profile.NickName,
-                fullName = profile.FullName,
-                avatar = profile.Avatar,
-            };
-            Account account = new Account
-            {
-                email = profile.Email,
-                password = profile.Password,
-            };
-            
-            return UserDao.RegisterUser(user, account);
+                User user = new User
+                {
+                    nickname = profile.NickName,
+                    fullName = profile.FullName,
+                    avatar = profile.Avatar,
+                };
+                Account account = new Account
+                {
+                    email = profile.Email,
+                    password = profile.Password,
+                };
+
+                return UserDao.RegisterUser(user, account); 
+            }
         }
 
         public Response<Profile> VerifyUserRegisteredByEmail(string email)

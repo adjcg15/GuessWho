@@ -211,6 +211,12 @@ namespace GuessWhoServices
 
                     matches.Remove(matchCode);
                 }
+                catch(CommunicationException ex)
+                {
+                    ServerLogger.Instance.Error(ex.Message);
+
+                    matches.Remove(matchCode);
+                }
             }
         }
     }

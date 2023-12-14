@@ -135,12 +135,10 @@ namespace GuessWhoDataAccess
                 using (var context = new GuessWhoContext())
                 {
                     var account = context.Accounts.FirstOrDefault(a => a.email == email);
-                    Console.WriteLine(account == null ? "account null" : "account not null");
 
                     if (account != null)
                     {
                         var user = context.Users.FirstOrDefault(a => a.idAccount == account.idAccount);
-                        Console.WriteLine(user == null ? "null account" : "not null account");
 
                         if (user != null)
                         {
@@ -162,8 +160,6 @@ namespace GuessWhoDataAccess
 
                 response.StatusCode = ResponseStatus.SQL_ERROR;
             }
-
-            Console.WriteLine("llegó al final del userDAO");
 
             return response;
         }

@@ -12,7 +12,10 @@ namespace GuessWhoServices
     {
         public Response<bool> SendRequest(int idUserRequester, int idUserRequested)
         {
-            return FriendshipDao.AddRequest(idUserRequester, idUserRequested);
+            lock (lockObject)
+            {
+                return FriendshipDao.AddRequest(idUserRequester, idUserRequested);
+            }
         }
             
         public Response<List<Friend>> GetRequests(int idUser)

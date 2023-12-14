@@ -18,39 +18,42 @@ namespace GuessWhoServices
 
         public Response<bool> UpdateUserNickname(string newNickname, int idUser)
         {
-            Response<bool> response = new Response<bool>()
+            lock (lockObject)
             {
-                StatusCode = ResponseStatus.OK,
-                Value = true,
-            };
-
-            DateTime currentDate = DateTime.Now;
-
-            var lastTimeNicknameChangedResponse = UserDao.GetLastTimeNicknameChangeById(idUser);
-
-            if(lastTimeNicknameChangedResponse.StatusCode != ResponseStatus.OK)
-            {
-                response.StatusCode = lastTimeNicknameChangedResponse.StatusCode;
-                response.Value = false;
-            }
-            else if(lastTimeNicknameChangedResponse.StatusCode == ResponseStatus.OK && 
-                lastTimeNicknameChangedResponse.Value == DateTime.MaxValue)
-            {
-                response.Value = false;
-            }
-            else
-            {
-                if ((currentDate - lastTimeNicknameChangedResponse.Value).TotalDays >= MINIMAL_DAYS_FOR_CHANGE)
+                Response<bool> response = new Response<bool>()
                 {
-                    response = UserDao.UpdateUserNickname(newNickname, idUser);
+                    StatusCode = ResponseStatus.OK,
+                    Value = true,
+                };
+
+                DateTime currentDate = DateTime.Now;
+
+                var lastTimeNicknameChangedResponse = UserDao.GetLastTimeNicknameChangeById(idUser);
+
+                if (lastTimeNicknameChangedResponse.StatusCode != ResponseStatus.OK)
+                {
+                    response.StatusCode = lastTimeNicknameChangedResponse.StatusCode;
+                    response.Value = false;
                 }
-                else
+                else if (lastTimeNicknameChangedResponse.StatusCode == ResponseStatus.OK &&
+                    lastTimeNicknameChangedResponse.Value == DateTime.MaxValue)
                 {
                     response.Value = false;
                 }
-            }
+                else
+                {
+                    if ((currentDate - lastTimeNicknameChangedResponse.Value).TotalDays >= MINIMAL_DAYS_FOR_CHANGE)
+                    {
+                        response = UserDao.UpdateUserNickname(newNickname, idUser);
+                    }
+                    else
+                    {
+                        response.Value = false;
+                    }
+                }
 
-            return response;
+                return response; 
+            }
         }
 
         public Response<bool> UpdateUserFullName(string newFullName, int idUser)
