@@ -1,4 +1,5 @@
-﻿using GuessWhoClient.GameServices;
+﻿using GuessWhoDataAccess;
+using GuessWhoTests.GameServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;

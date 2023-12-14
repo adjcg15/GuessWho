@@ -1,5 +1,4 @@
-﻿using GuessWhoClient;
-using GuessWhoDataAccess;
+﻿using GuessWhoDataAccess;
 using System.Runtime.Remoting.Contexts;
 using Xunit;
 

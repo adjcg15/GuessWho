@@ -101,6 +101,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientTests\Utils\AuthenticationTests.cs" />
+    <Compile Include="Connected Services\GameServices\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="DataAccessTests\DBOfflineTests.cs" />
     <Compile Include="DataAccessTests\ReportDAOTests.cs" />
     <Compile Include="DataAccessTests\MatchDAOTests.cs" />
@@ -114,10 +119,38 @@
   <ItemGroup>
     <None Include="App.config" />
     <Compile Include="DataAccessTests\UserDAOTests.cs" />
+    <None Include="Connected Services\GameServices\GuessWhoService.wsdl" />
+    <None Include="Connected Services\GameServices\item.disco" />
+    <None Include="Connected Services\GameServices\configuration91.svcinfo" />
+    <None Include="Connected Services\GameServices\configuration.svcinfo" />
+    <None Include="Connected Services\GameServices\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="connections.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Connected Services\GameServices\item.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GameServices\item1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GameServices\item2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GameServices\item3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\GameServices\item4.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\GuessWhoDataAccess.PlayerInMatch.datasource" />
+    <None Include="Properties\DataSources\GuessWhoDataAccess.Profile.datasource" />
+    <None Include="Properties\DataSources\GuessWhoDataAccess.Report.datasource" />
+    <None Include="Properties\DataSources\GuessWhoDataAccess.TopPlayer.datasource" />
+    <None Include="Properties\DataSources\GuessWhoServices.Friend.datasource" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\xunit.analyzers.1.6.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
@@ -139,6 +172,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\GameServices\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
