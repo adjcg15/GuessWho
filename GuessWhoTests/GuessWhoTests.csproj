@@ -101,48 +101,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientTests\Utils\AuthenticationTests.cs" />
-    <Compile Include="Connected Services\GuessWhoServices\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="DataAccessTests\DBOfflineTests.cs" />
     <Compile Include="DataAccessTests\ReportDAOTests.cs" />
     <Compile Include="DataAccessTests\MatchDAOTests.cs" />
     <Compile Include="DataAccessTests\PlayerDaoTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServicesTests\GameService\GameServiceTests.cs" />
+    <Compile Include="ServicesTests\GameService\MockGameServiceClient.cs" />
     <Compile Include="ServicesTests\MatchStatusService\MatchStatusServiceTests.cs" />
     <Compile Include="ServicesTests\MatchStatusService\MockMatchStatusClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <Compile Include="DataAccessTests\UserDAOTests.cs" />
-    <None Include="Connected Services\GuessWhoServices\GuessWhoService.wsdl" />
-    <None Include="Connected Services\GuessWhoServices\item.disco" />
-    <None Include="Connected Services\GuessWhoServices\configuration91.svcinfo" />
-    <None Include="Connected Services\GuessWhoServices\configuration.svcinfo" />
-    <None Include="Connected Services\GuessWhoServices\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <Content Include="connections.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Connected Services\GuessWhoServices\item.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\GuessWhoServices\item1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\GuessWhoServices\item2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\GuessWhoServices\item3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\GuessWhoServices\item4.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -165,9 +139,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\GuessWhoServices\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
