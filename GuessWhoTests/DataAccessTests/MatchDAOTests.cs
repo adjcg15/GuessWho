@@ -30,6 +30,24 @@ namespace GuessWhoTests.DataAccessTests
                 Assert.Equal(expectedScore, scoreStored);
             }
         }
+
+        [Fact]
+        public void TestAddScorePointsWinnerNicknameEmptyFail()
+        {
+            var response = MatchDao.AddScorePoints(string.Empty);
+
+            Assert.NotEqual(ResponseStatus.OK, response.StatusCode);
+            Assert.False(response.Value);
+        }
+
+        [Fact]
+        public void TestAddScorePointsWinnerNicknameInvalidFail()
+        {
+            var response = MatchDao.AddScorePoints(fixture.InexistentWinnerNickname);
+
+            Assert.NotEqual(ResponseStatus.OK, response.StatusCode);
+            Assert.False(response.Value);
+        }
     }
 
     public class MatchDAOTestsFixture : IDisposable
@@ -39,8 +57,11 @@ namespace GuessWhoTests.DataAccessTests
 
         private int idAccountAlreadyRegistered;
 
+        public string InexistentWinnerNickname { get { return "INEXISTENT_NICKNAME"; } }
         public MatchDAOTestsFixture()
         {
+            ServerLogger.ConfigureLogger();
+
             using (var context = new GuessWhoContext())
             {
                 Account newAccount = new Account

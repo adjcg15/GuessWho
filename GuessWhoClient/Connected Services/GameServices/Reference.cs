@@ -2020,10 +2020,10 @@ namespace GuessWhoClient.GameServices {
     public interface IAuthenticationService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/RegisterUser", ReplyAction="http://tempuri.org/IAuthenticationService/RegisterUserResponse")]
-        GuessWhoClient.GameServices.booleanResponse RegisterUser(GuessWhoClient.GameServices.Profile user);
+        GuessWhoClient.GameServices.booleanResponse RegisterUser(GuessWhoClient.GameServices.Profile profile);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/RegisterUser", ReplyAction="http://tempuri.org/IAuthenticationService/RegisterUserResponse")]
-        System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> RegisterUserAsync(GuessWhoClient.GameServices.Profile user);
+        System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> RegisterUserAsync(GuessWhoClient.GameServices.Profile profile);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuthenticationService/Login", ReplyAction="http://tempuri.org/IAuthenticationService/LoginResponse")]
         GuessWhoClient.GameServices.ProfileResponse Login(string email, string password);
@@ -2083,12 +2083,12 @@ namespace GuessWhoClient.GameServices {
                 base(binding, remoteAddress) {
         }
         
-        public GuessWhoClient.GameServices.booleanResponse RegisterUser(GuessWhoClient.GameServices.Profile user) {
-            return base.Channel.RegisterUser(user);
+        public GuessWhoClient.GameServices.booleanResponse RegisterUser(GuessWhoClient.GameServices.Profile profile) {
+            return base.Channel.RegisterUser(profile);
         }
         
-        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> RegisterUserAsync(GuessWhoClient.GameServices.Profile user) {
-            return base.Channel.RegisterUserAsync(user);
+        public System.Threading.Tasks.Task<GuessWhoClient.GameServices.booleanResponse> RegisterUserAsync(GuessWhoClient.GameServices.Profile profile) {
+            return base.Channel.RegisterUserAsync(profile);
         }
         
         public GuessWhoClient.GameServices.ProfileResponse Login(string email, string password) {

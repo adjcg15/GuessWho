@@ -13,51 +13,56 @@ namespace GuessWhoDataAccess
     {
         public static Response<List<TopPlayer>> GetTopPlayers(string query, int numberOfPlayers)
         {
-            Response<List<TopPlayer>> response = new Response<List<TopPlayer>>();
-            response.Value = new List<TopPlayer>();
-            response.StatusCode = ResponseStatus.OK;
+            Response<List<TopPlayer>> response = new Response<List<TopPlayer>>
+            {
+                Value = new List<TopPlayer>(),
+                StatusCode = ResponseStatus.OK
+            };
 
             try
             {
-                using (var context = new GuessWhoContext())
+                if (numberOfPlayers >= 0)
                 {
-                    var result = context.Matches
-                        .Join(
-                            context.Users,
-                            match => match.idWinner,
-                            user => user.idUser,
-                            (match, user) => new
-                            {
-                                UserId = user.idUser,
-                                UserNickname = user.nickname,
-                                MatchScore = match.score,
-                            }
-                        )
-                        .Where(u => u.UserNickname.Contains(query))
-                        .GroupBy(m => m.UserId)
-                        .Select(g => new
-                        {
-                            UserNickname = g.FirstOrDefault().UserNickname,
-                            TotalScore = g.Sum(m => m.MatchScore)
-                        })
-                        .OrderByDescending(tp => tp.TotalScore)
-                        .Take(numberOfPlayers)
-                        .ToList();
-
-                    int position = 1;
-                    foreach (var row in result)
+                    using (var context = new GuessWhoContext())
                     {
-                        if (row != null && row.TotalScore.HasValue)
-                        {
-                            response.Value.Add(new TopPlayer
+                        var result = context.Matches
+                            .Join(
+                                context.Users,
+                                match => match.idWinner,
+                                user => user.idUser,
+                                (match, user) => new
+                                {
+                                    UserId = user.idUser,
+                                    UserNickname = user.nickname,
+                                    MatchScore = match.score,
+                                }
+                            )
+                            .Where(u => u.UserNickname.Contains(query))
+                            .GroupBy(m => m.UserId)
+                            .Select(g => new
                             {
-                                Nickname = row.UserNickname,
-                                Score = (int)row.TotalScore,
-                                Position = position
-                            });
+                                UserNickname = g.FirstOrDefault().UserNickname,
+                                TotalScore = g.Sum(m => m.MatchScore)
+                            })
+                            .OrderByDescending(tp => tp.TotalScore)
+                            .Take(numberOfPlayers)
+                            .ToList();
+
+                        int position = 1;
+                        foreach (var row in result)
+                        {
+                            if (row != null && row.TotalScore.HasValue)
+                            {
+                                response.Value.Add(new TopPlayer
+                                {
+                                    Nickname = row.UserNickname,
+                                    Score = (int)row.TotalScore,
+                                    Position = position
+                                });
+                            }
+                            position++;
                         }
-                        position++;
-                    }
+                    } 
                 }
             }
             catch (DbUpdateException ex)

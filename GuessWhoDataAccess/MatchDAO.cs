@@ -15,28 +15,32 @@ namespace GuessWhoDataAccess
         {
             var response = new Response<bool>
             {
-                StatusCode = ResponseStatus.OK,
+                StatusCode = ResponseStatus.NOT_ALLOWED,
                 Value = false
             };
 
             try
             {
-                using (var context = new GuessWhoContext())
+                if (!string.IsNullOrEmpty(winnerNickname))
                 {
-                    var winner = context.Users.FirstOrDefault(a => a.nickname == winnerNickname);
-                    
-                    if(winner != null)
+                    using (var context = new GuessWhoContext())
                     {
-                        var match = new Match
-                        {
-                            idWinner = winner.idUser,
-                            score = 5
-                        };
-                        context.Matches.Add(match);
-                        context.SaveChanges();
+                        var winner = context.Users.FirstOrDefault(a => a.nickname == winnerNickname);
 
-                        response.Value = true;
-                    }
+                        if (winner != null)
+                        {
+                            var match = new Match
+                            {
+                                idWinner = winner.idUser,
+                                score = 5
+                            };
+                            context.Matches.Add(match);
+                            context.SaveChanges();
+
+                            response.StatusCode = ResponseStatus.OK;
+                            response.Value = true;
+                        }
+                    } 
                 }
             }
             catch (DbUpdateException ex)
