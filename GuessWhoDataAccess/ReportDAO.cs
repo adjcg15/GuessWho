@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
@@ -27,6 +28,13 @@ namespace GuessWhoDataAccess
                     context.SaveChanges();
                 }
             }
+            catch (ArgumentNullException ex)
+            {
+                ServerLogger.Instance.Warn(ex.Message);
+
+                response.StatusCode = ResponseStatus.UPDATE_ERROR;
+                response.Value = false;
+            }
             catch (DbUpdateException ex)
             {
                 ServerLogger.Instance.Error(ex.Message);
@@ -41,7 +49,7 @@ namespace GuessWhoDataAccess
                 response.StatusCode = ResponseStatus.VALIDATION_ERROR;
                 response.Value = false;
             }
-            catch (SqlException ex)
+            catch (EntityException ex)
             {
                 ServerLogger.Instance.Fatal(ex.Message);
 
@@ -69,7 +77,7 @@ namespace GuessWhoDataAccess
                     .ToList();
                 }
             }
-            catch (SqlException ex)
+            catch (EntityException ex)
             {
                 ServerLogger.Instance.Fatal(ex.Message);
 

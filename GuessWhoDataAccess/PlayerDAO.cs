@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
@@ -77,7 +78,7 @@ namespace GuessWhoDataAccess
 
                 response.StatusCode = ResponseStatus.VALIDATION_ERROR;
             }
-            catch (SqlException ex)
+            catch (EntityException ex)
             {
                 ServerLogger.Instance.Fatal(ex.Message);
 
@@ -118,7 +119,7 @@ namespace GuessWhoDataAccess
                     }
                 }
             }
-            catch(SqlException ex)
+            catch(EntityException ex)
             {
                 ServerLogger.Instance.Fatal(ex.Message);
 
@@ -176,7 +177,7 @@ namespace GuessWhoDataAccess
                     }
                 }
             }
-            catch (SqlException ex)
+            catch (EntityException ex)
             {
                 ServerLogger.Instance.Fatal(ex.Message);
 

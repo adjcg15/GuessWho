@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Data.SqlClient;
@@ -65,7 +66,7 @@ namespace GuessWhoDataAccess
                 response.StatusCode = ResponseStatus.VALIDATION_ERROR;
                 response.Value = false;
             }
-            catch (SqlException ex)
+            catch (EntityException ex)
             {
                 ServerLogger.Instance.Fatal(ex.Message);
 
@@ -113,7 +114,7 @@ namespace GuessWhoDataAccess
                 response.StatusCode = ResponseStatus.VALIDATION_ERROR;
                 response.Value = false;
             }
-            catch (SqlException ex)
+            catch (EntityException ex)
             {
                 ServerLogger.Instance.Fatal(ex.Message);
 
@@ -123,7 +124,6 @@ namespace GuessWhoDataAccess
 
             return response;
         }
-
 
         public static Response<bool> DeclineRequest(int idFriendship)
         {
@@ -157,7 +157,7 @@ namespace GuessWhoDataAccess
                 response.StatusCode = ResponseStatus.VALIDATION_ERROR;
                 response.Value = false;
             }
-            catch (SqlException ex)
+            catch (EntityException ex)
             {
                 ServerLogger.Instance.Fatal(ex.Message);
 
@@ -167,7 +167,6 @@ namespace GuessWhoDataAccess
 
             return response;
         }
-
 
         public static Response<List<Friendship>> GetRequestsById(int idUserRequested)
         {
@@ -200,7 +199,7 @@ namespace GuessWhoDataAccess
 
                 response.StatusCode = ResponseStatus.VALIDATION_ERROR;
             }
-            catch (SqlException ex)
+            catch (EntityException ex)
             {
                 ServerLogger.Instance.Fatal(ex.Message);
 
@@ -209,7 +208,6 @@ namespace GuessWhoDataAccess
 
             return response;
         }
-
 
         public static Response<List<User>> GetFriendsById(int idActualUser)
         {
@@ -242,7 +240,7 @@ namespace GuessWhoDataAccess
 
                 response.StatusCode = ResponseStatus.VALIDATION_ERROR;
             }
-            catch (SqlException ex)
+            catch (EntityException ex)
             {
                 ServerLogger.Instance.Fatal(ex.Message);
 
@@ -252,7 +250,7 @@ namespace GuessWhoDataAccess
             return response;
         }
 
-        public static bool CheckExistingFriendRequest(int idUserRequester, int idUserRequested)
+        private static bool CheckExistingFriendRequest(int idUserRequester, int idUserRequested)
         {
             bool requestExists;
 
