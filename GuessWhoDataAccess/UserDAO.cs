@@ -317,7 +317,7 @@ namespace GuessWhoDataAccess
                 {
                     var user = context.Users.Find(idUser);
 
-                    if(user != null)
+                    if(user != null && !string.IsNullOrEmpty(newNickname.Trim()))
                     {
                         user.nickname = newNickname;
                         user.lastTimeNicknameChanged = DateTime.Now;
@@ -369,7 +369,7 @@ namespace GuessWhoDataAccess
                 {
                     var user = context.Users.Find(idUser);
 
-                    if (user != null)
+                    if (user != null && !string.IsNullOrEmpty(newFullName.Trim()))
                     {
                         user.fullName = newFullName;
 
@@ -420,7 +420,7 @@ namespace GuessWhoDataAccess
                 {
                     var account = context.Accounts.Find(idAccount);
 
-                    if (account != null)
+                    if (account != null && !string.IsNullOrEmpty(newPassword.Trim()))
                     {
                         account.password = newPassword;
 
